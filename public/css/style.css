@@ -67,7 +67,7 @@ body {
         max-width: 90%;
     }
 }
-@media only screen and (max-width: 850px) {
+@media only screen and (max-width: 980px) {
     #signupflex {
         flex-direction: column;
     }
@@ -95,6 +95,38 @@ body {
         margin-bottom: 10px;
         padding-bottom: 20px;
         border-bottom: 2px solid #d8d5d5;
+    }
+}
+@media only screen and (min-width: 680px) {
+    #steps div {
+        width: 150px;
+        height: 150px;
+        margin: 15px;
+        padding: 40px 20px;
+    }
+}
+@media only screen and (max-width: 680px) {
+    #steps div {
+        width: 100px;
+        height: 100px;
+        padding: 23px 10px;
+        font-size: 12px;
+    }
+}
+@media only screen and (max-width: 450px) {
+    #steps div {
+        width: 80px;
+        height: 80px;
+        padding: 20px 10px;
+        font-size: 10px;
+    }
+}
+@media only screen and (max-width: 370px) {
+    #steps div {
+        width: 60px;
+        height: 60px;
+        padding: 9px 5px;
+        font-size: 8px;
     }
 }
 #nav img {
@@ -165,4 +197,21 @@ body {
 }
 #appsummary > p {
     font-size: 12px;
+}
+#steps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 50px 0;
+}
+#steps div {
+    color: white;
+    border-radius: 50%;
+    background-color: rgb(241, 49, 15);
+    text-align: center;
+    box-sizing: border-box;
+}
+#steps span {
+    font-size: 50px;
+    color: rgb(241, 49, 15);
 }
