@@ -1,5 +1,5 @@
 *{
-    font-family: Verdana;
+    font-family: "Trebuchet MS"
 }
 body {
     margin: 0;
@@ -52,9 +52,16 @@ body {
     #appsummary img {
         max-width: 80%;
     }
+    #cart {
+        flex: 30%;
+        margin-right: 20px;
+    }
+    #menu {
+        flex: 70%;
+    }
 }
 @media only screen and (max-width: 1024px) {
-    #signupflex {
+    #signupflex, #customerdashboardflex {
         flex-direction: row;
     }
     #signup-container {
@@ -66,9 +73,16 @@ body {
     #appsummary img {
         max-width: 90%;
     }
+    #cart {
+        flex: 40%;
+        margin-right: 20px;
+    }
+    #menu {
+        flex: 60%;
+    }
 }
 @media only screen and (max-width: 980px) {
-    #signupflex {
+    #signupflex, #customerdashboardflex {
         flex-direction: column;
     }
     #signup-container {
@@ -96,6 +110,14 @@ body {
         padding-bottom: 20px;
         border-bottom: 2px solid #d8d5d5;
     }
+    #customerdashboardflex {
+        margin-top: 150px;
+    }
+    #cart {
+        width: 95%;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
 @media only screen and (min-width: 680px) {
     #steps div {
@@ -120,6 +142,9 @@ body {
         padding: 20px 10px;
         font-size: 10px;
     }
+    #navavatar, #nav > h3 {
+        display: none;
+    }
 }
 @media only screen and (max-width: 370px) {
     #steps div {
@@ -127,6 +152,12 @@ body {
         height: 60px;
         padding: 9px 5px;
         font-size: 8px;
+    }
+    
+}
+@media only screen and (min-width: 450px) {
+    #nav > h3 {
+        display: inline-block;
     }
 }
 #nav img {
@@ -170,7 +201,7 @@ body {
     text-align: center;
     color: black;
 }
-#signin-container button, #signup-container button {
+#signin-container button, #signup-container button, #order {
     color: white;
     background-color: black;
     padding: 14px 20px;
@@ -214,4 +245,111 @@ body {
 #steps span {
     font-size: 50px;
     color: rgb(241, 49, 15);
+}
+.customerdashboard {
+    border-bottom: 2px solid #d8d5d5;
+}
+#navavatar, #navsetting{
+    float: right;
+    
+}
+#navavatar {
+    border-radius: 50%;
+    border: 3px solid rgb(241, 49, 15);
+    width: 40px;
+    margin-top: 20px;
+}
+#navsetting{
+    width: 30px;
+    margin-top: 35px;
+    cursor: pointer;
+}
+#nav h3 {
+    float: right;
+    margin: 34px 30px 25px 10px;
+}
+#customerdashboardflex {
+    display: flex;
+}
+#menu h1 {
+    text-align: center;
+    margin: 50px 0;
+}
+#cart {
+    margin-top: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+    border: 2px solid #d8d5d5;
+    border-radius: 3px;
+    height: 450px;
+
+    box-shadow: 0 2px 5px -1px rgba(0,0,0, 0.3);
+}
+.meal {
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-left: auto;
+    margin-right: auto;
+}
+.meal img {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}
+#mealinfo {
+    min-width: 30%;
+    height: 150px;
+    text-align: center;
+    border: 1px solid #d8d5d5;
+    margin: 5px 10px;
+    flex-grow: 1;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 1px 5px -1px rgba(0,0,0, 0.3);
+    color: #57727c;
+}
+#addmealdiv {
+    background-color: #dadada;
+    height: 40px;
+}
+#addmeal {
+    display: block;
+    margin: 6px auto;
+}
+.cartorder {
+    display: flex;
+    flex-direction: row;
+}
+.cartorder * {
+    flex: 1;
+    text-align: center;
+}
+.cartorder input {
+    width: 30px;
+    margin: 18px 0;
+}
+.description {
+    background-color: #dadada;
+}
+#cart h2 {
+    float: right;
+}
+#cart h1 {
+    text-align: left;
+}
+#items {
+    overflow: auto;
+    height:150px;
+}
+footer {
+    height: 50px;
+    color: white;
+    background-color: black;
+    margin-top: 20px;
+    text-align: center;
+    padding: 15px 0;
+    box-sizing: border-box;
 }
