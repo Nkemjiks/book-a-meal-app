@@ -1,8 +1,11 @@
 *{
     font-family: Verdana;
 }
+body {
+    margin: 0;
+}
 @media only screen and (max-width: 425px) {
-    #signin-container {
+    #signin-container, #signup-container {
         width: 80%;
     }
     #nav {
@@ -15,9 +18,12 @@
         display: inline-block;
         margin-left: 15px;
     }
+    #signin-container > h1, h1 {
+        font-size: 25px;
+    }
 }
 @media only screen and (min-width: 426px) {
-    #signin-container {
+    #signin-container, #signup-container {
         width: 350px;
     }
     #nav {
@@ -29,8 +35,69 @@
     .mobile {
         display: none;
     }
+    #signin-container > h1, h1 {
+        font-size: 30px;
+    }
 }
-img {
+@media only screen and (min-width: 1024px) {
+    #signupflex {
+        flex-direction: row;
+    }
+    #signup-container {
+        flex: 30%;
+    }
+    #appsummary {
+        flex: 70%;
+    }
+    #appsummary img {
+        max-width: 80%;
+    }
+}
+@media only screen and (max-width: 1024px) {
+    #signupflex {
+        flex-direction: row;
+    }
+    #signup-container {
+        flex: 40%;
+    }
+    #appsummary {
+        flex: 60%;
+    }
+    #appsummary img {
+        max-width: 90%;
+    }
+}
+@media only screen and (max-width: 850px) {
+    #signupflex {
+        flex-direction: column;
+    }
+    #signup-container {
+        order: 2;
+        align-self: center;
+    }
+    #appsummary {
+        order: 1;
+        margin-bottom: 40px;
+    }
+    #appsummary img {
+        max-width: 90%;
+    }
+    #nav {
+        border-bottom: 2px solid #d8d5d5;
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        background-color: white;
+    }
+    #signupflex {
+        margin-top: 150px;
+        margin-bottom: 10px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid #d8d5d5;
+    }
+}
+#nav img {
     max-width: 100px;
 }
 #nav {
@@ -39,7 +106,7 @@ img {
 #nav > button {
     float: right;
 }
-.signup {
+.signup, .signin {
     background-color: black;
     color: white;
     border-radius: 3px;
@@ -51,7 +118,7 @@ img {
     padding: 15px;
     font-size: 12px;
 }
-#signin-container {
+#signin-container, #signup-container {
     border: 1px solid #d8d5d5;
     padding: 20px;
     margin-left: auto;
@@ -59,7 +126,7 @@ img {
     height: 400px;
     box-shadow: 2px 5px 4px #d8d5d5
 }
-#signin-container input {
+#signin-container input, #signup-container input {
     display: inline-block;
     width: 100%;
     padding: 15px 20px;
@@ -67,12 +134,11 @@ img {
     box-sizing: border-box;
     border: 2px solid #f1f1f1;
 }
-#signin-container > h1 {
+#signin-container > h1, h1 {
     text-align: center;
     color: black;
-    font-size: 20px;
 }
-#signin-container button {
+#signin-container button, #signup-container button {
     color: white;
     background-color: black;
     padding: 14px 20px;
@@ -85,4 +151,18 @@ img {
 }
 #forget {
     float: right;
+}
+#signupflex {
+    display: flex;
+}
+#signup-container {
+    padding: 10px;
+    margin: 5px 20px;
+}
+#appsummary {
+    padding: 20px;
+    text-align: center;
+}
+#appsummary > p {
+    font-size: 12px;
 }
