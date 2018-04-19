@@ -71,6 +71,9 @@ body {
         flex: 70%;
         margin-right: 10px;
     }
+    .menu, .createmenu{
+        flex: 50%;
+    }
 }
 @media only screen and (max-width: 1024px) {
     #signupflex, #customerdashboardflex, #catererdashboardflex {
@@ -98,6 +101,9 @@ body {
     .addedmeals {
         flex: 60%;
         margin-right: 10px;
+    }
+    .menu, .createmenu{
+        flex: 50%;
     }
 }
 @media only screen and (max-width: 980px) {
@@ -132,19 +138,25 @@ body {
     #customerdashboardflex, #catererdashboardflex {
         margin-top: 150px;
     }
-    #cart {
-        width: 95%;
+    #cart, .menu, .addmeal {
         margin-left: auto;
         margin-right: auto;
     }
-    .addmeal {
+    #cart, .menu {
+        width: 95%;
+    }
+    .menu {
+        order: 2;
+    }
+    .createmenu {
+        order: 1;
+    }
+    .addmeal{
         width: 90%;
-        margin-left: auto;
-        margin-right: auto;
     }
 }
 @media only screen and (min-width: 980px) {
-    .addmeal {
+    .addmeal, .menu {
         margin-left: 10px;
     }
     
@@ -229,7 +241,7 @@ body {
     border: 1px solid #d8d5d5;
     padding: 20px;
     height: 400px;
-    box-shadow: 2px 5px 4px #d8d5d5
+    box-shadow: 2px 5px 4px #d8d5d5;
 }
 #signin-container, #signup-container {
     margin-left: auto;
@@ -248,7 +260,7 @@ body {
     text-align: center;
     color: black;
 }
-#signin-container button, #signup-container button, #order, #addmealcontainer button {
+#signin-container button, #signup-container button, #order, #addmealcontainer button, .createmenu button {
     color: white;
     background-color: black;
     padding: 14px 20px;
@@ -322,7 +334,7 @@ body {
     text-align: center;
     margin: 50px 0;
 }
-#cart, .addedmeals {
+#cart, .addedmeals, .createmenu, #incomingorders {
     margin-top: 20px;
     padding: 20px;
     box-sizing: border-box;
@@ -365,11 +377,11 @@ body {
     display: block;
     margin: 6px auto;
 }
-.cartorder, .mealsadded {
+.cartorder, .mealsadded, .orderinfo {
     display: flex;
     flex-direction: row;
 }
-.cartorder *, .mealsadded *{
+.cartorder *, .mealsadded *, .orderinfo *{
     flex: 1;
     text-align: center;
 }
@@ -386,7 +398,7 @@ body {
 #cart h1 {
     text-align: left;
 }
-.addedmeals h1 {
+.addedmeals h1, .createmenu h1, #incomingorders h1 {
     text-align: center;
 }
 #items, .meals {
@@ -397,6 +409,9 @@ body {
 }
 .meals {
     height:200px;
+}
+.mealsavaliable, .ordersplaced {
+    height:170px;
 }
 footer {
     height: 50px;
@@ -415,18 +430,19 @@ footer {
     margin-left: 2px;
     margin-right: 2px;
 }
-.addmeal {
+.addmeal, .menu {
     margin-top: 20px;
 }
-.addedmeals {
+.addedmeals, .createmenu, #incomingorders {
     margin-right: 10px;
     margin-left: 10px;
     height: 400px;
+}
+.addedmeals {
     margin-bottom: 60px;
 }
 #addmealcontainer {
     height: 300px;
-
 }
 #modifydiv {
     padding-top: 15px;
@@ -440,4 +456,14 @@ footer {
 .mobilecaterer {
     margin-left: auto;
     margin-right: auto;
+}
+.menu {
+    border: 1px solid #d8d5d5;
+    padding: 20px;
+    height: 400px;
+    box-shadow: 2px 5px 4px #d8d5d5;
+    box-sizing: border-box;
+}
+#incomingorders {
+    margin-bottom: 60px;
 }
