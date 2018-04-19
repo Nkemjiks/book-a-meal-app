@@ -11,7 +11,7 @@ body {
     #nav {
         padding: 15px 10px;
     }
-    #nav > button.signin, #nav > button.signup {
+    #nav .signin, #nav button.signup {
         display: none;
     }
     .mobile {
@@ -34,7 +34,7 @@ body {
     #nav {
         padding: 15px 40px;
     }
-    #nav > button.signin, #nav > button.signup {
+    #nav  button.signin, #nav  button.signup {
         display: inline-block;
     }
     .mobile {
@@ -63,6 +63,7 @@ body {
     }
     #menu {
         flex: 70%;
+        margin-bottom: 60px;
     }
     .addmeal {
         flex: 30%;
@@ -73,6 +74,12 @@ body {
     }
     .menu, .createmenu{
         flex: 50%;
+    }
+    .ordersummary {
+        flex: 15%;
+    }
+    .detailedorders {
+        flex: 75%;
     }
 }
 @media only screen and (max-width: 1024px) {
@@ -94,6 +101,7 @@ body {
     }
     #menu {
         flex: 60%;
+        margin-bottom: 60px;
     }
     .addmeal {
         flex: 40%;
@@ -104,6 +112,13 @@ body {
     }
     .menu, .createmenu{
         flex: 50%;
+    }
+    .ordersummary {
+        flex: 20%;
+    }
+    .detailedorders {
+        flex: 80%;
+        min-width: 650px;
     }
 }
 @media only screen and (max-width: 980px) {
@@ -138,12 +153,15 @@ body {
     #customerdashboardflex, #catererdashboardflex {
         margin-top: 150px;
     }
-    #cart, .menu, .addmeal {
+    #cart, .menu, .addmeal, .ordersummary {
         margin-left: auto;
         margin-right: auto;
     }
     #cart, .menu {
         width: 95%;
+    }
+    #cart {
+        margin-bottom: 60px;
     }
     .menu {
         order: 2;
@@ -154,6 +172,7 @@ body {
     .addmeal{
         width: 90%;
     }
+
 }
 @media only screen and (min-width: 980px) {
     .addmeal, .menu {
@@ -204,15 +223,15 @@ body {
     }
 }
 @media only screen and (max-width: 580px) {
-    #nav > .managebutton {
+    #nav .managebutton {
         display: none;
     }
-    .mobilecaterer > .managebutton {
+    .mobilecaterer .managebutton {
          display: inline-block;
     }
 }
 @media only screen and (min-width: 580px) {
-    .mobilecaterer > .managebutton {
+    .mobilecaterer .managebutton {
          display: none;
     }
 }
@@ -222,10 +241,10 @@ body {
 #nav {
     height: 100px;
 }
-#nav > button {
+#nav button {
     float: right;
 }
-.signup, .signin, #nav > .managebutton, .mobilecaterer > .managebutton {
+.signup, .signin, #nav .managebutton, .mobilecaterer .managebutton {
     background-color: black;
     color: white;
     border-radius: 3px;
@@ -401,7 +420,7 @@ body {
 .addedmeals h1, .createmenu h1, #incomingorders h1 {
     text-align: center;
 }
-#items, .meals {
+#items, .meals, .ordersplaced {
     overflow: auto;
 }
 #items {
@@ -410,8 +429,11 @@ body {
 .meals {
     height:200px;
 }
-.mealsavaliable, .ordersplaced {
+.mealsavaliable {
     height:170px;
+}
+.ordersplaced {
+    height:220px;
 }
 footer {
     height: 50px;
@@ -426,11 +448,11 @@ footer {
     right: 0;
     left: 0;
 }
-#nav > .managebutton, .mobilecaterer > .managebutton {
+#nav .managebutton, .mobilecaterer .managebutton {
     margin-left: 2px;
     margin-right: 2px;
 }
-.addmeal, .menu {
+.addmeal, .menu, .ordersummary {
     margin-top: 20px;
 }
 .addedmeals, .createmenu, #incomingorders {
@@ -457,12 +479,18 @@ footer {
     margin-left: auto;
     margin-right: auto;
 }
-.menu {
+.menu, .ordersummary{
     border: 1px solid #d8d5d5;
     padding: 20px;
-    height: 400px;
     box-shadow: 2px 5px 4px #d8d5d5;
     box-sizing: border-box;
+}
+.menu{
+    height: 400px;
+}
+.ordersummary{
+    height: 300px;
+    min-width: 300px;
 }
 #incomingorders {
     margin-bottom: 60px;
