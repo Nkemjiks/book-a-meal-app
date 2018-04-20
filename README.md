@@ -14,4 +14,4 @@ git clone https://github.com/Nkemjiks/book-a-meal-app.git
 + The external signup or signin button are to toggle between the signup and signin pages
 + To navigate to the admin dashboard, simply proceed to the user dashboard and hover over the settings     icon. You should see a dropdown containing admin and signout elements. Click on the admin page to       navigate to the admin dashboard and the signout page to sign out of the application.
 
-##### P.S: I moved the Sign Up page to the top-level directory to be able to use github pages
+##### P.S: I moved the Sign Up page to the top-level directory and renamed it as index.html to be able to use github pages
