@@ -1,11 +1,17 @@
-# book-a-meal-app
+# Book-a-meal-app
+
+##Description
 Book-A-Meal is an application that allows customers to make food orders and helps the food vendor know what the customers want to eat. 
 
+### How to clone this repository
++   Navigate to a directory using your favourite CLI(command line interface)
++   Clone this repository on that directory using 
+```
+git clone https://github.com/Nkemjiks/book-a-meal-app.git
+```
 
-**For navigating through the github pages, following the following instruction;**
+#### For navigating through the github pages, simply click on the signup or signin button on either of the form to go to the user dashbaord
++ The external signup or signin button are to toggle between the signup and signin pages
++ To navigate to the admin dashboard, simply proceed to the user dashboard and hover over the settings     icon. You should see a dropdown containing admin and signout elements. Click on the admin page to       navigate to the admin dashboard and the signout page to sign out of the application.
 
-    Landing page - User side: Click on the sign in or sign up button to go to the user dashboard
-    User Dashboard: Click on the place order button to go to the admin manage menu page
-    Manage meal page: Click on the add meal button to navigate back to the user side
-
-I moved the Sign Up page to the top-level directory to be able to use github pages
+#####P.S: I moved the Sign Up page to the top-level directory to be able to use github pages
