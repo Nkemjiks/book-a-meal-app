@@ -389,10 +389,9 @@ body {
 }
 .meal {
     width: 90%;
-    display: flex;
-    flex-direction: column;
     margin-left: auto;
     margin-right: auto;
+    box-sizing: border-box;
 }
 .meal #add-meal {
     width: 25px;
