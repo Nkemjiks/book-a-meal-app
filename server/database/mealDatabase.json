@@ -1,0 +1,25 @@
+{
+  "data": [
+    {
+      "id": "1",
+      "name": "Blessing Mbonu",
+      "price": "125",
+      "image": "mxbjhgshjsjvhsjvgsd",
+      "isChecked": "true"
+    },
+    {
+      "id": "1",
+      "name": "Yam and egg",
+      "price": "500",
+      "image": "www.image.com/hjw889w",
+      "isChecked": "true"
+    },
+    {
+      "id": "3",
+      "name": "Yam and fish",
+      "price": "300",
+      "image": "www.image.com/hjw889w",
+      "isChecked": "true"
+    }
+  ]
+}
