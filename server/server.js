@@ -1,16 +1,17 @@
-// import express from 'express';
-const express = require('express');
+import express from 'express';
+import bodyParser from 'body-parser';
+import router from './routes';
 
 const app = express();
-const port = 8080;
+const port = process.env.PORT || 8080;
 
-app.get('/', (req, res) => {
-  res.status(200);
-  res.json({ message: 'Hello World, how are you all doing?' });
-});
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+router(app);
 
 app.listen(port, () => {
-  console.log('Hello world');
+  console.log(`Server started on port ${port}`);
 });
 
-module.exports = app;
+export default app;

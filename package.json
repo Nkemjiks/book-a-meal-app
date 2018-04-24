@@ -8,7 +8,7 @@
     "build": "babel server -d dist",
     "start": "npm run build && node dist/server.js",
     "test": "mocha server/test --exit",
-    "test-mocha": "NODE_ENV=test nyc mocha server/tests/**/*.js"
+    "test-mocha": "nyc mocha --compilers js:babel-register server/test/**/*.js --exit"
   },
   "repository": {
     "type": "git",
@@ -29,6 +29,7 @@
     "instrument": false
   },
   "dependencies": {
+    "body-parser": "^1.18.2",
     "express": "^4.16.3"
   },
   "devDependencies": {
