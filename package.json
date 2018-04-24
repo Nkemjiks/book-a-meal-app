@@ -1,0 +1,40 @@
+{
+  "name": "book-a-meal-app",
+  "version": "1.0.0",
+  "description": "Book-A-Meal is an application that allows customers to make food orders and helps the food vendor know what the customers want to eat.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon server/server.js --exec babel-node",
+    "build": "babel server -d dist",
+    "start": "npm run build && node dist/server.js",
+    "test": "mocha server/test --exit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nkemjiks/book-a-meal-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Nkemjiks/book-a-meal-app/issues"
+  },
+  "homepage": "https://github.com/Nkemjiks/book-a-meal-app#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.7.0",
+    "mocha": "^5.1.1",
+    "nodemon": "^1.17.3"
+  }
+}
