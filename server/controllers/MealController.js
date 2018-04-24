@@ -19,7 +19,7 @@ const MealController = {
       if (err) {
         return res.status(400).send({ message: 'Meal not added successfully' });
       }
-      return res.status(200).send('Save completed');
+      return res.status(200).send(newMeal);
     });
   },
 };
