@@ -13,14 +13,18 @@ const MealController = {
       req.body.image,
       req.body.isChecked,
     );
-    meal.data.push(newMeal);
-    const mealDataUpdate = JSON.stringify(meal, null, 2);
-    return fs.writeFile(path.join(`${__dirname}/../database/mealDatabase.json`), mealDataUpdate, (err) => {
-      if (err) {
-        return res.status(400).send({ message: 'Meal not added successfully' });
-      }
-      return res.status(200).send(newMeal);
-    });
+    const filter = meal.data.filter(checkName => checkName.name === req.body.name);
+    if (filter === []) {
+      meal.data.push(newMeal);
+      const mealDataUpdate = JSON.stringify(meal, null, 2);
+      return fs.writeFile(path.join(`${__dirname}/../database/mealDatabase.json`), mealDataUpdate, (err) => {
+        if (err) {
+          return res.status(400).send({ message: 'Meal not added successfully' });
+        }
+        return res.status(200).send(newMeal);
+      });
+    }
+    return res.status(200).send({ message: 'Meal already exist' });
   },
 };
 

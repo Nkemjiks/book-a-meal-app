@@ -27,6 +27,13 @@
       "price": "800",
       "image": "www.image.com/hjw889w",
       "isChecked": "true"
+    },
+    {
+      "id": "4",
+      "name": "Yam and fish with vegetable",
+      "price": "800",
+      "image": "www.image.com/hjw889w",
+      "isChecked": "true"
     }
   ]
 }
