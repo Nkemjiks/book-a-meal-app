@@ -1,9 +1,9 @@
-const chai = require('chai');
-const chaiHTTP = require('chai-http');
-const server = require('../server');
-const expect = chai.expect;
+import chai from 'chai';
+import chaiHttp from 'chai-http';
+import server from '../server';
 
-chai.use(chaiHTTP);
+const expect = chai.expect;
+chai.use(chaiHttp);
 
 describe('Server', () => {
   it('It should return a status of 200', () => {
