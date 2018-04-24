@@ -6,7 +6,9 @@ const routes = (app) => {
     next();
   });
 
-  app.post('/api/v1/meals', MealController.addOneMeal);
+  app
+    .post('/api/v1/meals', MealController.addOneMeal)
+    .get('/api/v1/meals', MealController.getAllMeal);
 };
 
 export default routes;

@@ -26,6 +26,15 @@ const MealController = {
     }
     return res.status(200).send({ message: 'Meal already exist' });
   },
+  getAllMeal(req, res) {
+    fs.readFile(path.join(`${__dirname}/../database/mealDatabase.json`), (err, data) => {
+      const meal = JSON.parse(data);
+      if (err) {
+        return res.status(400).send({ message: 'Database not found' });
+      }
+      return res.status(200).send(meal);
+    });
+  },
 };
 
 export default MealController;
