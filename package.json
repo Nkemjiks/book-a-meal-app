@@ -7,7 +7,8 @@
     "dev": "nodemon server/server.js --exec babel-node",
     "build": "babel server -d dist",
     "start": "npm run build && node dist/server.js",
-    "test": "mocha server/test --exit"
+    "test": "mocha server/test --exit",
+    "test-mocha": "NODE_ENV=test nyc mocha server/tests/**/*.js"
   },
   "repository": {
     "type": "git",
@@ -20,13 +21,23 @@
     "url": "https://github.com/Nkemjiks/book-a-meal-app/issues"
   },
   "homepage": "https://github.com/Nkemjiks/book-a-meal-app#readme",
+  "nyc": {
+    "require": [
+      "babel-register"
+    ],
+    "sourceMap": false,
+    "instrument": false
+  },
   "dependencies": {
     "express": "^4.16.3"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-istanbul": "^4.1.6",
     "babel-preset-env": "^1.6.1",
+    "babel-register": "^6.26.0",
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
     "eslint": "^4.19.1",
@@ -35,6 +46,7 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
     "mocha": "^5.1.1",
-    "nodemon": "^1.17.3"
+    "nodemon": "^1.17.3",
+    "nyc": "^11.7.1"
   }
 }
