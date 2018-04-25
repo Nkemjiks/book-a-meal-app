@@ -1,0 +1,54 @@
+{
+  "1": {
+    "day": "Wednesday",
+    "date": "25/4/2018",
+    "time": "10:57:42",
+    "id": "1",
+    "menu": [
+      {
+        "id": "2",
+        "name": "Yam with vegetable and onions",
+        "price": "8900",
+        "image": "www.image.com/hjw889w",
+        "isChecked": "true"
+      }
+    ]
+  },
+  "setMenu": {
+    "day": "Wednesday",
+    "date": "25/4/2018",
+    "time": "10:55:37",
+    "id": "1",
+    "menu": [
+      {
+        "id": "2",
+        "name": "Yam with vegetable and onions",
+        "price": "8900",
+        "image": "www.image.com/hjw889w",
+        "isChecked": "true"
+      }
+    ]
+  },
+  "25/4/2018": {
+    "day": "Wednesday",
+    "date": "25/4/2018",
+    "time": "10:59:38",
+    "id": "1",
+    "menu": [
+      {
+        "id": "2",
+        "name": "Yam with vegetable and onions",
+        "price": "8900",
+        "image": "www.image.com/hjw889w",
+        "isChecked": "true"
+      },
+      {
+        "id": "3",
+        "name": "Yam with vegetable",
+        "price": "700",
+        "image": "www.image.com/hjw889w",
+        "isChecked": "true"
+      }
+    ]
+  }
+}
