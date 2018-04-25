@@ -13,6 +13,13 @@
       "price": "8900",
       "image": "www.image.com/hjw889w",
       "isChecked": "true"
+    },
+    {
+      "id": "3",
+      "name": "Yam with vegetable",
+      "price": "700",
+      "image": "www.image.com/hjw889w",
+      "isChecked": "true"
     }
   ]
 }
