@@ -8,7 +8,8 @@ const routes = (app) => {
     .put('/api/v1/meals/:id', MealController.modifyOneMeal)
     .delete('/api/v1/meals/:id', MealController.deleteOneMeal);
   app
-    .post('/api/v1/menu', MenuController.createMenu);
+    .post('/api/v1/menu', MenuController.createMenu)
+    .get('/api/v1/menu', MenuController.getMenu);
 };
 
 export default routes;
