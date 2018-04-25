@@ -28,6 +28,15 @@ const OrderController = {
       return res.status(200).send(order);
     });
   },
+  getAllOrder(req, res) {
+    fs.readFile((path.join(`${__dirname}/../database/orderDatabase.json`)), 'utf8', (err, data) => {
+      const order = JSON.parse(data);
+      if (err) {
+        return res.status(400).send({ message: 'Database not found' });
+      }
+      return res.status(200).send(order);
+    });
+  },
 };
 
 export default OrderController;
