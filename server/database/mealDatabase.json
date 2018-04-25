@@ -20,6 +20,13 @@
       "price": "700",
       "image": "www.image.com/hjw889w",
       "isChecked": "true"
+    },
+    {
+      "id": "4",
+      "name": "Rice and beans",
+      "price": "400",
+      "image": "www.image.com/hjw889w",
+      "isChecked": "true"
     }
   ]
 }

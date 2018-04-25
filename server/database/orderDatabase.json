@@ -1,0 +1,35 @@
+{
+  "2": {
+    "id": "2",
+    "customerName": "Houghton Parl",
+    "orderContent": [
+      {
+        "name": "Yam with vegetable and onions",
+        "price": "8900"
+      },
+      {
+        "name": "Yam with vegetable",
+        "price": "700"
+      }
+    ],
+    "totalCost": 9600
+  },
+  "3": {
+    "customerName": "Houghton Parlery",
+    "orderContent": [
+      {
+        "mealName": "Yam with vegetable and onions",
+        "price": "500"
+      },
+      {
+        "mealName": "Yam with vegetable",
+        "price": "700"
+      },
+      {
+        "mealName": "Rice and beans",
+        "price": "400"
+      }
+    ],
+    "totalCost": 1600
+  }
+}
