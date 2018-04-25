@@ -30,6 +30,16 @@ const MenuController = {
         return res.status(200).send(menu);
       });
     }
+    return res.status(200).send({ message: 'Menu created successfully' });
+  },
+  getMenu(req, res) {
+    fs.readFile((path.join(`${__dirname}/../database/menuDatabase.json`)), 'utf8', (err, data) => {
+      const menu = JSON.parse(data);
+      if (err) {
+        return res.status(400).send({ message: 'Database not found' });
+      }
+      return res.status(200).send(menu[`${new Date().getDate()}/${new Date().getMonth() + 1}/${new Date().getFullYear()}`].menu);
+    });
   },
 };
 
