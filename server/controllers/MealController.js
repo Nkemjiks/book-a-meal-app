@@ -38,7 +38,7 @@ const MealController = {
   modifyOneMeal(req, res) {
     const data = fs.readFileSync(path.join(`${__dirname}/../database/mealDatabase.json`));
     const meal = JSON.parse(data);
-    const filtered = meal.data.filter(checkProperty => checkProperty.id === Number(req.params.id));
+    const filtered = meal.data.filter(checkProperty => checkProperty.id === req.params.id);
     if (filtered.length === 1) {
       const position = meal.data.indexOf(filtered[0]);
       const checkKeys = Object.keys(req.body);
@@ -54,6 +54,23 @@ const MealController = {
       });
     }
     return res.status(200).send({ message: 'Meal does not exisit' });
+  },
+  deleteOneMeal(req, res) {
+    const data = fs.readFileSync(path.join(`${__dirname}/../database/mealDatabase.json`));
+    const meal = JSON.parse(data);
+    const filtered = meal.data.filter(checkProperty => checkProperty.id === Number(req.params.id));
+    if (filtered.length === 1) {
+      const position = meal.data.indexOf(filtered[0]);
+      meal.data.splice(position, 1);
+      const mealDataUpdate = JSON.stringify(meal, null, 2);
+      return fs.writeFile(path.join(`${__dirname}/../database/mealDatabase.json`), mealDataUpdate, (err) => {
+        if (err) {
+          return res.status(400).send({ message: 'Meal not deleted successfully' });
+        }
+        return res.status(200).send({ message: 'Meal deleted successfully' });
+      });
+    }
+    return res.status(200).send({ message: 'Meal does not exist' });
   },
 };
 

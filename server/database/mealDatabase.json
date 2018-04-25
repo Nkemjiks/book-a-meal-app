@@ -1,25 +1,18 @@
 {
   "data": [
     {
-      "id": 1,
-      "name": "Blessing Mbonu",
-      "price": "1500",
-      "image": "mxbjhgshjsjvhsjvgsd",
-      "isChecked": "false"
-    },
-    {
-      "id": 2,
-      "name": "Yam with vegetable",
-      "price": "2500",
+      "id": "3",
+      "name": "Yam with vegetable and onions",
+      "price": "800",
       "image": "www.image.com/hjw889w",
       "isChecked": "false"
     },
     {
-      "id": 3,
-      "name": "Rice and vegetable with plantain",
-      "price": "1800",
+      "id": "2",
+      "name": "Yam with vegetable and onions",
+      "price": "8900",
       "image": "www.image.com/hjw889w",
-      "isChecked": "false"
+      "isChecked": "true"
     }
   ]
 }
