@@ -12,7 +12,8 @@ const routes = (app) => {
     .post('/api/v1/menu', MenuController.createMenu)
     .get('/api/v1/menu', MenuController.getMenu);
   app
-    .post('/api/v1/order', OrderController.makeOrder);
+    .post('/api/v1/order', OrderController.makeOrder)
+    .get('/api/v1/order', OrderController.getAllOrder);
 };
 
 export default routes;
