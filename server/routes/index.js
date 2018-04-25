@@ -1,5 +1,6 @@
 import MealController from '../controllers/MealController';
 import MenuController from '../controllers/MenuController';
+import OrderController from '../controllers/OrderController';
 
 const routes = (app) => {
   app
@@ -10,6 +11,8 @@ const routes = (app) => {
   app
     .post('/api/v1/menu', MenuController.createMenu)
     .get('/api/v1/menu', MenuController.getMenu);
+  app
+    .post('/api/v1/order', OrderController.makeOrder);
 };
 
 export default routes;
