@@ -24,12 +24,50 @@
       {
         "mealName": "Yam with vegetable",
         "price": "700"
+      }
+    ],
+    "totalCost": 1200
+  },
+  "4": {
+    "customerName": "Fowlwer Godson",
+    "orderContent": [
+      {
+        "mealName": "Yam with vegetable",
+        "price": "700"
       },
       {
         "mealName": "Rice and beans",
         "price": "400"
       }
     ],
-    "totalCost": 1600
+    "totalCost": 1100
+  },
+  "5": {
+    "customerName": "Indiana jones",
+    "orderContent": [
+      {
+        "mealName": "Yam with vegetable and onions",
+        "price": "8900"
+      },
+      {
+        "mealName": "Yam with vegetable",
+        "price": "700"
+      }
+    ],
+    "totalCost": 9600
+  },
+  "6": {
+    "customerName": "Richard James",
+    "orderContent": [
+      {
+        "mealName": "Yam with vegetable and onions",
+        "price": "8900"
+      },
+      {
+        "mealName": "Yam with vegetable",
+        "price": "700"
+      }
+    ],
+    "totalCost": 9600
   }
 }

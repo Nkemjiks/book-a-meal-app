@@ -3,6 +3,12 @@
 ## Description
 Book-A-Meal is an application that allows customers to make food orders and helps the food vendor know what the customers want to eat. 
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/maintainability)](https://codeclimate.com/github/codeclimate/codeclimate/maintainability)
+
+[![Test Coverage](https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/test_coverage)](https://codeclimate.com/github/codeclimate/codeclimate/test_coverage)
+
+[![Coverage Status](https://coveralls.io/repos/github/Nkemjiks/book-a-meal-app/badge.svg?branch=development)](https://coveralls.io/github/Nkemjiks/book-a-meal-app?branch=development)
+
 ### How to clone this repository
 +   Navigate to a directory using your favourite CLI(command line interface)
 +   Clone this repository on that directory using 

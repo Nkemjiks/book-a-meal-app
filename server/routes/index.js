@@ -13,7 +13,8 @@ const routes = (app) => {
     .get('/api/v1/menu', MenuController.getMenu);
   app
     .post('/api/v1/order', OrderController.makeOrder)
-    .get('/api/v1/order', OrderController.getAllOrder);
+    .get('/api/v1/order', OrderController.getAllOrder)
+    .put('/api/v1/order/:id', OrderController.modifyOrderMade);
 };
 
 export default routes;
