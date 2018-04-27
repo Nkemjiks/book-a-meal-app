@@ -31,7 +31,7 @@ describe('Meal API', () => {
         .post('/api/v1/meals')
         .send({
           id: '11',
-          name: 'Potato fries',
+          name: 'Potato fries with chicken',
           price: '500',
           image: 'www.image.com/hjw889w',
           isChecked: 'false',
