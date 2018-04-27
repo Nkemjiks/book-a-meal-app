@@ -47,7 +47,6 @@ const MealController = {
   },
   modifyOneMeal(req, res) {
     if ((req.body.constructor === Object) && (Object.keys(req.body).length === 0)) {
-      console.log('yeah, i am here');
       return res.status(404).send({});
     }
     const data = fs.readFileSync(path.join(`${__dirname}/../database/mealDatabase.json`));
