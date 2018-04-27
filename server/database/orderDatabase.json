@@ -18,15 +18,39 @@
     "customerName": "Houghton Parlery",
     "orderContent": [
       {
-        "mealName": "Yam with vegetable and onions",
+        "mealName": "Blessing Mbonu",
+        "price": "125"
+      },
+      {
+        "mealName": "Yam and egg",
         "price": "500"
       },
       {
-        "mealName": "Yam with vegetable",
-        "price": "700"
+        "mealName": "Yam and fish",
+        "price": "300"
+      },
+      {
+        "mealName": "Yam and fish with vegetable",
+        "price": "800"
+      },
+      {
+        "mealName": "Potato fries with pepsi",
+        "price": "1800"
+      },
+      {
+        "mealName": "Yam and fish with yam",
+        "price": "800"
+      },
+      {
+        "mealName": "Beans and potato",
+        "price": "900"
+      },
+      {
+        "mealName": "Yam and egg with onions sauce",
+        "price": "500"
       }
     ],
-    "totalCost": 1200
+    "totalCost": 5725
   },
   "4": {
     "customerName": "Fowlwer Godson",
@@ -43,18 +67,38 @@
     "totalCost": 1100
   },
   "5": {
-    "customerName": "Indiana jones",
+    "customerName": "Hugh Jackman",
     "orderContent": [
       {
-        "mealName": "Yam with vegetable and onions",
-        "price": "8900"
+        "mealName": "Blessing Mbonu",
+        "price": "125"
       },
       {
-        "mealName": "Yam with vegetable",
-        "price": "700"
+        "mealName": "Yam and egg",
+        "price": "500"
+      },
+      {
+        "mealName": "Yam and fish",
+        "price": "300"
+      },
+      {
+        "mealName": "Potato fries with pepsi",
+        "price": "1800"
+      },
+      {
+        "mealName": "Yam and fish with yam",
+        "price": "800"
+      },
+      {
+        "mealName": "Beans and potato",
+        "price": "900"
+      },
+      {
+        "mealName": "Yam and egg with onions sauce",
+        "price": "500"
       }
     ],
-    "totalCost": 9600
+    "totalCost": 4925
   },
   "6": {
     "customerName": "Richard James",
@@ -69,5 +113,42 @@
       }
     ],
     "totalCost": 9600
+  },
+  "undefined": {
+    "orderContent": [
+      {
+        "mealName": "Blessing Mbonu",
+        "price": "125"
+      },
+      {
+        "mealName": "Yam and egg",
+        "price": "500"
+      },
+      {
+        "mealName": "Yam and fish",
+        "price": "300"
+      },
+      {
+        "mealName": "Yam and fish with vegetable",
+        "price": "800"
+      },
+      {
+        "mealName": "Potato fries with pepsi",
+        "price": "1800"
+      },
+      {
+        "mealName": "Yam and fish with yam",
+        "price": "800"
+      },
+      {
+        "mealName": "Beans and potato",
+        "price": "900"
+      },
+      {
+        "mealName": "Yam and egg with onions sauce",
+        "price": "500"
+      }
+    ],
+    "totalCost": 5725
   }
 }

@@ -7,7 +7,7 @@
     "dev": "nodemon server/server.js --exec babel-node",
     "build": "babel server -d dist",
     "start": "npm run build && node dist/server.js",
-    "test": "mocha server/test --exit",
+    "test": "mocha --compilers js:babel-register server/test/**/*.js --exit",
     "test-mocha": "nyc mocha --compilers js:babel-register server/test/**/*.js --exit"
   },
   "repository": {
