@@ -4,11 +4,10 @@
   "description": "Book-A-Meal is an application that allows customers to make food orders and helps the food vendor know what the customers want to eat.",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon server/server.js --exec babel-node",
+    "dev": "nodemon server --exec babel-node",
     "build": "babel server -d dist",
-    "start": "npm run build && node dist/server.js",
-    "test": "mocha --compilers js:babel-register server/test/**/*.js --exit istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
-    "test-mocha": "nyc mocha --compilers js:babel-register server/test/**/*.js --exit"
+    "start": "npm run build && node dist/index.js",
+    "test": "nyc mocha server/test/**/*.js"
   },
   "repository": {
     "type": "git",
@@ -25,11 +24,13 @@
     "require": [
       "babel-register"
     ],
+    "reporter": [
+      "lcov",
+      "text",
+      "html"
+    ],
     "sourceMap": false,
     "instrument": false
-  },
-  "bin": {
-    "coveralls": "./bin/coveralls.js"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
@@ -52,7 +53,6 @@
     "eslint-plugin-react": "^7.7.0",
     "istanbul": "^0.4.5",
     "mocha": "^5.1.1",
-    "mocha-lcov-reporter": "^1.3.0",
     "nodemon": "^1.17.3",
     "nyc": "^11.7.1"
   }
