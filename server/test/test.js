@@ -30,11 +30,11 @@ describe('Meal API', () => {
       chai.request(server)
         .post('/api/v1/meals')
         .send({
-          id: '11',
-          name: 'Potato fries with chicken',
-          price: '500',
+          id: '12',
+          name: 'Potato fries with beef sauce',
+          price: '5100',
           image: 'www.image.com/hjw889w',
-          isChecked: 'false',
+          isChecked: 'true',
         })
         .end((err, res) => {
           expect(res).to.have.status(201);
