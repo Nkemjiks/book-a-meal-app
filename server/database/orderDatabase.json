@@ -86,15 +86,15 @@
         "price": "1800"
       },
       {
-        "mealName": "Yam and fish with yam",
-        "price": "800"
+        "mealName": "Coconut rice",
+        "price": "900"
       },
       {
-        "mealName": "Potato fries with beef sauce",
-        "price": "5100"
+        "mealName": "Yam and fish with yam",
+        "price": "800"
       }
     ],
-    "totalCost": 8625
+    "totalCost": 4425
   },
   "6": {
     "customerName": "Richard James",

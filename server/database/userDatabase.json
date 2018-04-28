@@ -11,7 +11,7 @@
       "location": ""
     },
     {
-      "id": "4",
+      "id": "2",
       "fullName": "Wander Smith",
       "email": "babsmith@gmail.com",
       "phoneNumber": "078920839",
@@ -21,18 +21,8 @@
       "location": ""
     },
     {
-      "id": 5,
+      "id": "3",
       "fullName": "Taiwo Smith",
-      "email": "babsmith@gmail.com",
-      "phoneNumber": "078920839",
-      "password": "testing",
-      "role": "user",
-      "companyName": "",
-      "location": ""
-    },
-    {
-      "id": 3,
-      "fullName": "John Smith",
       "email": "babsmith@gmail.com",
       "phoneNumber": "078920839",
       "password": "testing",

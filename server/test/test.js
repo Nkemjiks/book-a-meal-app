@@ -10,10 +10,15 @@ const should = chai.should();
 chai.use(chaiHttp);
 
 describe('Meal API', () => {
-
   describe('/POST Meal', () => {
-
-    beforeEach('Deleting the last entry of the meal database', () => {
+    const meal = {
+      id: '12',
+      name: 'Potato fries with beef sauce',
+      price: '5100',
+      image: 'www.image.com/hjw889w',
+      isChecked: 'true',
+    };
+    after('Deleting the last entry of the meal database', () => {
       const getMealData = fs.readFileSync(path.join(`${__dirname}/../database/mealDatabase.json`));
       const parseMealData = JSON.parse(getMealData);
       parseMealData.data.pop();
@@ -23,34 +28,22 @@ describe('Meal API', () => {
     it('It should return a JSON response', (done) => {
       chai.request(server)
         .post('/api/v1/meals')
-        .send({
-          id: '6',
-          name: 'Yam and egg',
-          price: '500',
-          image: 'www.image.com/hjw889w',
-          isChecked: 'true',
-        })
+        .send(meal)
         .end((err, res) => {
-          expect(res).to.have.status(409);
+          expect(res).to.have.status(201);
           expect(res).to.be.json;
-          res.body.should.have.property('message').eql('Meal already exist');
+          res.body.should.be.a('object');
           done();
         });
     });
     it('It should return a JSON response', (done) => {
       chai.request(server)
         .post('/api/v1/meals')
-        .send({
-          id: '12',
-          name: 'Potato fries with beef sauce',
-          price: '5100',
-          image: 'www.image.com/hjw889w',
-          isChecked: 'true',
-        })
+        .send(meal)
         .end((err, res) => {
-          expect(res).to.have.status(201);
+          expect(res).to.have.status(409);
           expect(res).to.be.json;
-          res.body.should.be.a('object');
+          res.body.should.have.property('message').eql('Meal already exist');
           done();
         });
     });
@@ -76,6 +69,7 @@ describe('Meal API', () => {
           price: '1800',
         })
         .end((err, res) => {
+          console.log(res.status);
           expect(res).to.have.status(200);
           expect(res).to.be.json;
           res.body.should.have.property('message').eql('Meal added successfully');
@@ -84,7 +78,7 @@ describe('Meal API', () => {
     });
     it('it should return a response "No meal content"', (done) => {
       chai.request(server)
-        .put('/api/v1/meals/5')
+        .put('/api/v1/meals/6')
         .send({})
         .end((err, res) => {
           expect(res).to.have.status(404);
@@ -200,5 +194,44 @@ describe('Order API', () => {
           done();
         });
     });
+  });
+});
+describe('/POST User', () => {
+  const user = {
+    id: 6,
+    fullName: 'Rebecca Smith',
+    email: 'rebeccasmith@gmail.com',
+    phoneNumber: '078920839',
+    password: 'testing',
+  };
+  after(() => {
+    const getUserData = fs.readFileSync(path.join(`${__dirname}/../database/userDatabase.json`));
+    const parseUserData = JSON.parse(getUserData);
+    parseUserData.data.pop();
+    const stringifyUserData = JSON.stringify(parseUserData, null, 2);
+    fs.writeFileSync(path.join(`${__dirname}/../database/userDatabase.json`), stringifyUserData);
+  });
+
+  it('It should return a JSON response', (done) => {
+    chai.request(server)
+      .post('/api/v1/user')
+      .send(user)
+      .end((err, res) => {
+        expect(res).to.have.status(201);
+        expect(res).to.be.json;
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+  it('It should return a message saying User already exists', (done) => {
+    chai.request(server)
+      .post('/api/v1/user')
+      .send(user)
+      .end((err, res) => {
+        expect(res).to.have.status(409);
+        expect(res).to.be.json;
+        res.body.should.have.property('message').eql('User already exist');
+        done();
+      });
   });
 });
