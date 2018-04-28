@@ -9,6 +9,36 @@
       "role": "user",
       "companyName": "",
       "location": ""
+    },
+    {
+      "id": "4",
+      "fullName": "Wander Smith",
+      "email": "babsmith@gmail.com",
+      "phoneNumber": "078920839",
+      "password": "testing",
+      "role": "user",
+      "companyName": "",
+      "location": ""
+    },
+    {
+      "id": 5,
+      "fullName": "Taiwo Smith",
+      "email": "babsmith@gmail.com",
+      "phoneNumber": "078920839",
+      "password": "testing",
+      "role": "user",
+      "companyName": "",
+      "location": ""
+    },
+    {
+      "id": 3,
+      "fullName": "John Smith",
+      "email": "babsmith@gmail.com",
+      "phoneNumber": "078920839",
+      "password": "testing",
+      "role": "user",
+      "companyName": "",
+      "location": ""
     }
   ]
 }
