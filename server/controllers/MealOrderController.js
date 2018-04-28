@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import Order from '../models/order';
 
-const OrderController = {
+const MealOrderController = {
   makeOrder(req, res) {
     if (req.body.id !== undefined && req.body.customerName !== undefined) {
       const menuData = fs.readFileSync(path.join(`${__dirname}/../database/menuDatabase.json`));
@@ -109,4 +109,4 @@ const OrderController = {
   },
 };
 
-export default OrderController;
+export default MealOrderController;

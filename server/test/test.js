@@ -2,8 +2,7 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import fs from 'fs';
 import path from 'path';
-import Meal from '../models/meals';
-import server from '../server';
+import server from '../app';
 
 const expect = chai.expect;
 const should = chai.should();
