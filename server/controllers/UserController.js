@@ -4,7 +4,6 @@ import User from '../models/user';
 
 const UserController = {
   addUser(req, res) {
-    console.log(req.body, "hsjhkldnadk");
     if (Object.keys(req.body).length === 0) {
       return res.status(204).send({
         message: 'Please provide all relevant information',

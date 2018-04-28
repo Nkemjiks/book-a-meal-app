@@ -36,23 +36,16 @@
       "isChecked": "true"
     },
     {
-      "id": 7,
+      "id": "6",
       "name": "Coconut rice",
-      "price": 900,
-      "image": "www.image.com/hjw889w",
-      "isChecked": true
-    },
-    {
-      "id": "4",
-      "name": "Yam and fish with yam",
-      "price": "800",
+      "price": "900",
       "image": "www.image.com/hjw889w",
       "isChecked": "true"
     },
     {
-      "id": "12",
-      "name": "Potato fries with beef sauce",
-      "price": "5100",
+      "id": "7",
+      "name": "Yam and fish with yam",
+      "price": "800",
       "image": "www.image.com/hjw889w",
       "isChecked": "true"
     }

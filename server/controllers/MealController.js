@@ -67,9 +67,7 @@ const MealController = {
     ) {
       return res.status(404).send({});
     }
-    const data = fs.readFileSync(path.join(`
-      ${__dirname}/../database/mealDatabase.json
-    `));
+    const data = fs.readFileSync(path.join(`${__dirname}/../database/mealDatabase.json`));
     const meal = JSON.parse(data);
     const filtered = meal.data.filter(checkProperty => checkProperty.id === req.params.id);
     if (filtered.length === 1) {
