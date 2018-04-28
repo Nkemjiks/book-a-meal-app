@@ -1,14 +1,26 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+import fs from 'fs';
+import path from 'path';
+import Meal from '../models/meals';
 import server from '../server';
-
 
 const expect = chai.expect;
 const should = chai.should();
+
 chai.use(chaiHttp);
 
 describe('Meal API', () => {
+
   describe('/POST Meal', () => {
+
+    beforeEach('Deleting the last entry of the meal database', () => {
+      const getMealData = fs.readFileSync(path.join(`${__dirname}/../database/mealDatabase.json`));
+      const parseMealData = JSON.parse(getMealData);
+      parseMealData.data.pop();
+      const stringifyMealData = JSON.stringify(parseMealData, null, 2);
+      fs.writeFileSync(path.join(`${__dirname}/../database/mealDatabase.json`), stringifyMealData);
+    });
     it('It should return a JSON response', (done) => {
       chai.request(server)
         .post('/api/v1/meals')
