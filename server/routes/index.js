@@ -20,7 +20,8 @@ const routes = (app) => {
   app.put('/api/v1/order/:id', MealOrderController.modifyOrderMade);
 
   // User route
-  app.post('/api/v1/user', UserController.addUser);
+  app.post('/api/v1/user/signup', UserController.addUser);
+  app.post('/api/v1/user/signin', UserController.logInUser);
 };
 
 export default routes;
