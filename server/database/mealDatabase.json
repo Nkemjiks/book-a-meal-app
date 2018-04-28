@@ -49,28 +49,6 @@
       "image": "www.image.com/hjw889w",
       "isChecked": "true"
     },
-    {},
-    {
-      "id": "8",
-      "name": "Beans and potato",
-      "price": "900",
-      "image": "www.image.com/hjw889w",
-      "isChecked": "true"
-    },
-    {
-      "id": "6",
-      "name": "Yam and egg with onions sauce",
-      "price": "500",
-      "image": "www.image.com/hjw889w",
-      "isChecked": "true"
-    },
-    {
-      "id": "9",
-      "name": "Potato fries",
-      "price": "1500",
-      "image": "www.image.com/hjw889w",
-      "isChecked": "false"
-    },
     {
       "id": "12",
       "name": "Potato fries with beef sauce",

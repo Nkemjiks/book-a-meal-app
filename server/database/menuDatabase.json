@@ -156,5 +156,62 @@
         "isChecked": "true"
       }
     ]
+  },
+  "28/4/2018": {
+    "day": "Saturday",
+    "date": "28/4/2018",
+    "time": "0:6:43",
+    "id": "6",
+    "menu": [
+      {
+        "id": "1",
+        "name": "Blessing Mbonu",
+        "price": "125",
+        "image": "mxbjhgshjsjvhsjvgsd",
+        "isChecked": "true"
+      },
+      {
+        "id": "2",
+        "name": "Yam and egg",
+        "price": "500",
+        "image": "www.image.com/hjw889w",
+        "isChecked": "true"
+      },
+      {
+        "id": "3",
+        "name": "Yam and fish",
+        "price": "300",
+        "image": "www.image.com/hjw889w",
+        "isChecked": "true"
+      },
+      {
+        "id": "4",
+        "name": "Yam and fish with vegetable",
+        "price": "800",
+        "image": "www.image.com/hjw889w",
+        "isChecked": "false"
+      },
+      {
+        "id": "5",
+        "name": "Potato fries with pepsi",
+        "price": "1800",
+        "image": "www.image.com/hjw889w",
+        "isChecked": "true"
+      },
+      {
+        "id": "4",
+        "name": "Yam and fish with yam",
+        "price": "800",
+        "image": "www.image.com/hjw889w",
+        "isChecked": "true"
+      },
+      {
+        "id": "12",
+        "name": "Potato fries with beef sauce",
+        "price": "5100",
+        "image": "www.image.com/hjw889w",
+        "isChecked": "true"
+      }
+    ]
   }
 }

@@ -90,19 +90,11 @@
         "price": "800"
       },
       {
-        "mealName": "Beans and potato",
-        "price": "900"
-      },
-      {
-        "mealName": "Yam and egg with onions sauce",
-        "price": "500"
-      },
-      {
         "mealName": "Potato fries with beef sauce",
         "price": "5100"
       }
     ],
-    "totalCost": 10025
+    "totalCost": 8625
   },
   "6": {
     "customerName": "Richard James",

@@ -7,7 +7,7 @@
     "dev": "nodemon server --exec babel-node",
     "build": "babel server -d dist",
     "start": "npm run build && node dist/index.js",
-    "test": "nyc mocha server/test/**/*.js"
+    "test": "cross-env NODE_ENV=test nyc mocha server/test/*.js"
   },
   "repository": {
     "type": "git",
@@ -29,6 +29,9 @@
       "text",
       "html"
     ],
+    "exclude": [
+      "server/test/*.js"
+    ],
     "sourceMap": false,
     "instrument": false
   },
@@ -46,6 +49,7 @@
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
     "coveralls": "^3.0.0",
+    "cross-env": "^5.1.4",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.11.0",
