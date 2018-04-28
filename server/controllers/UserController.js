@@ -47,7 +47,20 @@ const UserController = {
     }
     return res.status(206).send({ message: 'Please provide all required field' });
   },
-
+  logInUser(req, res) {
+    const data = fs.readFileSync(path.join(`${__dirname}/../database/userDatabase.json`));
+    if (!data.toString()) {
+      return res.status(500).send({ message: 'Sever Error' });
+    }
+    const userDatabase = JSON.parse(data);
+    const filter = userDatabase.data.filter(checkName => (
+      checkName.email === req.body.email &&
+      checkName.password === req.body.password));
+    if (filter.length === 1) {
+      return res.status(200).send({ data: filter[0], message: 'Login successful' });
+    }
+    return res.status(401).send({ message: 'Login unsuccessful' });
+  },
 };
 
 export default UserController;
