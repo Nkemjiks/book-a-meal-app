@@ -18,7 +18,7 @@ describe('Meal API', () => {
       image: 'www.image.com/hjw889w',
       isChecked: 'true',
     };
-    after('Deleting the last entry of the meal database', () => {
+    after('Delete the last entry of the meal database', () => {
       const getMealData = fs.readFileSync(path.join(`${__dirname}/../database/mealDatabase.json`));
       const parseMealData = JSON.parse(getMealData);
       parseMealData.data.pop();
@@ -197,41 +197,73 @@ describe('Order API', () => {
   });
 });
 describe('/POST User', () => {
-  const user = {
-    id: 6,
-    fullName: 'Rebecca Smith',
-    email: 'rebeccasmith@gmail.com',
-    phoneNumber: '078920839',
-    password: 'testing',
-  };
-  after(() => {
-    const getUserData = fs.readFileSync(path.join(`${__dirname}/../database/userDatabase.json`));
-    const parseUserData = JSON.parse(getUserData);
-    parseUserData.data.pop();
-    const stringifyUserData = JSON.stringify(parseUserData, null, 2);
-    fs.writeFileSync(path.join(`${__dirname}/../database/userDatabase.json`), stringifyUserData);
-  });
+  describe('User Signup', () => {
+    const user = {
+      id: 6,
+      fullName: 'Rebecca Smith',
+      email: 'rebeccasmith@gmail.com',
+      phoneNumber: '078920839',
+      password: 'testing',
+    };
+    after('Delete the last entry in the user database', () => {
+      const getUserData = fs.readFileSync(path.join(`${__dirname}/../database/userDatabase.json`));
+      const parseUserData = JSON.parse(getUserData);
+      parseUserData.data.pop();
+      const stringifyUserData = JSON.stringify(parseUserData, null, 2);
+      fs.writeFileSync(path.join(`${__dirname}/../database/userDatabase.json`), stringifyUserData);
+    });
 
-  it('It should return a JSON response', (done) => {
-    chai.request(server)
-      .post('/api/v1/user')
-      .send(user)
-      .end((err, res) => {
-        expect(res).to.have.status(201);
-        expect(res).to.be.json;
-        res.body.should.be.a('object');
-        done();
-      });
+    it('It should return a JSON response', (done) => {
+      chai.request(server)
+        .post('/api/v1/user/signup')
+        .send(user)
+        .end((err, res) => {
+          expect(res).to.have.status(201);
+          expect(res).to.be.json;
+          res.body.should.be.a('object');
+          done();
+        });
+    });
+    it('It should return a message saying User already exists', (done) => {
+      chai.request(server)
+        .post('/api/v1/user/signup')
+        .send(user)
+        .end((err, res) => {
+          expect(res).to.have.status(409);
+          expect(res).to.be.json;
+          res.body.should.have.property('message').eql('User already exist');
+          done();
+        });
+    });
   });
-  it('It should return a message saying User already exists', (done) => {
-    chai.request(server)
-      .post('/api/v1/user')
-      .send(user)
-      .end((err, res) => {
-        expect(res).to.have.status(409);
-        expect(res).to.be.json;
-        res.body.should.have.property('message').eql('User already exist');
-        done();
-      });
+  describe('User Signin', () => {
+    const validUserDetail = {
+      email: 'babsmith@gmail.com',
+      password: 'testing',
+    };
+    const invalidUserDetail = {
+      email: 'babsmith@gmail.com',
+      password: 'testi',
+    };
+    it('It should return a message saying user signin was successfully', (done) => {
+      chai.request(server)
+        .post('/api/v1/user/signin')
+        .send(validUserDetail)
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          res.body.should.have.property('message').eql('Login successful');
+          done();
+        });
+    });
+    it('It should return a message saying user signin was unsuccessfully', (done) => {
+      chai.request(server)
+        .post('/api/v1/user/signin')
+        .send(invalidUserDetail)
+        .end((err, res) => {
+          expect(res).to.have.status(401);
+          res.body.should.have.property('message').eql('Login unsuccessful');
+          done();
+        });
+    });
   });
 });
