@@ -1,10 +1,17 @@
 language: node_js
 node_js:
   "node"
-branches:
-  only:
-  - master
-  - development
+
+env:
+  global:
+    - CC_TEST_REPORTER_ID=1e74d6a54938daa6cb39af2b1a6bea1448d8deadffb52fb0ed64266d68b91e6f
+    - NODE_ENV=test
+
+before_script:
+  - chmod 0755 ./node_modules/.bin/mocha
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 
 script: 
   - npm run test
@@ -12,7 +19,3 @@ script:
 after_script: 
   - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
   - codeclimate < coverage/**/lcov.info
-
-addons:
-  code_climate:
-    repo_token: 1e74d6a54938daa6cb39af2b1a6bea1448d8deadffb52fb0ed64266d68b91e6f
