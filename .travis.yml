@@ -6,14 +6,13 @@ branches:
   - master
   - development
 
-before_script:
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
-
 script: 
   - npm run test
   
 after_script: 
   - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - codeclimate < coverage/**/lcov.info
+
+addons:
+  code_climate:
+    repo_token: 1e74d6a54938daa6cb39af2b1a6bea1448d8deadffb52fb0ed64266d68b91e6f
