@@ -67,6 +67,7 @@ describe('Meal API', () => {
           expect(res).to.have.status(201);
           res.body.should.be.a('object');
           res.body.should.have.property('message').eql('New meal added successfully');
+          res.body.data.should.a('array');
           done();
         });
     });
@@ -90,6 +91,7 @@ describe('Meal API', () => {
           expect(res).to.have.status(200);
           res.body.should.be.a('object');
           res.body.should.have.property('data');
+          res.body.data.should.a('array');
           done();
         });
     });
@@ -107,6 +109,7 @@ describe('Meal API', () => {
           expect(res).to.have.status(200);
           res.body.should.be.a('object');
           res.body.should.have.property('message').eql('Meal updated successfully');
+          res.body.data.should.a('object');
           done();
         });
     });
@@ -221,6 +224,7 @@ describe('Menu API', () => {
           expect(res).to.have.status(201);
           res.body.should.be.a('object');
           res.body.should.have.property('message').eql('Menu created successfully');
+          res.body.data.should.a('array');
           done();
         });
     });
@@ -335,6 +339,7 @@ describe('/POST User', () => {
           res.body.should.be.a('object');
           res.body.should.have.property('data');
           res.body.should.have.property('message').eql('User successfully signed up');
+          res.body.data.should.a('array');
           done();
         });
     });
@@ -419,10 +424,6 @@ describe('/POST User', () => {
       email: 'bobsmith@gmail.com',
       password: 'testing1',
     };
-    const invalidUserDetail = {
-      email: 'mosgood@gmail.com',
-      password: 'notworking',
-    };
     it('It should return a message "Login successful"', (done) => {
       chai.request(server)
         .post('/api/v1/user/signin')
@@ -431,6 +432,7 @@ describe('/POST User', () => {
           expect(res).to.have.status(200);
           res.body.should.be.a('object');
           res.body.should.have.property('message').eql('Login successful');
+          res.body.data.should.a('object');
           done();
         });
     });
