@@ -1,6 +1,5 @@
 import menuDatabase from '../database/menuDatabase';
 import orderDatabase from '../database/orderDatabase';
-import cartDatabase from '../database/cartDatabase';
 
 class Order {
   constructor() {
@@ -16,19 +15,26 @@ class Order {
     this.createdAtTime = `${hour}:${minute}`;
     this.createdAtDate = `${day}-${month}-${year}`;
     this.totalCost = 0;
+    this.isAvailable = false;
   }
-  add(id, quantity, userId) {
+  create(userName, mealId) {
     const todayMenu = menuDatabase.data.filter(menu => menu.createdAt === this.createdAtDate)[0];
 
-    const selectedMeal = todayMenu.meals.filter(menu => menu.id === Number(id));
+    const selectedMeal = todayMenu.meals.filter(meal => meal.id === Number(mealId));
     if (selectedMeal.length === 1) {
-      const meal = Object.assign({}, selectedMeal[0], {
-        userId,
-        quantity,
-      });
-      cartDatabase.data.push(meal);
+      const order = {
+        customerName: userName,
+        orderContent: selectedMeal[0],
+        orderedAt: this.createdAtTime,
+
+      };
+      orderDatabase.data.push(order);
+      return order;
     }
-    return cartDatabase;
+    return this.isAvailable;
+  }
+  getOrders() {
+    
   }
 }
 

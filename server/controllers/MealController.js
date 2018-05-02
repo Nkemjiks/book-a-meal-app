@@ -3,11 +3,11 @@ import Meal from '../models/meals';
 const MealController = {
   createMeal(req, res) {
     const { name, price, image } = req.body;
-    if (!name || name === ' ') {
+    if (!name || (/^ *$/.test(name) === true)) {
       return res.status(400).send({ message: 'Please provide a valid meal name' });
     } else if (!price || isNaN(price) === true) {
       return res.status(400).send({ message: 'Please provide a valid meal price' });
-    } else if (typeof image !== 'string') {
+    } else if (!image || typeof image !== 'string' || (/^ *$/.test(image) === true)) {
       return res.status(400).send({ message: 'Please provide a valid image URL' });
     }
 

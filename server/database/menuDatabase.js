@@ -13,7 +13,7 @@ export default {
       createdAt: '30-04-2018',
     },
     {
-      id: 2,
+      id: 1,
       meals: [
         {
           id: 1,
@@ -23,6 +23,18 @@ export default {
         },
       ],
       createdAt: '1-5-2018',
+    },
+    {
+      id: 1,
+      meals: [
+        {
+          id: 1,
+          name: 'Rice and beans',
+          price: '2000',
+          image: 'www.image.com/djw889w',
+        },
+      ],
+      createdAt: '2-5-2018',
     },
   ],
 };

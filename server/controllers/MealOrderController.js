@@ -1,12 +1,22 @@
 import Order from '../models/order';
 
 const MealOrderController = {
-  addOrder(req, res) {
-    const { quantity } = req.body;
-    const { userId, id } = req.params;
+  placeOrder(req, res) {
+    const { userName } = req.body;
+    const { mealId } = req.params;
 
-    const newSelection = Order.add(id, quantity, userId);
-    return res.send({ data: newSelection });
+    if (isNaN(mealId)) {
+      return res.status(404).send({ message: 'Provide a valid meal id' });
+    }
+
+    if (!userName || (/^ *$/.test(userName)) === true) {
+      return res.status(400).send({ message: 'Please provide a valid userName' });
+    }
+    const newSelection = Order.create(userName, mealId);
+    if (newSelection === false) {
+      return res.status(404).send({ message: 'Meal not found' });
+    }
+    return res.status(201).send({ message: 'Order placed', data: newSelection });
   },
   makeOrder(req, res) {
     if (req.body.userId === '' || ' ') {
@@ -23,7 +33,8 @@ const MealOrderController = {
     return res.status(200).send({ data: newOrder });
   },
   getAllOrder(req, res) {
-    return res.status(200).send({ data: orderDatabase.orderData });
+    const todayOrders = Order.getOrders();
+    return res.status(200).send({ data: todayOrders });
   },
   modifyOrderMade(req, res) {
     if (req.body !== {}) {
