@@ -1,115 +1,63 @@
-import fs from 'fs';
-import path from 'path';
 import Meal from '../models/meals';
 
 const MealController = {
-  addOneMeal(req, res) {
-    if (req.body === {}) {
-      return res.status(204).send({
-        message: 'Please provide meal details',
-      });
+  createMeal(req, res) {
+    const { name, price, image } = req.body;
+    if (!name || name === ' ') {
+      return res.status(400).send({ message: 'Please provide a valid meal name' });
+    } else if (!price || isNaN(price) === true) {
+      return res.status(400).send({ message: 'Please provide a valid meal price' });
+    } else if (typeof image !== 'string') {
+      return res.status(400).send({ message: 'Please provide a valid image URL' });
     }
-    const data = fs.readFileSync(path.join(`${__dirname}/../database/mealDatabase.json`));
-    if (!data.toString()) {
-      return res.status(500).send({ message: 'Sever Error' });
-    }
-    const meal = JSON.parse(data);
-    if (req.body.id !== '' &&
-      req.body.name !== '' &&
-      req.body.price !== '' &&
-      req.body.image !== '' &&
-      req.body.isChecked !== ''
-    ) {
-      const newMeal = new Meal(
-        req.body.id,
-        req.body.name,
-        req.body.price,
-        req.body.image,
-        req.body.isChecked,
-      );
-      const filter = meal.data.filter(checkName => checkName.name === req.body.name);
-      if (filter.length === 0) {
-        meal.data.push(newMeal);
-        const mealDataUpdate = JSON.stringify(meal, null, 2);
-        return fs.writeFile(
-          path.join(`${__dirname}/../database/mealDatabase.json`),
-          mealDataUpdate,
-          (err) => {
-            if (err) {
-              return res.status(400).send({ message: 'Meal not added successfully' });
-            }
-            return res.status(201).send({ data: newMeal });
-          },
-        );
-      }
+
+    const newMeal = Meal.add(name, price, image);
+    if (newMeal === true) {
       return res.status(409).send({ message: 'Meal already exist' });
     }
-    return res.status(206).send({ message: 'Meal creation data is incomplete' });
-  },
 
+    return res.status(201).send({ message: 'New meal added successfully', data: newMeal });
+  },
   getAllMeal(req, res) {
-    fs.readFile(
-      (path.join(`${__dirname}/../database/mealDatabase.json`)), 
-      'utf8',
-      (err, data) => {
-        const meal = JSON.parse(data);
-        if (err) {
-          return res.status(400).send({ message: 'Getting meals unsuccessful' });
-        }
-        return res.status(200).send({ data: meal });
-      },
-    );
+    const allMeal = Meal.findAll();
+    return res.status(200).send({ data: allMeal });
   },
   modifyOneMeal(req, res) {
-    if (
-      (req.body.constructor === Object) &&
-      (Object.keys(req.body).length === 0)
-    ) {
-      return res.status(404).send({});
+    const { id } = req.params;
+    const { name, price, image } = req.body;
+
+    if (isNaN(id)) {
+      return res.status(404).send({ message: 'Provide a valid meal id' });
     }
-    const data = fs.readFileSync(path.join(`${__dirname}/../database/mealDatabase.json`));
-    const meal = JSON.parse(data);
-    const filtered = meal.data.filter(checkProperty => checkProperty.id === req.params.id);
-    if (filtered.length === 1) {
-      const position = meal.data.indexOf(filtered[0]);
-      const checkKeys = Object.keys(req.body);
-      checkKeys.forEach((dataKey) => {
-        meal.data[position][dataKey] = req.body[dataKey];
-      });
-      const mealDataUpdate = JSON.stringify(meal, null, 2);
-      return fs.writeFile(
-        path.join(`${__dirname}/../database/mealDatabase.json`),
-        mealDataUpdate,
-        (err) => {
-          if (err) {
-            return res.status(400).send({ message: 'Meal not added successfully' });
-          }
-          return res.status(200).send({ message: 'Meal added successfully' });
-        },
-      );
+    if (!name && !price && !image ) {
+      res.status(404).send({ message: 'Meal not found' });
     }
-    return res.status(404).send({ message: 'Meal not found' });
+    if (!name || (/^ *$/.test(name) === true) || typeof name !== 'string') {
+      return res.status(400).send({ message: 'Please check your meal name' });
+    }
+    if (!price || isNaN(price) === true) {
+      return res.status(400).send({ message: 'Please provide a valid meal price' });
+    }
+    if (!image || (/^ *$/.test(image) === true) || typeof image !== 'string') {
+      return res.status(400).send({ message: 'Please provide a valid image URL' });
+    }
+    const updatedMeal = Meal.update(id, req);
+
+    return res.status(200).send({ message: 'Meal updated successfully', data: updatedMeal });
   },
   deleteOneMeal(req, res) {
-    const data = fs.readFileSync(path.join(`${__dirname}/../database/mealDatabase.json`));
-    const meal = JSON.parse(data);
-    const filtered = meal.data.filter(checkProperty => checkProperty.id === Number(req.params.id));
-    if (filtered.length === 1) {
-      const position = meal.data.indexOf(filtered[0]);
-      meal.data.splice(position, 1);
-      const mealDataUpdate = JSON.stringify(meal, null, 2);
-      return fs.writeFile(
-        path.join(`${__dirname}/../database/mealDatabase.json`),
-        mealDataUpdate,
-        (err) => {
-          if (err) {
-            return res.status(400).send({ message: 'Meal not deleted successfully' });
-          }
-          return res.status(200).send({ message: 'Meal deleted successfully' });
-        },
-      );
+    const { id } = req.params;
+
+    if (isNaN(id)) {
+      return res.status(404).send({ message: 'Provide a valid meal id' });
     }
-    return res.status(404).send({ message: 'Meal does not exist' });
+
+    const deletedMeal = Meal.delete(id);
+    if (deletedMeal === false) {
+      return res.status(404).send({ message: 'Meal not found' });
+    }
+
+    return res.status(200).send({ message: 'Meal deleted successfully', data: deletedMeal });
   },
 };
 

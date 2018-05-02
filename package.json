@@ -30,7 +30,8 @@
       "html"
     ],
     "exclude": [
-      "server/test/*.js"
+      "server/test/*.js",
+      "server/database/*.js"
     ],
     "sourceMap": false,
     "instrument": false

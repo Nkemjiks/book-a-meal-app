@@ -1,49 +1,29 @@
-import fs from 'fs';
-import path from 'path';
 import Order from '../models/order';
 
 const MealOrderController = {
+  addOrder(req, res) {
+    const { quantity } = req.body;
+    const { userId, id } = req.params;
+
+    const newSelection = Order.add(id, quantity, userId);
+    return res.send({ data: newSelection });
+  },
   makeOrder(req, res) {
-    if (req.body.id !== undefined && req.body.customerName !== undefined) {
-      const menuData = fs.readFileSync(path.join(`${__dirname}/../database/menuDatabase.json`));
-      const menuParsed = JSON.parse(menuData);
-      const orderData = fs.readFileSync(path.join(`${__dirname}/../database/orderDatabase.json`));
-      const order = JSON.parse(orderData);
-      const date = new Date();
-      const day = date.getDate();
-      const month = date.getMonth() + 1;
-      const year = date.getFullYear();
-      const summaryOfOrder = [];
-      let totalPriceofOrder = 0;
-      (menuParsed[`${day}/${month}/${year}`].menu).forEach((mealInMenu) => {
-        if (mealInMenu.isChecked === 'true') {
-          const orderPerMeal = {
-            mealName: mealInMenu.name,
-            price: mealInMenu.price,
-          };
-          totalPriceofOrder += Number(mealInMenu.price);
-          summaryOfOrder.push(orderPerMeal);
-        }
-      });
-      order[req.body.id] = new Order(req.body.customerName, summaryOfOrder, totalPriceofOrder);
-      const menuOrderString = JSON.stringify(order, null, 2);
-      return fs.writeFile(path.join(`${__dirname}/../database/orderDatabase.json`), menuOrderString, (err) => {
-        if (err) {
-          return res.status(400).send({ message: 'Order not placed successfully' });
-        }
-        return res.status(200).send({ data: order });
-      });
+    if (req.body.userId === '' || ' ') {
+      return res.status(400).send({ message: 'Please provide a valid name' });
     }
-    return res.status(206).send({ message: 'Order placement data is incomplete' });
+    const { userId, content } = req.body;
+
+    const newOrder = Order.placeOrder(userId, content);
+
+    if (newOrder === false) {
+      return res.status(400).send({ message: 'Please provide a valid price' });
+    }
+
+    return res.status(200).send({ data: newOrder });
   },
   getAllOrder(req, res) {
-    fs.readFile((path.join(`${__dirname}/../database/orderDatabase.json`)), 'utf8', (err, data) => {
-      const order = JSON.parse(data);
-      if (err) {
-        return res.status(400).send({ message: 'Getting orders unsuccessful' });
-      }
-      return res.status(200).send({ data: order });
-    });
+    return res.status(200).send({ data: orderDatabase.orderData });
   },
   modifyOrderMade(req, res) {
     if (req.body !== {}) {
