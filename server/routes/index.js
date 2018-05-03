@@ -17,7 +17,7 @@ const routes = (app) => {
   // Meal Order routes
   app.post('/api/v1/order/:mealId', MealOrderController.placeOrder);
   app.get('/api/v1/order', MealOrderController.getAllOrder);
-  app.put('/api/v1/order/:id', MealOrderController.modifyOrderMade);
+  app.put('/api/v1/order/:orderId', MealOrderController.modifyOrderMade);
 
   // User route
   app.post('/api/v1/user/signup', UserController.addUser);

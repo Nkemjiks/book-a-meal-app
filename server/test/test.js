@@ -216,7 +216,7 @@ describe('Meal API', () => {
 });
 describe('Menu API', () => {
   describe('/POST Menu', () => {
-    it('It should return a message "Menu created successfully" and a status of 200', (done) => {
+    it('It should return a message "Menu created successfully" and a status of 201', (done) => {
       chai.request(server)
         .put('/api/v1/menu/2')
         .send({})
@@ -264,64 +264,129 @@ describe('Menu API', () => {
     });
   });
 });
-// describe('Order API', () => {
-//   describe('/POST Order', () => {
-//     it('It should return a message and a status of 206', (done) => {
-//       chai.request(server)
-//         .post('/api/v1/order')
-//         .send({})
-//         .end((err, res) => {
-//           expect(res).to.have.status(206);
-//           expect(res).to.be.json;
-//           res.body.should.have.property('message').eql('Order placement data is incomplete');
-//           done();
-//         });
-//     });
-//     it('It should return a JSON response and a status of 200', (done) => {
-//       chai.request(server)
-//         .post('/api/v1/order')
-//         .send({
-//           id: '5',
-//           customerName: 'Hugh Jackman',
-//         })
-//         .end((err, res) => {
-//           expect(res).to.have.status(200);
-//           expect(res).to.be.json;
-//           res.body.should.be.a('object');
-//           done();
-//         });
-//     });
-//   });
-//   describe('/GET order', () => {
-//     it('it should GET all order', (done) => {
-//       chai.request(server)
-//         .get('/api/v1/order')
-//         .end((err, res) => {
-//           expect(res).to.have.status(200);
-//           expect(res).to.be.json;
-//           res.body.should.be.a('object');
-//           done();
-//         });
-//     });
-//   });
-//   describe('/PUT/:id Order', () => {
-//     it('it should a status of 200 and an object', (done) => {
-//       chai.request(server)
-//         .put('/api/v1/order/5')
-//         .send({
-//           add: 'true',
-//           delete: 'true',
-//           addMealName: 'Potato fries',
-//           deleteMealName: 'Yam and fish with vegetable',
-//         })
-//         .end((err, res) => {
-//           expect(res).to.have.status(200);
-//           res.body.should.be.a('object');
-//           done();
-//         });
-//     });
-//   });
-// });
+describe('Order API', () => {
+  describe('/POST Order', () => {
+    it('It should return a message "Provide a valid meal id"', (done) => {
+      chai.request(server)
+        .post('/api/v1/order/gh')
+        .send({
+          userName: 'Lucy Jane',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(404);
+          res.body.should.be.a('object');
+          res.body.should.have.property('message').eql('Provide a valid meal id');
+          done();
+        });
+    });
+    it('It should return a message "Please provide a valid userName"', (done) => {
+      chai.request(server)
+        .post('/api/v1/order/1')
+        .send({
+          userName: '',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          res.body.should.be.a('object');
+          res.body.should.have.property('message').eql('Please provide a valid userName');
+          done();
+        });
+    });
+    it('It should return a message "Meal not found"', (done) => {
+      chai.request(server)
+        .post('/api/v1/order/5')
+        .send({
+          userName: 'Lucy Jane',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(404);
+          res.body.should.be.a('object');
+          res.body.should.have.property('message').eql('Meal not found');
+          done();
+        });
+    });
+    it('It should return a message "Order placed"', (done) => {
+      chai.request(server)
+        .post('/api/v1/order/1')
+        .send({
+          userName: 'Lucy Jane',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(201);
+          res.body.should.be.a('object');
+          res.body.should.have.property('message').eql('Order placed');
+          res.body.should.have.property('data');
+          done();
+        });
+    });
+  });
+  describe('/GET order', () => {
+    it('it should GET all order', (done) => {
+      chai.request(server)
+        .get('/api/v1/order')
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          res.body.should.be.a('object');
+          res.body.should.have.property('data');
+          done();
+        });
+    });
+  });
+  describe('/PUT/:id Order', () => {
+    it('it should return a message "Provide a valid order id"', (done) => {
+      chai.request(server)
+        .put('/api/v1/order/yuuj')
+        .send({
+          userName: 'Henry Brad',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(404);
+          res.body.should.be.a('object');
+          res.body.should.have.property('message').eql('Provide a valid order id');
+          done();
+        });
+    });
+    it('it should return a message "Please provide a valid userName"', (done) => {
+      chai.request(server)
+        .put('/api/v1/order/1')
+        .send({
+          userName: '',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          res.body.should.be.a('object');
+          res.body.should.have.property('message').eql('Please provide a valid userName');
+          done();
+        });
+    });
+    it('it should return a message "Order Not found"', (done) => {
+      chai.request(server)
+        .put('/api/v1/order/5')
+        .send({
+          userName: 'Houghton Parl',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(404);
+          res.body.should.be.a('object');
+          res.body.should.have.property('message').eql('Order Not found');
+          done();
+        });
+    });
+    it('it should return a message "Order deleted"', (done) => {
+      chai.request(server)
+        .put('/api/v1/order/1')
+        .send({
+          userName: 'Houghton Parl',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          res.body.should.be.a('object');
+          res.body.should.have.property('message').eql('Order deleted');
+          done();
+        });
+    });
+  });
+});
 describe('/POST User', () => {
   describe('User Signup', () => {
     const user = {

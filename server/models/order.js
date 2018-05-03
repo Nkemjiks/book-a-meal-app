@@ -14,27 +14,47 @@ class Order {
     this.orderContent = '';
     this.createdAtTime = `${hour}:${minute}`;
     this.createdAtDate = `${day}-${month}-${year}`;
-    this.totalCost = 0;
     this.isAvailable = false;
+    this.isIdExist = false;
   }
   create(userName, mealId) {
     const todayMenu = menuDatabase.data.filter(menu => menu.createdAt === this.createdAtDate)[0];
-
-    const selectedMeal = todayMenu.meals.filter(meal => meal.id === Number(mealId));
-    if (selectedMeal.length === 1) {
-      const order = {
-        customerName: userName,
-        orderContent: selectedMeal[0],
-        orderedAt: this.createdAtTime,
-
-      };
-      orderDatabase.data.push(order);
-      return order;
+    if (todayMenu !== undefined) {
+      const selectedMeal = todayMenu.meals.filter(meal => meal.id === Number(mealId));
+      if (selectedMeal.length === 1) {
+        const order = {
+          customerName: userName,
+          orderContent: selectedMeal[0],
+          orderedAtTime: this.createdAtTime,
+          orderedAtDate: this.createdAtDate,
+        };
+        orderDatabase.data.push(order);
+        return order;
+      }
+      return this.isAvailable;
     }
-    return this.isAvailable;
+    return 'No Menu';
   }
   getOrders() {
-    
+    const todayOrder = orderDatabase.data.filter((data) => {
+      if (data.orderedAtDate === this.createdAtDate) {
+        return data;
+      }
+    });
+    return todayOrder;
+  }
+  modifyOrder(orderId, userName) {
+    let orderIndex;
+    orderDatabase.data.filter((data) => {
+      if ((data.customerName === userName) && (data.id === Number(orderId))) {
+        orderIndex = orderDatabase.data.indexOf(data);
+      }
+    });
+    if (typeof orderIndex === 'number') {
+      orderDatabase.data.splice((orderIndex), 1);
+      return orderDatabase.data;
+    }
+    return this.isIdExist;
   }
 }
 

@@ -22,10 +22,10 @@ export default {
           image: 'www.image.com/hjw889w',
         },
       ],
-      createdAt: '1-5-2018',
+      createdAt: '3-5-2018',
     },
     {
-      id: 1,
+      id: 2,
       meals: [
         {
           id: 1,
@@ -34,7 +34,7 @@ export default {
           image: 'www.image.com/djw889w',
         },
       ],
-      createdAt: '2-5-2018',
+      createdAt: '3-5-2018',
     },
   ],
 };

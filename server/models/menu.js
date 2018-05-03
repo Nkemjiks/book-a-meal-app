@@ -16,7 +16,6 @@ class Menu {
   create(id) {
     this.id = menuDatabase.data.length + 1;
     const meal = mealDatabase.data[id - 1];
-
     if (id < 1 || id > mealDatabase.data.length) {
       this.isIdExist = false;
       return this.isIdExist;
@@ -25,7 +24,7 @@ class Menu {
     menuDatabase.data.forEach((menu) => {
       if (menu.createdAt === this.createdAt) {
         this.mealAvailable = true;
-        menu.mealIds.push(meal);
+        menu.meals.push(meal);
       }
     });
 
