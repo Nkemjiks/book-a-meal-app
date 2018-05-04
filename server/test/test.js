@@ -1,6 +1,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import server from '../app';
+import menu from '../models/menu';
 
 const { expect } = chai;
 const should = chai.should();
@@ -266,6 +267,32 @@ describe('Menu API', () => {
 });
 describe('Order API', () => {
   describe('/POST Order', () => {
+    before((done) => {
+      chai.request(server)
+        .put('/api/v1/menu/1')
+        .send({})
+        .end((err, res) => {
+          expect(res).to.have.status(201);
+          res.body.should.be.a('object');
+          res.body.should.have.property('message').eql('Menu created successfully');
+          res.body.data.should.a('array');
+          done();
+        });
+    })
+    it('It should return a message "Order placed"', (done) => {
+      chai.request(server)
+        .post('/api/v1/order/1')
+        .send({
+          userName: 'Lucy Jane',
+        })
+        .end((err, res) => {
+          expect(res).to.have.status(201);
+          res.body.should.be.a('object');
+          res.body.should.have.property('message').eql('Order placed');
+          res.body.should.have.property('data');
+          done();
+        });
+    });
     it('It should return a message "Provide a valid meal id"', (done) => {
       chai.request(server)
         .post('/api/v1/order/gh')
@@ -304,21 +331,7 @@ describe('Order API', () => {
           res.body.should.have.property('message').eql('Meal not found');
           done();
         });
-    });
-    it('It should return a message "Order placed"', (done) => {
-      chai.request(server)
-        .post('/api/v1/order/1')
-        .send({
-          userName: 'Lucy Jane',
-        })
-        .end((err, res) => {
-          expect(res).to.have.status(201);
-          res.body.should.be.a('object');
-          res.body.should.have.property('message').eql('Order placed');
-          res.body.should.have.property('data');
-          done();
-        });
-    });
+    });  
   });
   describe('/GET order', () => {
     it('it should GET all order', (done) => {
