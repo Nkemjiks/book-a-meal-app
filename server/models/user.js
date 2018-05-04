@@ -1,58 +1,49 @@
-import userDatabase from '../database/userDatabase';
-
-class User {
-  constructor() {
-    this.fullName = '';
-    this.email = '';
-    this.phoneNumber = null;
-    this.password = '';
-    this.role = 'user';
-    this.companyName = '';
-    this.location = '';
-    this.ifUserExist = false;
-  }
-  createUser(fullName, email, phoneNumber, password) {
-    let userExist = false;
-    userDatabase.data.forEach((user) => {
-      if (user.email === email) {
-        userExist = true;
-      }
+module.exports = (sequelize, DataTypes) => {
+  const user = sequelize.define('user', {
+    fullName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: { args: true, msg: 'Your Full Name is required' },
+        len: { args: [10, 40], msg: 'Full Name must be between 10 to 40 characters long' },
+      },
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: { args: true, msg: 'A User with this Email already exist, enter a different Email' },
+      validate: {
+        notEmpty: { args: true, msg: 'An Email Address is Required' },
+        isEmail: { args: true, msg: 'A valid email address is Required' },
+      },
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: { args: true, msg: 'A Password is Required' },
+      },
+    },
+    phoneNumber: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: { args: true, msg: 'Your Phone Number is required' },
+      },
+    },
+    role: {
+      type: DataTypes.STRING,
+      defaultValue: 'customer',
+      validate: {
+        notEmpty: { args: true, msg: 'Please provide a valid role name' },
+        isIn: { args: [['customer', 'caterer']], msg: 'You can only be either a caterer or customer' },
+      },
+    },
+  });
+  user.associate = (models) => {
+    user.hasMany(models.meal, {
+      foreignKey: 'userId',
     });
-
-    if (userExist) {
-      return userExist;
-    }
-
-    this.fullName = fullName;
-    this.email = email;
-    this.phoneNumber = phoneNumber;
-    this.password = password;
-    userDatabase.data.push({
-      fullName: this.fullName,
-      email: this.email,
-      phoneNumber: this.phoneNumber,
-      password: this.password,
-      role: this.role,
-      companyName: this.companyName,
-      location: this.location,
-    });
-
-    return userDatabase.data;
-  }
-  loginUser(email, password) {
-    let user = '';
-    userDatabase.data.forEach((checkUser) => {
-      if ((checkUser.email === email) && (checkUser.password === password)) {
-        user = checkUser;
-        this.ifUserExist = true;
-      }
-    });
-    if (this.ifUserExist === false) {
-      return this.ifUserExist;
-    }
-    this.ifUserExist = false;
-    return user;
-  }
-}
-
-export default new User();
+  };
+  return user;
+};
