@@ -30,14 +30,23 @@
       "html"
     ],
     "exclude": [
-      "server/test/*.js"
+      "server/test/*.js",
+      "server/database/*.js"
     ],
     "sourceMap": false,
     "instrument": false
   },
+  "engines": {
+    "node": "8.10.0"
+  },
   "dependencies": {
     "body-parser": "^1.18.2",
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "morgan": "^1.9.0",
+    "pg": "^7.4.1",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.37.6",
+    "sequelize-cli": "^4.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -48,6 +57,7 @@
     "babel-register": "^6.26.0",
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
+    "codeclimate-test-reporter": "^0.5.0",
     "coveralls": "^3.0.0",
     "cross-env": "^5.1.4",
     "eslint": "^4.19.1",
