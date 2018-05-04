@@ -6,15 +6,6 @@ module.exports = {
       primaryKey: true,
       type: Sequelize.INTEGER,
     },
-    userId: {
-      type: Sequelize.INTEGER,
-      onDelete: 'CASCADE',
-      reference: {
-        model: 'user',
-        key: 'id',
-        as: 'userId',
-      },
-    },
     name: {
       type: Sequelize.STRING,
       allowNull: false,
@@ -24,8 +15,17 @@ module.exports = {
       allowNull: false,
     },
     price: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.STRING,
       allowNull: false,
+    },
+    userId: {
+      type: Sequelize.STRING,
+      onDelete: 'CASCADE',
+      references: {
+        model: 'user',
+        key: 'id',
+        as: 'userId',
+      },
     },
     createdAt: {
       allowNull: false,

@@ -4,11 +4,11 @@ import MealOrderController from '../controllers/MealOrderController';
 import UserController from '../controllers/UserController';
 
 // Middleware
-import { checkUserRole } from '../common/middlewares';
+import checkUserRole from '../common/middlewares';
 
 const routes = (app) => {
   // Meal routes
-  app.post('/api/v1/meals', checkUserRole, MealController.createMeal);
+  app.post('/api/v1/meals/:userId', checkUserRole, MealController.createMeal);
   // app.get('/api/v1/meals', MealController.getAllMeal);
   // app.put('/api/v1/meals/:id', MealController.modifyOneMeal);
   // app.delete('/api/v1/meals/:id', MealController.deleteOneMeal);
@@ -25,7 +25,8 @@ const routes = (app) => {
 
   // User route
   app.post('/api/v1/user/signup', UserController.addUser);
-  // app.post('/api/v1/user/signin', UserController.logInUser);
+  app.post('/api/v1/user/signin', UserController.logInUser);
+  app.put('/api/v1/user/:id', UserController.updateUserRole);
 };
 
 export default routes;

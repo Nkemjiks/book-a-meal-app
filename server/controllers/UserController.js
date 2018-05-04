@@ -54,12 +54,44 @@ const UserController = {
     } else if (!password || (/^ *$/.test(password) === true)) {
       return res.status(400).send({ message: 'Please provide a password' });
     }
-    const checkUser = User.loginUser(email, password);
-    if (checkUser === false) {
-      return res.status(401).send({ message: 'Login unsuccessful. Please enter correct email address and password' });
+
+    return models.user
+      .findOne({ where: { email } })
+      .then((user) => {
+        if (user) {
+          const hashPassword = user.password;
+          if (bcrypt.compareSync(password, hashPassword)) {
+            const filteredUserDetail = filterUserDetail(user);
+            const token = generateToken(filteredUserDetail);
+            return res.status(200).send({ message: 'Signin successful', data: filteredUserDetail, token });
+          }
+          return res.status(401).send({ message: 'Password is incorrect' });
+        }
+        return res.status(404).send({ message: 'User not found. Please signup to continue' });
+      })
+      .catch((err) => {
+        return res.status(400).send({ message: err });
+      });
+  },
+  updateUserRole(req, res) {
+    const { id } = req.params;
+    if (isNaN(id)) {
+      return res.status(404).send({ message: 'Provide a valid User id' });
     }
 
-    return res.status(200).send({ message: 'Login successful', data: checkUser });
+    return models.user
+      .findOne({ where: { id } })
+      .then((user) => {
+        if (user) {
+          user.update({ role: 'caterer' });
+          const filteredUserDetail = filterUserDetail(user);
+          return res.status(200).send({ message: 'Update successful', data: filteredUserDetail });
+        }
+        return res.status(404).send({ message: 'User not found. Please signup to continue' });
+      })
+      .catch((err) => {
+        return res.status(400).send({ message: err });
+      });
   },
 };
 

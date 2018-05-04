@@ -1,7 +1,7 @@
 import { verifyToken } from '../common/token';
 import models from '../models';
 
-export const checkUserRole = (req, res, next) => {
+const checkUserRole = (req, res, next) => {
   const token = req.headers.authorization;
   if (!token) {
     return res.status(403).send({ message: 'Please provide a valid token'});
@@ -19,10 +19,11 @@ export const checkUserRole = (req, res, next) => {
       if (role !== 'caterer') {
         return res.status(403).send({ message: 'Access denied'});
       }
-      req.decoded = decoded;
       return next();
     })
     .catch((err) => {
-      return res.status(500).send({ message: 'Error found in server' });
+      return res.status(500).send({ message: 'Error found in server', data: err });
     });
 };
+
+export default checkUserRole;
