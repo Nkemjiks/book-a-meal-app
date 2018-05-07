@@ -3,6 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: { args: true, msg: 'A meal with that name already exists, enter a different meal name' },
       validate: {
         notEmpty: { args: true, msg: 'Meal Name is required' },
         len: { args: [10, 40], msg: 'Meal Name must be between 10 to 40 characters long' },
@@ -17,14 +18,14 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     price: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
         notEmpty: { args: true, msg: 'Meal Price is required' },
       },
     },
     userId: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
         notEmpty: { args: true, msg: 'user id required' },
@@ -35,6 +36,9 @@ module.exports = (sequelize, DataTypes) => {
     meal.belongsTo(models.user, {
       foreignKey: 'userId',
       onDelete: 'CASCADE',
+    });
+    meal.hasMany(models.menu, {
+      foreignKey: 'mealId',
     });
   };
   return meal;

@@ -5,6 +5,7 @@ const filterUserDetail = (user) => {
     email: user.email,
     phoneNumber: user.phoneNumber,
     role: user.role,
+    address: user.address,
   };
 };
 

@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         notEmpty: { args: true, msg: 'Your Full Name is required' },
-        len: { args: [10, 40], msg: 'Full Name must be between 10 to 40 characters long' },
+        len: { args: [5, 40], msg: 'Full Name must be between 10 to 40 characters long' },
       },
     },
     email: {
@@ -31,6 +31,14 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: { args: true, msg: 'Your Phone Number is required' },
       },
     },
+    address: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: { args: true, msg: 'Your address is required' },
+        len: { args: [5, 200], msg: 'Your address should be between 10 to 40 characters long' },
+      },
+    },
     role: {
       type: DataTypes.STRING,
       defaultValue: 'customer',
@@ -42,6 +50,12 @@ module.exports = (sequelize, DataTypes) => {
   });
   user.associate = (models) => {
     user.hasMany(models.meal, {
+      foreignKey: 'userId',
+    });
+    user.hasMany(models.menu, {
+      foreignKey: 'userId',
+    });
+    user.hasMany(models.order, {
       foreignKey: 'userId',
     });
   };

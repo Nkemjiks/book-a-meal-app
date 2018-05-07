@@ -10,6 +10,7 @@ const UserController = {
       email,
       phoneNumber,
       password,
+      address,
     } = req.body;
 
     const stringifyPhoneNumber = phoneNumber.toString();
@@ -22,6 +23,8 @@ const UserController = {
       return res.status(400).send({ message: 'Please provide a valid phone number' });
     } else if (!password || (/^ *$/.test(password) === true)) {
       return res.status(400).send({ message: 'Please provide a valid password' });
+    } else if (!address || (/^ *$/.test(address) === true) || typeof address !== 'string') {
+      return res.status(400).send({ message: 'Please provide a valid address' });
     }
 
     const hashPassword = bcrypt.hashSync(password, 10);
@@ -33,6 +36,7 @@ const UserController = {
           phoneNumber: stringifyPhoneNumber,
           email,
           password: hashPassword,
+          address,
         },
       })
       .spread((user, created) => {
@@ -52,7 +56,7 @@ const UserController = {
     if (!email || (/^ *$/.test(email) === true) || typeof email !== 'string') {
       return res.status(400).send({ message: 'Please provide a valid email address' });
     } else if (!password || (/^ *$/.test(password) === true)) {
-      return res.status(400).send({ message: 'Please provide a password' });
+      return res.status(500).send({ message: 'Please provide a password' });
     }
 
     return models.user
@@ -67,10 +71,10 @@ const UserController = {
           }
           return res.status(401).send({ message: 'Password is incorrect' });
         }
-        return res.status(404).send({ message: 'User not found. Please signup to continue' });
+        return res.status(401).send({ message: 'Account does not exist. Please signup to continue' });
       })
       .catch((err) => {
-        return res.status(400).send({ message: err });
+        return res.status(400).send({ message: 'Signin not successful' });
       });
   },
   updateUserRole(req, res) {
@@ -90,7 +94,7 @@ const UserController = {
         return res.status(404).send({ message: 'User not found. Please signup to continue' });
       })
       .catch((err) => {
-        return res.status(400).send({ message: err });
+        return res.status(400).send({ message: err.errors[0].message });
       });
   },
 };

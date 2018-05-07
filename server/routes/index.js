@@ -4,23 +4,23 @@ import MealOrderController from '../controllers/MealOrderController';
 import UserController from '../controllers/UserController';
 
 // Middleware
-import checkUserRole from '../common/middlewares';
+import { checkUserRole, checkAuthenticatedUser } from '../common/middlewares';
 
 const routes = (app) => {
   // Meal routes
-  app.post('/api/v1/meals/:userId', checkUserRole, MealController.createMeal);
-  // app.get('/api/v1/meals', MealController.getAllMeal);
-  // app.put('/api/v1/meals/:id', MealController.modifyOneMeal);
-  // app.delete('/api/v1/meals/:id', MealController.deleteOneMeal);
+  app.post('/api/v1/meals', checkUserRole, MealController.createMeal);
+  app.get('/api/v1/meals', checkUserRole, MealController.getAllCatererMeal);
+  app.put('/api/v1/meals/:id', checkUserRole, MealController.modifyMeal);
+  app.delete('/api/v1/meals/:id', checkUserRole, MealController.deleteMeal);
 
   // Menu routes
-  // app.put('/api/v1/menu/:id', MenuController.createMenu);
-  // app.get('/api/v1/menu', MenuController.getMenu);
+  app.post('/api/v1/menu/:mealId', checkUserRole, MenuController.createMenu);
+  app.get('/api/v1/menu/:userId', checkAuthenticatedUser, MenuController.getMenu);
 
   // // Meal Order routes
   // app.post('/api/v1/cart/:userId/:id', MealOrderController.addOrder);
-  // app.post('/api/v1/order', MealOrderController.makeOrder);
-  // app.get('/api/v1/order', MealOrderController.getAllOrder);
+  app.post('/api/v1/order', MealOrderController.makeOrder);
+  app.get('/api/v1/order', MealOrderController.getAllOrder);
   // app.put('/api/v1/order/:id', MealOrderController.modifyOrderMade);
 
   // User route
