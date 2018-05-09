@@ -6,7 +6,6 @@ module.exports = (sequelize, DataTypes) => {
       unique: { args: true, msg: 'A meal with that name already exists, enter a different meal name' },
       validate: {
         notEmpty: { args: true, msg: 'Meal Name is required' },
-        len: { args: [10, 40], msg: 'Meal Name must be between 10 to 40 characters long' },
       },
     },
     imageURL: {
@@ -31,14 +30,17 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: { args: true, msg: 'user id required' },
       },
     },
+  }, {
+    paranoid: true,
+    timestamps: true,
   });
   meal.associate = (models) => {
     meal.belongsTo(models.user, {
       foreignKey: 'userId',
       onDelete: 'CASCADE',
     });
-    meal.hasMany(models.menu, {
-      foreignKey: 'mealId',
+    meal.belongsToMany(models.menu, {
+      through: 'menuItems',
     });
   };
   return meal;

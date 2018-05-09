@@ -1,44 +1,48 @@
 import models from '../models';
 
-const MenuController = {
-  createMenu(req, res) {
-    const { mealId } = req.params;
+const menuController = {
+  async createMenu(req, res) {
+    const { mealId } = req.body;
     const userId = req.decoded.id;
     const date = new Date().toDateString();
 
-    if (isNaN(mealId)) {
+    if (Number.isNaN(Number(mealId))) {
       return res.status(404).send({ message: 'Provide a valid meal id' });
+    }
+
+    const meal = await models.meal.findById(mealId);
+    if (!meal) {
+      return res.status(404).send({ message: 'Meal not found' });
     }
 
     return models.menu
       .findOrCreate({
         where: {
           userId,
-          mealId,
           date,
         },
         defaults: {
           userId,
-          mealId,
           date,
+          mealId,
         },
       })
       .spread((menu, created) => {
+        menu.addMeals(mealId);
+        menu.save();
         if (created === false) {
-          return res.status(409).send({ message: 'Meal has already been added to today\'s menu' });
+          return res.status(200).send({ message: 'Menu has been updated', data: menu });
         }
-        return res.status(201).send({ message: 'Meal added to menu successfully', data: menu });
+        return res.status(201).send({ message: 'Menu created', data: menu });
       })
-      .catch((err) => {
-        return res.status(400).send({ message: err.errors[0].message });
-      });
+      .catch(err => res.status(500).send({ message: err }));
   },
-  getMenu(req, res) {
+  getCatererMenu(req, res) {
     const { userId } = req.params;
     const date = new Date().toDateString();
 
     return models.menu
-      .findAll({
+      .findOne({
         where: {
           userId,
           date,
@@ -50,13 +54,37 @@ const MenuController = {
           },
         ],
       })
-      .then((meal) => {
-        return res.status(200).send({ data: meal });
+      .then((meals) => {
+        if (meals.length === 0) {
+          return res.status(404).send({ message: 'The menu for today has not been set yet' });
+        }
+        return res.status(200).send({ data: meals });
       })
-      .catch((err) => {
-        return res.status(500).send({ message: 'Unable to get caterer\'s meals for today. Try again' });
-      });
+      .catch(err => res.status(500).send({ message: err.message }));
+  },
+  getAllMenu(req, res) {
+    const date = new Date().toDateString();
+
+    return models.menu
+      .findOne({
+        where: {
+          date,
+        },
+        include: [
+          {
+            model: models.meal,
+            attributes: ['name', 'imageURL', 'price'],
+          },
+        ],
+      })
+      .then((meals) => {
+        if (meals.length === 0) {
+          return res.status(404).send({ message: 'The menu for today has not been set yet' });
+        }
+        return res.status(200).send({ data: meals });
+      })
+      .catch(err => res.status(500).send({ message: err.message }));
   },
 };
 
-export default MenuController;
+export default menuController;

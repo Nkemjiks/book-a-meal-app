@@ -1,32 +1,32 @@
-import MealController from '../controllers/MealController';
-import MenuController from '../controllers/MenuController';
-import MealOrderController from '../controllers/MealOrderController';
-import UserController from '../controllers/UserController';
+import mealController from '../controllers/mealController';
+import menuController from '../controllers/menuController';
+// import orderController from '../controllers/orderController';
+import userController from '../controllers/userController';
 
 // Middleware
 import { checkUserRole, checkAuthenticatedUser } from '../common/middlewares';
 
 const routes = (app) => {
   // Meal routes
-  app.post('/api/v1/meals', checkUserRole, MealController.createMeal);
-  app.get('/api/v1/meals', checkUserRole, MealController.getAllCatererMeal);
-  app.put('/api/v1/meals/:id', checkUserRole, MealController.modifyMeal);
-  app.delete('/api/v1/meals/:id', checkUserRole, MealController.deleteMeal);
+  app.post('/meals/', checkUserRole, mealController.createMeal);
+  app.get('/meals/', checkUserRole, mealController.getAllCatererMeal);
+  app.put('/meals/:id', checkUserRole, mealController.modifyMeal);
+  app.delete('/meals/:id', checkUserRole, mealController.deleteMeal);
 
   // Menu routes
-  app.post('/api/v1/menu/:mealId', checkUserRole, MenuController.createMenu);
-  app.get('/api/v1/menu/:userId', checkAuthenticatedUser, MenuController.getMenu);
+  app.post('/menu/', checkUserRole, menuController.createMenu);
+  app.get('/menu/:userId', checkAuthenticatedUser, menuController.getCatererMenu);
+  app.get('/menu/', menuController.getAllMenu);
 
   // // Meal Order routes
-  // app.post('/api/v1/cart/:userId/:id', MealOrderController.addOrder);
-  app.post('/api/v1/order', MealOrderController.makeOrder);
-  app.get('/api/v1/order', MealOrderController.getAllOrder);
-  // app.put('/api/v1/order/:id', MealOrderController.modifyOrderMade);
+  // app.post('/order', orderController.makeOrder);
+  // app.get('/order', orderController.getAllOrder);
+  // app.put('/order/:id', orderController.modifyOrderMade);
 
   // User route
-  app.post('/api/v1/user/signup', UserController.addUser);
-  app.post('/api/v1/user/signin', UserController.logInUser);
-  app.put('/api/v1/user/:id', UserController.updateUserRole);
+  app.post('/auth/signup', userController.addUser);
+  app.post('/auth/login', userController.logInUser);
+  app.put('/auth/:id', userController.updateUserRole);
 };
 
 export default routes;

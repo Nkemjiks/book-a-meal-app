@@ -55,9 +55,9 @@ module.exports = (sequelize, DataTypes) => {
     user.hasMany(models.menu, {
       foreignKey: 'userId',
     });
-    user.hasMany(models.order, {
-      foreignKey: 'userId',
-    });
+    // user.hasMany(models.order, {
+    //   foreignKey: 'userId',
+    // });
   };
   return user;
 };

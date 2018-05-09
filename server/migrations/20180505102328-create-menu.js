@@ -19,15 +19,6 @@ module.exports = {
         as: 'userId',
       },
     },
-    mealId: {
-      type: Sequelize.INTEGER,
-      onDelete: 'CASCADE',
-      reference: {
-        model: 'meal',
-        key: 'id',
-        as: 'mealId',
-      },
-    },
     createdAt: {
       allowNull: false,
       type: Sequelize.DATE,

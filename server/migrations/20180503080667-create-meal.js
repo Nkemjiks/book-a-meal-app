@@ -35,6 +35,10 @@ module.exports = {
       allowNull: false,
       type: Sequelize.DATE,
     },
+    deletedAt: {
+      allowNull: false,
+      type: Sequelize.DATE,
+    },
   }),
   down: (queryInterface, Sequelize) => queryInterface.dropTable('meals'),
 };

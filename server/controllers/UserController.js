@@ -13,15 +13,13 @@ const UserController = {
       address,
     } = req.body;
 
-    const stringifyPhoneNumber = phoneNumber.toString();
-
-    if (!fullName || (/^ *$/.test(fullName) === true) || typeof fullName !== 'string') {
+    if (!fullName || (/^ *$/.test(fullName) === true) || (/^[a-zA-Z ]+$/.test(fullName) === false) || typeof fullName !== 'string') {
       return res.status(400).send({ message: 'Please provide a valid name' });
-    } else if (!email || (/^ *$/.test(email) === true) || typeof email !== 'string') {
+    } else if (!email || (/^ *$/.test(email) === true) || (/[ ]/.test(email) === true) || (/[@]/.test(email) === false) || typeof email !== 'string') {
       return res.status(400).send({ message: 'Please provide a valid email address' });
-    } else if (isNaN(stringifyPhoneNumber)) {
+    } else if (Number.isNaN(Number(phoneNumber))) {
       return res.status(400).send({ message: 'Please provide a valid phone number' });
-    } else if (!password || (/^ *$/.test(password) === true)) {
+    } else if (!password || (/^ *$/.test(password) === true) || (/[<>]/.test(password) === true)) {
       return res.status(400).send({ message: 'Please provide a valid password' });
     } else if (!address || (/^ *$/.test(address) === true) || typeof address !== 'string') {
       return res.status(400).send({ message: 'Please provide a valid address' });
@@ -33,7 +31,7 @@ const UserController = {
         where: { email },
         defaults: {
           fullName,
-          phoneNumber: stringifyPhoneNumber,
+          phoneNumber,
           email,
           password: hashPassword,
           address,
@@ -47,16 +45,14 @@ const UserController = {
         const token = generateToken(filteredUserDetail);
         return res.status(201).send({ message: 'User created', data: filteredUserDetail, token });
       })
-      .catch((err) => {
-        return res.status(400).send({ message: err.errors[0].message });
-      });
+      .catch(err => res.status(500).send({ message: err.message }));
   },
   logInUser(req, res) {
     const { email, password } = req.body;
-    if (!email || (/^ *$/.test(email) === true) || typeof email !== 'string') {
+    if (!email || (/^ *$/.test(email) === true) || (/[ ]/.test(email) === true) || (/[@]/.test(email) === false) || typeof email !== 'string') {
       return res.status(400).send({ message: 'Please provide a valid email address' });
-    } else if (!password || (/^ *$/.test(password) === true)) {
-      return res.status(500).send({ message: 'Please provide a password' });
+    } else if (!password || (/^ *$/.test(password) === true) || (/[<>]/.test(password) === true)) {
+      return res.status(500).send({ message: 'Please provide a valid password' });
     }
 
     return models.user
@@ -69,17 +65,15 @@ const UserController = {
             const token = generateToken(filteredUserDetail);
             return res.status(200).send({ message: 'Signin successful', data: filteredUserDetail, token });
           }
-          return res.status(401).send({ message: 'Password is incorrect' });
+          return res.status(401).send({ message: 'Email or password is incorrect' });
         }
         return res.status(401).send({ message: 'Account does not exist. Please signup to continue' });
       })
-      .catch((err) => {
-        return res.status(400).send({ message: 'Signin not successful' });
-      });
+      .catch(err => res.status(500).send({ message: err.message }));
   },
   updateUserRole(req, res) {
     const { id } = req.params;
-    if (isNaN(id)) {
+    if (Number.isNaN(Number(id))) {
       return res.status(404).send({ message: 'Provide a valid User id' });
     }
 
@@ -93,9 +87,7 @@ const UserController = {
         }
         return res.status(404).send({ message: 'User not found. Please signup to continue' });
       })
-      .catch((err) => {
-        return res.status(400).send({ message: err.errors[0].message });
-      });
+      .catch(err => res.status(500).send({ message: err.message }));
   },
 };
 
