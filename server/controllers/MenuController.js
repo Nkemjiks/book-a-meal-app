@@ -11,6 +11,7 @@ const menuController = {
     }
 
     const meal = await models.meal.findById(mealId);
+
     if (!meal) {
       return res.status(404).send({ message: 'Meal not found' });
     }
@@ -38,7 +39,7 @@ const menuController = {
       .catch(err => res.status(500).send({ message: err }));
   },
   getCatererMenu(req, res) {
-    const { userId } = req.params;
+    const userId = req.decoded.id;
     const date = new Date().toDateString();
 
     return models.menu
@@ -55,7 +56,7 @@ const menuController = {
         ],
       })
       .then((meals) => {
-        if (meals.length === 0) {
+        if (meals === null) {
           return res.status(404).send({ message: 'The menu for today has not been set yet' });
         }
         return res.status(200).send({ data: meals });
@@ -74,6 +75,10 @@ const menuController = {
           {
             model: models.meal,
             attributes: ['name', 'imageURL', 'price'],
+          },
+          {
+            model: models.user,
+            attributes: ['fullName', 'email'],
           },
         ],
       })

@@ -15,13 +15,13 @@ const UserController = {
 
     if (!fullName || (/^ *$/.test(fullName) === true) || (/^[a-zA-Z ]+$/.test(fullName) === false) || typeof fullName !== 'string') {
       return res.status(400).send({ message: 'Please provide a valid name' });
-    } else if (!email || (/^ *$/.test(email) === true) || (/[ ]/.test(email) === true) || (/[@]/.test(email) === false) || typeof email !== 'string') {
+    } else if (!email || (/^ *$/.test(email) === true) || (/[<>]/.test(email) === true) || (/[ ]/.test(email) === true) || (/[@]/.test(email) === false) || typeof email !== 'string') {
       return res.status(400).send({ message: 'Please provide a valid email address' });
     } else if (Number.isNaN(Number(phoneNumber))) {
       return res.status(400).send({ message: 'Please provide a valid phone number' });
     } else if (!password || (/^ *$/.test(password) === true) || (/[<>]/.test(password) === true)) {
       return res.status(400).send({ message: 'Please provide a valid password' });
-    } else if (!address || (/^ *$/.test(address) === true) || typeof address !== 'string') {
+    } else if (!address || (/^ *$/.test(address) === true) || (/[<>]/.test(address) === true) || typeof address !== 'string') {
       return res.status(400).send({ message: 'Please provide a valid address' });
     }
 

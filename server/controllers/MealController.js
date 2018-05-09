@@ -5,22 +5,22 @@ const MealController = {
     const { name, price, imageURL } = req.body;
     const userId = req.decoded.id;
 
-    if (Number.isNaN(parseFloat(userId))) {
+    if (Number.isNaN(Number(userId))) {
       return res.status(400).send({ message: 'Provide a valid User Id' });
     }
 
-    if (!name || (/^ *$/.test(name) === true) || typeof name !== 'string') {
+    if (!name || (/^ *$/.test(name) === true) || (/^[a-zA-Z ]+$/.test(name) === false) || typeof name !== 'string') {
       return res.status(400).send({ message: 'Please provide a valid meal name' });
     } else if (name.length < 10 || name.length > 40) {
       return res.status(400).send({ message: 'Meal Name must be between 10 to 40 characters long' });
-    } else if (!price || (Number.isNaN(parseFloat(price))) === true || (/^ *$/.test(price) === true)) {
+    } else if (!price || (Number.isNaN(Number(price))) === true || (/^ *$/.test(price) === true)) {
       return res.status(400).send({ message: 'Please provide a valid meal price' });
-    } else if (typeof imageURL !== 'string' || (/^ *$/.test(imageURL) === true)) {
+    } else if (typeof imageURL !== 'string' || (/[<>]/.test(imageURL) === true) || (/^ *$/.test(imageURL) === true)) {
       return res.status(400).send({ message: 'Please provide a valid image URL' });
     }
     return models.meal
       .findOrCreate({
-        where: { name },
+        where: { name, userId },
         defaults: {
           name,
           price,
@@ -61,10 +61,24 @@ const MealController = {
   modifyMeal(req, res) {
     const userId = req.decoded.id;
     const { id } = req.params;
+    const { name } = req.body;
 
     if (Number.isNaN(Number(id))) {
       return res.status(400).send({ message: 'Provide a valid meal id' });
     }
+
+    models.meal
+      .findOne({
+        where: {
+          name,
+        },
+      })
+      .then((mealExist) => {
+        if (mealExist) {
+          return res.status(409).send({ message: 'A meal with this name already exist' });
+        }
+      })
+      .catch(err => res.status(500).send({ message: err.message }));
 
     return models.meal
       .findById(id)

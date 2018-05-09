@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        notEmpty: { args: true, msg: 'user id required' },
+        notEmpty: { args: true, msg: 'User id required' },
       },
     },
   }, {
