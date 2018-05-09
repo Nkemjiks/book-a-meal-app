@@ -44,7 +44,7 @@ const UserController = {
         }
         const filteredUserDetail = filterUserDetail(user);
         const token = generateToken(filteredUserDetail);
-        return res.status(201).send({ message: 'User created', data: filteredUserDetail, token });
+        return res.status(201).send({ message: 'User successfully created', data: filteredUserDetail, token });
       })
       .catch(err => res.status(500).send({ message: err.message }));
   },
