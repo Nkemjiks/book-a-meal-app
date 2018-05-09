@@ -1,40 +1,47 @@
 import models from '../models';
 
 const menuController = {
-  async createMenu(req, res) {
+  createMenu(req, res) {
     const { mealId } = req.body;
     const userId = req.decoded.id;
     const date = new Date().toDateString();
 
     if (Number.isNaN(Number(mealId))) {
-      return res.status(404).send({ message: 'Provide a valid meal id' });
+      return res.status(400).send({ message: 'Provide a valid meal id' });
     }
 
-    const meal = await models.meal.findById(mealId);
-
-    if (!meal) {
-      return res.status(404).send({ message: 'Meal not found' });
-    }
-
-    return models.menu
-      .findOrCreate({
+    return models.meal
+      .findOne({
         where: {
+          id: mealId,
           userId,
-          date,
-        },
-        defaults: {
-          userId,
-          date,
-          mealId,
         },
       })
-      .spread((menu, created) => {
-        menu.addMeals(mealId);
-        menu.save();
-        if (created === false) {
-          return res.status(200).send({ message: 'Menu has been updated', data: menu });
+      .then((meal) => {
+        if (!meal) {
+          return res.status(403).send({ message: 'You can not add this meal' });
         }
-        return res.status(201).send({ message: 'Menu created', data: menu });
+        return models.menu
+          .findOrCreate({
+            where: {
+              userId,
+              date,
+            },
+            defaults: {
+              userId,
+              date,
+              mealId,
+            },
+          })
+          .spread((menu, created) => {
+            menu.addMeals(mealId);
+            menu.save();
+            if (created === false) {
+              return res.status(200).send({ message: 'Menu has been updated', data: menu });
+            }
+            return res.status(201).send({ message: 'Menu created', data: menu });
+          })
+          .catch(err => res.status(500).send({ message: err }));
       })
       .catch(err => res.status(500).send({ message: err }));
   },
@@ -67,7 +74,7 @@ const menuController = {
     const date = new Date().toDateString();
 
     return models.menu
-      .findOne({
+      .findAll({
         where: {
           date,
         },

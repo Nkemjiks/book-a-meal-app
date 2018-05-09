@@ -113,8 +113,6 @@ const MealOrderController = {
       deliveryAddress,
     } = req.body;
 
-    
-
     if (Number.isNaN(Number(id))) {
       return res.status(404).send({ message: 'Provide a valid order id' });
     }
@@ -134,11 +132,12 @@ const MealOrderController = {
         if (order.customerId !== userId) {
           return res.status(401).send({ message: 'You can not modify this order' });
         }
-        // Check time between order
+
         const orderHour = new Date(order.createdAt).getHours() * 60;
         const orderMinutes = new Date(order.createdAt).getMinutes();
         const orderTime = orderHour + orderMinutes;
         const presentTime = (new Date().getHours() * 60) + (new Date().getMinutes());
+
         if ((presentTime - orderTime) > 60) {
           return res.status(404).send({ message: 'You can not modify this order anymore' });
         }

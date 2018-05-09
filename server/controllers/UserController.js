@@ -25,12 +25,13 @@ const UserController = {
       return res.status(400).send({ message: 'Please provide a valid address' });
     }
 
+    const stripMultipleSpaces = fullName.replace(/  +/g, ' ');
     const hashPassword = bcrypt.hashSync(password, 10);
     return models.user
       .findOrCreate({
         where: { email },
         defaults: {
-          fullName,
+          fullName: stripMultipleSpaces,
           phoneNumber,
           email,
           password: hashPassword,
