@@ -19,7 +19,7 @@ body {
         margin-left: 15px;
     }
     #signin-container > h1, h1 {
-        font-size: 25px;
+        font-size: 30px;
     }
 }
 @media only screen and (min-width: 426px) {
@@ -43,7 +43,7 @@ body {
         display: none;
     }
     #signin-container > h1, h1 {
-        font-size: 30px;
+        font-size: 33px;
     }
 }
 @media only screen and (min-width: 1024px) {
@@ -120,7 +120,7 @@ body {
     }
     .detailed-orders {
         flex: 80%;
-        min-width: 650px;
+        min-width: 350px;
     }
 }
 @media only screen and (max-width: 980px) {
@@ -147,7 +147,7 @@ body {
         background-color: white;
     }
     #signup-flex {
-        margin-top: 150px;
+        margin-top: 100px;
         margin-bottom: 10px;
         padding-bottom: 20px;
         border-bottom: 2px solid #d8d5d5;
@@ -286,7 +286,6 @@ body {
     border: 1px solid #d8d5d5;
     padding: 20px;
     height: 400px;
-    box-shadow: 2px 5px 4px #d8d5d5;
 }
 #signin-container, #signup-container {
     margin-left: auto;
@@ -303,7 +302,7 @@ body {
 }
 #signin-container > h1, h1 {
     text-align: center;
-    color: black;
+    color: rgb(19, 15, 15);
 }
 #signin-container button, #signup-container button, #order, #add-meal-container button, .create-menu button, .add-meal button {
     color: white;
@@ -321,17 +320,29 @@ body {
 }
 #signup-flex {
     display: flex;
+    background: linear-gradient(
+        rgba(49, 44, 44, 0.45), 
+        rgba(36, 33, 33, 0.45)), url('http://res.cloudinary.com/dqsmurjpg/image/upload/v1525982000/nigeria_food.jpg');
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 #signup-container {
     padding: 10px;
-    margin: 5px 20px;
+    margin: 20px;
+    background-color: white;
 }
 #app-summary {
     padding: 20px;
     text-align: center;
 }
 #app-summary > p {
-    font-size: 12px;
+    font-size: 16px;
+    color: rgb(255, 255, 255);
+}
+#app-summary > h1 {
+    color: rgb(255, 255, 255);
 }
 #steps {
     display: flex;
@@ -444,6 +455,7 @@ body {
 }
 .description {
     background-color: #dadada;
+    font-size: 15px;
 }
 #cart h2 {
     float: right;
@@ -468,6 +480,7 @@ body {
 }
 .orders-placed {
     height:220px;
+    font-size: 14px;
 }
 footer {
     height: 50px;
