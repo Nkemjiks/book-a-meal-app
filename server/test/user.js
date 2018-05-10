@@ -4,6 +4,7 @@ import server from '../app';
 import models from '../models';
 import userMockData from './mock/userMockData';
 
+// Test cases for user signup
 const {
   validUserDetail,
   validUserLoginDetails,
