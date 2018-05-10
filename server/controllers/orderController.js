@@ -2,6 +2,9 @@ import models from '../models';
 import { filterOrderDetail } from '../common/filter';
 
 const mealOrderController = {
+  
+  // Place an order
+
   makeOrder(req, res) {
     const userId = req.decoded.id;
     const hours = new Date().getHours();
@@ -81,6 +84,9 @@ const mealOrderController = {
       })
       .catch(err => res.status(500).send({ message: err.message }));
   },
+
+  // Get all order
+
   getOrder(req, res) {
     const catererId = req.decoded.id;
     const date = new Date().toDateString();
@@ -112,6 +118,9 @@ const mealOrderController = {
       })
       .catch(err => res.status(500).send({ message: err.message }));
   },
+
+  // Modify an order
+
   modifyOrder(req, res) {
     const userId = req.decoded.id;
     const { id } = req.params;
