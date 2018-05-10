@@ -1,6 +1,8 @@
 import models from '../models';
+import { filterMenuDetails } from '../common/filter';
 
 const menuController = {
+  // Create a Menu
   createMenu(req, res) {
     const { mealId } = req.body;
     const userId = req.decoded.id;
@@ -46,6 +48,7 @@ const menuController = {
       .catch(err => res.status(500).send({ message: err }));
   },
   getCatererMenu(req, res) {
+    // Get menu by caterer's Id
     const userId = req.decoded.id;
     const date = new Date().toDateString();
 
@@ -71,6 +74,7 @@ const menuController = {
       .catch(err => res.status(500).send({ message: err.message }));
   },
   getAllMenu(req, res) {
+    // Get all menu for all users
     const date = new Date().toDateString();
 
     return models.menu
@@ -93,7 +97,12 @@ const menuController = {
         if (meals.length === 0) {
           return res.status(404).send({ message: 'The menu for today has not been set yet' });
         }
-        return res.status(200).send({ data: meals });
+        const filteredMenu = [];
+        meals.forEach((meal) => {
+          const filter = filterMenuDetails(meal);
+          filteredMenu.push(filter);
+        });
+        return res.status(200).send({ data: filteredMenu });
       })
       .catch(err => res.status(500).send({ message: err.message }));
   },

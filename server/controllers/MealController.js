@@ -1,6 +1,6 @@
 import models from '../models';
 
-const MealController = {
+const mealController = {
   createMeal(req, res) {
     const { name, price, imageURL } = req.body;
     const userId = req.decoded.id;
@@ -45,6 +45,7 @@ const MealController = {
         where: {
           userId,
         },
+        attributes: ['id', 'name', 'imageURL', 'price'],
         include: [
           {
             model: models.user,
@@ -60,17 +61,42 @@ const MealController = {
       })
       .catch(err => res.status(500).send({ message: err.message }));
   },
+  getAllMeal(req, res) {
+    return models.meal
+      .findAll({
+        attributes: ['id', 'name', 'imageURL', 'price'],
+        include: [
+          {
+            model: models.user,
+            attributes: ['fullName', 'email', 'address', 'phoneNumber'],
+          },
+        ],
+      })
+      .then((meal) => {
+        if (meal.length === 0) {
+          return res.status(404).send({ message: 'There is no meal in the database' });
+        }
+        return res.status(200).send({ data: meal });
+      })
+      .catch(err => res.status(500).send({ message: err.message }));
+  },
   modifyMeal(req, res) {
     const userId = req.decoded.id;
     const { id } = req.params;
     const { name, price } = req.body;
     const stripMultipleSpaces = name && name.replace(/  +/g, ' ');
 
+    if (Object.keys(req.body).length === 0) {
+      return res.status(400).send({ message: 'You have not provided any details to update' });
+    }
     if (Number.isNaN(Number(id))) {
       return res.status(400).send({ message: 'Provide a valid meal id' });
     }
-    if (price && Number.isNaN(Number(price))) {
+    if (price !== undefined && (price === '' || Number.isNaN(Number(price)))) {
       return res.status(400).send({ message: 'Provide a valid price value' });
+    }
+    if (name !== undefined && (name === '' || (/^ *$/.test(name) === true) || (/^[a-zA-Z ]+$/.test(name) === false) || typeof name !== 'string')) {
+      return res.status(400).send({ message: 'Please provide a valid meal name' });
     }
 
     return models.meal
@@ -109,20 +135,29 @@ const MealController = {
       return res.status(400).send({ message: 'Provide a valid meal id' });
     }
     return models.meal
-      .destroy({
-        where: {
-          userId,
-          id,
-        },
-      })
-      .then((deletedMealResponse) => {
-        if (deletedMealResponse === 0) {
+      .findById(id)
+      .then((meal) => {
+        if (!meal) {
+          return res.status(404).send({ message: 'This meal does not exist in the database' });
+        }
+        if (meal.userId !== userId) {
           return res.status(403).send({ message: 'You are not authorized to delete this meal' });
         }
-        return res.status(200).send({ message: 'Meal has been deleted successfully' });
+        return models.meal
+          .destroy({
+            where: {
+              id,
+            },
+          })
+          .then((deletedMealResponse) => {
+            if (deletedMealResponse === 1) {
+              return res.status(200).send({ message: 'Meal has been deleted successfully well' });
+            }
+          })
+          .catch(err => res.status(500).send({ message: err.message }));
       })
       .catch(err => res.status(500).send({ message: err.message }));
   },
 };
 
-export default MealController;
+export default mealController;

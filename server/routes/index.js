@@ -9,7 +9,8 @@ import { checkUserRole, checkAuthenticatedUser } from '../common/middlewares';
 const routes = (app) => {
   // Meal routes
   app.post('/meals/', checkUserRole, mealController.createMeal);
-  app.get('/meals/', checkUserRole, mealController.getAllCatererMeal);
+  app.get('/meals/caterer', checkUserRole, mealController.getAllCatererMeal);
+  app.get('/meals/', checkAuthenticatedUser, mealController.getAllMeal);
   app.put('/meals/:id', checkUserRole, mealController.modifyMeal);
   app.delete('/meals/:id', checkUserRole, mealController.deleteMeal);
 
@@ -19,14 +20,14 @@ const routes = (app) => {
   app.get('/menu/', menuController.getAllMenu);
 
   // // Meal Order routes
-  app.post('/order', checkAuthenticatedUser, orderController.makeOrder);
-  app.get('/order', checkAuthenticatedUser, orderController.getOrder);
-  app.put('/order/:id', checkAuthenticatedUser, orderController.modifyOrder);
+  app.post('/orders', checkAuthenticatedUser, orderController.makeOrder);
+  app.get('/orders', checkUserRole, orderController.getOrder);
+  app.put('/orders/:id', checkAuthenticatedUser, orderController.modifyOrder);
 
   // User route
   app.post('/auth/signup', userController.addUser);
   app.post('/auth/login', userController.logInUser);
-  app.put('/auth/:id', userController.updateUserRole);
+  app.put('/auth/', checkAuthenticatedUser, userController.updateUserRole);
 };
 
 export default routes;

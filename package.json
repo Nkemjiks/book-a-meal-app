@@ -31,7 +31,9 @@
     ],
     "exclude": [
       "server/test/*.js",
-      "server/database/*.js"
+      "server/test/mock/*.js",
+      "server/database/*.js",
+      "server/common/*.js"
     ],
     "sourceMap": false,
     "instrument": false

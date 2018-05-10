@@ -1,9 +1,9 @@
 import bcrypt from 'bcrypt';
 import models from '../models';
-import filterUserDetail from '../common/filter';
+import { filterUserDetail } from '../common/filter';
 import { generateToken } from '../common/token';
 
-const UserController = {
+const userController = {
   addUser(req, res) {
     const {
       fullName,
@@ -13,13 +13,13 @@ const UserController = {
       address,
     } = req.body;
 
-    if (!fullName || (/^ *$/.test(fullName) === true) || (/^[a-zA-Z ]+$/.test(fullName) === false) || typeof fullName !== 'string') {
+    if (!(fullName) || (/^ *$/.test(fullName) === true) || (/^[a-zA-Z ]+$/.test(fullName) === false) || typeof fullName !== 'string') {
       return res.status(400).send({ message: 'Please provide a valid name' });
-    } else if (!email || (/^ *$/.test(email) === true) || (/[<>]/.test(email) === true) || (/[ ]/.test(email) === true) || (/[@]/.test(email) === false) || typeof email !== 'string') {
+    } else if (!email || (/^ *$/.test(email) === true) || (/[<>]/.test(email) === true) || (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email) === false) || typeof email !== 'string') {
       return res.status(400).send({ message: 'Please provide a valid email address' });
     } else if (Number.isNaN(Number(phoneNumber))) {
       return res.status(400).send({ message: 'Please provide a valid phone number' });
-    } else if (!password || (/^ *$/.test(password) === true) || (/[<>]/.test(password) === true)) {
+    } else if (!password || (/^ *$/.test(password) === true) || (/[ ]/.test(password) === true) || (/[<>]/.test(password) === true)) {
       return res.status(400).send({ message: 'Please provide a valid password' });
     } else if (!address || (/^ *$/.test(address) === true) || (/[<>]/.test(address) === true) || typeof address !== 'string') {
       return res.status(400).send({ message: 'Please provide a valid address' });
@@ -40,7 +40,7 @@ const UserController = {
       })
       .spread((user, created) => {
         if (created === false) {
-          return res.status(409).send({ message: 'User already exist' });
+          return res.status(409).send({ message: 'A User already exist with this email address' });
         }
         const filteredUserDetail = filterUserDetail(user);
         const token = generateToken(filteredUserDetail);
@@ -50,10 +50,10 @@ const UserController = {
   },
   logInUser(req, res) {
     const { email, password } = req.body;
-    if (!email || (/^ *$/.test(email) === true) || (/[ ]/.test(email) === true) || (/[@]/.test(email) === false) || typeof email !== 'string') {
+    if (!email || (/^ *$/.test(email) === true) || (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email) === false) || typeof email !== 'string') {
       return res.status(400).send({ message: 'Please provide a valid email address' });
-    } else if (!password || (/^ *$/.test(password) === true) || (/[<>]/.test(password) === true)) {
-      return res.status(500).send({ message: 'Please provide a valid password' });
+    } else if (!password || (/^ *$/.test(password) === true) || (/[ ]/.test(password) === true) || (/[<>]/.test(password) === true)) {
+      return res.status(400).send({ message: 'Please provide a valid password' });
     }
 
     return models.user
@@ -73,18 +73,21 @@ const UserController = {
       .catch(err => res.status(500).send({ message: err.message }));
   },
   updateUserRole(req, res) {
-    const { id } = req.params;
+    const { id } = req.decoded;
     if (Number.isNaN(Number(id))) {
-      return res.status(404).send({ message: 'Provide a valid User id' });
+      return res.status(400).send({ message: 'Provide a valid User id' });
     }
 
     return models.user
       .findOne({ where: { id } })
       .then((user) => {
         if (user) {
-          user.update({ role: 'caterer' });
-          const filteredUserDetail = filterUserDetail(user);
-          return res.status(200).send({ message: 'Update successful', data: filteredUserDetail });
+          if (user.role === 'customer') {
+            user.update({ role: 'caterer' });
+            const filteredUserDetail = filterUserDetail(user);
+            return res.status(200).send({ message: 'Update successful', data: filteredUserDetail });
+          }
+          return res.status(409).send({ message: 'You are already a caterer' });
         }
         return res.status(404).send({ message: 'User not found. Please signup to continue' });
       })
@@ -92,4 +95,4 @@ const UserController = {
   },
 };
 
-export default UserController;
+export default userController;

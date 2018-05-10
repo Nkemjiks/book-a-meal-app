@@ -1,6 +1,7 @@
 import models from '../models';
+import { filterOrderDetail } from '../common/filter';
 
-const MealOrderController = {
+const mealOrderController = {
   makeOrder(req, res) {
     const userId = req.decoded.id;
     const hours = new Date().getHours();
@@ -93,6 +94,7 @@ const MealOrderController = {
         include: [
           {
             model: models.user,
+            as: 'user',
             attributes: ['fullName', 'email', 'phoneNumber', 'address'],
           },
         ],
@@ -101,7 +103,12 @@ const MealOrderController = {
         if (meal.length === 0) {
           return res.status(404).send({ message: 'You done have any order yet' });
         }
-        return res.status(200).send({ data: meal });
+        const filteredOrder = [];
+        meal.forEach((meals) => {
+          const filter = filterOrderDetail(meals);
+          filteredOrder.push(filter);
+        });
+        return res.status(200).send({ message: 'You have the following orders', data: filteredOrder });
       })
       .catch(err => res.status(500).send({ message: err.message }));
   },
@@ -109,10 +116,14 @@ const MealOrderController = {
     const userId = req.decoded.id;
     const { id } = req.params;
     const {
+      mealId,
       quantity,
       deliveryAddress,
     } = req.body;
 
+    if (Object.keys(req.body).length === 0) {
+      return res.status(400).send({ message: 'You have not provided any details to update' });
+    }
     if (Number.isNaN(Number(id))) {
       return res.status(404).send({ message: 'Provide a valid order id' });
     }
@@ -141,7 +152,29 @@ const MealOrderController = {
         if ((presentTime - orderTime) > 60) {
           return res.status(404).send({ message: 'You can not modify this order anymore' });
         }
-
+        if (mealId) {
+          return models.meal
+            .findById(mealId)
+            .then((meal) => {
+              if (!meal) {
+                return res.status(404).send({ message: 'Meal not found' });
+              }
+              const mealPrice = meal.price;
+              const updatedCost = Number(mealPrice) * Number(quantity);
+              return order
+                .updateAttributes({
+                  mealName: meal.name,
+                  mealPrice,
+                  mealId,
+                  quantity,
+                  deliveryAddress,
+                  totalCost: updatedCost,
+                })
+                .then(modifiedOrder => res.status(200).send({ data: modifiedOrder }))
+                .catch(err => res.status(500).send({ message: err.message }));
+            })
+            .catch(err => res.status(500).send({ message: err.message }));
+        }
         const updatedCost = Number(order.mealPrice) * Number(quantity);
         return order
           .updateAttributes({
@@ -156,4 +189,4 @@ const MealOrderController = {
   },
 };
 
-export default MealOrderController;
+export default mealOrderController;
