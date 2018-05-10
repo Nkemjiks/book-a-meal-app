@@ -126,11 +126,7 @@ describe('User APIs', () => {
           .post('/auth/login')
           .send(validUserLoginDetails)
           .end((err, res) => {
-            expect(res).to.have.status(200);
-            res.body.should.have.property('data');
-            res.body.should.have.property('token');
-            res.body.should.have.property('message');
-            res.body.should.have.property('message').eql('Signin successful');
+            expect(res.status).to.eql(401);
           });
         done();
       });
