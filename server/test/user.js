@@ -160,8 +160,7 @@ describe('User APIs', () => {
           .send(invalidUserLoginPassword)
           .end((err, res) => {
             expect(res).to.have.status(401);
-            res.body.should.have.property('message');
-            res.body.should.have.property('message').eql('Email or password is incorrect');
+            expect(res.body.message).to.eql('Email or password is incorrect');
           });
         done();
       });
