@@ -27,7 +27,7 @@ const routes = (app) => {
   // User route
   app.post('/auth/signup', userController.addUser);
   app.post('/auth/login', userController.logInUser);
-  app.put('/auth/', checkAuthenticatedUser, userController.updateUserRole);
+  app.put('/auth/update', checkAuthenticatedUser, userController.updateUserRole);
 };
 
 export default routes;

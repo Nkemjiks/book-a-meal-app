@@ -1,3 +1,5 @@
+import bycrypt from 'bcrypt';
+
 export default {
   validUserDetail: {
     fullName: 'Rebecca Smith',
@@ -67,5 +69,9 @@ export default {
   nonExistingUser: {
     email: 'robertkate@gmail.com',
     password: 'testing',
+  },
+  userLoginToken: {
+    email: 'johnAllman@gmail.com',
+    password: bycrypt.hashSync('testing', 10),
   },
 };

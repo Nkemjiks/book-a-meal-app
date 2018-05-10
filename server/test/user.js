@@ -177,41 +177,5 @@ describe('User APIs', () => {
         done();
       });
     });
-
-    describe('User Role Update', () => {
-      it('It should return a message "Update successful"', (done) => {
-        chai.request(server)
-          .put('/auth/1')
-          .send({})
-          .end((err, res) => {
-            expect(res).to.have.status(200);
-            res.body.should.have.property('data');
-            res.body.should.have.property('message');
-            res.body.should.have.property('message').eql('Update successful');
-          });
-        done();
-      });
-      it('It should return a message "Provide a valid User id"', (done) => {
-        chai.request(server)
-          .put('/auth/a')
-          .send({})
-          .end((err, res) => {
-            expect(res).to.have.status(400);
-            expect(res.body.message).to.eql('Provide a valid User id');
-          });
-        done();
-      });
-      it('It should return a message "User not found. Please signup to continue"', (done) => {
-        chai.request(server)
-          .put('/auth/4')
-          .send({})
-          .end((err, res) => {
-            expect(res).to.have.status(404);
-            res.body.should.have.property('message');
-            res.body.should.have.property('message').eql('User not found. Please signup to continue');
-          });
-        done();
-      });
-    });
   });
 });
