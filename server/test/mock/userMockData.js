@@ -2,10 +2,10 @@ import bycrypt from 'bcrypt';
 
 export default {
   validUserDetail: {
-    fullName: 'Rebecca Smith',
-    email: 'rebeccasmith@gmail.com',
+    fullName: 'Rebecca Deo',
+    email: 'rebeccadeo@gmail.com',
     phoneNumber: '078920839',
-    password: 'testing',
+    password: bycrypt.hashSync('testing', 10),
     address: '43, Agege Road, Lagos',
   },
   emptyUserDetail: {
@@ -17,7 +17,7 @@ export default {
   },
   invalidUserDetailName: {
     fullName: '',
-    email: 'rebeccasmith@gmail.com',
+    email: 'rebeccadeo@gmail.com',
     phoneNumber: '078920839',
     password: 'testing',
     address: '43, Agege Road, Lagos',
@@ -51,8 +51,8 @@ export default {
     address: '       ',
   },
   validUserLoginDetails: {
-    email: 'rebeccasmith@gmail.com',
-    password: 'testing',
+    email: 'rebeccadeo@gmail.com',
+    password: bycrypt.hashSync('testing', 10),
   },
   invalidUserLoginDetails: {
     email: 'rebeccasmithgmail.com',
@@ -71,7 +71,7 @@ export default {
     password: 'testing',
   },
   userLoginToken: {
-    email: 'johnAllman@gmail.com',
+    email: 'rebeccadeo@gmail.com',
     password: bycrypt.hashSync('testing', 10),
   },
 };
