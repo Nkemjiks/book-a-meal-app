@@ -83,7 +83,7 @@ const mealController = {
   modifyMeal(req, res) {
     const userId = req.decoded.id;
     const { id } = req.params;
-    const { name, price } = req.body;
+    const { name, price, imageURL } = req.body;
     const stripMultipleSpaces = name && name.replace(/  +/g, ' ');
 
     if (Object.keys(req.body).length === 0) {
@@ -97,6 +97,9 @@ const mealController = {
     }
     if (name !== undefined && (name === '' || (/^ *$/.test(name) === true) || (/^[a-zA-Z ]+$/.test(name) === false) || typeof name !== 'string')) {
       return res.status(400).send({ message: 'Please provide a valid meal name' });
+    }
+    if (imageURL !== undefined && (typeof imageURL !== 'string' || (/[<>]/.test(imageURL) === true) || (/^ *$/.test(imageURL) === true))) {
+      return res.status(400).send({ message: 'Please provide a valid image URL' });
     }
 
     return models.meal
