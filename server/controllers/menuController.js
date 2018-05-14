@@ -2,7 +2,12 @@ import models from '../models';
 import { filterMenuDetails } from '../common/filter';
 
 const menuController = {
-  // Create a Menu
+  /**
+   * @description Create a menu
+   * @param  {Object} req
+   * @param  {Object} res
+   * @return {Object}
+   */
   createMenu(req, res) {
     const { mealId } = req.body;
     const userId = req.decoded.id;
@@ -47,8 +52,14 @@ const menuController = {
       })
       .catch(err => res.status(500).send({ message: err }));
   },
+
+  /**
+   * @description Get Caterer menu
+   * @param  {Object} req
+   * @param  {Object} res
+   * @return {Object}
+   */
   getCatererMenu(req, res) {
-    // Get menu by caterer's Id
     const userId = req.decoded.id;
     const date = new Date().toDateString();
 
@@ -73,8 +84,14 @@ const menuController = {
       })
       .catch(err => res.status(500).send({ message: err.message }));
   },
+
+  /**
+   * @description Get all menu set for the day for customers
+   * @param  {Object} req
+   * @param  {Object} res
+   * @return {Object}
+   */
   getAllMenu(req, res) {
-    // Get all menu for all users
     const date = new Date().toDateString();
 
     return models.menu

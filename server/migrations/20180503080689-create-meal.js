@@ -2,9 +2,9 @@ module.exports = {
   up: (queryInterface, Sequelize) => queryInterface.createTable('meals', {
     id: {
       allowNull: false,
-      autoIncrement: true,
+      type: Sequelize.UUID,
       primaryKey: true,
-      type: Sequelize.INTEGER,
+      defaultValue: Sequelize.UUIDV4,
     },
     name: {
       type: Sequelize.STRING,
@@ -19,7 +19,7 @@ module.exports = {
       allowNull: false,
     },
     userId: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.UUID,
       onDelete: 'CASCADE',
       reference: {
         model: 'user',

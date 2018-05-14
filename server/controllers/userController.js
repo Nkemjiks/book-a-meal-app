@@ -2,8 +2,15 @@ import bcrypt from 'bcrypt';
 import models from '../models';
 import { filterUserDetail } from '../common/filter';
 import { generateToken } from '../common/token';
+import { signupValidation, signInValidation, roleUpdateValidation } from '../common/validation';
 
 const userController = {
+  /**
+   * @description Sign up a user
+   * @param  {Object} req
+   * @param  {Object} res
+   * @return {Object}
+   */
   addUser(req, res) {
     const {
       fullName,
@@ -13,19 +20,9 @@ const userController = {
       address,
     } = req.body;
 
-    if (!(fullName) || (/^ *$/.test(fullName) === true) || (/^[a-zA-Z ]+$/.test(fullName) === false) || typeof fullName !== 'string') {
-      return res.status(400).send({ message: 'Please provide a valid name' });
-    } else if (!email || (/^ *$/.test(email) === true) || (/[<>]/.test(email) === true) || (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email) === false) || typeof email !== 'string') {
-      return res.status(400).send({ message: 'Please provide a valid email address' });
-    } else if (Number.isNaN(Number(phoneNumber))) {
-      return res.status(400).send({ message: 'Please provide a valid phone number' });
-    } else if (!password || (/^ *$/.test(password) === true) || (/[ ]/.test(password) === true) || (/[<>]/.test(password) === true)) {
-      return res.status(400).send({ message: 'Please provide a valid password' });
-    } else if (!address || (/^ *$/.test(address) === true) || (/[<>]/.test(address) === true) || typeof address !== 'string') {
-      return res.status(400).send({ message: 'Please provide a valid address' });
-    }
+    signupValidation(fullName, email, phoneNumber, password, address, res);
 
-    const stripMultipleSpaces = fullName.replace(/  +/g, ' ');
+    const stripMultipleSpaces = fullName.replace(/  +/g, ' ').trim();
     const hashPassword = bcrypt.hashSync(password, 10);
     return models.user
       .findOrCreate({
@@ -48,13 +45,17 @@ const userController = {
       })
       .catch(err => res.status(500).send({ message: err.message }));
   },
+
+  /**
+   * @description Sign in a user
+   * @param  {Object} req
+   * @param  {Object} res
+   * @return {Object}
+   */
   logInUser(req, res) {
     const { email, password } = req.body;
-    if (!email || (/^ *$/.test(email) === true) || (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email) === false) || typeof email !== 'string') {
-      return res.status(400).send({ message: 'Please provide a valid email address' });
-    } else if (!password || (/^ *$/.test(password) === true) || (/[ ]/.test(password) === true) || (/[<>]/.test(password) === true)) {
-      return res.status(400).send({ message: 'Please provide a valid password' });
-    }
+
+    signInValidation(email, password, res);
 
     return models.user
       .findOne({ where: { email } })
@@ -72,11 +73,17 @@ const userController = {
       })
       .catch(err => res.status(500).send({ message: err.message }));
   },
+
+  /**
+   * @description Update a user role
+   * @param  {Object} req
+   * @param  {Object} res
+   * @return {Object}
+   */
   updateUserRole(req, res) {
     const { id } = req.decoded;
-    if (Number.isNaN(Number(id))) {
-      return res.status(400).send({ message: 'Provide a valid User id' });
-    }
+
+    roleUpdateValidation(id, res);
 
     return models.user
       .findOne({ where: { id } })

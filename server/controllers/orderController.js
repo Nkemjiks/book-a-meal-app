@@ -1,10 +1,14 @@
 import models from '../models';
 import { filterOrderDetail } from '../common/filter';
+import { placeOrderValidation, modifyOrderValidation } from '../common/validation';
 
 const mealOrderController = {
-  
-  // Place an order
-
+  /**
+   * @description Place an order
+   * @param  {Object} req - The object that sends the request
+   * @param  {Object} res - The object that returns a response
+   * @return {Object}
+   */
   makeOrder(req, res) {
     const userId = req.decoded.id;
     const hours = new Date().getHours();
@@ -13,36 +17,12 @@ const mealOrderController = {
     const date = new Date().toDateString();
 
     const {
-      catererId,
       mealId,
       quantity,
       deliveryAddress,
     } = req.body;
 
-    if (Number(hours) < 8) {
-      return res.status(404).send({ message: 'You cannot place an order yet' });
-    }
-    if (Number(hours) > 16) {
-      return res.status(404).send({ message: 'You cannot place any order for today' });
-    }
-    if (Number.isNaN(Number(mealId))) {
-      return res.status(404).send({ message: 'Provide a valid menu id' });
-    }
-    if (Number.isNaN(Number(catererId))) {
-      return res.status(404).send({ message: 'Provide a valid caterer id' });
-    }
-    if (Number.isNaN(Number(quantity))) {
-      return res.status(404).send({ message: 'Provide a valid quantity value' });
-    }
-    if (Number(quantity) > 20) {
-      return res.status(404).send({ message: 'Please select a quantity that is less than or equal to 20' });
-    }
-    if (Number(quantity) < 1) {
-      return res.status(404).send({ message: 'Please select a quantity that is greater than or equal to 1' });
-    }
-    if (deliveryAddress && ((/^ *$/.test(deliveryAddress) === true) || (/[<>]/.test(deliveryAddress) === true) || typeof deliveryAddress !== 'string')) {
-      return res.status(400).send({ message: 'Please provide a valid address' });
-    }
+    placeOrderValidation(mealId, quantity, deliveryAddress, hours, res);
 
     models.menu
       .findOne({ where: { date } })
@@ -85,8 +65,12 @@ const mealOrderController = {
       .catch(err => res.status(500).send({ message: err.message }));
   },
 
-  // Get all order
-
+  /**
+   * @description Get all orders that has been placed by customers
+   * @param  {Object} req - The object that sends the request
+   * @param  {Object} res - The object that returns a response
+   * @return {Object}
+   */
   getOrder(req, res) {
     const catererId = req.decoded.id;
     const date = new Date().toDateString();
@@ -119,8 +103,12 @@ const mealOrderController = {
       .catch(err => res.status(500).send({ message: err.message }));
   },
 
-  // Modify an order
-
+  /**
+   * @description Modify an order
+   * @param  {Object} req - The object that sends the request
+   * @param  {Object} res - The object that returns a response
+   * @return {Object}
+   */
   modifyOrder(req, res) {
     const userId = req.decoded.id;
     const { id } = req.params;
@@ -130,18 +118,7 @@ const mealOrderController = {
       deliveryAddress,
     } = req.body;
 
-    if (Object.keys(req.body).length === 0) {
-      return res.status(400).send({ message: 'You have not provided any details to update' });
-    }
-    if (Number.isNaN(Number(id))) {
-      return res.status(404).send({ message: 'Provide a valid order id' });
-    }
-    if (Number.isNaN(Number(quantity))) {
-      return res.status(404).send({ message: 'Provide a valid quantity value' });
-    }
-    if (deliveryAddress && ((/^ *$/.test(deliveryAddress) === true) || (/[<>]/.test(deliveryAddress) === true) || typeof deliveryAddress !== 'string')) {
-      return res.status(400).send({ message: 'Please provide a valid address' });
-    }
+    modifyOrderValidation(id, mealId, quantity, deliveryAddress, res, req);
 
     return models.order
       .findById(id)

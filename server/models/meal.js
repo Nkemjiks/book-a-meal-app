@@ -1,5 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
   const meal = sequelize.define('meal', {
+    id: {
+      allowNull: false,
+      type: DataTypes.UUID,
+      primaryKey: true,
+      defaultValue: DataTypes.UUIDV4,
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -24,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     userId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       allowNull: false,
       validate: {
         notEmpty: { args: true, msg: 'User id required' },
@@ -41,6 +47,9 @@ module.exports = (sequelize, DataTypes) => {
     });
     meal.belongsToMany(models.menu, {
       through: 'menuItems',
+    });
+    meal.belongsToMany(models.order, {
+      through: 'orderItems',
     });
   };
   return meal;

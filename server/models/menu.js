@@ -1,11 +1,17 @@
 module.exports = (sequelize, DataTypes) => {
   const menu = sequelize.define('menu', {
+    id: {
+      allowNull: false,
+      type: DataTypes.UUID,
+      primaryKey: true,
+      defaultValue: DataTypes.UUIDV4,
+    },
     date: {
       type: DataTypes.STRING,
       defaultValue: new Date().toDateString(),
     },
     userId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       allowNull: false,
       validate: {
         notEmpty: { args: true, msg: 'User Id is required' },

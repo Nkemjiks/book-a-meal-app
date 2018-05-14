@@ -1,25 +1,20 @@
 import models from '../models';
+import { addMealValidation, modifyMealValidation, deleteMealValidation } from '../common/validation';
 
 const mealController = {
+  /**
+   * @description Create a meal
+   * @param  {Object} req
+   * @param  {Object} res
+   * @return {Object}
+   */
   createMeal(req, res) {
     const { name, price, imageURL } = req.body;
     const userId = req.decoded.id;
 
-    if (Number.isNaN(Number(userId))) {
-      return res.status(400).send({ message: 'Provide a valid User Id' });
-    }
-    if (!name || (/^ *$/.test(name) === true) || (/^[a-zA-Z ]+$/.test(name) === false) || typeof name !== 'string') {
-      return res.status(400).send({ message: 'Please provide a valid meal name' });
-    } else if (name.length < 1 || name.length > 40) {
-      return res.status(400).send({ message: 'Meal Name must be between 10 to 40 characters long' });
-    } else if (!price || (Number.isNaN(Number(price))) === true || (/^ *$/.test(price) === true)) {
-      return res.status(400).send({ message: 'Please provide a valid meal price' });
-    } else if (typeof imageURL !== 'string' || (/[<>]/.test(imageURL) === true) || (/^ *$/.test(imageURL) === true)) {
-      return res.status(400).send({ message: 'Please provide a valid image URL' });
-    }
+    addMealValidation(name, price, imageURL, userId, res);
 
     const stripMultipleSpaces = name.replace(/  +/g, ' ');
-
     return models.meal
       .findOrCreate({
         where: { name, userId },
@@ -38,6 +33,13 @@ const mealController = {
       })
       .catch(err => res.status(500).send({ message: err.message }));
   },
+
+  /**
+   * @description Get all meals added by the caterer
+   * @param  {Object} req
+   * @param  {Object} res
+   * @return {Object}
+   */
   getAllCatererMeal(req, res) {
     const userId = req.decoded.id;
     return models.meal
@@ -61,6 +63,13 @@ const mealController = {
       })
       .catch(err => res.status(500).send({ message: err.message }));
   },
+
+  /**
+   * @description Get all meal added by all caterers
+   * @param  {Object} req
+   * @param  {Object} res
+   * @return {Object}
+   */
   getAllMeal(req, res) {
     return models.meal
       .findAll({
@@ -80,27 +89,20 @@ const mealController = {
       })
       .catch(err => res.status(500).send({ message: err.message }));
   },
+
+  /**
+   * @description Modify a meal added by a caterer
+   * @param  {Object} req
+   * @param  {Object} res
+   * @return {Object}
+   */
   modifyMeal(req, res) {
     const userId = req.decoded.id;
     const { id } = req.params;
     const { name, price, imageURL } = req.body;
     const stripMultipleSpaces = name && name.replace(/  +/g, ' ');
 
-    if (Object.keys(req.body).length === 0) {
-      return res.status(400).send({ message: 'You have not provided any details to update' });
-    }
-    if (Number.isNaN(Number(id))) {
-      return res.status(400).send({ message: 'Provide a valid meal id' });
-    }
-    if (price !== undefined && (price === '' || Number.isNaN(Number(price)))) {
-      return res.status(400).send({ message: 'Provide a valid price value' });
-    }
-    if (name !== undefined && (name === '' || (/^ *$/.test(name) === true) || (/^[a-zA-Z ]+$/.test(name) === false) || typeof name !== 'string')) {
-      return res.status(400).send({ message: 'Please provide a valid meal name' });
-    }
-    if (imageURL !== undefined && (typeof imageURL !== 'string' || (/[<>]/.test(imageURL) === true) || (/^ *$/.test(imageURL) === true))) {
-      return res.status(400).send({ message: 'Please provide a valid image URL' });
-    }
+    modifyMealValidation(name, price, imageURL, id, userId, res, req);
 
     return models.meal
       .findOne({
@@ -130,13 +132,19 @@ const mealController = {
       })
       .catch(err => res.status(500).send({ message: err.message }));
   },
+
+  /**
+   * @description Delete a meal added by a caterer
+   * @param  {Object} req
+   * @param  {Object} res
+   * @return {Object}
+   */
   deleteMeal(req, res) {
     const userId = req.decoded.id;
     const { id } = req.params;
 
-    if (Number.isNaN(Number(id))) {
-      return res.status(400).send({ message: 'Provide a valid meal id' });
-    }
+    deleteMealValidation(id, res);
+
     return models.meal
       .findById(id)
       .then((meal) => {
