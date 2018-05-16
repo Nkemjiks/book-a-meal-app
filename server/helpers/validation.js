@@ -112,10 +112,13 @@ export const menuMealsValidation = (req, res, next) => {
  * @param  {Object} next - The object that tells the next action to take place
  * @returns {Object}
  */
-export const placeOrderValidation = (req, res, next) => {
+export const orderValidation = (req, res, next) => {
   const hours = new Date().getHours();
   const { meals, deliveryAddress } = req.body;
 
+  if (Object.keys(req.body).length === 0) {
+    return res.status(400).send({ message: 'You have not provided any details' });
+  }
   if (Number(hours) < 9) {
     return res.status(404).send({ message: 'You cannot place an order yet' });
   }
@@ -123,7 +126,7 @@ export const placeOrderValidation = (req, res, next) => {
     return res.status(404).send({ message: 'You cannot place any order for today' });
   }
   if (meals.length === 0) {
-    return res.status(400).send({ message: 'You have not provided any meal to update' });
+    return res.status(400).send({ message: 'You have not provided any meal' });
   }
 
   for (const mealDetails of meals) {
@@ -141,28 +144,6 @@ export const placeOrderValidation = (req, res, next) => {
     }
   }
 
-  if (deliveryAddress && ((/^ *$/.test(deliveryAddress) === true) || (/[<>]/.test(deliveryAddress) === true) || typeof deliveryAddress !== 'string')) {
-    return res.status(400).send({ message: 'Please provide a valid address' });
-  }
-  return next();
-};
-
-/**
- * @description Validate meal id for delete meal
- * @param  {Object} req - The object that returns a response
- * @param  {Object} res - The object that sends the request
- * @param  {Object} next - The object that tells the next action to take place
- * @returns {Object}
- */
-export const modifyOrderValidation = (req, res, next) => {
-  const { meals, deliveryAddress } = req.body;
-
-  if (Object.keys(req.body).length === 0) {
-    return res.status(400).send({ message: 'You have not provided any details to update' });
-  }
-  if (meals.length === 0) {
-    return res.status(400).send({ message: 'You have not provided any meal to update' });
-  }
   if (deliveryAddress && ((/^ *$/.test(deliveryAddress) === true) || (/[<>]/.test(deliveryAddress) === true) || typeof deliveryAddress !== 'string')) {
     return res.status(400).send({ message: 'Please provide a valid address' });
   }

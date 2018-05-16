@@ -59,7 +59,7 @@ const mealOrderController = {
             where: {
               userId,
             },
-            attributes: ['id', 'name', 'imageURL', 'price'],
+            attributes: ['id', 'name', 'imageURL', 'price', 'isDeleted'],
           },
           {
             model: models.user,
@@ -69,7 +69,7 @@ const mealOrderController = {
       })
       .then((meal) => {
         if (meal.length === 0) {
-          return res.status(404).send({ message: 'You done have any order yet' });
+          return res.status(404).send({ message: 'You don\'t have any order yet' });
         }
         const totalSales = calculateTotalSales(meal);
 
@@ -92,7 +92,7 @@ const mealOrderController = {
         include: [
           {
             model: models.meal,
-            attributes: ['id', 'name', 'imageURL', 'price'],
+            attributes: ['id', 'name', 'imageURL', 'price', 'isDeleted'],
           },
         ],
       })

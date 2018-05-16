@@ -3,48 +3,129 @@ import menuController from '../controllers/menuController';
 import orderController from '../controllers/orderController';
 import userController from '../controllers/userController';
 
-// Middleware
-import { checkUserRole, checkAuthenticatedUser, checkValidMealId } from '../helpers/middlewares';
+// Import Middleware
+import {
+  checkUserRole,
+  checkAuthenticatedUser,
+  checkValidMealId,
+} from '../helpers/middlewares';
 
-// Validations
+// Import Validations
 import {
   signupValidation,
   signInValidation,
   addMealValidation,
   modifyMealValidation,
   menuMealsValidation,
-  placeOrderValidation,
-  modifyOrderValidation,
+  orderValidation,
 } from '../helpers/validation';
 
-// Token Verification
+// Import Token Verification
 import { verifyToken } from '../helpers/token';
 
 const routes = (app) => {
   // User route
   app.post('/auth/signup', signupValidation, userController.addUser);
   app.post('/auth/login', signInValidation, userController.logInUser);
-  app.put('/auth/update', verifyToken, checkAuthenticatedUser, userController.updateUserRole);
+  app.put(
+    '/auth/update',
+    verifyToken,
+    checkAuthenticatedUser,
+    userController.updateUserRole,
+  );
 
   // Meal routes
-  app.post('/meals/', verifyToken, checkUserRole, addMealValidation, mealController.createMeal);
-  app.get('/meals/caterer', verifyToken, checkUserRole, mealController.getAllCatererMeal);
-  app.get('/meals/', verifyToken, checkAuthenticatedUser, mealController.getAllMeal);
-  app.put('/meals/:id', verifyToken, checkUserRole, modifyMealValidation, mealController.modifyMeal);
-  app.delete('/meals/:id', verifyToken, checkUserRole, mealController.deleteMeal);
+  app.post(
+    '/meals/',
+    verifyToken,
+    checkUserRole,
+    addMealValidation,
+    mealController.createMeal,
+  );
+  app.get(
+    '/meals/caterer',
+    verifyToken,
+    checkUserRole,
+    mealController.getAllCatererMeal,
+  );
+  app.get(
+    '/meals/',
+    verifyToken,
+    checkAuthenticatedUser,
+    mealController.getAllMeal,
+  );
+  app.put(
+    '/meals/:id',
+    verifyToken,
+    checkUserRole,
+    modifyMealValidation,
+    mealController.modifyMeal,
+  );
+  app.delete(
+    '/meals/:id',
+    verifyToken,
+    checkUserRole,
+    mealController.deleteMeal,
+  );
 
   // Menu routes
-  app.post('/menu/', verifyToken, checkUserRole, menuMealsValidation, checkValidMealId, menuController.createMenu);
-  app.get('/menu/caterer', verifyToken, checkAuthenticatedUser, menuController.getCatererMenu);
+  app.post(
+    '/menu/',
+    verifyToken,
+    checkUserRole,
+    menuMealsValidation,
+    checkValidMealId,
+    menuController.createMenu,
+  );
+  app.get(
+    '/menu/caterer',
+    verifyToken,
+    checkAuthenticatedUser,
+    menuController.getCatererMenu,
+  );
   app.get('/menu/', menuController.getAllMenu);
-  app.delete('/menu/', verifyToken, checkUserRole, menuMealsValidation, checkValidMealId, menuController.removeMealFromMenu);
+  app.delete(
+    '/menu/',
+    verifyToken,
+    checkUserRole,
+    menuMealsValidation,
+    checkValidMealId,
+    menuController.removeMealFromMenu,
+  );
 
-  // // Meal Order routes
-  app.post('/orders', verifyToken, checkAuthenticatedUser, placeOrderValidation, orderController.placeOrder);
-  app.get('/orders/caterer', verifyToken, checkUserRole, orderController.getCatererOrder);
-  app.get('/orders', verifyToken, checkAuthenticatedUser, orderController.getCustomerOrder);
-  app.put('/orders/:id', verifyToken, checkAuthenticatedUser, modifyOrderValidation, orderController.modifyOrder);
-  app.delete('/orders/:id', verifyToken, checkAuthenticatedUser, orderController.cancelOrder);
+  // Meal Order routes
+  app.post(
+    '/orders',
+    verifyToken,
+    checkAuthenticatedUser,
+    orderValidation,
+    orderController.placeOrder,
+  );
+  app.get(
+    '/orders/caterer',
+    verifyToken,
+    checkUserRole,
+    orderController.getCatererOrder,
+  );
+  app.get(
+    '/orders',
+    verifyToken,
+    checkAuthenticatedUser,
+    orderController.getCustomerOrder,
+  );
+  app.put(
+    '/orders/:id',
+    verifyToken,
+    checkAuthenticatedUser,
+    orderValidation,
+    orderController.modifyOrder,
+  );
+  app.delete(
+    '/orders/:id',
+    verifyToken,
+    checkAuthenticatedUser,
+    orderController.cancelOrder,
+  );
 };
 
 export default routes;

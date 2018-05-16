@@ -135,7 +135,6 @@ const mealController = {
   deleteMeal(req, res) {
     const userId = req.decoded.id;
     const { id } = req.params;
-    const date = new Date().toDateString();
 
     return models.meal
       .findById(id)
@@ -146,28 +145,12 @@ const mealController = {
         if (meal.userId !== userId) {
           return res.status(403).send({ message: 'You are not authorized to delete this meal' });
         }
-        const menuExist = await models.menu.findOne({
-          where: {
-            date,
-            userId,
-          },
-        });
-        if (menuExist) {
-          menuExist
-            .hasMeal([id])
-            .then((isInMenu) => {
-              if (isInMenu) {
-                return res.status(200).send({ message: 'Meal already exist in the menu for today' });
-              }
-              return meal
-                .update({
-                  isDeleted: true,
-                })
-                .then(deletedMeal => res.status(200).send({ message: 'Meal has been deleted successfully' }))
-                .catch(err => res.status(500).send({ message: err.message }));
-            })
-            .catch(err => res.status(500).send({ message: err.message }));
-        }  
+        return meal
+          .update({
+            isDeleted: true,
+          })
+          .then(deletedMeal => res.status(200).send({ message: 'Meal has been deleted successfully' }))
+          .catch(err => res.status(500).send({ message: err.message }));
       })
       .catch(err => res.status(500).send({ message: err.message }));
   },
