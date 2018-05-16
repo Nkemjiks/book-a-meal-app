@@ -1,5 +1,5 @@
 import models from '../models';
-import { filterMenuDetails } from '../common/filter';
+import { filterMenuDetails } from '../helpers/filter';
 
 const menuController = {
   /**
@@ -9,46 +9,29 @@ const menuController = {
    * @return {Object}
    */
   createMenu(req, res) {
-    const { mealId } = req.body;
     const userId = req.decoded.id;
     const date = new Date().toDateString();
 
-    if (Number.isNaN(Number(mealId))) {
-      return res.status(400).send({ message: 'Provide a valid meal id' });
-    }
-
-    return models.meal
-      .findOne({
+    const { meals } = req.body;
+    
+    return models.menu
+      .findOrCreate({
         where: {
-          id: mealId,
           userId,
+          date,
+        },
+        defaults: {
+          userId,
+          date,
         },
       })
-      .then((meal) => {
-        if (!meal) {
-          return res.status(403).send({ message: 'You can not add this meal' });
+      .spread((menu, created) => {
+        menu.addMeals(meals);
+        menu.save();
+        if (created === false) {
+          return res.status(200).send({ message: 'Menu has been updated', data: menu });
         }
-        return models.menu
-          .findOrCreate({
-            where: {
-              userId,
-              date,
-            },
-            defaults: {
-              userId,
-              date,
-              mealId,
-            },
-          })
-          .spread((menu, created) => {
-            menu.addMeals(mealId);
-            menu.save();
-            if (created === false) {
-              return res.status(200).send({ message: 'Menu has been updated', data: menu });
-            }
-            return res.status(201).send({ message: 'Menu created', data: menu });
-          })
-          .catch(err => res.status(500).send({ message: err }));
+        return res.status(201).send({ message: 'Menu created', data: menu });
       })
       .catch(err => res.status(500).send({ message: err }));
   },
@@ -72,6 +55,9 @@ const menuController = {
         include: [
           {
             model: models.meal,
+            where: {
+              isDeleted: false,
+            },
             attributes: ['name', 'imageURL', 'price'],
           },
         ],
@@ -83,6 +69,35 @@ const menuController = {
         return res.status(200).send({ data: meals });
       })
       .catch(err => res.status(500).send({ message: err.message }));
+  },
+
+  /**
+   * @description Remove certain meal from the menu by the caterer
+   * @param  {Object} req
+   * @param  {Object} res
+   * @return {Object}
+   */
+  removeMealFromMenu(req, res) {
+    const userId = req.decoded.id;
+    const date = new Date().toDateString();
+
+    const { meals } = req.body;
+    return models.menu
+      .findOne({
+        where: {
+          userId,
+          date,
+        },
+      })
+      .then((menu) => {
+        if (!menu) {
+          return res.status(200).send({ message: 'Menu doesn\'t exist' });
+        }
+        menu.removeMeals(meals);
+        menu.save();
+        return res.status(201).send({ message: 'Menu has been updated', data: menu });
+      })
+      .catch(err => res.status(500).send({ message: err }));
   },
 
   /**
@@ -102,6 +117,9 @@ const menuController = {
         include: [
           {
             model: models.meal,
+            where: {
+              isDeleted: false,
+            },
             attributes: ['name', 'imageURL', 'price'],
           },
           {

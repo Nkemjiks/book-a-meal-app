@@ -33,7 +33,7 @@
       "server/test/*.js",
       "server/test/mock/*.js",
       "server/database/*.js",
-      "server/common/*.js"
+      "server/helpers/*.js"
     ],
     "sourceMap": false,
     "instrument": false

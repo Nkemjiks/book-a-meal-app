@@ -1,6 +1,5 @@
 import models from '../models';
-import { filterOrderDetail } from '../common/filter';
-import { placeOrderValidation, modifyOrderValidation } from '../common/validation';
+import calculateTotalSales from '../helpers/calculation';
 
 const mealOrderController = {
   /**
@@ -9,60 +8,33 @@ const mealOrderController = {
    * @param  {Object} res - The object that returns a response
    * @return {Object}
    */
-  makeOrder(req, res) {
+  async placeOrder(req, res) {
     const userId = req.decoded.id;
     const hours = new Date().getHours();
     const minutes = new Date().getMinutes();
     const time = `${hours}:${minutes}`;
     const date = new Date().toDateString();
 
-    const {
-      mealId,
-      quantity,
-      deliveryAddress,
-    } = req.body;
+    const { meals, deliveryAddress } = req.body;
 
-    placeOrderValidation(mealId, quantity, deliveryAddress, hours, res);
+    const menu = await models.menu.findOne({ where: { date } });
+    if (!menu) {
+      return res.status(404).send({ message: 'The menu for today has not been set yet' });
+    }
 
-    models.menu
-      .findOne({ where: { date } })
-      .then((menu) => {
-        if (!menu) {
-          return res.status(404).send({ message: 'The menu for today has not been set yet' });
+    return models.order
+      .create({
+        userId,
+        time,
+        deliveryAddress,
+      })
+      .then((order) => {
+        for (const meal of meals) {
+          order.setMeals(meal.mealId, { through: { quantity: meal.quantity } });
         }
+        return res.status(201).send({ message: 'Order Placed successfully', data: order });
       })
-      .catch(err => res.status(500).send({ message: err.message }));
-
-    return models.meal
-      .findOne({
-        where: {
-          id: mealId,
-        },
-      })
-      .then((meal) => {
-        if (!meal) {
-          return res.status(404).send({ message: 'Meal not found' });
-        }
-        const orderedMeal = meal;
-        return orderedMeal;
-      })
-      .then((orderedMeal) => {
-        models.order
-          .create({
-            customerId: userId,
-            catererId,
-            time,
-            mealName: orderedMeal.name,
-            mealId: orderedMeal.id,
-            mealPrice: orderedMeal.price,
-            quantity,
-            totalCost: (Number(orderedMeal.price) * Number(quantity)),
-            deliveryAddress,
-          })
-          .then(order => res.status(201).send({ message: 'Order Placed successfully', data: order }))
-          .catch(err => res.status(500).send({ message: err.message }));
-      })
-      .catch(err => res.status(500).send({ message: err.message }));
+      .catch(err => res.status(500).send({ message: err }));
   },
 
   /**
@@ -71,21 +43,27 @@ const mealOrderController = {
    * @param  {Object} res - The object that returns a response
    * @return {Object}
    */
-  getOrder(req, res) {
-    const catererId = req.decoded.id;
+  getCatererOrder(req, res) {
+    const userId = req.decoded.id;
     const date = new Date().toDateString();
 
     return models.order
       .findAll({
         where: {
-          catererId,
           date,
+          isDeleted: false,
         },
         include: [
           {
+            model: models.meal,
+            where: {
+              userId,
+            },
+            attributes: ['id', 'name', 'imageURL', 'price'],
+          },
+          {
             model: models.user,
-            as: 'user',
-            attributes: ['fullName', 'email', 'phoneNumber', 'address'],
+            attributes: ['id', 'fullName', 'email', 'phoneNumber', 'address'],
           },
         ],
       })
@@ -93,12 +71,37 @@ const mealOrderController = {
         if (meal.length === 0) {
           return res.status(404).send({ message: 'You done have any order yet' });
         }
-        const filteredOrder = [];
-        meal.forEach((meals) => {
-          const filter = filterOrderDetail(meals);
-          filteredOrder.push(filter);
-        });
-        return res.status(200).send({ message: 'You have the following orders', data: filteredOrder });
+        const totalSales = calculateTotalSales(meal);
+
+        return res.status(200).send({ message: 'You have the following orders', data: meal, totalSales });
+      })
+      .catch(err => res.status(500).send({ message: err.message }));
+  },
+
+  getCustomerOrder(req, res) {
+    const userId = req.decoded.id;
+    const date = new Date().toDateString();
+
+    return models.order
+      .findAll({
+        where: {
+          userId,
+          date,
+          isDeleted: false,
+        },
+        include: [
+          {
+            model: models.meal,
+            attributes: ['id', 'name', 'imageURL', 'price'],
+          },
+        ],
+      })
+      .then((meal) => {
+        if (meal.length === 0) {
+          return res.status(404).send({ message: 'You done have any order yet' });
+        }
+        const totalExpenses = calculateTotalSales(meal);
+        return res.status(200).send({ message: 'You have the following orders', data: meal, totalExpenses });
       })
       .catch(err => res.status(500).send({ message: err.message }));
   },
@@ -112,21 +115,20 @@ const mealOrderController = {
   modifyOrder(req, res) {
     const userId = req.decoded.id;
     const { id } = req.params;
-    const {
-      mealId,
-      quantity,
-      deliveryAddress,
-    } = req.body;
-
-    modifyOrderValidation(id, mealId, quantity, deliveryAddress, res, req);
+    const { meals, deliveryAddress } = req.body;
 
     return models.order
-      .findById(id)
+      .findOne({
+        where: {
+          id,
+          isDeleted: false,
+        },
+      })
       .then((order) => {
         if (!order) {
           return res.status(404).send({ message: 'Order not found' });
         }
-        if (order.customerId !== userId) {
+        if (order.userId !== userId) {
           return res.status(401).send({ message: 'You can not modify this order' });
         }
 
@@ -138,37 +140,43 @@ const mealOrderController = {
         if ((presentTime - orderTime) > 60) {
           return res.status(404).send({ message: 'You can not modify this order anymore' });
         }
-        if (mealId) {
-          return models.meal
-            .findById(mealId)
-            .then((meal) => {
-              if (!meal) {
-                return res.status(404).send({ message: 'Meal not found' });
-              }
-              const mealPrice = meal.price;
-              const updatedCost = Number(mealPrice) * Number(quantity);
-              return order
-                .updateAttributes({
-                  mealName: meal.name,
-                  mealPrice,
-                  mealId,
-                  quantity,
-                  deliveryAddress,
-                  totalCost: updatedCost,
-                })
-                .then(modifiedOrder => res.status(200).send({ data: modifiedOrder }))
-                .catch(err => res.status(500).send({ message: err.message }));
-            })
-            .catch(err => res.status(500).send({ message: err.message }));
-        }
-        const updatedCost = Number(order.mealPrice) * Number(quantity);
         return order
-          .updateAttributes({
-            quantity,
-            deliveryAddress,
-            totalCost: updatedCost,
+          .update({ deliveryAddress })
+          .then((updatedOrder) => {
+            for (const meal of meals) {
+              updatedOrder.setMeals(meal.mealId, { through: { quantity: meal.quantity } });
+            }
+            return res.status(201).send({ message: 'Order Modified successfully', data: order });
           })
-          .then(modifiedOrder => res.status(200).send({ data: modifiedOrder }))
+          .catch(err => res.status(500).send({ message: err.message }));
+      })
+      .catch(err => res.status(500).send({ message: err.message }));
+  },
+
+  /**
+   * @description Cancel an order
+   * @param  {Object} req - The object that sends the request
+   * @param  {Object} res - The object that returns a response
+   * @return {Object}
+   */
+  cancelOrder(req, res) {
+    const userId = req.decoded.id;
+    const { id } = req.params;
+
+    return models.order
+      .findById(id)
+      .then((order) => {
+        if (!order) {
+          return res.status(404).send({ message: 'This order does not exist in the database' });
+        }
+        if (order.userId !== userId) {
+          return res.status(403).send({ message: 'You are not authorized to delete this order' });
+        }
+        return models.order
+          .update({
+            isDeleted: true,
+          })
+          .then(canceledOrder => res.status(200).send({ message: 'Order has been deleted successfully well' }))
           .catch(err => res.status(500).send({ message: err.message }));
       })
       .catch(err => res.status(500).send({ message: err.message }));

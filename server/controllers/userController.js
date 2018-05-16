@@ -1,8 +1,7 @@
 import bcrypt from 'bcrypt';
 import models from '../models';
-import { filterUserDetail } from '../common/filter';
-import { generateToken } from '../common/token';
-import { signupValidation, signInValidation, roleUpdateValidation } from '../common/validation';
+import { filterUserDetail } from '../helpers/filter';
+import { generateToken } from '../helpers/token';
 
 const userController = {
   /**
@@ -19,8 +18,6 @@ const userController = {
       password,
       address,
     } = req.body;
-
-    signupValidation(fullName, email, phoneNumber, password, address, res);
 
     const stripMultipleSpaces = fullName.replace(/  +/g, ' ').trim();
     const hashPassword = bcrypt.hashSync(password, 10);
@@ -55,8 +52,6 @@ const userController = {
   logInUser(req, res) {
     const { email, password } = req.body;
 
-    signInValidation(email, password, res);
-
     return models.user
       .findOne({ where: { email } })
       .then((user) => {
@@ -82,8 +77,6 @@ const userController = {
    */
   updateUserRole(req, res) {
     const { id } = req.decoded;
-
-    roleUpdateValidation(id, res);
 
     return models.user
       .findOne({ where: { id } })

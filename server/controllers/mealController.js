@@ -1,5 +1,4 @@
 import models from '../models';
-import { addMealValidation, modifyMealValidation, deleteMealValidation } from '../common/validation';
 
 const mealController = {
   /**
@@ -11,8 +10,6 @@ const mealController = {
   createMeal(req, res) {
     const { name, price, imageURL } = req.body;
     const userId = req.decoded.id;
-
-    addMealValidation(name, price, imageURL, userId, res);
 
     const stripMultipleSpaces = name.replace(/  +/g, ' ');
     return models.meal
@@ -31,7 +28,7 @@ const mealController = {
         }
         return res.status(201).send({ message: 'New meal added successfully', data: meal });
       })
-      .catch(err => res.status(500).send({ message: err.message }));
+      .catch(err => res.status(500).send({ message: err }));
   },
 
   /**
@@ -46,14 +43,9 @@ const mealController = {
       .findAll({
         where: {
           userId,
+          isDeleted: false,
         },
         attributes: ['id', 'name', 'imageURL', 'price'],
-        include: [
-          {
-            model: models.user,
-            attributes: ['fullName', 'email', 'role'],
-          },
-        ],
       })
       .then((meal) => {
         if (meal.length === 0) {
@@ -73,6 +65,9 @@ const mealController = {
   getAllMeal(req, res) {
     return models.meal
       .findAll({
+        where: {
+          isDeleted: false,
+        },
         attributes: ['id', 'name', 'imageURL', 'price'],
         include: [
           {
@@ -99,10 +94,8 @@ const mealController = {
   modifyMeal(req, res) {
     const userId = req.decoded.id;
     const { id } = req.params;
-    const { name, price, imageURL } = req.body;
+    const { name } = req.body;
     const stripMultipleSpaces = name && name.replace(/  +/g, ' ');
-
-    modifyMealValidation(name, price, imageURL, id, userId, res, req);
 
     return models.meal
       .findOne({
@@ -142,30 +135,39 @@ const mealController = {
   deleteMeal(req, res) {
     const userId = req.decoded.id;
     const { id } = req.params;
-
-    deleteMealValidation(id, res);
+    const date = new Date().toDateString();
 
     return models.meal
       .findById(id)
-      .then((meal) => {
+      .then(async (meal) => {
         if (!meal) {
           return res.status(404).send({ message: 'This meal does not exist in the database' });
         }
         if (meal.userId !== userId) {
           return res.status(403).send({ message: 'You are not authorized to delete this meal' });
         }
-        return models.meal
-          .destroy({
-            where: {
-              id,
-            },
-          })
-          .then((deletedMealResponse) => {
-            if (deletedMealResponse === 1) {
-              return res.status(200).send({ message: 'Meal has been deleted successfully well' });
-            }
-          })
-          .catch(err => res.status(500).send({ message: err.message }));
+        const menuExist = await models.menu.findOne({
+          where: {
+            date,
+            userId,
+          },
+        });
+        if (menuExist) {
+          menuExist
+            .hasMeal([id])
+            .then((isInMenu) => {
+              if (isInMenu) {
+                return res.status(200).send({ message: 'Meal already exist in the menu for today' });
+              }
+              return meal
+                .update({
+                  isDeleted: true,
+                })
+                .then(deletedMeal => res.status(200).send({ message: 'Meal has been deleted successfully' }))
+                .catch(err => res.status(500).send({ message: err.message }));
+            })
+            .catch(err => res.status(500).send({ message: err.message }));
+        }  
       })
       .catch(err => res.status(500).send({ message: err.message }));
   },

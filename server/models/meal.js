@@ -36,10 +36,12 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: { args: true, msg: 'User id required' },
       },
     },
-  }, {
-    paranoid: true,
-    timestamps: true,
-  });
+    isDeleted: {
+      allowNull: false,
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+  }, {});
   meal.associate = (models) => {
     meal.belongsTo(models.user, {
       foreignKey: 'userId',

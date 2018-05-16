@@ -20,21 +20,19 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: { args: true, msg: 'User id required' },
       },
     },
-    totalCost: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        notEmpty: { args: true, msg: 'Total cost is required' },
-      },
-    },
     deliveryAddress: {
       type: DataTypes.STRING,
       allowNull: true,
     },
+    isDeleted: {
+      allowNull: false,
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   });
   order.associate = (models) => {
     order.belongsTo(models.user, {
-      foreignKey: 'customerId',
+      foreignKey: 'userId',
       onDelete: 'CASCADE',
     });
     order.belongsToMany(models.meal, {

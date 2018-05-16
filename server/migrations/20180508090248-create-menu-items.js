@@ -1,10 +1,9 @@
 module.exports = {
   up: (queryInterface, Sequelize) => queryInterface.createTable('menuItems', {
     id: {
-      allowNull: false,
-      type: Sequelize.UUID,
+      type: Sequelize.INTEGER,
       primaryKey: true,
-      defaultValue: Sequelize.UUIDV4,
+      autoIncrement: true,
     },
     mealId: {
       type: Sequelize.UUID,
@@ -12,8 +11,8 @@ module.exports = {
       references: {
         model: 'meals',
         key: 'id',
+        as: 'mealId',
       },
-      onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
     },
     menuId: {
@@ -22,8 +21,8 @@ module.exports = {
       references: {
         model: 'menus',
         key: 'id',
+        as: 'menuId',
       },
-      onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
     },
     createdAt: {

@@ -16,13 +16,13 @@ module.exports = {
       type: Sequelize.UUID,
       allowNull: false,
     },
-    totalCost: {
-      type: Sequelize.INTEGER,
-      allowNull: false,
-    },
     deliveryAddress: {
       type: Sequelize.STRING,
       allowNull: true,
+    },
+    isDeleted: {
+      allowNull: false,
+      type: Sequelize.BOOLEAN,
     },
     createdAt: {
       allowNull: false,

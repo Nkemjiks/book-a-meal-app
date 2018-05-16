@@ -1,3 +1,4 @@
+// Filter the user details that are returned after signing up
 const filterUserDetail = user => ({
   id: user.id,
   fullName: user.fullName,
@@ -7,6 +8,7 @@ const filterUserDetail = user => ({
   address: user.address,
 });
 
+// Filter the menu details that is displayed to users
 const filterMenuDetails = menu => ({
   id: menu.id,
   date: menu.date,
@@ -15,21 +17,7 @@ const filterMenuDetails = menu => ({
   caterer: menu.user,
 });
 
-const filterOrderDetail = meal => ({
-  date: meal.date,
-  time: meal.time,
-  customerId: meal.customerId,
-  mealId: meal.mealId,
-  mealname: meal.mealName,
-  mealPrice: meal.mealPrice,
-  quantity: meal.quantity,
-  totalCost: meal.totalCost,
-  deliveryAddress: meal.deliveryAddress,
-  customerDetails: meal.user,
-});
-
 export {
-  filterOrderDetail,
   filterUserDetail,
   filterMenuDetails,
 };
