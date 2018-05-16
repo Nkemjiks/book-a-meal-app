@@ -120,12 +120,6 @@ const routes = (app) => {
     orderValidation,
     orderController.modifyOrder,
   );
-  app.delete(
-    '/orders/:id',
-    verifyToken,
-    checkAuthenticatedUser,
-    orderController.cancelOrder,
-  );
 };
 
 export default routes;

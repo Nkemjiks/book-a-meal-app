@@ -152,35 +152,6 @@ const mealOrderController = {
       })
       .catch(err => res.status(500).send({ message: err.message }));
   },
-
-  /**
-   * @description Cancel an order
-   * @param  {Object} req - The object that sends the request
-   * @param  {Object} res - The object that returns a response
-   * @return {Object}
-   */
-  cancelOrder(req, res) {
-    const userId = req.decoded.id;
-    const { id } = req.params;
-
-    return models.order
-      .findById(id)
-      .then((order) => {
-        if (!order) {
-          return res.status(404).send({ message: 'This order does not exist in the database' });
-        }
-        if (order.userId !== userId) {
-          return res.status(403).send({ message: 'You are not authorized to delete this order' });
-        }
-        return models.order
-          .update({
-            isDeleted: true,
-          })
-          .then(canceledOrder => res.status(200).send({ message: 'Order has been deleted successfully well' }))
-          .catch(err => res.status(500).send({ message: err.message }));
-      })
-      .catch(err => res.status(500).send({ message: err.message }));
-  },
 };
 
 export default mealOrderController;

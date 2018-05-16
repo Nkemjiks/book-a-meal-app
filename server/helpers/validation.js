@@ -20,7 +20,7 @@ export const signupValidation = (req, res, next) => {
     return res.status(400).send({ message: 'Please provide a valid email address' });
   } else if (Number.isNaN(Number(phoneNumber))) {
     return res.status(400).send({ message: 'Please provide a valid phone number' });
-  } else if (!password || (/^ *$/.test(password) === true) || (/[ ]/.test(password) === true) || (/[=]/.test(address) === true) || (/[<>]/.test(password) === true)) {
+  } else if (!password || (/^ *$/.test(password) === true) || (/[ ]/.test(password) === true) || (/[<>]/.test(password) === true)) {
     return res.status(400).send({ message: 'Please provide a valid password' });
   } else if (!address || (/^ *$/.test(address) === true) || (/[<>]/.test(address) === true) || (/[=]/.test(address) === true) || typeof address !== 'string') {
     return res.status(400).send({ message: 'Please provide a valid address' });
