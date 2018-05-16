@@ -109,4 +109,28 @@ export default {
     email: 'rebeccadeo@gmail.com',
     password: bycrypt.hashSync('testing', 10),
   },
+  validUserLoginDetailsFirst: {
+    email: 'rebeccadeo@gmail.com',
+    password: 'testing',
+  },
+  validUserLoginDetailsSecond: {
+    email: 'jackstone@gmail.com',
+    password: 'testing',
+  },
+  invalidUserLoginPasswordSecond: {
+    email: 'rebeccadeo@gmail.com',
+    password: 'testingjs',
+  },
+  nonExistingUserFirst: {
+    email: 'robertkate@gmail.com',
+    password: 'testing',
+  },
+  invalidUserLoginDetailsThird: {
+    email: 'rebeccasmithgmail',
+    password: 'testing',
+  },
+  invalidUserLoginDetailPasswordFirst: {
+    email: 'rebeccasmith@gmail.com',
+    password: 'test<>ing',
+  },
 };

@@ -3,7 +3,7 @@ import chaiHttp from 'chai-http';
 import expect from 'expect';
 import server from '../app';
 import models from '../models';
-import userMockData from './mock/userSignupMockData';
+import userMockData from './mock/userMockData';
 
 /** Test cases for user signup
 We are testing all input case time to make sure that our validations are working
@@ -24,6 +24,12 @@ const {
   invalidUserDetailPasswordSecond,
   invalidUserDetailAddressSecond,
   invalidUserDetailAddressThird,
+  validUserLoginDetailsFirst,
+  validUserLoginDetailsSecond,
+  invalidUserLoginPasswordSecond,
+  invalidUserLoginDetailPasswordFirst,
+  invalidUserLoginDetailsThird,
+  nonExistingUserFirst,
 } = userMockData;
 
 chai.use(chaiHttp);
@@ -180,6 +186,73 @@ describe('User Controller', () => {
           expect(res.body.message).toEqual('Please provide a valid address');
           done();
         });
+    });
+  });
+  describe('User Signin', () => {
+    // Sign in with valid input information
+    it('It should return a message "Signin successful"', (done) => {
+      chai.request(server)
+        .post('/auth/login')
+        .send(validUserLoginDetailsFirst)
+        .end((err, res) => {
+          expect(res.status).toEqual(200);
+          expect(res.body.message).toEqual('Signin successful');
+        });
+      done();
+    });
+    // Sign in with another valid input information
+    it('It should return a message "Signin successful"', (done) => {
+      chai.request(server)
+        .post('/auth/login')
+        .send(validUserLoginDetailsSecond)
+        .end((err, res) => {
+          expect(res.status).toEqual(200);
+          expect(res.body.message).toEqual('Signin successful');
+        });
+      done();
+    });
+    // Signin with another incorrect password
+    it('It should return a message "Email or password is incorrect"', (done) => {
+      chai.request(server)
+        .post('/auth/login')
+        .send(invalidUserLoginPasswordSecond)
+        .end((err, res) => {
+          expect(res.status).toEqual(401);
+          expect(res.body.message).toEqual('Email or password is incorrect');
+        });
+      done();
+    });
+    // Signin with a non-existent user account
+    it('It should return a message "Account does not exist. Please signup to continue"', (done) => {
+      chai.request(server)
+        .post('/auth/login')
+        .send(nonExistingUserFirst)
+        .end((err, res) => {
+          expect(res.status).toEqual(401);
+          expect(res.body.message).toEqual('Account does not exist. Please signup to continue');
+        });
+      done();
+    });
+    // Sign in with an email address that doesn't contain '@' and '.com'
+    it('It should return a message "Please provide a valid email address"', (done) => {
+      chai.request(server)
+        .post('/auth/login')
+        .send(invalidUserLoginDetailsThird)
+        .end((err, res) => {
+          expect(res.status).toEqual(400);
+          expect(res.body.message).toEqual('Please provide a valid email address');
+        });
+      done();
+    });
+    // Signin with a password conatining '<>'
+    it('It should return a message "Please provide a valid password"', (done) => {
+      chai.request(server)
+        .post('/auth/login')
+        .send(invalidUserLoginDetailPasswordFirst)
+        .end((err, res) => {expect(res.status).toEqual(400);
+          expect(res.body.message).toEqual('Please provide a valid password');
+        });
+      done();
     });
   });
 });
