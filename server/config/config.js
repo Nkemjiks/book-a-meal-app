@@ -11,11 +11,7 @@ module.exports = {
     logging: false,
   },
   test: {
-    username: 'postgres',
-    password: 2859,
-    database: 'book-a-meal-test',
-    host: '127.0.0.1',
-    port: 5432,
+    use_env_variable: 'DATABASE_TEST_URL',
     dialect: 'postgres',
     logging: false,
   },
