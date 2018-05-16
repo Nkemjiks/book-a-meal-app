@@ -72,7 +72,7 @@ describe('User Controller', () => {
       done();
     });
     // Signup with input fields that are completely empty
-    it('It should return a message "Please provide a valid name" if an empty object is sent', (done) => {
+    it('It should return a message "Please provide a valid name"', (done) => {
       chai.request(server)
         .post('/auth/signup')
         .send(emptyUserDetail)
