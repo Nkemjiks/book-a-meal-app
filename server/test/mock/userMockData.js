@@ -133,4 +133,12 @@ export default {
     email: 'rebeccasmith@gmail.com',
     password: 'test<>ing',
   },
+  catererLoginDetailsFirst: {
+    email: 'janedeo@gmail.com',
+    password: 'testing',
+  },
+  catererLoginDetailsSecond: {
+    email: 'alexjames@gmail.com',
+    password: 'testing',
+  },
 };

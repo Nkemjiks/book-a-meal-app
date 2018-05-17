@@ -13,7 +13,6 @@ and that we are getting the desired output
 // Mock data imported from a userMockData
 const {
   validUserDetailFirst,
-  validUserDetailSecond,
   invalidUserDetailEmailSecond,
   invalidUserDetailEmailThird,
   emptyUserDetail,
@@ -25,7 +24,6 @@ const {
   invalidUserDetailAddressSecond,
   invalidUserDetailAddressThird,
   validUserLoginDetailsFirst,
-  validUserLoginDetailsSecond,
   invalidUserLoginPasswordSecond,
   invalidUserLoginDetailPasswordFirst,
   invalidUserLoginDetailsThird,
@@ -33,15 +31,18 @@ const {
 } = userMockData;
 
 let firstCustomerToken;
-let secondCustomerToken;
 chai.use(chaiHttp);
 
 describe('User Controller', () => {
   describe('User Signup', () => {
-    // This will empty the database so we can save the information afresh
+    // This will delete the account with this email addresses so we can save the information afresh
     before((done) => {
       models.user
-        .destroy({ truncate: true })
+        .destroy({
+          where: {
+            email: 'rebeccadeo@gmail.com',
+          },
+        })
         .then(() => {
           done();
         });
@@ -50,16 +51,6 @@ describe('User Controller', () => {
       chai.request(server)
         .post('/auth/signup')
         .send(validUserDetailFirst)
-        .end((err, res) => {
-          expect(res.status).toEqual(201);
-          expect(res.body.message).toEqual('User successfully created');
-        });
-      done();
-    });
-    it('It should remove the extra spaces and signup the user', (done) => {
-      chai.request(server)
-        .post('/auth/signup')
-        .send(validUserDetailSecond)
         .end((err, res) => {
           expect(res.status).toEqual(201);
           expect(res.body.message).toEqual('User successfully created');
@@ -198,20 +189,8 @@ describe('User Controller', () => {
           firstCustomerToken = res.body.token;
           expect(res.status).toEqual(200);
           expect(res.body.message).toEqual('Signin successful');
+          done();
         });
-      done();
-    });
-    it(`It should return a message "Signin successful" 
-    when you signin with another valid information`, (done) => {
-      chai.request(server)
-        .post('/auth/login')
-        .send(validUserLoginDetailsSecond)
-        .end((err, res) => {
-          secondCustomerToken = res.body.token;
-          expect(res.status).toEqual(200);
-          expect(res.body.message).toEqual('Signin successful');
-        });
-      done();
     });
     it(`It should return a message "Email or password is incorrect"
      if you input an incorrect password`, (done) => {
@@ -221,8 +200,8 @@ describe('User Controller', () => {
         .end((err, res) => {
           expect(res.status).toEqual(401);
           expect(res.body.message).toEqual('Email or password is incorrect');
+          done();
         });
-      done();
     });
     it(`It should return a message "Account does not exist. Please signup to continue" 
     if you input an email address that does not exist in the database`, (done) => {
