@@ -17,9 +17,12 @@ const {
 } = userMockData;
 
 const {
-  addMeal,
-  updateMeal,
-  removeMeal,
+  addMealDev,
+  addMealProd,
+  updateMealDev,
+  updateMealProd,
+  removeMealDev,
+  removeMealProd,
 } = mealMockData;
 
 let secondCatererToken;
@@ -65,7 +68,7 @@ describe('Menu Controller', () => {
       chai.request(server)
         .get('/menu/caterer')
         .set({ authorization: secondCatererToken })
-        .send(addMeal)
+        .send(addMealProd)
         .end((err, res) => {
           expect(res.status).toEqual(404);
           expect(res.body.message).toEqual('The menu for today has not been set yet');
@@ -77,7 +80,7 @@ describe('Menu Controller', () => {
       chai.request(server)
         .delete('/menu/')
         .set({ authorization: secondCatererToken })
-        .send(removeMeal)
+        .send(removeMealProd)
         .end((err, res) => {
           expect(res.status).toEqual(404);
           expect(res.body.message).toEqual('Menu doesn\'t exist');
@@ -101,7 +104,7 @@ describe('Menu Controller', () => {
       chai.request(server)
         .post('/menu/')
         .set({ authorization: secondCatererToken })
-        .send(addMeal)
+        .send(addMealProd)
         .end((err, res) => {
           expect(res.status).toEqual(201);
           expect(res.body).toHaveProperty('data');
@@ -115,7 +118,7 @@ describe('Menu Controller', () => {
       chai.request(server)
         .post('/menu/')
         .set({ authorization: secondCatererToken })
-        .send(updateMeal)
+        .send(updateMealProd)
         .end((err, res) => {
           expect(res.status).toEqual(200);
           expect(res.body).toHaveProperty('data');
@@ -143,7 +146,7 @@ describe('Menu Controller', () => {
       chai.request(server)
         .delete('/menu/')
         .set({ authorization: secondCatererToken })
-        .send(removeMeal)
+        .send(removeMealProd)
         .end((err, res) => {
           expect(res.status).toEqual(201);
           expect(res.body.message).toEqual('Menu has been updated');
