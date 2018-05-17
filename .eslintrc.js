@@ -9,5 +9,6 @@ module.exports = {
         "describe": true,
         "it": true,
         "before": true,
+        "afterEach": true,
     }
 };

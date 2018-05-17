@@ -141,4 +141,8 @@ export default {
     email: 'alexjames@gmail.com',
     password: 'testing',
   },
+  customerLoginDetailsFirst: {
+    email: 'anitajoe@gmail.com',
+    password: 'testing',
+  },
 };

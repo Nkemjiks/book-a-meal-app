@@ -91,7 +91,7 @@ const menuController = {
       })
       .then((menu) => {
         if (!menu) {
-          return res.status(200).send({ message: 'Menu doesn\'t exist' });
+          return res.status(404).send({ message: 'Menu doesn\'t exist' });
         }
         menu.removeMeals(meals);
         menu.save();

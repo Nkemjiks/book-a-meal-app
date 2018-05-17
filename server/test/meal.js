@@ -14,7 +14,6 @@ and that we are getting the desired output
 // Mock data imported from a userMockData
 const {
   catererLoginDetailsFirst,
-  catererLoginDetailsSecond,
   validUserLoginDetailsFirst,
 } = userMockData;
 
@@ -23,7 +22,6 @@ const {
 } = mealMockData;
 
 let firstCatererToken;
-let secondCatererToken;
 let newcatererToken;
 chai.use(chaiHttp);
 
@@ -34,15 +32,6 @@ describe('Meal Controller', () => {
       .send(catererLoginDetailsFirst)
       .end((err, res) => {
         firstCatererToken = res.body.token;
-        done();
-      });
-  });
-  before((done) => {
-    chai.request(server)
-      .post('/auth/login')
-      .send(catererLoginDetailsSecond)
-      .end((err, res) => {
-        secondCatererToken = res.body.token;
         done();
       });
   });
