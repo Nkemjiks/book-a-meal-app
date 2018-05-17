@@ -4,7 +4,7 @@ import expect from 'expect';
 import server from '../app';
 import models from '../models';
 import userMockData from './mock/userMockData';
-import mealMockData from './mock/mealMockData';
+import otherMockData from './mock/otherMockData';
 
 /** Test cases for creating the menu for the day
 We are testing all input case time to make sure that our validations are working
@@ -23,7 +23,8 @@ const {
   updateMealProd,
   removeMealDev,
   removeMealProd,
-} = mealMockData;
+  placeOrderDev,
+} = otherMockData;
 
 let secondCatererToken;
 let firstCustomerToken;
@@ -92,6 +93,18 @@ describe('Menu Controller', () => {
       chai.request(server)
         .get('/menu/')
         .set({ authorization: firstCustomerToken })
+        .end((err, res) => {
+          expect(res.status).toEqual(404);
+          expect(res.body.message).toEqual('The menu for today has not been set yet');
+          done();
+        });
+    });
+    it(`It should return the message "The menu for today has not been set yet" 
+  when a customer tries to place an order when the menu has not been set`, (done) => {
+      chai.request(server)
+        .post('/orders/')
+        .set({ authorization: firstCustomerToken })
+        .send(placeOrderDev)
         .end((err, res) => {
           expect(res.status).toEqual(404);
           expect(res.body.message).toEqual('The menu for today has not been set yet');

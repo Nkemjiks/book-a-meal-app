@@ -145,4 +145,8 @@ export default {
     email: 'anitajoe@gmail.com',
     password: 'testing',
   },
+  customerLoginDetailsSecond: {
+    email: 'samjohn@gmail.com',
+    password: 'testing',
+  },
 };

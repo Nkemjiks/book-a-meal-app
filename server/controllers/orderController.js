@@ -98,10 +98,10 @@ const mealOrderController = {
       })
       .then((meal) => {
         if (meal.length === 0) {
-          return res.status(404).send({ message: 'You done have any order yet' });
+          return res.status(404).send({ message: 'You have not placed any order yet' });
         }
         const totalExpenses = calculateTotalSales(meal);
-        return res.status(200).send({ message: 'You have the following orders', data: meal, totalExpenses });
+        return res.status(200).send({ message: 'You have placed the following orders', data: meal, totalExpenses });
       })
       .catch(err => res.status(500).send({ message: err.message }));
   },
@@ -146,7 +146,7 @@ const mealOrderController = {
             for (const meal of meals) {
               updatedOrder.setMeals(meal.mealId, { through: { quantity: meal.quantity } });
             }
-            return res.status(201).send({ message: 'Order Modified successfully', data: order });
+            return res.status(200).send({ message: 'Order Modified successfully', data: order });
           })
           .catch(err => res.status(500).send({ message: err.message }));
       })

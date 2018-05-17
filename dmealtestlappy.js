@@ -4,7 +4,7 @@ import expect from 'expect';
 import server from '../app';
 import models from '../models';
 import userMockData from './mock/userMockData';
-import otherMockData from './mock/otherMockData';
+import mealMockData from './mock/mealMockData';
 
 /** Test cases for adding a meal
 We are testing all input case time to make sure that our validations are working
@@ -19,11 +19,10 @@ const {
 
 const {
   firstMeal,
-} = otherMockData;
+} = mealMockData;
 
 let firstCatererToken;
 let newcatererToken;
-
 chai.use(chaiHttp);
 
 describe('Meal Controller', () => {
