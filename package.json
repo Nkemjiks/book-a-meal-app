@@ -4,10 +4,11 @@
   "description": "Book-A-Meal is an application that allows customers to make food orders and helps the food vendor know what the customers want to eat.",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon server/server.js --exec babel-node",
+    "dev": "cross-env NODE_ENV=development nodemon server/server.js --exec babel-node",
     "build": "babel server -d dist",
     "start": "npm run build && node dist/server.js",
-    "test": "cross-env NODE_ENV=test nyc mocha server/test/*.js"
+    "test": "cross-env NODE_ENV=test nyc mocha server/test/*.js --exit",
+    "migrate-test": "cross-env NODE_ENV=test sequelize db:migrate"
   },
   "repository": {
     "type": "git",
@@ -30,24 +31,36 @@
       "html"
     ],
     "exclude": [
-      "server/test/*.js"
+      "server/test/*.js",
+      "server/test/mock/*.js",
+      "server/database/*.js",
+      "server/helpers/*.js"
     ],
     "sourceMap": false,
     "instrument": false
   },
   "dependencies": {
+    "bcrypt": "^2.0.1",
     "body-parser": "^1.18.2",
-    "express": "^4.16.3"
+    "dotenv": "^5.0.1",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.2.1",
+    "pg": "^7.4.1",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.37.6"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
     "babel-plugin-istanbul": "^4.1.6",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.26.0",
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
+    "codeclimate-test-reporter": "^0.5.0",
     "coveralls": "^3.0.0",
     "cross-env": "^5.1.4",
     "eslint": "^4.19.1",
@@ -55,6 +68,7 @@
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
+    "expect": "^22.4.3",
     "istanbul": "^0.4.5",
     "mocha": "^5.1.1",
     "nodemon": "^1.17.3",

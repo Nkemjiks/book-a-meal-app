@@ -1,0 +1,5 @@
+// URL to the postgress database on elephantsql. It can be found in details after creating an instance
+DATABASE_URL=postgres://fgdgfsf:YF6Pcnw1fMbtwpYR-uPW8OYUMfOO8Omn@pellefant.db.elephantsql.com:5432/sfwogbyi
+
+// Add any secret key of choice for JWT token generation and authentication
+secret=hdjeu793 
