@@ -89,7 +89,6 @@ const userController = {
           }
           return res.status(409).send({ message: 'You are already a caterer' });
         }
-        return res.status(404).send({ message: 'User not found. Please signup to continue' });
       })
       .catch(err => res.status(500).send({ message: err.message }));
   },

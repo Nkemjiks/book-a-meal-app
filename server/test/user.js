@@ -32,11 +32,13 @@ const {
   nonExistingUserFirst,
 } = userMockData;
 
+let firstCustomerToken;
+let secondCustomerToken;
 chai.use(chaiHttp);
 
 describe('User Controller', () => {
-  // This will empty the database so we can save the information afresh
   describe('User Signup', () => {
+    // This will empty the database so we can save the information afresh
     before((done) => {
       models.user
         .destroy({ truncate: true })
@@ -44,8 +46,7 @@ describe('User Controller', () => {
           done();
         });
     });
-    // Signup with valid user details
-    it('It should return a message "User successfully created"', (done) => {
+    it('It should signup a user and return the message "User successfully created"', (done) => {
       chai.request(server)
         .post('/auth/signup')
         .send(validUserDetailFirst)
@@ -55,8 +56,7 @@ describe('User Controller', () => {
         });
       done();
     });
-    // Signup with valid user details but contains multiple spaces in the full name both in the beginning, middle and end
-    it('It should return a message "User successfully created"', (done) => {
+    it('It should remove the extra spaces and signup the user', (done) => {
       chai.request(server)
         .post('/auth/signup')
         .send(validUserDetailSecond)
@@ -66,8 +66,8 @@ describe('User Controller', () => {
         });
       done();
     });
-    // Signup with an email address that has already been registered
-    it('It should return a message "A User already exist with this email address"', (done) => {
+    it(`It should return a message "A User already exist with this email address" 
+    when you signup with an existing email address`, (done) => {
       chai.request(server)
         .post('/auth/signup')
         .send(validUserDetailFirst)
@@ -77,8 +77,8 @@ describe('User Controller', () => {
         });
       done();
     });
-    // Signup with input fields that are completely empty
-    it('It should return a message "Please provide a valid name"', (done) => {
+    it(`It should return a message "Please provide a valid name" 
+    when you signup with empty input fields`, (done) => {
       chai.request(server)
         .post('/auth/signup')
         .send(emptyUserDetail)
@@ -88,8 +88,8 @@ describe('User Controller', () => {
           done();
         });
     });
-    // Signing up with a fullname input field that contains numbers
-    it('It should return a message "Please provide a valid name"', (done) => {
+    it(`It should return a message "Please provide a valid name" 
+    when you signup with a name that conatins numbers`, (done) => {
       chai.request(server)
         .post('/auth/signup')
         .send(invalidUserDetailNameThird)
@@ -99,8 +99,8 @@ describe('User Controller', () => {
           done();
         });
     });
-    // Signup with an email address that doesn't contain the @ special character
-    it('It should return a message "Please provide a valid email address"', (done) => {
+    it(`It should return a message "Please provide a valid email address" 
+    when the @ character isn't present`, (done) => {
       chai.request(server)
         .post('/auth/signup')
         .send(invalidUserDetailEmailSecond)
@@ -110,8 +110,8 @@ describe('User Controller', () => {
           done();
         });
     });
-    // Signup with an email address that doesn't contain the '.com'
-    it('It should return a message "Please provide a valid email address"', (done) => {
+    it(`It should return a message "Please provide a valid email address" 
+    when '.com' is missing`, (done) => {
       chai.request(server)
         .post('/auth/signup')
         .send(invalidUserDetailEmailThird)
@@ -121,8 +121,8 @@ describe('User Controller', () => {
           done();
         });
     });
-    // Signup with a phone number that has letters in it
-    it('It should return a message "Please provide a valid phone number"', (done) => {
+    it(`It should return a message "Please provide a valid phone number" 
+    when you pass a phone number with alphabets in it`, (done) => {
       chai.request(server)
         .post('/auth/signup')
         .send(invalidUserDetailPhoneNumberFirst)
@@ -132,8 +132,8 @@ describe('User Controller', () => {
           done();
         });
     });
-    // Signup with a phone number that has special characters
-    it('It should return a message "Please provide a valid phone number"', (done) => {
+    it(`It should return a message "Please provide a valid phone number"
+     when the number contains special characters`, (done) => {
       chai.request(server)
         .post('/auth/signup')
         .send(invalidUserDetailPhoneNumberSecond)
@@ -143,8 +143,8 @@ describe('User Controller', () => {
           done();
         });
     });
-    // Signup with a password that contains '<>'
-    it('It should return a message "Please provide a valid password" if password is a script', (done) => {
+    it(`It should return a message "Please provide a valid password" 
+    if password contains '<>'`, (done) => {
       chai.request(server)
         .post('/auth/signup')
         .send(invalidUserDetailPasswordFirst)
@@ -154,8 +154,8 @@ describe('User Controller', () => {
           done();
         });
     });
-    // Signup with a password that contains spaces
-    it('It should return a message "Please provide a valid password"', (done) => {
+    it(`It should return a message "Please provide a valid password"
+     if the password contains spaces`, (done) => {
       chai.request(server)
         .post('/auth/signup')
         .send(invalidUserDetailPasswordSecond)
@@ -165,8 +165,8 @@ describe('User Controller', () => {
           done();
         });
     });
-    // Signup with the address input field containing '<>'
-    it('It should return a message "Please provide a valid address"', (done) => {
+    it(`It should return a message "Please provide a valid address"
+     if address contains '<>'`, (done) => {
       chai.request(server)
         .post('/auth/signup')
         .send(invalidUserDetailAddressSecond)
@@ -176,8 +176,8 @@ describe('User Controller', () => {
           done();
         });
     });
-    // Signup with the address input field containing '='
-    it('It should return a message "Please provide a valid address"', (done) => {
+    it(`It should return a message "Please provide a valid address" 
+    if address contains '='`, (done) => {
       chai.request(server)
         .post('/auth/signup')
         .send(invalidUserDetailAddressThird)
@@ -189,30 +189,32 @@ describe('User Controller', () => {
     });
   });
   describe('User Signin', () => {
-    // Sign in with valid input information
-    it('It should return a message "Signin successful"', (done) => {
+    it(`It should return a message "Signin successful" 
+    when you signin with a valid information`, (done) => {
       chai.request(server)
         .post('/auth/login')
         .send(validUserLoginDetailsFirst)
         .end((err, res) => {
+          firstCustomerToken = res.body.token;
           expect(res.status).toEqual(200);
           expect(res.body.message).toEqual('Signin successful');
         });
       done();
     });
-    // Sign in with another valid input information
-    it('It should return a message "Signin successful"', (done) => {
+    it(`It should return a message "Signin successful" 
+    when you signin with another valid information`, (done) => {
       chai.request(server)
         .post('/auth/login')
         .send(validUserLoginDetailsSecond)
         .end((err, res) => {
+          secondCustomerToken = res.body.token;
           expect(res.status).toEqual(200);
           expect(res.body.message).toEqual('Signin successful');
         });
       done();
     });
-    // Signin with another incorrect password
-    it('It should return a message "Email or password is incorrect"', (done) => {
+    it(`It should return a message "Email or password is incorrect"
+     if you input an incorrect password`, (done) => {
       chai.request(server)
         .post('/auth/login')
         .send(invalidUserLoginPasswordSecond)
@@ -222,8 +224,8 @@ describe('User Controller', () => {
         });
       done();
     });
-    // Signin with a non-existent user account
-    it('It should return a message "Account does not exist. Please signup to continue"', (done) => {
+    it(`It should return a message "Account does not exist. Please signup to continue" 
+    if you input an email address that does not exist in the database`, (done) => {
       chai.request(server)
         .post('/auth/login')
         .send(nonExistingUserFirst)
@@ -233,8 +235,8 @@ describe('User Controller', () => {
         });
       done();
     });
-    // Sign in with an email address that doesn't contain '@' and '.com'
-    it('It should return a message "Please provide a valid email address"', (done) => {
+    it(`It should return a message "Please provide a valid email address"
+     if the email does not contain @ or .com`, (done) => {
       chai.request(server)
         .post('/auth/login')
         .send(invalidUserLoginDetailsThird)
@@ -244,15 +246,50 @@ describe('User Controller', () => {
         });
       done();
     });
-    // Signin with a password conatining '<>'
-    it('It should return a message "Please provide a valid password"', (done) => {
+    it(`It should return a message "Please provide a valid password"
+     if the password contains <>`, (done) => {
       chai.request(server)
         .post('/auth/login')
         .send(invalidUserLoginDetailPasswordFirst)
-        .end((err, res) => {expect(res.status).toEqual(400);
+        .end((err, res) => {
+          expect(res.status).toEqual(400);
           expect(res.body.message).toEqual('Please provide a valid password');
         });
       done();
+    });
+  });
+  describe('User Role Update', () => {
+    let catererToken;
+    afterEach((done) => {
+      chai.request(server)
+        .post('/auth/login')
+        .send(validUserLoginDetailsFirst)
+        .end((err, res) => {
+          catererToken = res.body.token;
+          done();
+        });
+    });
+    it(`It should update the role of a user to caterer and return a message
+     "Please provide a valid password"`, (done) => {
+      chai.request(server)
+        .put('/auth/update')
+        .set({ authorization: firstCustomerToken })
+        .end((err, res) => {
+          expect(res.status).toEqual(200);
+          expect(res.body.message).toEqual('Update successful');
+          done();
+        });
+    });
+    it(`It should return a message saying 'You are already a caterer'
+     if you try to update when you already one`, (done) => {
+      chai.request(server)
+        .put('/auth/update')
+        .set({ authorization: catererToken })
+        .end((err, res) => {
+          expect(res.status).toEqual(409);
+          expect(res.body.message).toEqual('You are already a caterer');
+          done();
+        });
     });
   });
 });
