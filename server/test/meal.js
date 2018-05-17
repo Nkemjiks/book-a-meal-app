@@ -4,7 +4,7 @@ import expect from 'expect';
 import server from '../app';
 import models from '../models';
 import userMockData from './mock/userMockData';
-import mealMockData from './mock/mealMockData';
+import otherMockData from './mock/otherMockData';
 
 /** Test cases for adding a meal
 We are testing all input case time to make sure that our validations are working
@@ -19,7 +19,7 @@ const {
 
 const {
   firstMeal,
-} = mealMockData;
+} = otherMockData;
 
 let firstCatererToken;
 let newcatererToken;
