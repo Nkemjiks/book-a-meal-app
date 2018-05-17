@@ -48,12 +48,6 @@ const routes = (app) => {
     checkUserRole,
     mealController.getAllCatererMeal,
   );
-  app.get(
-    '/meals/',
-    verifyToken,
-    checkAuthenticatedUser,
-    mealController.getAllMeal,
-  );
   app.put(
     '/meals/:id',
     verifyToken,

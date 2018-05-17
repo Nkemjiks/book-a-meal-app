@@ -89,7 +89,6 @@ describe('Meal Controller', () => {
       });
   });
   describe('Add a new meal', () => {
-    // This will delete these to email addresses so we can save the information afresh
     it('It should add a new meal and return the message "New meal added successfully"', (done) => {
       chai.request(server)
         .post('/meals/')
@@ -130,16 +129,6 @@ describe('Meal Controller', () => {
         .end((err, res) => {
           expect(res.status).toEqual(404);
           expect(res.body.message).toEqual('You have not added any meal');
-          done();
-        });
-    });
-    it('It should get all the meals added by all caterers in the database', (done) => {
-      chai.request(server)
-        .get('/meals/')
-        .set({ authorization: newcatererToken })
-        .end((err, res) => {
-          expect(res.status).toEqual(200);
-          expect(res.body).toHaveProperty('data');
           done();
         });
     });

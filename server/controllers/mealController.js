@@ -57,35 +57,6 @@ const mealController = {
   },
 
   /**
-   * @description Get all meal added by all caterers
-   * @param  {Object} req
-   * @param  {Object} res
-   * @return {Object}
-   */
-  getAllMeal(req, res) {
-    return models.meal
-      .findAll({
-        where: {
-          isDeleted: false,
-        },
-        attributes: ['id', 'name', 'imageURL', 'price'],
-        include: [
-          {
-            model: models.user,
-            attributes: ['fullName', 'email', 'address', 'phoneNumber'],
-          },
-        ],
-      })
-      .then((meal) => {
-        if (meal.length === 0) {
-          return res.status(404).send({ message: 'There is no meal in the database' });
-        }
-        return res.status(200).send({ data: meal });
-      })
-      .catch(err => res.status(500).send({ message: err.message }));
-  },
-
-  /**
    * @description Modify a meal added by a caterer
    * @param  {Object} req
    * @param  {Object} res
