@@ -4,7 +4,7 @@ import expect from 'expect';
 import server from '../app';
 import models from '../models';
 import userMockData from './mock/userMockData';
-import otherMockData from './mock/otherMockData';
+import mealMockData from './mock/mealMockData';
 
 /** Test cases for adding a meal
 We are testing all input case time to make sure that our validations are working
@@ -19,11 +19,10 @@ const {
 
 const {
   firstMeal,
-} = otherMockData;
+} = mealMockData;
 
 let firstCatererToken;
 let newcatererToken;
-
 chai.use(chaiHttp);
 
 describe('Meal Controller', () => {
@@ -58,7 +57,7 @@ describe('Meal Controller', () => {
   });
   before((done) => {
     chai.request(server)
-      .put('/meals/d0b5e9d3-2665-4709-bc5a-b5b7cbd93039')
+      .put('/meals/0692eb03-141d-4873-9035-2f4a9502a3cb')
       .set({ authorization: firstCatererToken })
       .send({
         name: 'Akara and pap',
@@ -69,7 +68,7 @@ describe('Meal Controller', () => {
   });
   before((done) => {
     models.meal
-      .findById('d0b5e9d3-2665-4709-bc5a-b5b7cbd93039')
+      .findById('0692eb03-141d-4873-9035-2f4a9502a3cb')
       .then((meal) => {
         meal
           .update({
@@ -102,8 +101,6 @@ describe('Meal Controller', () => {
           done();
         });
     });
-  });
-  describe('Get meal API', () => {
     it('It should get all the meals added by a caterer"', (done) => {
       chai.request(server)
         .get('/meals/caterer')
@@ -124,11 +121,9 @@ describe('Meal Controller', () => {
           done();
         });
     });
-  });
-  describe('Modify meal API', () => {
     it('It should modify a meal added by a caterer', (done) => {
       chai.request(server)
-        .put('/meals/d0b5e9d3-2665-4709-bc5a-b5b7cbd93039')
+        .put('/meals/0692eb03-141d-4873-9035-2f4a9502a3cb')
         .set({ authorization: firstCatererToken })
         .send({
           name: 'Moimoi and pap',
@@ -141,7 +136,7 @@ describe('Meal Controller', () => {
     });
     it('It should not modify a meal added by a caterer if that name already exist', (done) => {
       chai.request(server)
-        .put('/meals/d0b5e9d3-2665-4709-bc5a-b5b7cbd93039')
+        .put('/meals/0692eb03-141d-4873-9035-2f4a9502a3cb')
         .set({ authorization: firstCatererToken })
         .send({
           name: 'Moimoi and pap',
@@ -169,7 +164,7 @@ describe('Meal Controller', () => {
     it(`It should return 'You can not modify this meal'
     if a caterer trys to modify a meal added by another caterer`, (done) => {
       chai.request(server)
-        .put('/meals/d0b5e9d3-2665-4709-bc5a-b5b7cbd93039')
+        .put('/meals/0692eb03-141d-4873-9035-2f4a9502a3cb')
         .set({ authorization: newcatererToken })
         .send({
           name: 'Moimoi and pap and milk',
@@ -180,8 +175,6 @@ describe('Meal Controller', () => {
           done();
         });
     });
-  });
-  describe('Delete meal API', () => {
     it(`It should return 'This meal does not exist in the database' if a 
     caterer sends an id that does not exist in the database`, (done) => {
       chai.request(server)
@@ -196,7 +189,7 @@ describe('Meal Controller', () => {
     it(`It should return 'You can not modify this meal'
     if a caterer trys to modify a meal added by another caterer`, (done) => {
       chai.request(server)
-        .delete('/meals/d0b5e9d3-2665-4709-bc5a-b5b7cbd93039')
+        .delete('/meals/0692eb03-141d-4873-9035-2f4a9502a3cb')
         .set({ authorization: newcatererToken })
         .end((err, res) => {
           expect(res.status).toEqual(403);
@@ -207,7 +200,7 @@ describe('Meal Controller', () => {
     it(`It should return 'Meal has been deleted successfully'
     if a caterer trys to modify a meal added by another caterer`, (done) => {
       chai.request(server)
-        .delete('/meals/d0b5e9d3-2665-4709-bc5a-b5b7cbd93039')
+        .delete('/meals/0692eb03-141d-4873-9035-2f4a9502a3cb')
         .set({ authorization: firstCatererToken })
         .end((err, res) => {
           expect(res.status).toEqual(200);
