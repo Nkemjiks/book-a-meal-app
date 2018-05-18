@@ -38,6 +38,126 @@ You can edit to change the details you want to signup with. The fields required 
                 "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
             }
 
++ Request (application/json)
+
+    + Body
+
+            {
+                "fullName": " Alex 123",
+                "email": "alexjames@gmail.com",
+                "phoneNumber": 07037827892,
+                "password": "testing",
+                "address": "124, Express road, Lagos State"
+            }
+
++ Response 400 (application/json)
+
+    + Body
+
+            {
+                "message": "Please provide a valid name",
+            }
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "fullName": "Alex James",
+                "email": "alexjamesgmail",
+                "phoneNumber": 07037827892,
+                "password": "testing",
+                "address": "124, Express road, Lagos State"
+            }
+
++ Response 400 (application/json)
+
+    + Body
+
+            {
+                "message": "Please provide a valid email address",
+            }
+            
++ Request (application/json)
+
+    + Body
+
+            {
+                "fullName": "Alex James",
+                "email": "alexjames@gmail.com",
+                "phoneNumber": "0703782789yu",
+                "password": "testing",
+                "address": "124, Express road, Lagos State"
+            }
+
++ Response 400 (application/json)
+
+    + Body
+
+            {
+                "message": "Please provide a valid phone number",
+            }
+            
++ Request (application/json)
+
+    + Body
+
+            {
+                "fullName": "Alex James",
+                "email": "alexjames@gmail.com",
+                "phoneNumber": 07037827898,
+                "password": "testing <>",
+                "address": "124, Express road, Lagos State"
+            }
+
++ Response 400 (application/json)
+
+    + Body
+
+            {
+                "message": "Please provide a valid password",
+            }
+            
++ Request (application/json)
+
+    + Body
+
+            {
+                "fullName": "Alex James",
+                "email": "alexjames@gmail.com",
+                "phoneNumber": 07037827898,
+                "password": "testing",
+                "address": "124, Express road, Lagos State <=>"
+            }
+
++ Response 400 (application/json)
+
+    + Body
+
+            {
+                "message": "Please provide a valid address",
+            }
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "fullName": "Mary Janes",
+                "email": "alexjames@gmail.com",
+                "phoneNumber": 07037827898,
+                "password": "testing",
+                "address": "124, Express road, Lagos State"
+            }
+
++ Response 409 (application/json)
+
+    + Body
+
+            {
+                "message": "A User already exist with this email address",
+            }
+
 ### Signin to the Application [POST /auth/login]
 You can change the details to match what you signed up with. Only the email address and password is required.
 
@@ -67,6 +187,74 @@ You can change the details to match what you signed up with. Only the email addr
                 "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
             }
 
++ Request (application/json)
+
+    + Body
+
+            {
+                "email": "alexjamesgmail.com",
+                "password": "testing",
+            }
+
++ Response 400 (application/json)
+
+    + Body
+
+            {
+                "message": "Please provide a valid email address"
+            }
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "email": "alexjames@gmail.com",
+                "password": "  ",
+            }
+
++ Response 400 (application/json)
+
+    + Body
+
+            {
+                "message": "Please provide a valid password"
+            }
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "email": "alexjames@gmail.com",
+                "password": "testin",
+            }
+
++ Response 401 (application/json)
+
+    + Body
+
+            {
+                "message": "Email or password is incorrect"
+            }
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "email": "maryjane@gmail.com",
+                "password": "testin",
+            }
+
++ Response 401 (application/json)
+
+    + Body
+
+            {
+                "message": "Account does not exist. Please signup to continue"
+            }
+
 ### Upgrade your role from Customer to Caterer [PUT /auth/update]
 You can upgrade your role from customer to caterer. You need to provide the token sent to you when you signed up or logged in.
 
@@ -76,7 +264,7 @@ You can upgrade your role from customer to caterer. You need to provide the toke
 
             Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
 
-+ Response 200(application/json)
++ Response 200 (application/json)
 
     + Body
 
@@ -91,7 +279,49 @@ You can upgrade your role from customer to caterer. You need to provide the toke
                     "address": "124, Express road, Lagos State"
                 }
             }
-            
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOQQ1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "Invalid Token"
+            }
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: ""
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "Please provide a valid token"
+            }
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 409 (application/json)
+
+    + Body
+
+            {
+                "message": "You are already a caterer"}
+            }
+
 ## Meal [/meals/]
 ### Add the meals - Caterer [POST]
 The details required includes meal name, meal price and the image of the meal.You must be a caterer before you can add a meal
@@ -128,6 +358,204 @@ The details required includes meal name, meal price and the image of the meal.Yo
                  }
             }
 
++ Request (application/json)
+
+    + Body
+
+            {
+                "name": "Rice and Beans",
+                "price": 500,
+                "imageURL": "www.image.com/link"
+            }
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOQQ1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "Invalid Token"
+            }
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "name": "Rice and Beans",
+                "price": 500,
+                "imageURL": "www.image.com/link"
+            }
+
+    + Headers
+
+            Authorization: ""
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "Please provide a valid token"
+            }
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "name": "Rice and Beans",
+                "price": 500,
+                "imageURL": "www.image.com/link"
+            }
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNWW5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 404 (application/json)
+
+    + Body
+
+            {
+                "message": "User account does not exist",
+            }
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "name": "Rice and Beans",
+                "price": 500,
+                "imageURL": "www.image.com/link"
+            }
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNWW5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "You don't have access to use this route",
+            }
+            
++ Request (application/json)
+
+    + Body
+
+            {
+                "name": "Rice 12345",
+                "price": 500,
+                "imageURL": "www.image.com/link"
+            }
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 400 (application/json)
+
+    + Body
+
+            {
+                "message": "Please provide a valid meal name"
+            }
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "name": "",
+                "price": 500,
+                "imageURL": "www.image.com/link"
+            }
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 400 (application/json)
+
+    + Body
+
+            {
+                "message": "Meal Name must be between 1 to 40 characters long"
+            }
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "name": "Rice and Beans",
+                "price": "500df",
+                "imageURL": "www.image.com/link"
+            }
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 400 (application/json)
+
+    + Body
+
+            {
+                "message": "Please provide a valid meal price"
+            }
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "name": "Rice and Beans",
+                "price": 500,
+                "imageURL": "www.image.com/link=<>"
+            }
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 400 (application/json)
+
+    + Body
+
+            {
+                "message": "Please provide a valid image URL"
+            }
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "name": "Rice and Beans",
+                "price": 500,
+                "imageURL": "www.image.com/link"
+            }
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 400 (application/json)
+
+    + Body
+
+            {
+                "message": "Meal already exist"
+            }
+
 ### Get a list of all the meals you have added - Caterer [GET]
 You have to provide the a valid token as its only caterer's that can access this route.
 
@@ -156,6 +584,62 @@ You have to provide the a valid token as its only caterer's that can access this
                 }
             ]
         }
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOQQ1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "Invalid Token"
+            }
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: ""
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "Please provide a valid token"
+            }
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNWW5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "You don't have access to use this route",
+            }
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNWW5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 404 (application/json)
+
+    + Body
+
+            {
+                "message": "You have not added any meal",
+            }
 
 ### Modify a meal - Caterer[PUT /meals/{meal_id}]
 You can modify a meal by sending the mealid as a parameter, the properties you want to update as well as your token
@@ -195,6 +679,237 @@ You can modify a meal by sending the mealid as a parameter, the properties you w
                 }
             }
             
++ Request (application/json)
+
+    + Body
+
+            {
+                "name": "Rice and Beans",
+                "price": 800,
+                "imageURL": "www.image.com/link"
+            }
+
+    + Parameters
+
+        + meal_id (UUID) - ID of the meal you want to modify
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOQQ1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "Invalid Token"
+            }
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "name": "Rice and Beans",
+                "price": 800,
+                "imageURL": "www.image.com/link"
+            }
+
+    + Parameters
+
+        + meal_id (UUID) - ID of the meal you want to modify
+
+    + Headers
+
+            Authorization: ""
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "Please provide a valid token"
+            }
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "name": "Rice and Beans",
+                "price": 800,
+                "imageURL": "www.image.com/link"
+            }
+
+    + Parameters
+
+        + meal_id (UUID) - ID of the meal you want to modify
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNWW5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "You don't have access to use this route",
+            }
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "name": "Rice 12345",
+                "price": 500,
+                "imageURL": "www.image.com/link"
+            }
+    + Parameters
+
+        + meal_id (UUID) - ID of the meal you want to modify
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 400 (application/json)
+
+    + Body
+
+            {
+                "message": "Please provide a valid meal name"
+            }
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "name": "Rice and Beans",
+                "price": "500df",
+                "imageURL": "www.image.com/link"
+            }
+            
+    + Parameters
+
+        + meal_id (UUID) - ID of the meal you want to modify
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 400 (application/json)
+
+    + Body
+
+            {
+                "message": "Please provide a valid meal price"
+            }
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "name": "Rice and Beans",
+                "price": 500,
+                "imageURL": "www.image.com/link=<>"
+            }
+    
+    + Parameters
+
+        + meal_id (UUID) - ID of the meal you want to modify
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 400 (application/json)
+
+    + Body
+
+            {
+                "message": "Please provide a valid image URL"
+            }
+
++ Request (application/json)
+
+    + Body
+
+            {
+                
+            }
+    
+    + Parameters
+
+        + meal_id (UUID) - ID of the meal you want to modify
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 400 (application/json)
+
+    + Body
+
+            {
+                "message": "You have not provided any details to update"
+            }
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "name": "Rice and Beans",
+                "price": 700,
+                "imageURL": "www.image.com/link=<>"
+            }
+    
+    + Parameters
+
+        + meal_id (UUID) - ID of the meal you want to modify
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 409 (application/json)
+
+    + Body
+
+            {
+                "message": "A meal with this name already exist"
+            }
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "name": "Rice and Beans",
+                "price": 700,
+                "imageURL": "www.image.com/link=<>"
+            }
+    
+    + Parameters
+
+        + meal_id (UUID) - ID of the meal you want to modify
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlGMM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 401 (application/json)
+
+    + Body
+
+            {
+                "message": "You can not modify this meal"
+            }
+
 ### Delete a meal - Caterer [DELETE]
 You can modify a meal by sending the mealid as a parameter as well as your token
 
@@ -215,7 +930,97 @@ You can modify a meal by sending the mealid as a parameter as well as your token
             {
                "message": "Meal has been deleted successfully"
             }
-            
+
++ Request (application/json)
+
+    + Parameters
+
+        + meal_id (UUID) - ID of the meal you want to modify
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOQQ1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "Invalid Token"
+            }
+
++ Request (application/json)
+
+    + Parameters
+
+        + meal_id (UUID) - ID of the meal you want to modify
+
+    + Headers
+
+            Authorization: ""
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "Please provide a valid token"
+            }
+
++ Request (application/json)
+
+    + Parameters
+
+        + meal_id (UUID) - ID of the meal you want to modify
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNWW5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "You don't have access to use this route",
+            }
+
++ Request (application/json)
+
+    + Parameters
+
+        + meal_id (UUID) - ID of the meal you want to modify
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNWW5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 404 (application/json)
+
+    + Body
+
+            {
+                "message": "This meal does not exist in the database",
+            }
+
++ Request (application/json)
+
+    + Parameters
+
+        + meal_id (UUID) - ID of the meal you want to modify
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNWW5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "You are not authorized to delete this meal",
+            }
+
 ## Menu [/menu]
 ### Create a menu - Caterer [POST]
 You simply send in the ids of the meals you want to add along with your token. You must be a caterer to access this route.
@@ -245,6 +1050,126 @@ You simply send in the ids of the meals you want to add along with your token. Y
                     "updatedAt": "2018-05-16T10:14:15.183Z",
                     "createdAt": "2018-05-16T10:14:15.183Z"
                 }
+            }
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "meals": ["8f17a141-7c02-40f5-8c28-c8c520f9946d", "593c9d41-4c24-4ea1-949e-c1f30b3af0a4"]
+            }
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOQQ1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "Invalid Token"
+            }
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "meals": ["8f17a141-7c02-40f5-8c28-c8c520f9946d", "593c9d41-4c24-4ea1-949e-c1f30b3af0a4"]
+            }
+
+    + Headers
+
+            Authorization: ""
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "Please provide a valid token"
+            }
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "meals": ["8f17a141-7c02-40f5-8c28-c8c520f9946d", "593c9d41-4c24-4ea1-949e-c1f30b3af0a4"]
+            }
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNWW5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "You don't have access to use this route",
+            }
+
++ Request (application/json)
+
+    + Body
+
+            {
+                
+            }
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNWW5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 400 (application/json)
+
+    + Body
+
+            {
+                "message": "You have not provided any details",
+            }
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "meals": ["8f17a141-7c02-40f5-8c28-c8c520f9949d", "593c9d41-4c24-4ea1-949e-c1f30b3af0a4"]
+            }
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNWW5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "Some selected meals does not exist",
+            }
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "meals": ["8f17a141-7c02-40f5-8c28-c8c520f9949e"]
+            }
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNWW5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "message": "Menu has been updated",
             }
 
 ### Get the menu that has been created - Customer [GET /menu/customer]
@@ -296,7 +1221,49 @@ You have to provide the a valid token.
                 }
             ]
         }
-         
+ 
+ + Request (application/json)
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOQQ1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "Invalid Token"
+            }
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: ""
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "Please provide a valid token"
+            }
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNWW5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 404 (application/json)
+
+    + Body
+
+            {
+                "message": "The menu for today has not been set yet",
+            }
+
 ### Get the menu that has been created - Caterer [GET /menu/caterer]
 You need to be a caterer to access this route. You need to provide a valid token.
 
@@ -334,6 +1301,62 @@ You need to be a caterer to access this route. You need to provide a valid token
                 }
             }
 
++ Request (application/json)
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOQQ1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "Invalid Token"
+            }
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: ""
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "Please provide a valid token"
+            }
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNWW5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "You don't have access to use this route",
+            }
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNWW5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 404 (application/json)
+
+    + Body
+
+            {
+                "message": "The menu for today has not been set yet",
+            }
+
 ### Remove a meal or many meals from the menu - Caterer [DELETE]
 You can remove a meal or multiple meals from the menu. You should provide the meal id as well as your token.
 
@@ -362,6 +1385,86 @@ You can remove a meal or multiple meals from the menu. You should provide the me
                     "updatedAt": "2018-05-16T10:15:15.183Z",
                     "createdAt": "2018-05-16T10:14:15.183Z"
                 }
+            }
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "meals": ["593c9d41-4c24-4ea1-949e-c1f30b3af0a4"]
+            }
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOQQ1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "Invalid Token"
+            }
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "meals": ["593c9d41-4c24-4ea1-949e-c1f30b3af0a4"]
+            }
+
+    + Headers
+
+            Authorization: ""
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "Please provide a valid token"
+            }
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "meals": ["593c9d41-4c24-4ea1-949e-c1f30b3af0a4"]
+            }
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNWW5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "You don't have access to use this route",
+            }
+
++ Request (application/json)
+
+    + Body
+
+            {
+                
+            }
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNWW5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 400 (application/json)
+
+    + Body
+
+            {
+                "message": "You have not provided any details",
             }
 
 ## Order [/order]
@@ -408,6 +1511,199 @@ You need to provide the meal id, quantity, a delivery address if different from 
                 }
             }
 
++ Request (application/json)
+
+   + Body
+
+            {
+                "deliveryAddress": "124B, Allen Way, Ikeja",
+                "meals": [
+                    {
+                        "mealId": "4ef65ce5-b64a-45ca-9c02-c18857894dc2",
+                        "quantity": 10
+                    },
+                    {
+                        "mealId": "7c205a70-52f1-4ada-883c-6745f90f0033",
+                        "quantity": 4
+                    }
+                ]
+            }
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOQQ1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "Invalid Token"
+            }
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "deliveryAddress": "124B, Allen Way, Ikeja",
+                "meals": [
+                    {
+                        "mealId": "4ef65ce5-b64a-45ca-9c02-c18857894dc2",
+                        "quantity": 10
+                    },
+                    {
+                        "mealId": "7c205a70-52f1-4ada-883c-6745f90f0033",
+                        "quantity": 4
+                    }
+                ]
+            }
+
+    + Headers
+
+            Authorization: ""
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "Please provide a valid token"
+            }
+
++ Request (application/json)
+
+   + Body
+
+            {
+                
+            }
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOQQ1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 400 (application/json)
+
+    + Body
+
+            {
+                "message": "You have not provided any details"
+            }
+            
++ Request (application/json)
+
+   + Body
+
+            {
+                "deliveryAddress": "124B, Allen Way, Ikeja",
+                "meals": [
+                    {
+                        "mealId": "4ef65ce5-b64a-45ca-9c02-c18857894dc2",
+                        "quantity": 10
+                    },
+                    {
+                        "mealId": "7c205a70-52f1-4ada-883c-6745f90f0033",
+                        "quantity": 4
+                    }
+                ]
+            }
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOQQ1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 404 (application/json)
+
+    + Body
+
+            {
+                "message": "You cannot place an order yet"
+            }
+
++ Request (application/json)
+
+   + Body
+
+            {
+                "deliveryAddress": "124B, Allen Way, Ikeja",
+                "meals": [
+                    {
+                        "mealId": "4ef65ce5-b64a-45ca-9c02-c18857894dc2",
+                        "quantity": 10
+                    },
+                    {
+                        "mealId": "7c205a70-52f1-4ada-883c-6745f90f0033",
+                        "quantity": 4
+                    }
+                ]
+            }
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOQQ1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 404 (application/json)
+
+    + Body
+
+            {
+                "message": "You cannot place any more order today"
+            }
+
++ Request (application/json)
+
+   + Body
+
+            {
+                "deliveryAddress": "124B, Allen Way, Ikeja",
+                "meals": [
+                    
+                ]
+            }
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOQQ1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 404 (application/json)
+
+    + Body
+
+            {
+                "message": "You have not provided any meal"
+            }
+
++ Request (application/json)
+
+   + Body
+
+            {
+                "deliveryAddress": "124B, Allen Way, Ikeja",
+                "meals": [
+                    {
+                        "mealId": "4ef65ce5-b64a-45ca-9c02-c18857894dc2",
+                        "quantity": 10
+                    },
+                    {
+                        "mealId": "7c205a70-52f1-4ada-883c-6745f90f0033",
+                        "quantity": 4
+                    }
+                ]
+            }
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOQQ1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 404 (application/json)
+
+    + Body
+
+            {
+                "message": "The menu for today has not been set yet"
+            }
+
 ### Get the order that have been placed - Customer [GET /order/customer]
 You have to provide the a valid token.
 
@@ -452,6 +1748,47 @@ You have to provide the a valid token.
             "totalExpenses": 4000
         }
 
++ Request (application/json)
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOQQ1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "Invalid Token"
+            }
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: ""
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "Please provide a valid token"
+            }
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
+
++ Response 404 (application/json)
+
+        {
+            "message": "You have not placed any order yet"
+        }
+  
 ### Get all orders that has been place to you - Caterer [GET /order/caterer]
 You need to provide a valid token.
 
@@ -504,6 +1841,61 @@ You need to provide a valid token.
             "totalSales": 18000
         }
 
++ Request (application/json)
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOQQ1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "Invalid Token"
+            }
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: ""
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "Please provide a valid token"
+            }
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNWW5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "You don't have access to use this route",
+            }
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
+
++ Response 404 (application/json)
+
+        {
+            "message": "You don't have any order yet"
+        }
+
 ### Modify an Order - Customer [PUT /order/{order_id}]
 You need to provide the order id, meal id, quantity, a delivery address if different from the one you signed up with.
 
@@ -523,6 +1915,10 @@ You need to provide the order id, meal id, quantity, a delivery address if diffe
     + Parameters
 
         + order_id (UUID) - ID of the order you want to modify
+    
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOQQ1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
 
 + Response 200 (application/json)
 
@@ -539,4 +1935,149 @@ You need to provide the order id, meal id, quantity, a delivery address if diffe
                     "createdAt": "2018-05-16T10:19:43.307Z",
                     "updatedAt": "2018-05-16T11:06:52.812Z"
                 }
+            }
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "meals": [
+                            {
+                                "mealId": "4ef65ce5-b64a-45ca-9c02-c18857894dc2",
+                                "quantity": 12
+                            }
+                        ]
+            }
+
+    + Parameters
+
+        + order_id (UUID) - ID of the order you want to modify
+        
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOQQ1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "Invalid Token"
+            }
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "meals": [
+                            {
+                                "mealId": "4ef65ce5-b64a-45ca-9c02-c18857894dc2",
+                                "quantity": 12
+                            }
+                        ]
+            }
+
+    + Parameters
+
+        + order_id (UUID) - ID of the order you want to modify
+
+    + Headers
+
+            Authorization: ""
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "Please provide a valid token"
+            }
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "meals": [
+                            {
+                                "mealId": "4ef65ce5-b64a-45ca-9c02-c18857894dc2",
+                                "quantity": 12
+                            }
+                        ]
+            }
+
+    + Parameters
+
+        + order_id (UUID) - ID of the order you want to modify
+    
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOQQ1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "You don't have access to use this route",
+            }
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "meals": [
+                            {
+                                "mealId": "4ef65ce5-b64a-45ca-9c02-c18857894dc2",
+                                "quantity": 12
+                            }
+                        ]
+            }
+
+    + Parameters
+
+        + order_id (UUID) - ID of the order you want to modify
+    
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOQQ1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 401 (application/json)
+
+    + Body
+
+            {
+                "message": "Order not found",
+            }
+            
++ Request (application/json)
+
+    + Body
+
+            {
+                "meals": [
+                            {
+                                "mealId": "4ef65ce5-b64a-45ca-9c02-c18857894dc2",
+                                "quantity": 12
+                            }
+                        ]
+            }
+
+    + Parameters
+
+        + order_id (UUID) - ID of the order you want to modify
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVYU9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOQQ1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 401 (application/json)
+
+    + Body
+
+            {
+                "message": "You can not modify this order",
             }
