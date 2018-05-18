@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/Nkemjiks/book-a-meal-app.svg?branch=development)](https://travis-ci.org/Nkemjiks/book-a-meal-app)
 [![Maintainability](https://api.codeclimate.com/v1/badges/db45d21cf0c9b41aa619/maintainability)](https://codeclimate.com/github/Nkemjiks/book-a-meal-app/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/db45d21cf0c9b41aa619/test_coverage)](https://codeclimate.com/github/Nkemjiks/book-a-meal-app/test_coverage)
-[![Coverage Status](https://coveralls.io/repos/github/Nkemjiks/book-a-meal-app/badge.png?branch=development)](https://coveralls.io/github/Nkemjiks/book-a-meal-app?branch=development)
+[![Coverage Status](https://coveralls.io/repos/github/Nkemjiks/book-a-meal-app/badge.svg?branch=development)](https://coveralls.io/github/Nkemjiks/book-a-meal-app?branch=development)
 
 # Book-a-meal-app
 
