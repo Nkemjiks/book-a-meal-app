@@ -1,80 +1,530 @@
 FORMAT: 1A
-HOST: http://polls.apiblueprint.org/
+HOST: https://book-a-meal-app-andela.herokuapp.com/
 
-# bookameal
+# Book-A-Meal
 
-Polls is a simple API allowing consumers to view polls and vote in them.
+Book-a-meal API is a simple API that can be used to build a simple online restaurant application
 
-## Questions Collection [/questions]
-
-### List All Questions [GET]
-
-+ Response 200 (application/json)
-
-        [
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
-            }
-        ]
-
-### Create a New Question [POST]
-
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
+## User [/auth/signup]
+### Signup to the Application [POST]
+You can edit to change the details you want to signup with. The fields required are full name, email, phone number, password and address.
 
 + Request (application/json)
 
         {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
-            ]
+            "fullName": "Alex james",
+            "email": "alexjames@gmail.com",
+            "phoneNumber": 07037827892,
+            "password": "testing",
+            "address": "124, Express road, Lagos State"
         }
 
 + Response 201 (application/json)
 
-    + Headers
+    + Body
 
-            Location: /questions/2
+            {
+                "message": "User successfully created",
+                "data": {
+                    "id": "c3b7c8ec-1b5b-409d-94d4-fe0c512c227a",
+                    "fullName": "Alex James",
+                    "email": "alexjames@gmail.com",
+                    "phoneNumber": "07037827892",
+                    "role": "customer",
+                    "address": "124, Express road, Lagos State"
+                },
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+            }
+
+## User [/auth/login]
+### Signin to the Application [POST]
+
+You can change the details to match what you signed up with. Only the email address and password is required.
+
++ Request (application/json)
+
+        {
+            "email": "alexjames@gmail.com",
+            "password": "testing",
+        }
+
++ Response 200 (application/json)
 
     + Body
 
             {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
+                "message": "User successfully created",
+                "data": {
+                    "id": "c3b7c8ec-1b5b-409d-94d4-fe0c512c227a",
+                    "fullName": "Alex James",
+                    "email": "alexjames@gmail.com",
+                    "phoneNumber": "07037827892",
+                    "role": "customer",
+                    "address": "124, Express road, Lagos State"
+                },
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+            }
+
+## User [/auth/update]
+### Upgrade your role from Customer to Caterer [PUT]
+You can upgrade your role from customer to caterer. You need to provide the token sent to you when you signed up or logged in.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 200(application/json)
+    
+    + Body
+
+            {
+                "message": "Update successful",
+                "data": {
+                    "id": "c3b7c8ec-1b5b-409d-94d4-fe0c512c227a",
+                    "fullName": "Alex James",
+                    "email": "alexjames@gmail.com",
+                    "phoneNumber": "07037827892",
+                    "role": "caterer",
+                    "address": "124, Express road, Lagos State"
+                }
+            }
+            
+## Meal [/meals/]
+### Add the meals - Caterer [POST]
+The details required includes meal name, meal price and the image of the meal.You must be a caterer before you can add a meal
+
++ Request (application/json)
+        {
+            "name": "Rice and Beans",
+            "price": 500,
+            "imageURL": "www.image.com/link"
+        }
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 201 (application/json)
+    
+    + Body
+
+            {
+                "message": "New meal added successfully",
+                "data": {
+                    "id": "593c9d41-4c24-4ea1-949e-c1f30b3af0a4",
+                    "isDeleted": false,
+                    "name": "Rice and Beans",
+                    "price": 500,
+                    "imageURL": "www.image.com/link"
+                    "userId": "c3b7c8ec-1b5b-409d-94d4-fe0c512c227a",
+                    "updatedAt": "2018-05-17T06:34:29.694Z",
+                    "createdAt": "2018-05-17T06:34:29.694Z"
+                 }
+            }
+
+### Get a list of all the meals you have added - Caterer [GET]
+You have to provide the a valid token as its only caterer's that can access this route.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
+
++ Response 200 (application/json)
+
+        {
+            "data": [
+                {
+                    "id": "82a712ab-fd6e-4b68-bc63-c34f5f1ba7f1",
+                    "name": "Rice and Beans
+                    "imageURL": "www.image.com/jiu7i89jk",
+                    "price": 500,
+                },
+                {
+                    "id": "82a712ab-fd6e-4b68-bc63-c34f5f1ba7f1",
+                    "name": "Potato Chips",
+                    "imageURL": "www.image.com/jiu7i89jk",
+                    "price": 1600,
+                }
+            ]
+        }
+
+## Meal [/meals/{meal_id}]
+### Modify a meal - Caterer[PUT]
+You can modify a meal by sending the mealid as a parameter, the properties you want to update as well as your token
+
++ Request (application/json)
+        {
+            "name": "Rice and Beans",
+            "price": 800,
+            "imageURL": "www.image.com/link"
+        }
+    + Parameters
+    
+        + meal_id (UUID) - ID of the meal you want to modify
+        
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 200(application/json)
+    
+    + Body
+
+            {
+                "data": {
+                    "id": "cbe3af6b-2007-479f-88ce-d2b91377f599",
+                    "name": "Potato Chips",
+                    "imageURL": "www.image.com/widj76ud",
+                    "price": "3500",
+                    "userId": "fc103acd-6c52-4005-b903-c6ffcaade340",
+                    "isDeleted": false,
+                    "createdAt": "2018-05-16T09:50:46.473Z",
+                    "updatedAt": "2018-05-16T10:01:20.366Z"
+                }
+            }
+            
+### Delete a meal - Caterer [DELETE]
+You can modify a meal by sending the mealid as a parameter as well as your token
+
++ Request (application/json)
+
+    + Parameters
+    
+        + meal_id (UUID) - ID of the meal you want to modify
+        
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 200(application/json)
+    
+    + Body
+
+            {
+               "message": "Meal has been deleted successfully"
+            }
+            
+## Menu [/menu]
+### Create a menu - Caterer [POST]
+You simply send in the ids of the meals you want to add along with your token. You must be a caterer to access this route.
+
++ Request (application/json)
+
+        {
+            "meals": ["8f17a141-7c02-40f5-8c28-c8c520f9946d", "593c9d41-4c24-4ea1-949e-c1f30b3af0a4"]
+        }
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 201 (application/json)
+    
+    + Body
+
+            {
+                "message": "Menu created",
+                "data": {
+                    "id": "bd7596b2-42b5-43e0-9655-3da1f932738f",
+                    "userId": "bfb52e81-7a7c-4858-8f31-194d85531be2",
+                    "date": "Wed May 16 2018",
+                    "updatedAt": "2018-05-16T10:14:15.183Z",
+                    "createdAt": "2018-05-16T10:14:15.183Z"
+                }
+            }
+
+### Remove a meal or many meals from the menu - Caterer [DELETE]
+You can remove a meal or multiple meals from the menu. You should provide the meal id as well as your token.
+
++ Request (application/json)
+        {
+            "meals": ["593c9d41-4c24-4ea1-949e-c1f30b3af0a4"]
+        }
+        
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 200(application/json)
+    
+    + Body
+
+            {
+                "message": "Menu has been updated",
+                "data": {
+                    "id": "bd7596b2-42b5-43e0-9655-3da1f932738f",
+                    "userId": "bfb52e81-7a7c-4858-8f31-194d85531be2",
+                    "date": "Wed May 16 2018",
+                    "updatedAt": "2018-05-16T10:15:15.183Z",
+                    "createdAt": "2018-05-16T10:14:15.183Z"
+                }
+            }
+
+## Menu [/menu/caterer]
+### Get the menu that has been created - Caterer [GET]
+You need to be a caterer to access this route. You need to provide a valid token.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "data": {
+                    "id": "bd7596b2-42b5-43e0-9655-3da1f932738f",
+                    "date": "Wed May 16 2018",
+                    "userId": "bfb52e81-7a7c-4858-8f31-194d85531be2",
+                    "createdAt": "2018-05-16T10:14:15.183Z",
+                    "updatedAt": "2018-05-16T10:14:15.183Z",
+                    "meals": [
+                        {
+                            "name": "Rice and Beans",
+                            "imageURL": "www.image.com/jiu7i89jk",
+                            "price": 800,
+                            "menuItems": {
+                                "createdAt": "2018-05-16T10:14:15.405Z",
+                                "updatedAt": "2018-05-16T10:15:15.405Z",
+                                "mealId": "4ef65ce5-b64a-45ca-9c02-c18857894dc2",
+                                "menuId": "bd7596b2-42b5-43e0-9655-3da1f932738f"
+                            }
+                        }
+                    ]
+                }
+            }
+
+## Menu [/menu/customer]
+### Get the menu that has been created - Customer [GET]
+You have to provide the a valid token.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
+
++ Response 200 (application/json)
+
+        {
+            "data": [
+                {
+                    "id": "bd7596b2-42b5-43e0-9655-3da1f932738f",
+                    "date": "Wed May 16 2018",
+                    "catererId": "bfb52e81-7a7c-4858-8f31-194d85531be2",
+                    "meals": [
+                        {
+                            "name": "Rice and Beans",
+                            "imageURL": "www.image.com/jiu7i89jk",
+                            "price": 800,
+                            "menuItems": {
+                                "createdAt": "2018-05-16T10:14:15.405Z",
+                                "updatedAt": "2018-05-16T10:14:15.405Z",
+                                "mealId": "4ef65ce5-b64a-45ca-9c02-c18857894dc2",
+                                "menuId": "bd7596b2-42b5-43e0-9655-3da1f932738f"
+                            }
+                        },
+                        {
+                            "name": "Potato Chips",
+                            "imageURL": "www.image.com/jiu7i89jk",
+                            "price": 1600,
+                            "menuItems": {
+                                "createdAt": "2018-05-16T10:14:15.405Z",
+                                "updatedAt": "2018-05-16T10:14:15.405Z",
+                                "mealId": "7c205a70-52f1-4ada-883c-6745f90f0033",
+                                "menuId": "bd7596b2-42b5-43e0-9655-3da1f932738f"
+                            }
+                        }
+                    ],
+                    "caterer": {
+                        "fullName": "Alex James",
+                        "email": "alexjames@gmail.com"
+                    }
+                }
+            ]
+        }
+         
+## Order [/order]
+### Place an Order - Customer [POST]
+You need to provide the meal id, quantity, a delivery address if different from the one you signed up with.
+
++ Request (application/json)
+
+        {
+            "deliveryAddress": "124B, Allen Way, Ikeja",
+            "meals": [
+                {
+                    "mealId": "4ef65ce5-b64a-45ca-9c02-c18857894dc2",
+                    "quantity": 10
+                },
+                {
+                    "mealId": "7c205a70-52f1-4ada-883c-6745f90f0033",
+                    "quantity": 4
+                }
+            ]
+        }
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 201 (application/json)
+    
+    + Body
+    
+            {
+                "message": "Order Placed successfully",
+                "data": {
+                    "id": "d65a1b90-ea1c-424c-a0d0-3fe7769a5b54",
+                    "date": "Wed May 16 2018",
+                    "isDeleted": false,
+                    "userId": "9253f41c-95ad-4e31-aefb-25c6541c25a4",
+                    "time": "11:19",
+                    "deliveryAddress": "124B, Allen Way, Ikeja",
+                    "updatedAt": "2018-05-16T10:19:43.307Z",
+                    "createdAt": "2018-05-16T10:19:43.307Z"
+                }
+            }
+            
+## Order [/order/customer]
+### Get the order that have been placed - Customer [GET]
+You have to provide the a valid token.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
+
++ Response 200 (application/json)
+
+        {
+            "message": "You have placed the following orders",
+            "data": [
+                {
+                    "id": "d65a1b90-ea1c-424c-a0d0-3fe7769a5b54",
+                    "date": "Wed May 16 2018",
+                    "time": "11:19",
+                    "userId": "9253f41c-95ad-4e31-aefb-25c6541c25a4",
+                    "deliveryAddress": null,
+                    "isDeleted": false,
+                    "createdAt": "2018-05-16T10:19:43.307Z",
+                    "updatedAt": "2018-05-16T11:06:52.812Z",
+                    "meals": [
+                        {
+                            "id": "4ef65ce5-b64a-45ca-9c02-c18857894dc2",
+                            "name": "Rice and Beans",
+                            "imageURL": "www.image.com/jiu7i89jk",
+                            "price": 800,
+                            "isDeleted": false,
+                            "orderItems": {
+                                "quantity": 5,
+                                "createdAt": "2018-05-16T10:57:52.554Z",
+                                "updatedAt": "2018-05-16T11:06:53.019Z",
+                                "mealId": "4ef65ce5-b64a-45ca-9c02-c18857894dc2",
+                                "orderId": "d65a1b90-ea1c-424c-a0d0-3fe7769a5b54"
+                            }
+                        }
+                    ],
+            ],
+            "totalExpenses": 4000
+        }
+
+## Order [/order/caterer]
+### Get all orders that has been place to you - Caterer [GET]
+You need to provide a valid token.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
+
++ Response 200 (application/json)
+
+        {
+            "message": "You have the following orders",
+            "data": [
+                {
+                    "id": "d65a1b90-ea1c-424c-a0d0-3fe7769a5b54",
+                    "date": "Wed May 16 2018",
+                    "time": "11:19",
+                    "userId": "9253f41c-95ad-4e31-aefb-25c6541c25a4",
+                    "deliveryAddress": null,
+                    "isDeleted": false,
+                    "createdAt": "2018-05-16T10:19:43.307Z",
+                    "updatedAt": "2018-05-16T11:06:52.812Z",
+                    "meals": [
+                        {
+                            "id": "4ef65ce5-b64a-45ca-9c02-c18857894dc2",
+                            "name": "Akara and pap",
+                            "imageURL": "www.image.com/jiu7i89jk",
+                            "price": 1500,
+                            "isDeleted": false,
+                            "orderItems": {
+                                "quantity": 12,
+                                "createdAt": "2018-05-16T10:57:52.554Z",
+                                "updatedAt": "2018-05-16T11:06:53.019Z",
+                                "mealId": "4ef65ce5-b64a-45ca-9c02-c18857894dc2",
+                                "orderId": "d65a1b90-ea1c-424c-a0d0-3fe7769a5b54"
+                            }
+                        }
+                    ],
+                    "user": {
+                        "id": "9253f41c-95ad-4e31-aefb-25c6541c25a4",
+                        "fullName": "Samuel James",
+                        "email": "samjames@gmail.com",
+                        "phoneNumber": "07037827892",
+                        "address": "124, Express road, Lagos State"
+                    }
+                }
+            ],
+            "totalSales": 18000
+        }
+        
+## Order [/order/{order_id}]
+### Modify an Order - Customer [PUT]
+You need to provide the order id, meal id, quantity, a delivery address if different from the one you signed up with.
+
++ Request (application/json)
+
+    {
+        "meals": [
                     {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
+                        "mealId": "4ef65ce5-b64a-45ca-9c02-c18857894dc2",
+                        "quantity": 12
                     }
                 ]
+    }
+
+    + Parameters
+        + order_id (UUID) - ID of the order you want to modify
+
++ Response 200 (application/json)
+    
+    + Body
+    
+            {
+                "message": "Order Modified successfully",
+                "data": {
+                    "id": "d65a1b90-ea1c-424c-a0d0-3fe7769a5b54",
+                    "date": "Wed May 16 2018",
+                    "time": "11:19",
+                    "userId": "9253f41c-95ad-4e31-aefb-25c6541c25a4",
+                    "isDeleted": false,
+                    "createdAt": "2018-05-16T10:19:43.307Z",
+                    "updatedAt": "2018-05-16T11:06:52.812Z"
+                }
             }
