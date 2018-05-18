@@ -57,7 +57,7 @@ export const addMealValidation = (req, res, next) => {
   if (!name || (/^ *$/.test(name) === true) || (/^[a-zA-Z ]+$/.test(name) === false) || typeof name !== 'string') {
     return res.status(400).send({ message: 'Please provide a valid meal name' });
   } else if (name.length < 1 || name.length > 40) {
-    return res.status(400).send({ message: 'Meal Name must be between 10 to 40 characters long' });
+    return res.status(400).send({ message: 'Meal Name must be between 1 to 40 characters long' });
   } else if (!price || (Number.isNaN(Number(price))) === true || (/^ *$/.test(price) === true)) {
     return res.status(400).send({ message: 'Please provide a valid meal price' });
   } else if (typeof imageURL !== 'string' || (/[<>]/.test(imageURL) === true) || (/^ *$/.test(imageURL) === true)) {
@@ -100,7 +100,7 @@ export const modifyMealValidation = (req, res, next) => {
  */
 export const menuMealsValidation = (req, res, next) => {
   if (Object.keys(req.body).length === 0) {
-    return res.status(400).send({ message: 'You have not provided any details to create menu' });
+    return res.status(400).send({ message: 'You have not provided any details' });
   }
   return next();
 };
@@ -123,7 +123,7 @@ export const orderValidation = (req, res, next) => {
     return res.status(404).send({ message: 'You cannot place an order yet' });
   }
   if (Number(hours) > 16) {
-    return res.status(404).send({ message: 'You cannot place any order for today' });
+    return res.status(404).send({ message: 'You cannot place any more order today' });
   }
   if (meals.length === 0) {
     return res.status(400).send({ message: 'You have not provided any meal' });
