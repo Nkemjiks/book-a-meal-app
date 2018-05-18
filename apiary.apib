@@ -11,13 +11,15 @@ You can edit to change the details you want to signup with. The fields required 
 
 + Request (application/json)
 
-        {
-            "fullName": "Alex james",
-            "email": "alexjames@gmail.com",
-            "phoneNumber": 07037827892,
-            "password": "testing",
-            "address": "124, Express road, Lagos State"
-        }
+    + Body
+
+            {
+                "fullName": "Alex james",
+                "email": "alexjames@gmail.com",
+                "phoneNumber": 07037827892,
+                "password": "testing",
+                "address": "124, Express road, Lagos State"
+            }
 
 + Response 201 (application/json)
 
@@ -37,15 +39,16 @@ You can edit to change the details you want to signup with. The fields required 
             }
 
 ### Signin to the Application [POST /auth/login]
-
 You can change the details to match what you signed up with. Only the email address and password is required.
 
 + Request (application/json)
 
-        {
-            "email": "alexjames@gmail.com",
-            "password": "testing",
-        }
+    + Body
+
+            {
+                "email": "alexjames@gmail.com",
+                "password": "testing",
+            }
 
 + Response 200 (application/json)
 
@@ -74,7 +77,7 @@ You can upgrade your role from customer to caterer. You need to provide the toke
             Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
 
 + Response 200(application/json)
-    
+
     + Body
 
             {
@@ -94,18 +97,21 @@ You can upgrade your role from customer to caterer. You need to provide the toke
 The details required includes meal name, meal price and the image of the meal.You must be a caterer before you can add a meal
 
 + Request (application/json)
-        {
-            "name": "Rice and Beans",
-            "price": 500,
-            "imageURL": "www.image.com/link"
-        }
+
+    + Body
+
+            {
+                "name": "Rice and Beans",
+                "price": 500,
+                "imageURL": "www.image.com/link"
+            }
 
     + Headers
 
             Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
 
 + Response 201 (application/json)
-    
+
     + Body
 
             {
@@ -155,13 +161,17 @@ You have to provide the a valid token as its only caterer's that can access this
 You can modify a meal by sending the mealid as a parameter, the properties you want to update as well as your token
 
 + Request (application/json)
-        {
-            "name": "Rice and Beans",
-            "price": 800,
-            "imageURL": "www.image.com/link"
-        }
+
+    + Body
+
+            {
+                "name": "Rice and Beans",
+                "price": 800,
+                "imageURL": "www.image.com/link"
+            }
+
     + Parameters
-    
+
         + meal_id (UUID) - ID of the meal you want to modify
         
     + Headers
@@ -169,7 +179,7 @@ You can modify a meal by sending the mealid as a parameter, the properties you w
             Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
 
 + Response 200(application/json)
-    
+
     + Body
 
             {
@@ -191,7 +201,7 @@ You can modify a meal by sending the mealid as a parameter as well as your token
 + Request (application/json)
 
     + Parameters
-    
+
         + meal_id (UUID) - ID of the meal you want to modify
         
     + Headers
@@ -199,7 +209,7 @@ You can modify a meal by sending the mealid as a parameter as well as your token
             Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
 
 + Response 200(application/json)
-    
+
     + Body
 
             {
@@ -212,16 +222,18 @@ You simply send in the ids of the meals you want to add along with your token. Y
 
 + Request (application/json)
 
-        {
-            "meals": ["8f17a141-7c02-40f5-8c28-c8c520f9946d", "593c9d41-4c24-4ea1-949e-c1f30b3af0a4"]
-        }
+    + Body
+
+            {
+                "meals": ["8f17a141-7c02-40f5-8c28-c8c520f9946d", "593c9d41-4c24-4ea1-949e-c1f30b3af0a4"]
+            }
 
     + Headers
 
             Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
 
 + Response 201 (application/json)
-    
+
     + Body
 
             {
@@ -298,7 +310,7 @@ You need to be a caterer to access this route. You need to provide a valid token
 + Response 200 (application/json)
 
     + Body
-    
+
             {
                 "data": {
                     "id": "bd7596b2-42b5-43e0-9655-3da1f932738f",
@@ -326,16 +338,19 @@ You need to be a caterer to access this route. You need to provide a valid token
 You can remove a meal or multiple meals from the menu. You should provide the meal id as well as your token.
 
 + Request (application/json)
-        {
-            "meals": ["593c9d41-4c24-4ea1-949e-c1f30b3af0a4"]
-        }
+
+    + Body
+
+            {
+                "meals": ["593c9d41-4c24-4ea1-949e-c1f30b3af0a4"]
+            }
         
     + Headers
 
             Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
 
 + Response 200(application/json)
-    
+
     + Body
 
             {
@@ -349,37 +364,36 @@ You can remove a meal or multiple meals from the menu. You should provide the me
                 }
             }
 
-
-
-
 ## Order [/order]
 ### Place an Order - Customer [POST]
 You need to provide the meal id, quantity, a delivery address if different from the one you signed up with.
 
 + Request (application/json)
 
-        {
-            "deliveryAddress": "124B, Allen Way, Ikeja",
-            "meals": [
-                {
-                    "mealId": "4ef65ce5-b64a-45ca-9c02-c18857894dc2",
-                    "quantity": 10
-                },
-                {
-                    "mealId": "7c205a70-52f1-4ada-883c-6745f90f0033",
-                    "quantity": 4
-                }
-            ]
-        }
+    + Body
+
+            {
+                "deliveryAddress": "124B, Allen Way, Ikeja",
+                "meals": [
+                    {
+                        "mealId": "4ef65ce5-b64a-45ca-9c02-c18857894dc2",
+                        "quantity": 10
+                    },
+                    {
+                        "mealId": "7c205a70-52f1-4ada-883c-6745f90f0033",
+                        "quantity": 4
+                    }
+                ]
+            }
 
     + Headers
 
             Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
 
 + Response 201 (application/json)
-    
+
     + Body
-    
+
             {
                 "message": "Order Placed successfully",
                 "data": {
@@ -495,22 +509,25 @@ You need to provide the order id, meal id, quantity, a delivery address if diffe
 
 + Request (application/json)
 
-    {
-        "meals": [
-                    {
-                        "mealId": "4ef65ce5-b64a-45ca-9c02-c18857894dc2",
-                        "quantity": 12
-                    }
-                ]
-    }
+    + Body
+
+            {
+                "meals": [
+                            {
+                                "mealId": "4ef65ce5-b64a-45ca-9c02-c18857894dc2",
+                                "quantity": 12
+                            }
+                        ]
+            }
 
     + Parameters
+
         + order_id (UUID) - ID of the order you want to modify
 
 + Response 200 (application/json)
-    
+
     + Body
-    
+
             {
                 "message": "Order Modified successfully",
                 "data": {
