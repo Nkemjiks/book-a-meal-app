@@ -138,7 +138,7 @@ const mealOrderController = {
         const presentTime = (new Date().getHours() * 60) + (new Date().getMinutes());
 
         if ((presentTime - orderTime) > 60) {
-          return res.status(404).send({ message: 'You can not modify this order anymore' });
+          return res.status(401).send({ message: 'You can not modify this order anymore' });
         }
         return order
           .update({ deliveryAddress })

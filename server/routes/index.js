@@ -74,7 +74,7 @@ const routes = (app) => {
   app.get(
     '/menu/caterer',
     verifyToken,
-    checkAuthenticatedUser,
+    checkUserRole,
     menuController.getCatererMenu,
   );
   app.get('/menu/customer', menuController.getAllMenu);

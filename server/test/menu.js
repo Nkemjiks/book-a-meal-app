@@ -91,7 +91,7 @@ describe('Menu Controller', () => {
     it(`It should return the message "The menu for today has not been set yet" 
   when a customer tries to get the menu when it has not been set`, (done) => {
       chai.request(server)
-        .get('/menu/')
+        .get('/menu/customer')
         .set({ authorization: firstCustomerToken })
         .end((err, res) => {
           expect(res.status).toEqual(404);
@@ -171,7 +171,7 @@ describe('Menu Controller', () => {
     it(`It should return an object 
   containing the menu set for the day`, (done) => {
       chai.request(server)
-        .get('/menu/')
+        .get('/menu/customer')
         .set({ authorization: firstCustomerToken })
         .end((err, res) => {
           expect(res.status).toEqual(200);

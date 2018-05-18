@@ -88,7 +88,7 @@ describe('Menu Controller', () => {
     it(`It should return the message "You have not placed any order yet" 
   when a customer tries to get all orders without setting one`, (done) => {
       chai.request(server)
-        .get('/orders/')
+        .get('/orders/customer')
         .set({ authorization: secondCustomerToken })
         .end((err, res) => {
           expect(res.status).toEqual(404);
@@ -146,7 +146,7 @@ describe('Menu Controller', () => {
     it(`It should return the message "You have placed the following orders" 
   when a customer tries to get all orders`, (done) => {
       chai.request(server)
-        .get('/orders/')
+        .get('/orders/customer')
         .set({ authorization: secondCustomerToken })
         .end((err, res) => {
           expect(res.status).toEqual(200);

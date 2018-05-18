@@ -13,7 +13,7 @@ const menuController = {
     const date = new Date().toDateString();
 
     const { meals } = req.body;
-    
+
     return models.menu
       .findOrCreate({
         where: {
