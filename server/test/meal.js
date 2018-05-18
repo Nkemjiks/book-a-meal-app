@@ -103,7 +103,7 @@ describe('Meal Controller', () => {
     });
     it('It should get all the meals added by a caterer"', (done) => {
       chai.request(server)
-        .get('/meals/caterer')
+        .get('/meals/')
         .set({ authorization: firstCatererToken })
         .end((err, res) => {
           expect(res.status).toEqual(200);
@@ -113,7 +113,7 @@ describe('Meal Controller', () => {
     });
     it('It should return a message for a caterer that has not added any meal', (done) => {
       chai.request(server)
-        .get('/meals/caterer')
+        .get('/meals/')
         .set({ authorization: newcatererToken })
         .end((err, res) => {
           expect(res.status).toEqual(404);
