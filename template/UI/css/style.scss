@@ -1,0 +1,632 @@
+* {
+  font-family: "Trebuchet MS";
+}
+
+body {
+  margin: 0;
+}
+
+@media only screen and (max-width: 425px) {
+  #signin-container, #signup-container, #add-meal-container, .add-meal {
+    width: 80%;
+  }
+  #nav {
+    padding: 15px 10px;
+    .signin, button.signup {
+      display: none;
+    }
+  }
+  .mobile {
+    display: inline-block;
+    margin-left: 15px;
+  }
+  #signin-container > h1, h1 {
+    font-size: 25px;
+  }
+}
+
+@media only screen and (min-width: 426px) {
+  #signin-container, #signup-container, #add-meal-container, .add-meal {
+    width: 350px;
+  }
+  #add-meal-container {
+    margin-right: auto;
+    margin-left: auto;
+  }
+  #nav {
+    padding: 15px 40px;
+    button {
+      &.signin, &.signup {
+        display: inline-block;
+      }
+    }
+  }
+  .mobile {
+    display: none;
+  }
+  #signin-container > h1, h1 {
+    font-size: 30px;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  #signup-flex {
+    flex-direction: row;
+  }
+  #signup-container {
+    flex: 30%;
+  }
+  #app-summary {
+    flex: 70%;
+    img {
+      max-width: 80%;
+    }
+  }
+  #cart {
+    flex: 30%;
+    margin-right: 20px;
+  }
+  #menu {
+    flex: 70%;
+    margin-bottom: 80px;
+  }
+  .add-meal {
+    flex: 30%;
+  }
+  .added-meals {
+    flex: 70%;
+    margin-right: 10px;
+  }
+  .menu, .create-menu {
+    flex: 50%;
+  }
+  .order-summary {
+    flex: 15%;
+    margin-left: 10px;
+  }
+  .detailed-orders {
+    flex: 75%;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  #signup-flex, #customer-dashboard-flex, #caterer-dashboard-flex {
+    flex-direction: row;
+  }
+  #signup-container {
+    flex: 40%;
+  }
+  #app-summary {
+    flex: 60%;
+    img {
+      max-width: 90%;
+    }
+  }
+  #cart {
+    flex: 40%;
+    margin-right: 20px;
+  }
+  #menu {
+    flex: 60%;
+  }
+  .add-meal {
+    flex: 40%;
+  }
+  .added-meals {
+    flex: 60%;
+    margin-right: 10px;
+  }
+  .menu, .create-menu {
+    flex: 50%;
+  }
+  .order-summary {
+    flex: 20%;
+  }
+  .detailed-orders {
+    flex: 80%;
+    min-width: 650px;
+  }
+}
+
+@media only screen and (max-width: 980px) {
+  #signup-flex, #customer-dashboard-flex, #caterer-dashboard-flex {
+    flex-direction: column;
+  }
+  #signup-container {
+    order: 2;
+    align-self: center;
+  }
+  #app-summary {
+    order: 1;
+    margin-bottom: 40px;
+    img {
+      max-width: 90%;
+    }
+  }
+  #nav {
+    border-bottom: 2px solid #d8d5d5;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    background-color: white;
+  }
+  #signup-flex {
+    margin-top: 150px;
+    margin-bottom: 10px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #d8d5d5;
+  }
+  #customer-dashboard-flex, #caterer-dashboard-flex {
+    margin-top: 150px;
+  }
+  #cart, .menu, .add-meal, .order-summary {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #cart, .menu {
+    width: 95%;
+  }
+  #cart {
+    margin-bottom: 60px;
+  }
+  .menu {
+    order: 2;
+  }
+  .create-menu {
+    order: 1;
+  }
+  .add-meal {
+    width: 85%;
+  }
+  #signin-container, #signup-container {
+    margin-top: 140px;
+  }
+}
+
+@media only screen and (min-width: 980px) {
+  .add-meal, .menu {
+    margin-left: 10px;
+  }
+}
+
+@media only screen and (min-width: 680px) {
+  #steps div {
+    width: 150px;
+    height: 150px;
+    margin: 15px;
+    padding: 40px 20px;
+  }
+}
+
+@media only screen and (max-width: 680px) {
+  #steps div {
+    width: 100px;
+    height: 100px;
+    padding: 23px 10px;
+    font-size: 12px;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  #steps div {
+    width: 80px;
+    height: 80px;
+    padding: 20px 10px;
+    font-size: 10px;
+  }
+  #nav-avatar, #nav > h3 {
+    display: none;
+  }
+  #dropdown-name {
+    display: block;
+    padding: 8px 12px;
+    margin: 10px 0;
+  }
+  #nav {
+    height: 70px;
+    img[alt='logo'] {
+      width: 70px;
+    }
+  }
+  #nav-setting {
+    margin-top: 20px;
+    width: 30px;
+  }
+  #customer-dashboard-flex, #caterer-dashboard-flex {
+    margin-top: 100px;
+  }
+}
+
+@media only screen and (max-width: 370px) {
+  #steps div {
+    width: 60px;
+    height: 60px;
+    padding: 9px 5px;
+    font-size: 8px;
+  }
+}
+
+@media only screen and (min-width: 450px) {
+  #nav {
+    > h3 {
+      display: inline-block;
+    }
+    height: 100px;
+    img[alt='logo'] {
+      width: 100px;
+    }
+  }
+  #nav-setting {
+    margin-top: 35px;
+  }
+  #dropdown-name {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 580px) {
+  #nav .manage-button {
+    display: none;
+  }
+  .mobile-caterer .manage-button {
+    display: inline-block;
+  }
+}
+
+@media only screen and (min-width: 580px) {
+  .mobile-caterer .manage-button {
+    display: none;
+  }
+}
+
+#nav button {
+  float: right;
+}
+
+.signup, .signin, #nav .manage-button, .mobile-caterer .manage-button {
+  background-color: black;
+  color: white;
+  border-radius: 3px;
+  cursor: pointer;
+  width: auto;
+  min-width: 104px;
+  border: none;
+  margin-top: 14px;
+  padding: 15px;
+  font-size: 12px;
+}
+
+#signin-container, #signup-container, #add-meal-container, .add-meal {
+  border: 1px solid #d8d5d5;
+  padding: 20px;
+  height: 400px;
+  box-shadow: 2px 5px 4px #d8d5d5;
+}
+
+#signin-container, #signup-container {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#signin-container input, #signup-container input, #add-meal-container input, .add-meal input {
+  display: inline-block;
+  width: 100%;
+  padding: 15px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 2px solid #f1f1f1;
+}
+
+#signin-container > h1, h1 {
+  text-align: center;
+  color: black;
+}
+
+#signin-container button, #signup-container button, #order, #add-meal-container button, .create-menu button, .add-meal button {
+  color: white;
+  background-color: black;
+  padding: 14px 20px;
+  margin: 15px 0;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  width: 100%;
+  border-radius: 3px;
+}
+
+#forget {
+  float: right;
+}
+
+#signup-flex {
+  display: flex;
+}
+
+#signup-container {
+  padding: 10px;
+  margin: 5px 20px;
+}
+
+#app-summary {
+  padding: 20px;
+  text-align: center;
+  > p {
+    font-size: 12px;
+  }
+}
+
+#steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 50px 0;
+  div {
+    color: white;
+    border-radius: 50%;
+    background-color: rgb(241, 49, 15);
+    text-align: center;
+    box-sizing: border-box;
+  }
+  span {
+    font-size: 50px;
+    color: rgb(241, 49, 15);
+  }
+}
+
+.dashboard {
+  border-bottom: 2px solid #d8d5d5;
+}
+
+#nav-avatar, #nav-setting {
+  float: right;
+}
+
+#nav-avatar {
+  border-radius: 50%;
+  border: 3px solid rgb(241, 49, 15);
+  width: 40px;
+  margin-top: 20px;
+}
+
+#nav-setting {
+  width: 30px;
+  cursor: pointer;
+}
+
+#nav h3 {
+  float: right;
+  margin: 34px 30px 25px 10px;
+}
+
+#customer-dashboard-flex, #caterer-dashboard-flex {
+  display: flex;
+}
+
+#menu h1 {
+  text-align: center;
+  margin: 50px 0;
+}
+
+#cart, .added-meals, .create-menu, #incoming-orders {
+  margin-top: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+  border: 2px solid #d8d5d5;
+  border-radius: 3px;
+  height: 450px;
+  box-shadow: 0 2px 5px -1px rgba(0, 0, 0, 0.3);
+}
+
+.meal {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+  #add-meal {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+  }
+  .remove {
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+  }
+}
+
+#meal-info {
+  min-width: 30%;
+  height: 60px;
+  text-align: center;
+  border: 1px solid #d8d5d5;
+  margin: 5px 10px;
+  flex-grow: 1;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: row;
+  box-shadow: 0 1px 5px -1px rgba(0, 0, 0, 0.3);
+  color: #57727c;
+}
+
+#add-meal-div {
+  height: 40px;
+  margin-top: 9px;
+}
+
+#add-meal, .remove {
+  display: block;
+  margin: 6px auto;
+}
+
+.cart-order, .meals-added, .order-info, #meal-info {
+  display: flex;
+  flex-direction: row;
+}
+
+.cart-order *, .meals-added *, .order-info *, #meal-info * {
+  text-align: center;
+}
+
+.cart-order *, .meals-added *, .order-info *, #meal-price, #add-meal-div {
+  flex: 1;
+}
+
+#meal-name {
+  flex: 2;
+}
+
+.cart-order input, .meals-added input {
+  width: 30px;
+  margin: 18px 0;
+}
+
+.description {
+  background-color: #dadada;
+}
+
+#cart {
+  h2 {
+    float: right;
+  }
+  h1 {
+    text-align: left;
+  }
+}
+
+.added-meals h1, .create-menu h1, #incoming-orders h1 {
+  text-align: center;
+}
+
+#items, .meals, .orders-placed, .meals-avaliable {
+  overflow: auto;
+}
+
+#items {
+  height: 150px;
+}
+
+.meals {
+  height: 200px;
+}
+
+.meals-avaliable {
+  height: 170px;
+}
+
+.orders-placed {
+  height: 220px;
+}
+
+footer {
+  height: 50px;
+  color: white;
+  background-color: rgb(66, 64, 64);
+  margin-top: 20px;
+  text-align: center;
+  padding: 15px 0;
+  box-sizing: border-box;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
+#nav .manage-button, .mobile-caterer .manage-button {
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+.add-meal, .menu, .order-summary {
+  margin-top: 20px;
+}
+
+.added-meals, .create-menu, #incoming-orders {
+  margin-right: 10px;
+  margin-left: 10px;
+  height: 400px;
+}
+
+.added-meals {
+  margin-bottom: 80px;
+}
+
+#add-meal-container, .add-meal {
+  height: 300px;
+}
+
+#modify-div {
+  padding-top: 15px;
+}
+
+.modify {
+  margin: 2px;
+}
+
+.edit {
+  width: 26px;
+}
+
+.mobile-caterer {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.menu, .order-summary {
+  border: 1px solid #d8d5d5;
+  padding: 20px;
+  box-shadow: 2px 5px 4px #d8d5d5;
+  box-sizing: border-box;
+}
+
+.menu {
+  height: 400px;
+}
+
+.order-summary {
+  height: 300px;
+  min-width: 300px;
+}
+
+#incoming-orders {
+  margin-bottom: 80px;
+}
+
+#nav > div {
+  position: relative;
+  display: inline;
+  float: right;
+}
+
+.dropdown-content {
+  display: none;
+  margin-top: 65px;
+  position: absolute;
+  right: 0;
+  background-color: #f9f9f9;
+  min-width: 170px;
+  box-shadow: 0px 3px 8px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  a {
+    color: black;
+    padding: 12px 16px;
+    display: block;
+    &:hover {
+      background-color: #c5c0c0;
+    }
+  }
+}
+
+#nav > div:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-content a, a {
+  text-decoration: none;
+}
+
+.img .remove {
+  width: 32px;
+  height: 32px;
+}

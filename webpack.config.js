@@ -1,10 +1,11 @@
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   entry: {
-    app: './client/app.js',
+    app: './client/app.jsx',
   },
 
   output: {
@@ -12,16 +13,13 @@ module.exports = {
     filename: '[name].bundle.js',
     publicPath: '/',
   },
+
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
-
-        options: {
-          presets: ['env', 'react', 'stage-0'],
-        },
       },
       {
         test: /\.(scss|css)$/,
@@ -49,9 +47,21 @@ module.exports = {
     new ExtractTextWebpackPlugin({
       filename: 'css/[name].main.css',
     }),
+    new webpack.NamedModulesPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
   ],
 
-  resolve: {
-    extensions: ['js', 'jsx'],
+  devServer: {
+    contentBase: path.resolve(__dirname, 'client', 'public'),
+    port: 8000,
+    open: true,
+    historyApiFallback: true,
+    hot: true,
   },
+
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
+
+  mode: 'none',
 };
