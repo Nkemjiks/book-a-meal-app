@@ -22,18 +22,17 @@ module.exports = {
         loader: 'babel-loader',
       },
       {
-        test: /\.(scss|css)$/,
-        use: ExtractTextWebpackPlugin.extract({
-          use: [
-            {
-              loader: 'css-loader',
-            },
-            {
-              loader: 'sass-loader',
-            },
-          ],
-          fallback: 'style-loader',
-        }),
+        test: /\.scss$/,
+        use: [{
+          loader: 'style-loader',
+        }, {
+          loader: 'css-loader',
+        }, {
+          loader: 'sass-loader',
+          options: {
+            includePaths: ['absolute/path/a', 'absolute/path/b'],
+          },
+        }],
       },
       {
         test: /\.(jpg|png|svg)$/,
@@ -43,11 +42,11 @@ module.exports = {
   },
 
   plugins: [
-    new UglifyJSPlugin(),
-    new ExtractTextWebpackPlugin({
-      filename: 'css/[name].main.css',
-    }),
-    new webpack.NamedModulesPlugin(),
+    // new UglifyJSPlugin(),
+    // new ExtractTextWebpackPlugin({
+    //   filename: 'css/[name].main.css',
+    // }),
+    // new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
   ],
 

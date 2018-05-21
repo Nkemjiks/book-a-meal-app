@@ -85,7 +85,8 @@ const userController = {
           if (user.role === 'customer') {
             user.update({ role: 'caterer' });
             const filteredUserDetail = filterUserDetail(user);
-            return res.status(200).send({ message: 'Update successful', data: filteredUserDetail });
+            const token = generateToken(filteredUserDetail);
+            return res.status(200).send({ message: 'Update successful', data: filteredUserDetail, token });
           }
           return res.status(409).send({ message: 'You are already a caterer' });
         }

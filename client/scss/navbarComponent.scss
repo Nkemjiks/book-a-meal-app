@@ -1,0 +1,99 @@
+#nav button {
+  float: right;
+}
+#nav {
+  height: 15vh;
+  background-color: white;
+}
+#nav .manage-button {
+  background-color: black;
+  color: white;
+  border-radius: 3px;
+  cursor: pointer;
+  width: auto;
+  min-width: 104px;
+  border: none;
+  margin-top: 14px;
+  padding: 15px;
+  font-size: 12px;
+}
+.signup, .signin, #nav .manage-button, .mobile-caterer .manage-button {
+  background-color: black;
+  color: white;
+  border-radius: 3px;
+  cursor: pointer;
+  width: auto;
+  border: none;
+  margin-top: 14px;
+  padding: 15px;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+@media (max-width: 600px) {
+  #nav {
+    padding: 15px 10px;
+  }
+}
+@media (min-width: 601px) {
+  #nav {
+    padding: 15px 40px;
+    button {
+      &.signin, &.signup {
+        display: inline-block;
+      }
+    }
+  }
+}
+@media (max-width: 450px) {
+  #nav-avatar, #nav > h3 {
+    display: none;
+  }
+  #nav {
+    height: 70px;
+    img[alt='logo'] {
+      width: 70px;
+    }
+  }
+  #nav {
+    button {
+      &.signin, &.signup {
+        font-size: 10px;
+        min-width: 90px;
+      }
+    }
+  }
+  #nav-setting {
+    margin-top: 20px;
+    width: 30px;
+  }
+}
+@media (min-width: 450px) {
+  #nav {
+    > h3 {
+      display: inline-block;
+    }
+    img[alt='logo'] {
+      width: 100px;
+    }
+    button {
+      &.signin, &.signup {
+        font-size: 12px;
+        min-width: 104px;
+      }
+    }
+  }
+  #nav-setting {
+    margin-top: 35px;
+  }
+}
+@media (max-width: 580px) {
+  #nav .manage-button {
+    display: none;
+  }
+}
+
+@media (min-width: 580px) {
+  .mobile-caterer .manage-button {
+    display: none;
+  }
+}
