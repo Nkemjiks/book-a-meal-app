@@ -1,7 +1,9 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import NavbarComponent from './NavbarComponent';
-import CatererDashboardComponent from './CatererDashboardComponent';
+import CatererManageMealComponent from './CatererManageMealComponent';
+import CatererManageMenuComponent from './CatererManageMenuComponent';
+import CatererManageOrderComponent from './CatererManageOrderComponent';
 import CustomerDashboardComponent from './CustomerDashboardComponent';
 import LoginComponent from './LoginComponent';
 import SignupComponent from './SignupComponent';
@@ -10,7 +12,7 @@ import ProtectComponent from './ProtectComponent';
 
 class RouteComponent extends React.Component {
   state = {
-    isAuthenticated: false,
+    isAuthenticated: true,
   };
   render() {
     const { isAuthenticated } = this.state;
@@ -22,7 +24,9 @@ class RouteComponent extends React.Component {
           <Route path="/signup" component={SignupComponent} />
           <Route path="/login" component={LoginComponent} />
           <ProtectComponent path="/customer" isAuthenticated={isAuthenticated} component={CustomerDashboardComponent} />
-          <ProtectComponent path="/caterer" isAuthenticated={isAuthenticated} component={CatererDashboardComponent} />
+          <ProtectComponent path="/caterer/meal" isAuthenticated={isAuthenticated} component={CatererManageMealComponent} />
+          <ProtectComponent path="/caterer/menu" isAuthenticated={isAuthenticated} component={CatererManageMenuComponent} />
+          <ProtectComponent path="/caterer/order" isAuthenticated={isAuthenticated} component={CatererManageOrderComponent} />
         </Switch>
       </div>
     );
