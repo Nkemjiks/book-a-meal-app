@@ -36,14 +36,14 @@ const routes = (app) => {
 
   // Meal routes
   app.post(
-    '/meals/',
+    '/meals',
     verifyToken,
     checkUserRole,
     addMealValidation,
     mealController.createMeal,
   );
   app.get(
-    '/meals/',
+    '/meals',
     verifyToken,
     checkUserRole,
     mealController.getAllCatererMeal,
@@ -64,7 +64,7 @@ const routes = (app) => {
 
   // Menu routes
   app.post(
-    '/menu/',
+    '/menu',
     verifyToken,
     checkUserRole,
     menuMealsValidation,
@@ -79,7 +79,7 @@ const routes = (app) => {
   );
   app.get('/menu/customer', menuController.getAllMenu);
   app.delete(
-    '/menu/',
+    '/menu',
     verifyToken,
     checkUserRole,
     menuMealsValidation,

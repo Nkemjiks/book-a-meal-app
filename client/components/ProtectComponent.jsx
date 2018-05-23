@@ -2,21 +2,36 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const ProtectComponent = ({ component: Component, isAuthenticated, path }) => {
+export const UserProtectComponent = ({ component: Component, isValidated, path }) => {
   return (<Route
     path={path}
     render={() => (
-      isAuthenticated
+      isValidated
       ? <Component />
       : <Redirect to="/login" />
     )}
   />);
 };
 
-ProtectComponent.propTypes = {
+export const RoleProtectedComponent = ({ component: Component, isCaterer, path }) => {
+  return (<Route
+    path={path}
+    render={() => (
+      isCaterer
+      ? <Component />
+      : <Redirect to="/customer" />
+    )}
+  />);
+};
+
+UserProtectComponent.propTypes = {
   component: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
+  isValidated: PropTypes.bool.isRequired,
   path: PropTypes.string.isRequired,
 };
 
-export default ProtectComponent;
+RoleProtectedComponent.propTypes = {
+  component: PropTypes.func.isRequired,
+  isCaterer: PropTypes.bool.isRequired,
+  path: PropTypes.string.isRequired,
+};

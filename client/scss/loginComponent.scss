@@ -14,7 +14,7 @@
 #signin-container {
   border: 1px solid #d8d5d5;
   padding: 20px;
-  height: 450px;
+  height: 400px;
   margin-left: auto;
   margin-right: auto;
   margin-top: 10px;
@@ -30,7 +30,7 @@
     box-sizing: border-box;
     border: 2px solid #f1f1f1;
   }
-  button {
+  .button {
     color: white;
     background-color: black;
     padding: 14px 20px;
@@ -43,6 +43,7 @@
   }
   h1 {
     text-align: center;
+    margin-top: 70px;
   }
 }
 #signin-component {

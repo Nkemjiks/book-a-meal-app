@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
 import NavbarComponent from './NavbarComponent';
 import CatererManageMealComponent from './CatererManageMealComponent';
 import CatererManageMenuComponent from './CatererManageMenuComponent';
@@ -8,14 +9,27 @@ import CustomerDashboardComponent from './CustomerDashboardComponent';
 import LoginComponent from './LoginComponent';
 import SignupComponent from './SignupComponent';
 import LandingPageComponent from './LandingPageComponent';
-import ProtectComponent from './ProtectComponent';
+import { UserProtectComponent, RoleProtectedComponent } from './ProtectComponent';
 
-class RouteComponent extends React.Component {
+class RouteComponent extends React.Component { 
   state = {
-    isAuthenticated: true,
+    isValidated: false,
+    isCaterer: false,
   };
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.user.role === 'customer') {
+      this.setState({
+        isValidated: true,
+        isCaterer: false,
+      });
+    } else if (nextProps.user.role === 'caterer') {
+      this.setState({
+        isCaterer: true,
+      });
+    }
+  }
   render() {
-    const { isAuthenticated } = this.state;
+    const { isValidated, isCaterer } = this.state;
     return (
       <div>
         <NavbarComponent />
@@ -23,14 +37,20 @@ class RouteComponent extends React.Component {
           <Route exact path="/" component={LandingPageComponent} />
           <Route path="/signup" component={SignupComponent} />
           <Route path="/login" component={LoginComponent} />
-          <ProtectComponent path="/customer" isAuthenticated={isAuthenticated} component={CustomerDashboardComponent} />
-          <ProtectComponent path="/caterer/meal" isAuthenticated={isAuthenticated} component={CatererManageMealComponent} />
-          <ProtectComponent path="/caterer/menu" isAuthenticated={isAuthenticated} component={CatererManageMenuComponent} />
-          <ProtectComponent path="/caterer/order" isAuthenticated={isAuthenticated} component={CatererManageOrderComponent} />
+          <UserProtectComponent path="/customer" isValidated={isValidated} component={CustomerDashboardComponent} />
+          <RoleProtectedComponent path="/caterer/meal" isCaterer={isCaterer} component={CatererManageMealComponent} />
+          <RoleProtectedComponent path="/caterer/menu" isCaterer={isCaterer} component={CatererManageMenuComponent} />
+          <RoleProtectedComponent path="/caterer/order" isCaterer={isCaterer} component={CatererManageOrderComponent} />
         </Switch>
       </div>
     );
   }
 }
-
-export default RouteComponent;
+const mapStateToProps = ({ userInformation }) => {
+  const { user, error } = userInformation;
+  return {
+    user,
+    error,
+  };
+};
+export default connect(mapStateToProps)(RouteComponent);
