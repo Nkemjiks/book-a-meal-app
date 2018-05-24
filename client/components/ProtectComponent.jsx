@@ -2,9 +2,10 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const isUser = JSON.parse(window.localStorage.getItem('user'));
+let isUser;
 
 export const UserProtectComponent = ({ component: Component, path }) => {
+  isUser = JSON.parse(window.localStorage.getItem('user'));
   return (<Route
     path={path}
     render={({ location }) => (
@@ -16,6 +17,7 @@ export const UserProtectComponent = ({ component: Component, path }) => {
 };
 
 export const RoleProtectedComponent = ({ component: Component, path }) => {
+  isUser = JSON.parse(window.localStorage.getItem('user'));
   return (<Route
     path={path}
     render={({ location }) => (

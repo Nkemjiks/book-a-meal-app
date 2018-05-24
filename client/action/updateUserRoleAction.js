@@ -1,16 +1,16 @@
 import { USER_ROLE_UPDATE_SUCCESS, USER_ROLE_UPDATE_FAILURE } from '../actionTypes';
 
-const updateUserRoleAction = (user, error) => {
+const updateUserRoleAction = (userDetails, isAuthenticated) => {
   return (dispatch) => {
-    if (user) {
+    if (isAuthenticated) {
       dispatch({
         type: USER_ROLE_UPDATE_SUCCESS,
-        payload: user,
+        payload: userDetails,
       });
-    } else if (error) {
+    } else {
       dispatch({
         type: USER_ROLE_UPDATE_FAILURE,
-        payload: error,
+        payload: userDetails,
       });
     }
   };

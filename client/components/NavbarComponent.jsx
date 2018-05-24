@@ -26,22 +26,18 @@ class NavbarComponent extends Component {
   }
 
   handleRoleUpdate = () => {
-    let user = null;
-    let error = null;
     const token = window.localStorage.getItem('token');
 
     apiCall('/auth/update', 'put', null, token)
       .then((response) => {
         window.localStorage.setItem('user', JSON.stringify(response.data.data));
         window.localStorage.setItem('token', response.data.token);
-        user = response.data.data;
-        this.props.updateUserRoleAction(user);
+        this.props.updateUserRoleAction(response.data.data, true);
         this.props.history.push('/caterer/menu');
       })
       .catch((err) => {
-        error = err.response.data.message;
-        this.props.updateUserRoleAction(user, error);
-        return toast.error(error, {
+        this.props.updateUserRoleAction(err.response.data.message, false);
+        return toast.error(err.response.data.message, {
           hideProgressBar: true,
         });
       });

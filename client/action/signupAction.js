@@ -1,16 +1,16 @@
 import { SIGNUP_USER_SUCCESS, SIGNUP_USER_FAILURE } from '../actionTypes';
 
-const signupAction = (user, error) => {
+const signupAction = (userDetails, isAuthenticated) => {
   return (dispatch) => {
-    if (user) {
+    if (isAuthenticated) {
       dispatch({
         type: SIGNUP_USER_SUCCESS,
-        payload: user,
+        payload: userDetails,
       });
-    } else if (error) {
+    } else {
       dispatch({
         type: SIGNUP_USER_FAILURE,
-        payload: error,
+        payload: userDetails,
       });
     }
   };

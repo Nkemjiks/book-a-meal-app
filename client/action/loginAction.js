@@ -1,16 +1,16 @@
 import { LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS } from '../actionTypes';
 
-const loginAction = (user, error) => {
+const loginAction = (userDetails, isAuthenticated) => {
   return (dispatch) => {
-    if (user) {
+    if (isAuthenticated) {
       dispatch({
         type: LOGIN_USER_SUCCESS,
-        payload: user,
+        payload: userDetails,
       });
-    } else if (error) {
+    } else {
       dispatch({
         type: LOGIN_USER_FAILURE,
-        payload: error,
+        payload: userDetails,
       });
     }
   };

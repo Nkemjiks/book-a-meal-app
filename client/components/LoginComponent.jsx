@@ -23,9 +23,6 @@ class LoginComponent extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    let user = null;
-    let error = null;
-
     const {
       email,
       password,
@@ -41,24 +38,20 @@ class LoginComponent extends React.Component {
       .then((response) => {
         window.localStorage.setItem('user', JSON.stringify(response.data.data));
         window.localStorage.setItem('token', response.data.token);
-        user = response.data.data;
-        this.props.loginAction(user);
+        this.props.loginAction(response.data.data, true);
         this.props.history.push('/customer');
       })
       .catch((err) => {
-        error = err.response.data.message;
-        this.props.loginAction(user, error);
-        return toast.error(error, {
+        this.props.loginAction(err.response.data.message, false);
+        return toast.error(err.response.data.message, {
           hideProgressBar: true,
         });
       });
 
-    if (user) {
-      this.setState({
-        email: '',
-        password: '',
-      });
-    }
+    this.setState({
+      email: '',
+      password: '',
+    });
   }
 
   render() {

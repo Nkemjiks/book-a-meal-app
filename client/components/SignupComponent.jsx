@@ -25,8 +25,6 @@ class SignupComponent extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    let user = null;
-    let error = null;
 
     const {
       fullName,
@@ -46,27 +44,24 @@ class SignupComponent extends React.Component {
       .then((response) => {
         window.localStorage.setItem('user', JSON.stringify(response.data.data));
         window.localStorage.setItem('token', response.data.token);
-        user = response.data.data;
-        this.props.signupAction(user);
+        this.props.signupAction(response.data.data, true);
         this.props.history.push('/customer');
       })
       .catch((err) => {
-        error = err.response.data.message;
-        this.props.signupAction(user, error);
-        return toast.error(error, {
+        this.props.signupAction(err.response.data.message, false);
+        return toast.error(err.response.data.message, {
           hideProgressBar: true,
         });
       });
 
-    if (user) {
-      this.setState({
-        fullName: '',
-        email: '',
-        phoneNumber: '',
-        password: '',
-        address: '',
-      });
-    }
+
+    this.setState({
+      fullName: '',
+      email: '',
+      phoneNumber: '',
+      password: '',
+      address: '',
+    });
   }
   render() {
     return (
