@@ -6,7 +6,6 @@
  * @returns {Object}
  */
 export const signupValidation = (req, res, next) => {
-  console.log(req.body, 'ttt');
   const {
     fullName,
     email,

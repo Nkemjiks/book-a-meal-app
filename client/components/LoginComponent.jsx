@@ -1,9 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
+import PropTypes from 'prop-types';
 import 'react-toastify/dist/ReactToastify.css';
 import '../scss/loginComponent.scss';
+import apiCall from '../helpers/axios';
 import loginAction from '../action/loginAction';
 
 class LoginComponent extends React.Component {
@@ -11,12 +13,6 @@ class LoginComponent extends React.Component {
     email: '',
     password: '',
   };
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.error) {
-      return toast.error(nextProps.error);
-    }
-  }
 
   handleChange = (event) => {
     this.setState({
@@ -26,42 +22,59 @@ class LoginComponent extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
+
+    let user = null;
+    let error = null;
+
     const {
       email,
       password,
     } = this.state;
 
     if (!email || !password) {
-      return toast.error('You are missing a field');
+      return toast.error('Please provide all required fields', {
+        hideProgressBar: true,
+      });
     }
 
-    this.props.loginAction(this.state);
+    apiCall('/auth/login', 'post', this.state)
+      .then((response) => {
+        window.localStorage.setItem('user', JSON.stringify(response.data.data));
+        window.localStorage.setItem('token', response.data.token);
+        user = response.data.data;
+        this.props.loginAction(user);
+        this.props.history.push('/customer');
+      })
+      .catch((err) => {
+        error = err.response.data.message;
+        this.props.loginAction(user, error);
+        return toast.error(error, {
+          hideProgressBar: true,
+        });
+      });
 
-    this.setState({
-      email: '',
-      password: '',
-    });
+    if (user) {
+      this.setState({
+        email: '',
+        password: '',
+      });
+    }
   }
 
   render() {
-
-    if (Object.keys(this.props.user).length !== 0 && this.props.user.constructor === Object) {
-      return <Redirect to="/customer" />;
-    }
-
     return (
       <div id="signin-component">
         <div id="signin-container">
           <h1>Sign in</h1>
           <ToastContainer />
           <form action="">
-            <input type="email" name="email" placeholder="Email Address" onChange={this.handleChange} />
-            <input type="password" name="password" placeholder="Password" onChange={this.handleChange} />
+            <input type="email" name="email" placeholder="Email Address" value={this.state.email} onChange={this.handleChange} />
+            <input type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleChange} />
             <button className="button" onClick={this.handleSubmit}>SIGN IN</button>
           </form>
           <div>
             <p id="forget">
-              <a href="#">Forgot Password?</a>
+              <Link to="#">Forgot Password?</Link>
             </p>
           </div>
         </div>
@@ -80,6 +93,10 @@ const mapStateToProps = ({ userInformation }) => {
 
 const mapActionToProps = {
   loginAction,
+};
+
+LoginComponent.propTypes = {
+  loginAction: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapActionToProps)(LoginComponent);

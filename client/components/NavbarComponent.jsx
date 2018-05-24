@@ -1,82 +1,141 @@
-import React, { Component } from 'react';
-import { withRouter} from 'react-router-dom';
+import React, { Component, Fragment } from 'react';
+import { withRouter, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '../scss/navbarComponent.scss';
+import logoutAction from '../action/logoutAction';
+import updateUserRoleAction from '../action/updateUserRoleAction';
+import apiCall from '../helpers/axios';
+
+let isUser;
 
 class NavbarComponent extends Component {
-  state = {
-    isAuthenticated: true,
-  };
-  render() {
-    if (
-      (this.props.location.pathname === '/') ||
-      (this.props.location.pathname === '/login') ||
-      (this.props.location.pathname === '/signup')
-    ) {
-      return (
-        <div id="nav">
-          <a href="/">
-            <img src="image/logo.png" alt="logo" />
-          </a>
-          <a href="/login">
-            <button className="signin tablet">LOGIN</button>
-          </a>
-          <a href="/signup">
-            <button className="signup tablet">SIGN UP</button>
-          </a>
-        </div>
-      );
-    } else if (this.props.location.pathname === '/customer') {
-      return (
-        <div id="nav" className="dashboard">
-          <a href="/">
-            <img src="image/logo.png" alt="logo" />
-          </a>
-          <div id="dropdown">
-            <img src="../../image/setting.png" alt="settings" id="nav-setting" />
-            <div className="dropdown-content">
-              <h4 id="dropdown-name">Mbonu Blessing</h4>
-              <a href="/caterer/menu">Caterer's panel</a>
-              <a href="/login">Sign out</a>
-            </div>
-          </div>
-          <h3>Mbonu Blessing</h3>
-          <img src="../../image/avatar.png" alt="avatar" id="nav-avatar" />
-        </div>
-      );
-    } else if (
-      (this.props.location.pathname === '/caterer/meal') ||
-      (this.props.location.pathname === '/caterer/menu') ||
-      (this.props.location.pathname === '/caterer/order')
-    ) {
-      return (
-        <div id="nav">
-          <a href="/">
-            <img src="image/logo.png" alt="logo" />
-          </a>
-          <div id="dropdown">
-            <img src="../../image/setting.png" alt="settings" id="nav-setting-caterer" />
-            <div className="dropdown-content-caterer">
-              <h4 id="dropdown-name-caterer">Mbonu Blessing</h4>
-              <a href="/caterer/menu" className="dropdown-option">Set Menu</a>
-              <a href="/caterer/meal" className="dropdown-option">Manage Meals</a>
-              <a href="/caterer/order" className="dropdown-option">Manage Orders</a>
-              <a href="/customer" className="default">Customer Dashboard</a>
-              <a href="/login" className="default">Sign out</a>
-            </div>
-          </div>
-          <a href="/caterer/order">
-            <button className="manage-button">Manage Orders</button>
-          </a>
-          <a href="/caterer/menu">
-            <button className="manage-button">Set Menu</button>
-          </a>
-          <a href="/caterer/meal">
-            <button className="manage-button">Manage Meals</button>
-          </a>
-        </div>
-      );
+  componentWillReceiveProps(nextProps) {
+    if (nextProps) {
+      isUser = JSON.parse(window.localStorage.getItem('user'));
     }
+  }
+
+  handleLogout = () => {
+    window.localStorage.removeItem('user');
+    window.localStorage.removeItem('token');
+    this.props.logoutAction();
+    this.props.history.push('/login');
+  }
+
+  handleRoleUpdate = () => {
+    let user = null;
+    let error = null;
+    const token = window.localStorage.getItem('token');
+
+    apiCall('/auth/update', 'put', null, token)
+      .then((response) => {
+        window.localStorage.setItem('user', JSON.stringify(response.data.data));
+        window.localStorage.setItem('token', response.data.token);
+        user = response.data.data;
+        this.props.updateUserRoleAction(user);
+        this.props.history.push('/caterer/menu');
+      })
+      .catch((err) => {
+        error = err.response.data.message;
+        this.props.updateUserRoleAction(user, error);
+        return toast.error(error, {
+          hideProgressBar: true,
+        });
+      });
+  }
+
+  render() {
+    return (
+      <div id="nav">
+        <Link to="/">
+          <img src="image/logo.png" alt="logo" />
+        </Link>
+        <ToastContainer />
+        {
+          ((this.props.location.pathname === '/') ||
+          (this.props.location.pathname === '/login') ||
+          (this.props.location.pathname === '/signup')) &&
+          <Fragment>
+            <Link to="/login">
+              <button className="signin tablet">LOGIN</button>
+            </Link>
+            <Link to="/signup">
+              <button className="signup tablet">SIGN UP</button>
+            </Link>
+          </Fragment>
+        }
+        {
+          (this.props.location.pathname === '/customer') &&
+          <Fragment>
+            <div id="dropdown">
+              <img src="image/setting.png" alt="settings" id="nav-setting" />
+              <div className="dropdown-content">
+                <h4 id="dropdown-name">{isUser && isUser.fullName}</h4>
+                {
+                  isUser && isUser.role === 'customer' &&
+                  <button className="logout" onClick={this.handleRoleUpdate}>Become a Caterer</button>
+                }
+                {
+                  isUser && isUser.role === 'caterer' && <Link to="/caterer/menu">Caterer Panel</Link>
+                }
+                <button className="logout" onClick={this.handleLogout}>Logout</button>
+              </div>
+            </div>
+            <h3>{isUser && isUser.fullName}</h3>
+            <img src="image/avatar.png" alt="avatar" id="nav-avatar" />
+          </Fragment>
+        }
+        {
+          ((this.props.location.pathname === '/caterer/meal') ||
+          (this.props.location.pathname === '/caterer/menu') ||
+          (this.props.location.pathname === '/caterer/order')) &&
+          <Fragment>
+            <div id="dropdown">
+              <img src="image/setting.png" alt="settings" id="nav-setting-caterer" />
+              <div className="dropdown-content-caterer">
+                <h4 id="dropdown-name-caterer">{isUser && isUser.fullName}</h4>
+                <Link to="/caterer/menu" className="dropdown-option">Set Menu</Link>
+                <Link to="/caterer/meal" className="dropdown-option">Manage Meals</Link>
+                <Link to="/caterer/order" className="dropdown-option">Manage Orders</Link>
+                <Link to="/customer" className="default">Customer Dashboard</Link>
+                <button className="default logout" onClick={this.handleLogout}>Logout</button>
+              </div>
+            </div>
+            <Link to="/caterer/order">
+              <button className="manage-button">Manage Orders</button>
+            </Link>
+            <Link to="/caterer/menu">
+              <button className="manage-button">Set Menu</button>
+            </Link>
+            <Link to="/caterer/meal">
+              <button className="manage-button">Manage Meals</button>
+            </Link>
+          </Fragment>
+        }
+      </div>
+    );
   }
 }
 
-export default withRouter(NavbarComponent);
+const mapStateToProps = ({ userInformation }) => {
+  const { user, error } = userInformation;
+  return {
+    user,
+    error,
+  };
+};
+
+const mapActionToProps = {
+  logoutAction,
+  updateUserRoleAction,
+};
+
+NavbarComponent.propTypes = {
+  logoutAction: PropTypes.func.isRequired,
+  updateUserRoleAction: PropTypes.func.isRequired,
+};
+
+export default withRouter(connect(mapStateToProps, mapActionToProps)(NavbarComponent));

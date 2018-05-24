@@ -2,36 +2,36 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-export const UserProtectComponent = ({ component: Component, isValidated, path }) => {
+const isUser = JSON.parse(window.localStorage.getItem('user'));
+
+export const UserProtectComponent = ({ component: Component, path }) => {
   return (<Route
     path={path}
-    render={() => (
-      isValidated
+    render={({ location }) => (
+      isUser && (isUser.role === 'customer' || isUser.role === 'caterer')
       ? <Component />
-      : <Redirect to="/login" />
+      : <Redirect to={{ pathname: '/login', state: { from: location } }} />
     )}
   />);
 };
 
-export const RoleProtectedComponent = ({ component: Component, isCaterer, path }) => {
+export const RoleProtectedComponent = ({ component: Component, path }) => {
   return (<Route
     path={path}
-    render={() => (
-      isCaterer
+    render={({ location }) => (
+      isUser && (isUser.role === 'caterer')
       ? <Component />
-      : <Redirect to="/customer" />
+      : <Redirect to={{ pathname: '/customer', state: { from: location } }} />
     )}
   />);
 };
 
 UserProtectComponent.propTypes = {
   component: PropTypes.func.isRequired,
-  isValidated: PropTypes.bool.isRequired,
   path: PropTypes.string.isRequired,
 };
 
 RoleProtectedComponent.propTypes = {
   component: PropTypes.func.isRequired,
-  isCaterer: PropTypes.bool.isRequired,
   path: PropTypes.string.isRequired,
 };

@@ -1,8 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
+import PropTypes from 'prop-types';
 import 'react-toastify/dist/ReactToastify.css';
+import apiCall from '../helpers/axios';
 import '../scss/signupComponent.scss';
 import signupAction from '../action/signupAction';
 
@@ -15,12 +17,6 @@ class SignupComponent extends React.Component {
     address: '',
   };
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.error) {
-      return toast.error(nextProps.error);
-    }
-  }
-
   handleChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value,
@@ -29,6 +25,9 @@ class SignupComponent extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
+    let user = null;
+    let error = null;
+
     const {
       fullName,
       email,
@@ -36,24 +35,40 @@ class SignupComponent extends React.Component {
       password,
       address,
     } = this.state;
+
     if (!fullName || !email || !phoneNumber || !password || !address) {
-      return toast.error('You are missing a field');
+      return toast.error('Please provide all required fields', {
+        hideProgressBar: true,
+      });
     }
-    this.props.signupAction(this.state);
-    this.setState({
-      fullName: '',
-      email: '',
-      phoneNumber: '',
-      password: '',
-      address: '',
-    });
+
+    apiCall('/auth/signup', 'post', this.state)
+      .then((response) => {
+        window.localStorage.setItem('user', JSON.stringify(response.data.data));
+        window.localStorage.setItem('token', response.data.token);
+        user = response.data.data;
+        this.props.signupAction(user);
+        this.props.history.push('/customer');
+      })
+      .catch((err) => {
+        error = err.response.data.message;
+        this.props.signupAction(user, error);
+        return toast.error(error, {
+          hideProgressBar: true,
+        });
+      });
+
+    if (user) {
+      this.setState({
+        fullName: '',
+        email: '',
+        phoneNumber: '',
+        password: '',
+        address: '',
+      });
+    }
   }
   render() {
-
-    if (Object.keys(this.props.user).length !== 0 && this.props.user.constructor === Object) {
-      return <Redirect to="/customer" />;
-    }
-
     return (
       <div id="signup-component">
         <div id="signup-container">
@@ -85,4 +100,8 @@ const mapActionToProps = {
   signupAction,
 };
 
-export default connect(mapStateToProps, mapActionToProps)(SignupComponent);
+SignupComponent.propTypes = {
+  signupAction: PropTypes.func.isRequired,
+};
+
+export default withRouter(connect(mapStateToProps, mapActionToProps)(SignupComponent));

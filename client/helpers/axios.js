@@ -13,12 +13,10 @@ const apiCall = (url, method, requestBody, token) => {
     });
   }
   if (method === 'post' || method === 'put') {
-    return axiosInstance[method](url, requestBody)
-      .then(response => response);
+    return axiosInstance[method](url, requestBody);
   }
 
-  return axiosInstance[method](url)
-    .then(response => response);
+  return axiosInstance[method](url);
 };
 
 export default apiCall;
