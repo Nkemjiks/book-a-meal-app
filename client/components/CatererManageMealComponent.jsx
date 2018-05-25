@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 import apiCall from '../helpers/axios';
 import '../scss/catererManageMealComponent.scss';
 import addMealAction from '../action/addMealAction';
+import displayToast from '../helpers/displayToast';
 import getUserDetailsAction from '../action/getUserDetailsAction';
-
 
 class CatererManageMealComponent extends React.Component {
   state = {
@@ -35,7 +35,7 @@ class CatererManageMealComponent extends React.Component {
       selectedFile: event.target.files[0],
     });
   }
-  
+
   imageUploadHandler = (event) => {
     event.preventDefault();
     const formData = new FormData();
@@ -53,14 +53,10 @@ class CatererManageMealComponent extends React.Component {
         this.setState({
           imageURL: response.data.url,
         });
-        return toast.success('Image Uploaded successfully', {
-          hideProgressBar: true,
-        });
+        return displayToast('success', 'Image Uploaded successfully');
       })
       .catch((err) => {
-        return toast.error('There was error while uploading the image. Try again', {
-          hideProgressBar: true,
-        });
+        return displayToast('error', 'There was error while uploading the image. Try again');
       });
   }
 
@@ -73,7 +69,7 @@ class CatererManageMealComponent extends React.Component {
       price,
       imageURL,
     } = this.state;
-    
+
     const mealData = {
       name: mealName,
       price,
@@ -81,23 +77,17 @@ class CatererManageMealComponent extends React.Component {
     };
 
     if (!mealName || !price || !imageURL) {
-      return toast.error('Please provide all required fields', {
-        hideProgressBar: true,
-      });
+      return displayToast('error', 'Please provide all required fields');
     }
     apiCall('/meals', 'post', mealData, token)
       .then((response) => {
         window.localStorage.setItem('meal', JSON.stringify(response.data.data));
         this.props.addMealAction(true);
-        return toast.success('Meal Added Successfully', {
-          hideProgressBar: true,
-        });
+        return displayToast('success', 'Meal Added Successfully');
       })
       .catch((err) => {
         this.props.addMealAction(false);
-        return toast.error(err.response.data.message, {
-          hideProgressBar: true,
-        });
+        return displayToast('error', err.response.data.message);
       });
 
     this.setState({
@@ -116,7 +106,7 @@ class CatererManageMealComponent extends React.Component {
             <form action="">
               <input type="text" name="mealName" placeholder="Meal Name" className="input" value={this.state.mealName} onChange={this.handleChange} />
               <input type="number" name="price" placeholder="Price" className="input" value={this.state.price} onChange={this.handleChange} />
-              <input type="file" name="imageURL" className="imageSelector" accept=".jpg, .jpeg, .png" value={this.state.imageURL} onChange={this.selectFileHandler} />
+              <input type="file" name="imageURL" className="imageSelector" accept=".jpg, .jpeg, .png" onChange={this.selectFileHandler} />
               <button className="uploadButton" onClick={this.imageUploadHandler}>Upload</button>
               <span>{this.state.uploadProgress}</span>
               <button className="button" onClick={this.handleSubmit}>Add Meal</button>
@@ -125,12 +115,14 @@ class CatererManageMealComponent extends React.Component {
           <div className="added-meals">
             <h1>Meal Added</h1>
             <div className="meals-added description">
+              <h4>Meal Image</h4>
               <h4>Meal name</h4>
               <h4>Meal Price</h4>
               <h4>Edit/Delete</h4>
             </div>
             <div className="meals" >
               <div className="meals-added">
+                <img src="image/nigeria food.jpg" alt="Edit Icon" className="modify edit" />
                 <p>Coconut rice</p>
                 <p>&#8358; 300</p>
                 <div id="modify-div">
@@ -139,6 +131,7 @@ class CatererManageMealComponent extends React.Component {
                 </div>
               </div>
               <div className="meals-added">
+                <img src="image/nigeria food.jpg" alt="Edit Icon" className="modify edit" />
                 <p>Coconut rice</p>
                 <p>&#8358; 300</p>
                 <div id="modify-div">
@@ -147,6 +140,7 @@ class CatererManageMealComponent extends React.Component {
                 </div>
               </div>
               <div className="meals-added">
+                <img src="image/nigeria food.jpg" alt="Edit Icon" className="modify edit" />
                 <p>Coconut rice</p>
                 <p>&#8358; 300</p>
                 <div id="modify-div">
@@ -155,6 +149,7 @@ class CatererManageMealComponent extends React.Component {
                 </div>
               </div>
               <div className="meals-added">
+                <img src="image/nigeria food.jpg" alt="Edit Icon" className="modify edit" />
                 <p>Coconut rice</p>
                 <p>&#8358; 300</p>
                 <div id="modify-div">

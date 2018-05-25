@@ -85,16 +85,16 @@
   display: block;
   margin: 6px auto;
 }
-.cart-order, .meals-added, .order-info, #meal-info {
+.cart-order, .order-info, .meals-added, #meal-info {
   display: flex;
   flex-direction: row;
 }
 
-.cart-order *, .meals-added *, .order-info *, #meal-info * {
+.cart-order *, .order-info *, .meals-added *, #meal-info * {
   text-align: center;
 }
 
-.cart-order *, .meals-added *, .order-info *, #meal-price, #add-meal-div {
+.cart-order *, .order-info *, .meals-added *, #meal-price, #add-meal-div {
   flex: 1;
 }
 
