@@ -34,10 +34,16 @@
   .add-meal {
     width: 85%;
   }
+  input[type=file] {
+    width: 40%;
+  }
 }
 @media only screen and (min-width: 980px) {
   .add-meal {
     margin-left: 10px;
+  }
+  input[type=file] {
+    width: 50%;
   }
 }
 .add-meal {
@@ -46,7 +52,7 @@
   height: 400px;
   box-shadow: 2px 5px 4px #d8d5d5;
 }
-.add-meal input {
+.add-meal .input {
   display: inline-block;
   width: 100%;
   padding: 15px 20px;
@@ -76,7 +82,7 @@
 .added-meals h1, h1 {
   text-align: center;
 }
-.add-meal button {
+.add-meal .button {
   color: white;
   background-color: black;
   padding: 14px 20px;
@@ -98,4 +104,18 @@
 }
 .dashboard {
   border-top: 2px solid #d8d5d5;
+}
+input[type=file] {
+  display: inline;
+  border: none;
+  padding: 15px 20px;
+}
+.uploadButton {
+  color: white;
+  background-color: black;
+  padding: 9px 15px;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  border-radius: 3px;
 }

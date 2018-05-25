@@ -90,6 +90,9 @@ const mapActionToProps = {
 
 LoginComponent.propTypes = {
   loginAction: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default connect(mapStateToProps, mapActionToProps)(LoginComponent);

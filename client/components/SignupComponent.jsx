@@ -97,6 +97,9 @@ const mapActionToProps = {
 
 SignupComponent.propTypes = {
   signupAction: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default withRouter(connect(mapStateToProps, mapActionToProps)(SignupComponent));

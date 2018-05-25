@@ -132,6 +132,12 @@ const mapActionToProps = {
 NavbarComponent.propTypes = {
   logoutAction: PropTypes.func.isRequired,
   updateUserRoleAction: PropTypes.func.isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default withRouter(connect(mapStateToProps, mapActionToProps)(NavbarComponent));

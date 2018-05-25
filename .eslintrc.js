@@ -5,6 +5,7 @@ module.exports = {
         "import/no-extraneous-dependencies": 0,
         "no-restricted-syntax": 0,
         "no-underscore-dangle": 0,
+        "jsx-a11y/anchor-is-valid": 0,
     },
     "globals": {
         "describe": true,
@@ -13,6 +14,7 @@ module.exports = {
         "afterEach": true,
         "window": true,
         "document": true,
+        "FormData": true,
     },
     "parser": "babel-eslint",
 };
