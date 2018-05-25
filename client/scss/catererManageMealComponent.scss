@@ -119,10 +119,14 @@ input[type=file] {
   font-size: 12px;
   border-radius: 3px;
 }
-.meals-added > img {
-  width: 5%;
-  height: 5%;
+.meal-image {
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
 }
 #modify-div {
   padding-top: 15px;
+}
+.no-meal {
+  text-align: center;
 }

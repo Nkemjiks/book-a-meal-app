@@ -7,8 +7,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import apiCall from '../helpers/axios';
 import '../scss/catererManageMealComponent.scss';
 import addMealAction from '../action/addMealAction';
+import getMealsAction from '../action/getMealsAction';
 import displayToast from '../helpers/displayToast';
 import getUserDetailsAction from '../action/getUserDetailsAction';
+
+let token;
 
 class CatererManageMealComponent extends React.Component {
   state = {
@@ -17,11 +20,36 @@ class CatererManageMealComponent extends React.Component {
     imageURL: '',
     uploadProgress: '',
     selectedFile: '',
+    meals: [],
   };
-
+  
+  // Update user and meal details in Store
+  // Set the state of the meals from local storage 
   componentWillMount() {
     const user = JSON.parse(window.localStorage.getItem('user'));
     this.props.getUserDetailsAction(user);
+    const meals = JSON.parse(window.localStorage.getItem('meals'));
+    if (meals) {
+      this.props.getMealsAction(meals, true);
+      this.setState({
+        meals,
+      });
+    } else {
+      token = window.localStorage.getItem('token');
+      apiCall('/meals', 'get', null, token)
+        .then((response) => {
+          if (response.length !== 0) {
+            window.localStorage.setItem('meals', JSON.stringify(response.data.data));
+            this.props.getMealsAction(response.data.data, true);
+            this.setState({
+              meals: response.data.data,
+            });
+          }
+        })
+        .catch((err) => {
+          this.props.getMealsAction(err.response.data.message, false);
+        });
+    }
   }
 
   handleChange = (event) => {
@@ -36,6 +64,7 @@ class CatererManageMealComponent extends React.Component {
     });
   }
 
+  // Upload meal image to cloudinary
   imageUploadHandler = (event) => {
     event.preventDefault();
     const formData = new FormData();
@@ -55,14 +84,13 @@ class CatererManageMealComponent extends React.Component {
         });
         return displayToast('success', 'Image Uploaded successfully');
       })
-      .catch((err) => {
-        return displayToast('error', 'There was error while uploading the image. Try again');
-      });
+      .catch(err => displayToast('error', 'There was error while uploading the image. Try again'));
   }
 
+  // Submit meal details, dispatch appropriate actions and update store
   handleSubmit = (event) => {
     event.preventDefault();
-    const token = window.localStorage.getItem('token');
+    token = window.localStorage.getItem('token');
 
     const {
       mealName,
@@ -76,14 +104,28 @@ class CatererManageMealComponent extends React.Component {
       imageURL,
     };
 
+    // Check to make sure all fields are provided
     if (!mealName || !price || !imageURL) {
       return displayToast('error', 'Please provide all required fields');
     }
+
+    // Add meal API call
     apiCall('/meals', 'post', mealData, token)
       .then((response) => {
-        window.localStorage.setItem('meal', JSON.stringify(response.data.data));
         this.props.addMealAction(true);
-        return displayToast('success', 'Meal Added Successfully');
+        displayToast('success', 'Meal Added Successfully');
+        apiCall('/meals', 'get', null, token)
+          .then((response) => {
+            window.localStorage.setItem('meals', JSON.stringify(response.data.data));
+            this.props.getMealsAction(response.data.data, true);
+            this.setState({
+              meals: response.data.data,
+            });
+          })
+          .catch((err) => {
+            this.props.getMealsAction(err.response.data.message, false);
+            return displayToast('error', err.response.data.message);
+          });
       })
       .catch((err) => {
         this.props.addMealAction(false);
@@ -121,42 +163,28 @@ class CatererManageMealComponent extends React.Component {
               <h4>Edit/Delete</h4>
             </div>
             <div className="meals" >
-              <div className="meals-added">
-                <img src="image/nigeria food.jpg" alt="Edit Icon" className="modify edit" />
-                <p>Coconut rice</p>
-                <p>&#8358; 300</p>
-                <div id="modify-div">
-                  <img src="image/edit.png" alt="Edit Icon" className="modify edit" />
-                  <img src="image/delete.png" alt="Delete Icon" className="modify" />
-                </div>
-              </div>
-              <div className="meals-added">
-                <img src="image/nigeria food.jpg" alt="Edit Icon" className="modify edit" />
-                <p>Coconut rice</p>
-                <p>&#8358; 300</p>
-                <div id="modify-div">
-                  <img src="image/edit.png" alt="Edit Icon" className="modify edit" />
-                  <img src="image/delete.png" alt="Delete Icon" className="modify" />
-                </div>
-              </div>
-              <div className="meals-added">
-                <img src="image/nigeria food.jpg" alt="Edit Icon" className="modify edit" />
-                <p>Coconut rice</p>
-                <p>&#8358; 300</p>
-                <div id="modify-div">
-                  <img src="image/edit.png" alt="Edit Icon" className="modify edit" />
-                  <img src="image/delete.png" alt="Delete Icon" className="modify" />
-                </div>
-              </div>
-              <div className="meals-added">
-                <img src="image/nigeria food.jpg" alt="Edit Icon" className="modify edit" />
-                <p>Coconut rice</p>
-                <p>&#8358; 300</p>
-                <div id="modify-div">
-                  <img src="image/edit.png" alt="Edit Icon" className="modify edit" />
-                  <img src="image/delete.png" alt="Delete Icon" className="modify" />
-                </div>
-              </div>
+              {
+              (this.state.meals.length !== 0) &&
+                this.state.meals.map((meal) => {
+                  return (
+                    <div key={meal.id} className="meals-added">
+                      <div>
+                        <img src={meal.imageURL} alt="Edit Icon" className="meal-image" />
+                      </div>
+                      <p>{meal.name}</p>
+                      <p>&#8358; {meal.price}</p>
+                      <div id="modify-div">
+                        <img src="image/edit.png" alt="Edit Icon" className="modify edit" />
+                        <img src="image/delete.png" alt="Delete Icon" className="modify" />
+                      </div>
+                    </div>
+                  );
+              })
+              }
+              {
+              (this.state.meals.length === 0) &&
+              <p className='no-meal'>You have not added any meal</p>
+              }
             </div>
           </div>
         </div>
@@ -166,21 +194,26 @@ class CatererManageMealComponent extends React.Component {
   }
 }
 
-const mapStateToProps = ({ addMeal }) => {
+const mapStateToProps = ({ addMeal, getMeals }) => {
   const { isMealAdded } = addMeal;
+  const { meals, error } = getMeals;
   return {
     isMealAdded,
+    meals,
+    error,
   };
 };
 
 const mapActionToProps = {
   addMealAction,
   getUserDetailsAction,
+  getMealsAction,
 };
 
 CatererManageMealComponent.propTypes = {
   addMealAction: PropTypes.func.isRequired,
   getUserDetailsAction: PropTypes.func.isRequired,
+  getMealsAction: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapActionToProps)(CatererManageMealComponent);

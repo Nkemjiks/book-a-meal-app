@@ -6,7 +6,7 @@ import {
   GET_USER_DETAILS_SUCCESS,
   USER_ROLE_UPDATE_SUCCESS,
   USER_ROLE_UPDATE_FAILURE,
-  LOGOUT_USER_SUCCESS
+  LOGOUT_USER_SUCCESS,
 } from '../actionTypes';
 
 const initialState = {
