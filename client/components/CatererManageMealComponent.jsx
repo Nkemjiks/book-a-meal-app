@@ -3,13 +3,17 @@ import { connect } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+
 import 'react-toastify/dist/ReactToastify.css';
-import apiCall from '../helpers/axios';
 import '../scss/catererManageMealComponent.scss';
+
+import apiCall from '../helpers/axios';
 import addMealAction from '../action/addMealAction';
 import getMealsAction from '../action/getMealsAction';
 import displayToast from '../helpers/displayToast';
 import getUserDetailsAction from '../action/getUserDetailsAction';
+import getMealsRequest from '../helpers/getMealsRequest';
+import MealsAddedListComponent from './MealsAddedListComponent';
 
 let token;
 
@@ -22,9 +26,9 @@ class CatererManageMealComponent extends React.Component {
     selectedFile: '',
     meals: [],
   };
-  
+
   // Update user and meal details in Store
-  // Set the state of the meals from local storage 
+  // Set the state of the meals from local storage
   componentWillMount() {
     const user = JSON.parse(window.localStorage.getItem('user'));
     this.props.getUserDetailsAction(user);
@@ -36,19 +40,15 @@ class CatererManageMealComponent extends React.Component {
       });
     } else {
       token = window.localStorage.getItem('token');
-      apiCall('/meals', 'get', null, token)
-        .then((response) => {
-          if (response.length !== 0) {
-            window.localStorage.setItem('meals', JSON.stringify(response.data.data));
-            this.props.getMealsAction(response.data.data, true);
-            this.setState({
-              meals: response.data.data,
-            });
-          }
-        })
-        .catch((err) => {
-          this.props.getMealsAction(err.response.data.message, false);
-        });
+      getMealsRequest(token, this.props.getMealsAction);
+    }
+  }
+
+  componentWillReceiveProps({ meals }) {
+    if (meals.length !== 0) {
+      this.setState({
+        meals,
+      });
     }
   }
 
@@ -114,18 +114,7 @@ class CatererManageMealComponent extends React.Component {
       .then((response) => {
         this.props.addMealAction(true);
         displayToast('success', 'Meal Added Successfully');
-        apiCall('/meals', 'get', null, token)
-          .then((response) => {
-            window.localStorage.setItem('meals', JSON.stringify(response.data.data));
-            this.props.getMealsAction(response.data.data, true);
-            this.setState({
-              meals: response.data.data,
-            });
-          })
-          .catch((err) => {
-            this.props.getMealsAction(err.response.data.message, false);
-            return displayToast('error', err.response.data.message);
-          });
+        getMealsRequest(token, this.props.getMealsAction);
       })
       .catch((err) => {
         this.props.addMealAction(false);
@@ -157,33 +146,19 @@ class CatererManageMealComponent extends React.Component {
           <div className="added-meals">
             <h1>Meal Added</h1>
             <div className="meals-added description">
-              <h4>Meal Image</h4>
-              <h4>Meal name</h4>
-              <h4>Meal Price</h4>
+              <h4>Image</h4>
+              <h4>Name</h4>
+              <h4>Price</h4>
               <h4>Edit/Delete</h4>
             </div>
             <div className="meals" >
               {
               (this.state.meals.length !== 0) &&
-                this.state.meals.map((meal) => {
-                  return (
-                    <div key={meal.id} className="meals-added">
-                      <div>
-                        <img src={meal.imageURL} alt="Edit Icon" className="meal-image" />
-                      </div>
-                      <p>{meal.name}</p>
-                      <p>&#8358; {meal.price}</p>
-                      <div id="modify-div">
-                        <img src="image/edit.png" alt="Edit Icon" className="modify edit" />
-                        <img src="image/delete.png" alt="Delete Icon" className="modify" />
-                      </div>
-                    </div>
-                  );
-              })
+                <MealsAddedListComponent meals={this.state.meals} />
               }
               {
               (this.state.meals.length === 0) &&
-              <p className='no-meal'>You have not added any meal</p>
+              <p className="no-meal">You have not added any meal</p>
               }
             </div>
           </div>

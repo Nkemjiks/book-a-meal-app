@@ -130,3 +130,15 @@ input[type=file] {
 .no-meal {
   text-align: center;
 }
+.fa-edit, .fa-trash-alt {
+  font-size: 25px;
+  cursor: pointer;
+}
+.fa-edit {
+  margin-right: 14px;
+  color: midnightblue;
+}
+.fa-trash-alt {
+  padding-right: 8px;
+  color: red;
+}
