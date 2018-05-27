@@ -39,8 +39,7 @@ class CatererManageMealComponent extends React.Component {
         meals,
       });
     } else {
-      token = window.localStorage.getItem('token');
-      getMealsRequest(token, this.props.getMealsAction);
+      getMealsRequest(getToken(), this.props.getMealsAction);
     }
   }
 
