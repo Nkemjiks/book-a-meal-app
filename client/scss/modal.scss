@@ -1,0 +1,76 @@
+.EditModal, .DeleteModal {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  border: 1px solid rgb(204, 204, 204);
+  background: rgb(255, 255, 255);
+  overflow: auto;
+  border-radius: 4px;
+  outline: none;
+}
+.EditModal {
+  width: 320px;
+  top: 100px;
+  height: 350px;
+  padding: 20px;
+}
+.DeleteModal {
+  width: 350px;
+  top: 200px;
+  height: 200px;
+  padding: 10px;
+}
+.button {
+  color: white;
+  background-color: black;
+  padding: 14px 20px;
+  margin: 15px 0;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  width: 100%;
+  border-radius: 3px;
+}
+input[type=text], input[type=number] {
+  display: inline-block;
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 2px solid #f1f1f1;
+}
+input[type=file] {
+  display: inline;
+  border: none;
+  padding: 15px 20px;
+}
+.uploadButton {
+  color: white;
+  background-color: black;
+  padding: 9px 15px;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  border-radius: 3px;
+}
+.select, .DeleteModal p {
+  text-align: center;
+}
+.yes, .no {
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  border-radius: 3px;
+  width: 80px;
+  height: 40px;
+  margin: 10px;
+}
+.no {
+  background-color: blue;
+}
+.yes {
+  background-color: red;
+}
