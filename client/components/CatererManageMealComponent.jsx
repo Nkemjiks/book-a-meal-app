@@ -128,6 +128,7 @@ class CatererManageMealComponent extends React.Component {
       uploadProgress: '',
     });
   }
+
   render() {
     return (
       <div className="dashboard">
@@ -169,8 +170,8 @@ class CatererManageMealComponent extends React.Component {
   }
 }
 
-const mapStateToProps = ({ addMeal, getMeals }) => {
-  const { isMealAdded } = addMeal;
+const mapStateToProps = ({ singleMeal, getMeals }) => {
+  const { isMealAdded } = singleMeal;
   const { meals, error } = getMeals;
   return {
     isMealAdded,

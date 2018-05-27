@@ -27,12 +27,15 @@ class MealAddedComponent extends React.Component {
     imageURL: '',
     selectedFile: '',
   };
+
+  // Update the state of the meal name and price when its changed
   handleChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value,
     });
   }
 
+  // Update the state of the selected image
   selectFileHandler = (event) => {
     this.setState({
       selectedFile: event.target.files[0],
@@ -83,6 +86,7 @@ class MealAddedComponent extends React.Component {
       return displayToast('error', 'Please provide all required fields');
     }
 
+    // Check which of the field was changed and assign them to the mealData variable
     if (
       (mealName === currentMealName) &&
       (price === currentMealPrice) && !imageURL) {
@@ -92,6 +96,12 @@ class MealAddedComponent extends React.Component {
       (price !== currentMealPrice) && !imageURL) {
       mealData = {
         price,
+      };
+    } else if (
+      (mealName !== currentMealName) &&
+      (price === currentMealPrice) && !imageURL) {
+      mealData = {
+        name: mealName,
       };
     } else if (
       (mealName !== currentMealName) &&
@@ -105,6 +115,13 @@ class MealAddedComponent extends React.Component {
       (price !== currentMealPrice) && imageURL) {
       mealData = {
         price,
+        imageURL,
+      };
+    } else if (
+      (mealName !== currentMealName) &&
+      (price === currentMealPrice) && imageURL) {
+      mealData = {
+        name: mealName,
         imageURL,
       };
     } else if (
@@ -123,7 +140,7 @@ class MealAddedComponent extends React.Component {
       };
     }
 
-    // Add meal API call
+    // Update meal API call
     apiCall(`/meals/${this.state.mealId}`, 'put', mealData, token)
       .then((response) => {
         this.props.modifyMealAction(true);
@@ -134,6 +151,8 @@ class MealAddedComponent extends React.Component {
         this.props.modifyMealAction(false);
         return displayToast('error', err.response.data.message);
       });
+
+    // Update the state after a successful modification
     this.setState({
       mealName: '',
       price: '',
@@ -141,9 +160,12 @@ class MealAddedComponent extends React.Component {
       uploadProgress: '',
       mealId: '',
     });
+
+    // Close the modal
     this.closeEditModal();
   }
 
+  // Handle delete meal function
   handleDeleteMeal = (event) => {
     event.preventDefault();
     token = window.localStorage.getItem('token');
@@ -159,14 +181,19 @@ class MealAddedComponent extends React.Component {
         this.props.deleteMealAction(false);
         return displayToast('error', err.response.data.message);
       });
+
+    // Reset the state for meal name, price, image url and upload progress
     this.setState({
       mealName: '',
       price: '',
       imageURL: '',
       uploadProgress: '',
     });
+
+    // Close delete meal modal
     this.closeDeleteModal();
   }
+
   openEditModal = (event) => {
     const currentMealName = document.getElementById(`${event.target.id}name`).innerText;
     const currentMealPrice = Number(document.getElementById(`${event.target.id}price`).innerText.substr(2));
@@ -177,15 +204,18 @@ class MealAddedComponent extends React.Component {
       price: currentMealPrice,
     });
   }
-  openDeleteModal = () => {
+
+  openDeleteModal = (event) => {
     this.setState({
       deleteModalIsOpen: true,
       mealId: event.target.id,
     });
   }
+
   closeEditModal = () => {
     this.setState({ modifyModalIsOpen: false });
   }
+
   closeDeleteModal = () => {
     this.setState({ deleteModalIsOpen: false });
   }
@@ -198,6 +228,7 @@ class MealAddedComponent extends React.Component {
           isOpen={this.state.modifyModalIsOpen}
           onRequestClose={this.closeEditModal}
           className="EditModal"
+          overlayClassName="Overlay"
         >
           <h1>Modify Meal</h1>
           <form action="">
@@ -213,6 +244,7 @@ class MealAddedComponent extends React.Component {
           isOpen={this.state.deleteModalIsOpen}
           onRequestClose={this.closeDeleteModal}
           className="DeleteModal"
+          overlayClassName="Overlay"
         >
           <h1>Delete Meal</h1>
           <p>Are You Sure You Want To Delete This Meal?</p>
@@ -237,8 +269,8 @@ class MealAddedComponent extends React.Component {
   }
 }
 
-const mapStateToProps = ({ addMeal, getMeals }) => {
-  const { isMealModified, isMealDeleted } = addMeal;
+const mapStateToProps = ({ singleMeal, getMeals }) => {
+  const { isMealModified, isMealDeleted } = singleMeal;
   const { meals, error } = getMeals;
   return {
     isMealModified,
@@ -258,6 +290,7 @@ MealAddedComponent.propTypes = {
   modifyMealAction: PropTypes.func.isRequired,
   deleteMealAction: PropTypes.func.isRequired,
   getMealsAction: PropTypes.func.isRequired,
+  meal: PropTypes.object.isRequired,
 };
 
 export default connect(mapStateToProps, mapActionToProps)(MealAddedComponent);

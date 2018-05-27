@@ -68,8 +68,7 @@ class NavbarComponent extends Component {
           (this.props.location.pathname === '/customer') &&
           <Fragment>
             <div id="dropdown">
-            <i className="fas fa-cog" id="nav-setting"></i>
-              {/* <img src="image/setting.png" alt="settings" id="nav-setting" /> */}
+              <i className="fas fa-cog" id="nav-setting" />
               <div className="dropdown-content">
                 <h4 id="dropdown-name">{isUser && isUser.fullName}</h4>
                 {
@@ -83,7 +82,8 @@ class NavbarComponent extends Component {
               </div>
             </div>
             <h3>{isUser && isUser.fullName}</h3>
-            <img src="image/avatar.png" alt="avatar" id="nav-avatar" />
+            {/* <img src="image/avatar.png" alt="avatar" id="nav-avatar" /> */}
+            <i className="fas fa-user" id="nav-avatar" />
           </Fragment>
         }
         {
@@ -92,8 +92,7 @@ class NavbarComponent extends Component {
           (this.props.location.pathname === '/caterer/order')) &&
           <Fragment>
             <div id="dropdown">
-              <i className="fas fa-cog" id="nav-setting-caterer"></i>
-              {/* <img src="image/setting.png" alt="settings"  /> */}
+              <i className="fas fa-cog" id="nav-setting-caterer" />
               <div className="dropdown-content-caterer">
                 <h4 id="dropdown-name-caterer">{isUser && isUser.fullName}</h4>
                 <Link to="/caterer/menu" className="dropdown-option">Set Menu</Link>

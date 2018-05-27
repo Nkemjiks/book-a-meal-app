@@ -1,13 +1,13 @@
 import { combineReducers } from 'redux';
 import userInformationReducer from './userInformationReducer';
 import logoutReducer from './logoutReducer';
-import addMealReducer from './addMealReducer';
+import mealReducer from './mealReducer';
 import getMealsReducer from './getMealsReducer';
 
 const rootReducer = combineReducers({
   userInformation: userInformationReducer,
   logout: logoutReducer,
-  addMeal: addMealReducer,
+  singleMeal: mealReducer,
   getMeals: getMealsReducer,
 });
 
