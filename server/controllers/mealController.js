@@ -14,7 +14,7 @@ const mealController = {
     const stripMultipleSpaces = name.replace(/  +/g, ' ');
     return models.meal
       .findOrCreate({
-        where: { name, userId },
+        where: { name, userId, isDeleted: false },
         defaults: {
           name: stripMultipleSpaces,
           price,
@@ -72,6 +72,7 @@ const mealController = {
       .findOne({
         where: {
           name: stripMultipleSpaces,
+          isDeleted: false,
         },
       })
       .then((mealExist) => {

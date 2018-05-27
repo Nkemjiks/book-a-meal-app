@@ -7,13 +7,13 @@ import PropTypes from 'prop-types';
 import '../scss/modal.scss';
 
 import apiCall from '../helpers/axios';
+import getToken from '../helpers/getToken';
 import displayToast from '../helpers/displayToast';
 import modifyMealAction from '../action/modifyMealAction';
 import deleteMealAction from '../action/deleteMealAction';
 import getMealsRequest from '../helpers/getMealsRequest';
 import getMealsAction from '../action/getMealsAction';
 
-let token;
 Modal.setAppElement('#app');
 
 class MealAddedComponent extends React.Component {
@@ -52,7 +52,7 @@ class MealAddedComponent extends React.Component {
       onUploadProgress: (progressEvent) => {
         const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
         this.setState({
-          uploadProgress: `${percentCompleted} %`,
+          uploadProgress: `${percentCompleted}%`,
         });
       },
     })
@@ -68,7 +68,6 @@ class MealAddedComponent extends React.Component {
   // Submit meal details, dispatch appropriate actions and update store
   handleModifyMeal = (event) => {
     event.preventDefault();
-    token = window.localStorage.getItem('token');
 
     const {
       mealName,
@@ -77,7 +76,7 @@ class MealAddedComponent extends React.Component {
       mealId,
     } = this.state;
 
-    let mealData;
+    let mealData = {};
     const currentMealName = document.getElementById(`${mealId}name`).innerText;
     const currentMealPrice = Number(document.getElementById(`${mealId}price`).innerText.substr(2));
 
@@ -87,65 +86,34 @@ class MealAddedComponent extends React.Component {
     }
 
     // Check which of the field was changed and assign them to the mealData variable
-    if (
-      (mealName === currentMealName) &&
-      (price === currentMealPrice) && !imageURL) {
+    if ((mealName === currentMealName) && (price === currentMealPrice) && !imageURL) {
       return displayToast('error', 'You have not made any changes');
-    } else if (
-      (mealName === currentMealName) &&
-      (price !== currentMealPrice) && !imageURL) {
+    }
+    if (mealName !== currentMealName) {
       mealData = {
-        price,
-      };
-    } else if (
-      (mealName !== currentMealName) &&
-      (price === currentMealPrice) && !imageURL) {
-      mealData = {
+        ...mealData,
         name: mealName,
       };
-    } else if (
-      (mealName !== currentMealName) &&
-      (price !== currentMealPrice) && !imageURL) {
+    }
+    if (price !== currentMealPrice) {
       mealData = {
-        name: mealName,
+        ...mealData,
         price,
       };
-    } else if (
-      (mealName === currentMealName) &&
-      (price !== currentMealPrice) && imageURL) {
+    }
+    if (imageURL) {
       mealData = {
-        price,
-        imageURL,
-      };
-    } else if (
-      (mealName !== currentMealName) &&
-      (price === currentMealPrice) && imageURL) {
-      mealData = {
-        name: mealName,
-        imageURL,
-      };
-    } else if (
-      (mealName === currentMealName) &&
-      (price === currentMealPrice) && imageURL) {
-      mealData = {
-        imageURL,
-      };
-    } else if (
-      (mealName !== currentMealName) &&
-      (price !== currentMealPrice) && imageURL) {
-      mealData = {
-        name: mealName,
-        price,
+        ...mealData,
         imageURL,
       };
     }
 
     // Update meal API call
-    apiCall(`/meals/${this.state.mealId}`, 'put', mealData, token)
+    apiCall(`/meals/${this.state.mealId}`, 'put', mealData, getToken())
       .then((response) => {
         this.props.modifyMealAction(true);
         displayToast('success', 'Meal Modified Successfully');
-        getMealsRequest(token, this.props.getMealsAction);
+        getMealsRequest(getToken(), this.props.getMealsAction);
       })
       .catch((err) => {
         this.props.modifyMealAction(false);
@@ -168,14 +136,13 @@ class MealAddedComponent extends React.Component {
   // Handle delete meal function
   handleDeleteMeal = (event) => {
     event.preventDefault();
-    token = window.localStorage.getItem('token');
 
     // Delete meal API call
-    apiCall(`/meals/${this.state.mealId}`, 'delete', null, token)
+    apiCall(`/meals/${this.state.mealId}`, 'delete', null, getToken())
       .then((response) => {
         this.props.deleteMealAction(true);
         displayToast('success', 'Meal Deleted Successfully');
-        getMealsRequest(token, this.props.getMealsAction);
+        getMealsRequest(getToken(), this.props.getMealsAction);
       })
       .catch((err) => {
         this.props.deleteMealAction(false);

@@ -8,6 +8,9 @@ const getMealsRequest = (userToken, action) => {
       action(response.data.data, true);
     })
     .catch((err) => {
+      if (err.response.data.message === 'You have not added any meal') {
+        window.localStorage.removeItem('meals');
+      }
       action(err.response.data.message, false);
       return displayToast('error', err.response.data.message);
     });

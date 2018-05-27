@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../scss/catererManageMealComponent.scss';
 
 import apiCall from '../helpers/axios';
+import getToken from '../helpers/getToken';
 import addMealAction from '../action/addMealAction';
 import getMealsAction from '../action/getMealsAction';
 import displayToast from '../helpers/displayToast';
@@ -15,7 +16,6 @@ import getUserDetailsAction from '../action/getUserDetailsAction';
 import getMealsRequest from '../helpers/getMealsRequest';
 import MealsAddedListComponent from './MealsAddedListComponent';
 
-let token;
 
 class CatererManageMealComponent extends React.Component {
   state = {
@@ -45,9 +45,13 @@ class CatererManageMealComponent extends React.Component {
   }
 
   componentWillReceiveProps({ meals }) {
-    if (meals.length !== 0) {
+    if (meals.length > 0) {
       this.setState({
         meals,
+      });
+    } else {
+      this.setState({
+        meals: [],
       });
     }
   }
@@ -90,7 +94,6 @@ class CatererManageMealComponent extends React.Component {
   // Submit meal details, dispatch appropriate actions and update store
   handleSubmit = (event) => {
     event.preventDefault();
-    token = window.localStorage.getItem('token');
 
     const {
       mealName,
@@ -110,11 +113,11 @@ class CatererManageMealComponent extends React.Component {
     }
 
     // Add meal API call
-    apiCall('/meals', 'post', mealData, token)
+    apiCall('/meals', 'post', mealData, getToken())
       .then((response) => {
         this.props.addMealAction(true);
         displayToast('success', 'Meal Added Successfully');
-        getMealsRequest(token, this.props.getMealsAction);
+        getMealsRequest(getToken(), this.props.getMealsAction);
       })
       .catch((err) => {
         this.props.addMealAction(false);
@@ -199,7 +202,7 @@ CatererManageMealComponent.propTypes = {
   addMealAction: PropTypes.func.isRequired,
   getUserDetailsAction: PropTypes.func.isRequired,
   getMealsAction: PropTypes.func.isRequired,
-  meals: PropTypes.object.isRequired,
+  meals: PropTypes.array.isRequired,
 };
 
 export default connect(mapStateToProps, mapActionToProps)(CatererManageMealComponent);
