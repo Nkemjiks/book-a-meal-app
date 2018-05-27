@@ -88,10 +88,17 @@
   padding: 14px 20px;
   margin: 15px 0;
   border: none;
-  cursor: pointer;
   font-size: 12px;
   width: 100%;
   border-radius: 3px;
+}
+#disabledAddMealButton {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+#enabledAddMealButton {
+  opacity: 1;
+  cursor: pointer;
 }
 .edit {
   width: 26px;

@@ -130,6 +130,10 @@ class CatererManageMealComponent extends React.Component {
   }
 
   render() {
+    const { mealName, price, imageURL } = this.state;
+    const enabled =
+          mealName.length > 0 &&
+          price.length > 0 && imageURL.length > 0;
     return (
       <div className="dashboard">
         <div id="caterer-dashboard-flex">
@@ -141,7 +145,12 @@ class CatererManageMealComponent extends React.Component {
               <input type="file" name="imageURL" className="imageSelector" accept=".jpg, .jpeg, .png" onChange={this.selectFileHandler} />
               <button className="uploadButton" onClick={this.imageUploadHandler}>Upload</button>
               <span>{this.state.uploadProgress}</span>
-              <button className="button" onClick={this.handleSubmit}>Add Meal</button>
+              { enabled &&
+                <button id="enabledAddMealButton" className="button" onClick={this.handleSubmit}>Add Meal</button>
+              }
+              { !enabled &&
+                <button id="disabledAddMealButton" className="button" onClick={this.handleSubmit} disabled>Add Meal</button>
+              }
             </form>
           </div>
           <div className="added-meals">
@@ -190,6 +199,7 @@ CatererManageMealComponent.propTypes = {
   addMealAction: PropTypes.func.isRequired,
   getUserDetailsAction: PropTypes.func.isRequired,
   getMealsAction: PropTypes.func.isRequired,
+  meals: PropTypes.object.isRequired,
 };
 
 export default connect(mapStateToProps, mapActionToProps)(CatererManageMealComponent);
