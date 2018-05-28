@@ -21,7 +21,6 @@ class NavbarComponent extends Component {
   handleLogout = () => {
     window.localStorage.removeItem('user');
     window.localStorage.removeItem('token');
-    window.localStorage.removeItem('meals');
     this.props.logoutAction();
     this.props.history.push('/login');
   }

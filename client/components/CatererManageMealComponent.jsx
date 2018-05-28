@@ -32,15 +32,7 @@ class CatererManageMealComponent extends React.Component {
   componentWillMount() {
     const user = JSON.parse(window.localStorage.getItem('user'));
     this.props.getUserDetailsAction(user);
-    const meals = JSON.parse(window.localStorage.getItem('meals'));
-    if (meals) {
-      this.props.getMealsAction(meals, true);
-      this.setState({
-        meals,
-      });
-    } else {
-      getMealsRequest(getToken(), this.props.getMealsAction);
-    }
+    getMealsRequest(getToken(), this.props.getMealsAction);
   }
 
   componentWillReceiveProps({ meals }) {
