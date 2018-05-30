@@ -5,6 +5,7 @@ import mealReducer from './mealReducer';
 import getMealsReducer from './getMealsReducer';
 import createMenuReducer from './createMenuReducer';
 import getMenuReducer from './getMenuReducer';
+import getAllMenuReducer from './getAllMenuReducer';
 
 const rootReducer = combineReducers({
   userInformation: userInformationReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   getMeals: getMealsReducer,
   createMenu: createMenuReducer,
   getMenu: getMenuReducer,
+  getAllMenu: getAllMenuReducer,
 });
 
 export default rootReducer;

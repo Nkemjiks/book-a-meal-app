@@ -1,14 +1,40 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+
 import '../scss/customerComponent.scss';
+
 import getUserDetailsAction from '../action/getUserDetailsAction';
+import getAllMenuAction from '../action/getAllMenuAction';
+import getAllMenuRequest from '../helpers/getAllMenuRequest';
+import getToken from '../helpers/getToken';
+import AllMenuComponent from './AllMenuComponent';
 
 class CustomerDashboardComponent extends React.Component {
+  state = {
+    allMenu: [],
+    selectedMeal: [],
+    order: [],
+  }
+
   componentWillMount() {
     const user = JSON.parse(window.localStorage.getItem('user'));
     this.props.getUserDetailsAction(user);
+    getAllMenuRequest(getToken(), this.props.getAllMenuAction);
   }
+
+  componentWillReceiveProps({ allMenu }) {
+    if (allMenu.length > 0) {
+      this.setState({ allMenu });
+    } else {
+      this.setState({ allMenu: [] });
+    }
+  }
+
+  addMealToCart = (mealId, mealName, mealPrice) => {
+    this.setState({ selectedMeal: [...this.state.selectedMeal, [mealId, mealName, mealPrice]] });
+  }
+
   render() {
     return (
       <div>
@@ -16,33 +42,13 @@ class CustomerDashboardComponent extends React.Component {
           <div id="menu">
             <h1>&#9832; Menu for Today &#9832;</h1>
             <div className="meal">
-              <div id="meal-info">
-                <h3 id="meal-name">
-                  <strong>Coconut rice</strong>
-                </h3>
-                <p id="meal-price">&#8358; 300</p>
-                <div id="add-meal-div">
-                  <img src="../../image/remove.png" className="remove" alt="add/remove meal" />
-                </div>
-              </div>
-              <div id="meal-info">
-                <h3 id="meal-name">
-                  <strong>Coconut rice</strong>
-                </h3>
-                <p id="meal-price">&#8358; 300</p>
-                <div id="add-meal-div">
-                  <img src="../../image/add.png" alt="add/remove meal" id="add-meal" />
-                </div>
-              </div>
-              <div id="meal-info">
-                <h3 id="meal-name">
-                  <strong>Coconut rice</strong>
-                </h3>
-                <p id="meal-price">&#8358; 300</p>
-                <div id="add-meal-div">
-                  <img src="../../image/add.png" alt="add/remove meal" id="add-meal" />
-                </div>
-              </div>
+              {
+              (this.state.allMenu.length !== 0) &&
+              <AllMenuComponent allMenu={this.state.allMenu} addMealToCart={this.addMealToCart} />
+              }
+              {
+              (this.state.allMenu.length === 0) && <p className="no-meal">No Menu Available yet</p>
+              }
             </div>
           </div>
           <div id="cart">
@@ -54,11 +60,12 @@ class CustomerDashboardComponent extends React.Component {
             </div>
             <div id="items">
               <div className="cart-order">
-                <p>Coconut rice</p>
+              {this.state.selectedMeal}
+                {/* <p>Coconut rice</p>
                 <p>&#8358; 300</p>
                 <div>
                   <input type="number" value="1" minLength="1" maxLength="10" name="quatity" id="" />
-                </div>
+                </div> */}
               </div>
             </div>
             <h2>Total:
@@ -74,13 +81,16 @@ class CustomerDashboardComponent extends React.Component {
 
 const mapActionToProps = {
   getUserDetailsAction,
+  getAllMenuAction,
 };
 
-const mapStateToProps = ({ userInformation }) => {
+const mapStateToProps = ({ userInformation, getAllMenu }) => {
   const { user, error } = userInformation;
+  const { allMenu } = getAllMenu;
   return {
     user,
     error,
+    allMenu,
   };
 };
 

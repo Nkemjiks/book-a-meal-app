@@ -65,16 +65,14 @@
 
 #meal-info {
   min-width: 30%;
-  height: 60px;
+  height: 80px;
   text-align: center;
-  border: 1px solid #d8d5d5;
   margin: 5px 10px;
   flex-grow: 1;
   border-radius: 3px;
   display: flex;
   flex-direction: row;
-  box-shadow: 0 1px 5px -1px rgba(0, 0, 0, 0.3);
-  color: #57727c;
+  color: #000000;
 }
 #add-meal-div {
   height: 40px;
@@ -94,11 +92,11 @@
   text-align: center;
 }
 
-.cart-order *, .order-info *, .meals-added *, #meal-price, #add-meal-div {
+.cart-order *, .order-info *, .meals-added *, .meal-price, #add-meal-div {
   flex: 1;
 }
 
-#meal-name {
+.meal-name {
   flex: 2;
 }
 #cart {
@@ -109,10 +107,6 @@
   border-radius: 3px;
   height: 450px;
   box-shadow: 0 2px 5px -1px rgba(0, 0, 0, 0.3);
-}
-
-#meal-name {
-  flex: 2;
 }
 
 .cart-order input, .meals-added input {
@@ -148,4 +142,7 @@
 }
 #items {
   overflow: auto;
+}
+.add-i {
+  margin-top: 8px;
 }
