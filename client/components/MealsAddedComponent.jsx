@@ -222,7 +222,7 @@ class MealAddedComponent extends React.Component {
         </Modal>
         <div className="meals-added">
           <div>
-            <img src={meal.imageURL} alt="Edit Icon" className="meal-image" />
+            <img src={meal.imageURL} alt="Meal Image" className="meal-image" />
           </div>
           <p id={`${meal.id}name`}>{meal.name}</p>
           <p id={`${meal.id}price`}>&#8358; {meal.price}</p>
