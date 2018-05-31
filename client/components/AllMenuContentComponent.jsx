@@ -9,6 +9,7 @@ class AllMenuContentComponent extends React.Component {
 
   render() {
     const { meals } = this.props;
+    const hours = new Date().getHours();
     return (
       meals.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase()).map(meal => (
         <Fragment key={meal.menuItems.mealId}>
@@ -21,7 +22,19 @@ class AllMenuContentComponent extends React.Component {
             </h4>
             <p id={`${meal.menuItems.mealId}price`} className="meal-price">&#8358; {meal.price}</p>
             <div id="add-meal-div">
-              <i id={meal.menuItems.mealId} className="fas fa-plus add-i" onClick={this.handleClick} />
+              {
+                (Number(hours) > 16) &&
+                <i id={meal.menuItems.mealId} className="fas fa-plus add-i disabled" />
+              }
+              {
+                (Number(hours) < 9) &&
+                <i id={meal.menuItems.mealId} className="fas fa-plus add-i disabled" />
+              }
+              {
+                (Number(hours) >= 9) && (Number(hours) <= 16) &&
+                <i id={meal.menuItems.mealId} className="fas fa-plus add-i" onClick={this.handleClick} />
+              }
+              
             </div>
           </div>
         </Fragment>

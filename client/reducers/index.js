@@ -6,6 +6,7 @@ import getMealsReducer from './getMealsReducer';
 import createMenuReducer from './createMenuReducer';
 import getMenuReducer from './getMenuReducer';
 import getAllMenuReducer from './getAllMenuReducer';
+import orderReducer from './orderReducer';
 
 const rootReducer = combineReducers({
   userInformation: userInformationReducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   createMenu: createMenuReducer,
   getMenu: getMenuReducer,
   getAllMenu: getAllMenuReducer,
+  placeOrder: orderReducer,
 });
 
 export default rootReducer;

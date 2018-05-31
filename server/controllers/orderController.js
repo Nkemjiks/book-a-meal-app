@@ -38,7 +38,7 @@ const mealOrderController = {
   },
 
   /**
-   * @description Get all orders that has been placed by customers
+   * @description Get all orders that has been placed by customers for that day
    * @param  {Object} req - The object that sends the request
    * @param  {Object} res - The object that returns a response
    * @return {Object}
@@ -78,6 +78,51 @@ const mealOrderController = {
       .catch(err => res.status(500).send({ message: err.message }));
   },
 
+  /**
+   * @description Get all orders that has been placed by customers
+   * @param  {Object} req - The object that sends the request
+   * @param  {Object} res - The object that returns a response
+   * @return {Object}
+   */
+  getAllCatererOrder(req, res) {
+    const userId = req.decoded.id;
+
+    return models.order
+      .findAll({
+        where: {
+          isDeleted: false,
+        },
+        include: [
+          {
+            model: models.meal,
+            where: {
+              userId,
+            },
+            attributes: ['id', 'name', 'imageURL', 'price', 'isDeleted'],
+          },
+          {
+            model: models.user,
+            attributes: ['id', 'fullName', 'email', 'phoneNumber', 'address'],
+          },
+        ],
+      })
+      .then((meal) => {
+        if (meal.length === 0) {
+          return res.status(404).send({ message: 'You don\'t have any order yet' });
+        }
+        const totalSales = calculateTotalSales(meal);
+
+        return res.status(200).send({ message: 'You have the following orders', data: meal, totalSales });
+      })
+      .catch(err => res.status(500).send({ message: err.message }));
+  },
+
+  /**
+   * @description Get all orders that has been placed by this customer
+   * @param  {Object} req - The object that sends the request
+   * @param  {Object} res - The object that returns a response
+   * @return {Object}
+   */
   getCustomerOrder(req, res) {
     const userId = req.decoded.id;
     const date = new Date().toDateString();
@@ -86,7 +131,6 @@ const mealOrderController = {
       .findAll({
         where: {
           userId,
-          date,
           isDeleted: false,
         },
         include: [

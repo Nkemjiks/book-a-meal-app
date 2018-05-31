@@ -102,6 +102,12 @@ const routes = (app) => {
     orderController.getCatererOrder,
   );
   app.get(
+    '/orders/caterer/all',
+    verifyToken,
+    checkUserRole,
+    orderController.getAllCatererOrder,
+  );
+  app.get(
     '/orders/customer',
     verifyToken,
     checkAuthenticatedUser,

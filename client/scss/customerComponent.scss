@@ -43,8 +43,9 @@
 }
 #menu h1 {
   text-align: center;
-  margin: 50px 0;
+  margin: 50px 0 10px;
 }
+
 .meal {
   width: 90%;
   display: flex;
@@ -105,13 +106,22 @@
   box-sizing: border-box;
   border: 2px solid #d8d5d5;
   border-radius: 3px;
-  height: 450px;
+  height: 510px;
   box-shadow: 0 2px 5px -1px rgba(0, 0, 0, 0.3);
 }
 
-.cart-order input, .meals-added input {
-  width: 30px;
+#menu {
+  p {
+    text-align: center;
+  }
+}
+.meals-added input {
+  width: 70px;
   margin: 18px 0;
+}
+
+.cartdetails {
+  padding-top: 10px;
 }
 
 .description {
@@ -119,7 +129,7 @@
 }
 
 #cart {
-  h2 {
+  h3 {
     float: right;
   }
   h1 {
@@ -145,4 +155,8 @@
 }
 .add-i {
   margin-top: 8px;
+}
+.disabled {
+  cursor: not-allowed;
+  color: rgb(209, 206, 206);
 }
