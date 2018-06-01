@@ -64,12 +64,15 @@ class NavbarComponent extends Component {
           </Fragment>
         }
         {
-          (this.props.location.pathname === '/customer') &&
+          ((this.props.location.pathname === '/customer/dashboard') ||
+          (this.props.location.pathname === '/customer/order')) &&
           <Fragment>
             <div id="dropdown">
               <i className="fas fa-cog" id="nav-setting" />
               <div className="dropdown-content">
                 <h4 id="dropdown-name">{isUser && isUser.fullName}</h4>
+                <Link to="/customer/order">Order History</Link>
+                <Link to="/customer/dashboard">Dashboard</Link>
                 {
                   isUser && isUser.role === 'customer' &&
                   <button className="logout" onClick={this.handleRoleUpdate}>Become a Caterer</button>
@@ -81,7 +84,6 @@ class NavbarComponent extends Component {
               </div>
             </div>
             <h3>{isUser && isUser.fullName}</h3>
-            {/* <img src="image/avatar.png" alt="avatar" id="nav-avatar" /> */}
             <i className="fas fa-user" id="nav-avatar" />
           </Fragment>
         }
@@ -97,7 +99,7 @@ class NavbarComponent extends Component {
                 <Link to="/caterer/menu" className="dropdown-option">Set Menu</Link>
                 <Link to="/caterer/meal" className="dropdown-option">Manage Meals</Link>
                 <Link to="/caterer/order" className="dropdown-option">Manage Orders</Link>
-                <Link to="/customer" className="default">Customer Dashboard</Link>
+                <Link to="/customer/dashboard" className="default">Customer Dashboard</Link>
                 <button className="default logout" onClick={this.handleLogout}>Logout</button>
               </div>
             </div>

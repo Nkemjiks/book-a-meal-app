@@ -39,7 +39,7 @@ class LoginComponent extends React.Component {
         window.localStorage.setItem('user', JSON.stringify(response.data.data));
         window.localStorage.setItem('token', response.data.token);
         this.props.loginAction(response.data.data, true);
-        this.props.history.push('/customer');
+        this.props.history.push('/customer/dashboard');
       })
       .catch((err) => {
         this.props.loginAction(err.response.data.message, false);

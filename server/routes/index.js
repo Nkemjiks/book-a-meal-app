@@ -78,14 +78,6 @@ const routes = (app) => {
     menuController.getCatererMenu,
   );
   app.get('/menu/customer', menuController.getAllMenu);
-  app.delete(
-    '/menu',
-    verifyToken,
-    checkUserRole,
-    menuMealsValidation,
-    checkValidMealId,
-    menuController.removeMealFromMenu,
-  );
 
   // Meal Order routes
   app.post(

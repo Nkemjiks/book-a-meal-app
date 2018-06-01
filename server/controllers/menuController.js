@@ -71,35 +71,6 @@ const menuController = {
   },
 
   /**
-   * @description Remove certain meal from the menu by the caterer
-   * @param  {Object} req
-   * @param  {Object} res
-   * @return {Object}
-   */
-  removeMealFromMenu(req, res) {
-    const userId = req.decoded.id;
-    const date = new Date().toDateString();
-
-    const { meals } = req.body;
-    return models.menu
-      .findOne({
-        where: {
-          userId,
-          date,
-        },
-      })
-      .then((menu) => {
-        if (!menu) {
-          return res.status(404).send({ message: 'Menu doesn\'t exist' });
-        }
-        menu.removeMeals(meals);
-        menu.save();
-        return res.status(201).send({ message: 'Menu has been updated', data: menu });
-      })
-      .catch(err => res.status(500).send({ message: err }));
-  },
-
-  /**
    * @description Get all menu set for the day for customers
    * @param  {Object} req
    * @param  {Object} res

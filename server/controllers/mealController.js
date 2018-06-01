@@ -73,6 +73,7 @@ const mealController = {
         where: {
           name: stripMultipleSpaces,
           isDeleted: false,
+          userId,
         },
       })
       .then((mealExist) => {
@@ -110,7 +111,7 @@ const mealController = {
 
     return models.meal
       .findById(id)
-      .then(async (meal) => {
+      .then((meal) => {
         if (!meal) {
           return res.status(404).send({ message: 'This meal does not exist in the database' });
         }

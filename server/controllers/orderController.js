@@ -138,6 +138,10 @@ const mealOrderController = {
             model: models.meal,
             attributes: ['id', 'name', 'imageURL', 'price', 'isDeleted'],
           },
+          {
+            model: models.user,
+            attributes: ['id', 'fullName', 'email', 'phoneNumber', 'address'],
+          },
         ],
       })
       .then((meal) => {

@@ -45,7 +45,7 @@ class SignupComponent extends React.Component {
         window.localStorage.setItem('user', JSON.stringify(response.data.data));
         window.localStorage.setItem('token', response.data.token);
         this.props.signupAction(response.data.data, true);
-        this.props.history.push('/customer');
+        this.props.history.push('/customer/dashboard');
       })
       .catch((err) => {
         this.props.signupAction(err.response.data.message, false);

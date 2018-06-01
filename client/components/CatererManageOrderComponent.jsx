@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { ToastContainer } from 'react-toastify';
 import PropTypes from 'prop-types';
 
 import 'react-toastify/dist/ReactToastify.css';

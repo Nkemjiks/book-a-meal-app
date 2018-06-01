@@ -72,6 +72,8 @@ class CustomerDashboardComponent extends React.Component {
         total += (meal.mealPrice * meal.quantity);
       });
       this.setState({ total });
+    } else {
+      this.setState({ total: 0 });
     }
   }
 
@@ -101,6 +103,35 @@ class CustomerDashboardComponent extends React.Component {
         this.getTotal();
       }, 200);
     }, 100);
+  }
+
+  removeMealFromCart = (mealId) => {
+    this.state.selectedMeal.forEach((meal) => {
+      if (meal.mealId === mealId) {
+        const mealIndex = this.state.selectedMeal.indexOf(meal);
+        const newSelected = this.state.selectedMeal;
+        newSelected.splice(mealIndex, 1);
+        this.setState({
+          selectedMeal: [...newSelected],
+        });
+      }
+    });
+    this.state.order.forEach((meal) => {
+      if (meal.mealId === mealId) {
+        const mealIndex = this.state.order.indexOf(meal);
+        const newOrder = this.state.order;
+        newOrder.splice(mealIndex, 1);
+        const newMealDetails = this.state.mealDetails;
+        newMealDetails.splice(mealIndex, 1);
+        this.setState({
+          order: [...newOrder],
+          mealDetails: [...newMealDetails],
+        });
+      }
+    });
+    setTimeout(() => {
+      this.getTotal();
+    }, 200);
   }
 
   handleSubmit = (event) => {
@@ -159,6 +190,7 @@ class CustomerDashboardComponent extends React.Component {
           <div id="cart">
             <h1>Cart</h1>
             <div className="cart-order description">
+              <h4>Remove</h4>
               <h4>Meal name</h4>
               <h4>Meal Price</h4>
               <h4>Quantity</h4>
@@ -169,6 +201,7 @@ class CustomerDashboardComponent extends React.Component {
               <CartComponent
                 selectedMeal={this.state.selectedMeal}
                 getQuantity={this.getQuantity}
+                removeMealFromCart={this.removeMealFromCart}
               />
               }
               {

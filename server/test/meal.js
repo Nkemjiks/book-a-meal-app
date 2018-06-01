@@ -77,7 +77,7 @@ describe('Meal Controller', () => {
         done();
       });
   });
-  describe('Add a new meal', () => {
+  describe('Add, modify or delete a new meal', () => {
     it('It should add a new meal and return the message "New meal added successfully"', (done) => {
       chai.request(server)
         .post('/meals/')

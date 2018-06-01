@@ -1,7 +1,7 @@
 import { GET_ALL_MENU_SUCCESS, GET_ALL_MENU_FAILURE } from '../actionTypes';
 
 const initialState = {
-  allMenu: {},
+  allMenu: [],
   error: null,
 };
 
@@ -16,7 +16,7 @@ export default (state = initialState, action) => {
     case GET_ALL_MENU_FAILURE:
       return {
         ...state,
-        allMenu: {},
+        allMenu: [],
         error: action.payload,
       };
     default:

@@ -32,7 +32,7 @@ let orderId;
 chai.use(chaiHttp);
 
 const date = new Date().toDateString();
-describe('Menu Controller', () => {
+describe('Order Controller', () => {
   before((done) => {
     chai.request(server)
       .post('/auth/login')
@@ -72,8 +72,8 @@ describe('Menu Controller', () => {
       });
   });
   describe('Get all Orders - Caterer', () => {
-    it(`It should return the message "The menu for today has not been set yet" 
-  when a caterer tries to get the menu without creating one`, (done) => {
+    it(`It should return the message "You don't have any order yet" 
+  when a caterer tries to get the order for that day when there is none`, (done) => {
       chai.request(server)
         .get('/orders/caterer')
         .set({ authorization: secondCatererToken })
@@ -112,8 +112,8 @@ describe('Menu Controller', () => {
     });
   });
   describe('Place an order', () => {
-    it(`It should return the message "The menu for today has not been set yet" 
-  when a caterer tries to get the menu without creating one`, (done) => {
+    it(`It should return the message "Order Placed successfully" 
+  when a customer places an order`, (done) => {
       chai.request(server)
         .post('/orders')
         .set({ authorization: secondCustomerToken })
@@ -129,9 +129,24 @@ describe('Menu Controller', () => {
   });
   describe('Get all Orders - Caterer', () => {
     it(`It should return the message "You have the following orders" 
-  when a caterer tries to get all orders`, (done) => {
+  when a caterer tries to get all orders for the day`, (done) => {
       chai.request(server)
         .get('/orders/caterer')
+        .set({ authorization: secondCatererToken })
+        .end((err, res) => {
+          expect(res.status).toEqual(200);
+          expect(res.body).toHaveProperty('data');
+          expect(res.body).toHaveProperty('totalSales');
+          expect(res.body.message).toEqual('You have the following orders');
+          done();
+        });
+    });
+  });
+  describe('Get all Orders - Caterer', () => {
+    it(`It should return the message "You have the following orders" 
+  when a caterer tries to get all orders that has ever been made`, (done) => {
+      chai.request(server)
+        .get('/orders/caterer/all')
         .set({ authorization: secondCatererToken })
         .end((err, res) => {
           expect(res.status).toEqual(200);
