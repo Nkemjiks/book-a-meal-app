@@ -154,61 +154,6 @@ class CatererManageMenuComponent extends React.Component {
             </div>
           </div>
         </div>
-        <div id="incoming-orders">
-          <h1>Order Placed</h1>
-          <div className="order-info description">
-            <h4>{ 'Customer\'s Name' }</h4>
-            <h4>Meal name</h4>
-            <h4>Quantity</h4>
-            <h4>Price</h4>
-            <h4>Price</h4>
-            <h4>Price</h4>
-            <h4>Price</h4>
-            <h4>Price</h4>
-          </div>
-          <div className="orders-placed">
-            <div className="order-info">
-              <p>John Deo</p>
-              <p>Coconut rice</p>
-              <p>2</p>
-              <p>&#8358; 600</p>
-              <p>&#8358; 600</p>
-              <p>&#8358; 600</p>
-              <p>&#8358; 600</p>
-              <p>&#8358; 600</p>
-            </div>
-            <div className="order-info">
-              <p>John Deo</p>
-              <p>Coconut rice</p>
-              <p>2</p>
-              <p>&#8358; 600</p>
-              <p>&#8358; 600</p>
-              <p>&#8358; 600</p>
-              <p>&#8358; 600</p>
-              <p>&#8358; 600</p>
-            </div>
-            <div className="order-info">
-              <p>John Deo</p>
-              <p>Coconut rice</p>
-              <p>2</p>
-              <p>&#8358; 600</p>
-              <p>&#8358; 600</p>
-              <p>&#8358; 600</p>
-              <p>&#8358; 600</p>
-              <p>&#8358; 600</p>
-            </div>
-            <div className="order-info">
-              <p>John Deo</p>
-              <p>Coconut rice</p>
-              <p>2</p>
-              <p>&#8358; 600</p>
-              <p>&#8358; 600</p>
-              <p>&#8358; 600</p>
-              <p>&#8358; 600</p>
-              <p>&#8358; 600</p>
-            </div>
-          </div>
-        </div>
       </div>
     );
   }

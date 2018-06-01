@@ -1,24 +1,48 @@
-@media only screen and (min-width: 1024px) {
+@media only screen and (max-width:580px) {
   .order-summary {
-    flex: 15%;
+    width: 250px;
     margin-left: 10px;
   }
-  .detailed-orders {
-    flex: 75%;
+  h4 {
+    font-size: 14px;
+  }
+  p {
+    font-size: 12px;
+  }
+  h3 {
+    font-size: 15px;
+  }
+  h1 {
+    font-size: 20px;
   }
 }
-@media only screen and (max-width: 1024px) {
-  .order-summary {
-    flex: 20%;
+@media only screen and (max-width: 460px) {
+  #order-summary-general {
+    flex-direction: column;
   }
-  .detailed-orders {
-    flex: 80%;
-  }
-}
-@media only screen and (max-width: 980px) {
   .order-summary {
+    width: 90%;
     margin-left: auto;
     margin-right: auto;
+    min-width: 220px;
+  }
+}
+@media only screen and (min-width: 580px) {
+  .order-summary {
+    margin-left: 10px;
+    width: 270px;
+  }
+  h4 {
+    font-size: 16px;
+  }
+  p {
+    font-size: 14px;
+  }
+  h3 {
+    font-size: 18px;
+  }
+  h1 {
+    font-size: 23px;
   }
 }
 .order-summary {
@@ -31,11 +55,10 @@
   box-sizing: border-box;
 }
 .order-summary {
-  height: 300px;
-  min-width: 300px;
+  height: 160px;
 }
 #incoming-orders {
-  margin-top: 20px;
+  margin-top: 15px;
   padding: 20px;
   box-sizing: border-box;
   border: 2px solid #d8d5d5;
@@ -43,7 +66,7 @@
   height: 450px;
   box-shadow: 0 2px 5px -1px rgba(0, 0, 0, 0.3);
 }
-#incoming-orders h1 {
+#incoming-orders h2, .message {
   text-align: center;
 }
 #incoming-orders {
@@ -52,8 +75,12 @@
   height: 400px;
 }
 #incoming-orders {
-  margin-bottom: 80px;
+  margin-bottom: 15px;
 }
 #caterer-dashboard-flex {
+  display: flex;
+  flex-direction: column;
+}
+#order-summary-general {
   display: flex;
 }
