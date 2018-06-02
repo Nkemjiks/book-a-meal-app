@@ -45,6 +45,7 @@ class CustomerManageOrderComponent extends React.Component {
               <h4>Date</h4>
               <h4>Time</h4>
               <h4>Total</h4>
+              <h4>Modify</h4>
             </div>
             <div className="orders-placed">
               {

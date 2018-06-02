@@ -238,13 +238,15 @@ const mapActionToProps = {
   placeOrderAction,
 };
 
-const mapStateToProps = ({ userInformation, getAllMenu }) => {
+const mapStateToProps = ({ userInformation, getAllMenu, singleOrder }) => {
   const { user, error } = userInformation;
   const { allMenu } = getAllMenu;
+  const { isOrderPlaced } = singleOrder;
   return {
     user,
     error,
     allMenu,
+    isOrderPlaced,
   };
 };
 

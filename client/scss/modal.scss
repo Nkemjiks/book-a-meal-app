@@ -1,4 +1,4 @@
-.EditModal, .DeleteModal {
+.EditModal, .DeleteModal, .ModifyModal {
   position: absolute;
   margin-left: auto;
   margin-right: auto;
@@ -14,6 +14,12 @@
   width: 320px;
   top: 100px;
   height: 350px;
+  padding: 20px;
+}
+.ModifyModal {
+  width: 320px;
+  top: 60px;
+  height: 460px;
   padding: 20px;
 }
 .DeleteModal {

@@ -19,7 +19,7 @@ const rootReducer = combineReducers({
   createMenu: createMenuReducer,
   getMenu: getMenuReducer,
   getAllMenu: getAllMenuReducer,
-  placeOrder: orderReducer,
+  singleOrder: orderReducer,
   getCatererOrder: getCatererOrderReducer,
   getAllCatererOrder: getAllCatererOrderReducer,
   getCustomerOrderHistory: getCustomerOrderHistoryReducer,

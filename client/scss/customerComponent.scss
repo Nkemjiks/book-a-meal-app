@@ -165,3 +165,22 @@
   font-size: 20px;
   cursor: pointer;
 }
+.orderHistory {
+  border: 2px solid #e0dede;
+  margin-top: 10px;
+  border-radius: 3px;
+  p {
+    padding-left: 13px;
+  }
+}
+hr {
+  width: 97%;
+}
+#incoming-orders {
+  margin-right: 10px;
+  margin-left: 10px;
+  height: 450px;
+}
+.orders-placed {
+  height: 280px;
+}

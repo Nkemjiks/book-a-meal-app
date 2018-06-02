@@ -179,13 +179,14 @@ const mealOrderController = {
         if (order.userId !== userId) {
           return res.status(401).send({ message: 'You can not modify this order' });
         }
-
         const orderHour = new Date(order.createdAt).getHours() * 60;
         const orderMinutes = new Date(order.createdAt).getMinutes();
         const orderTime = orderHour + orderMinutes;
         const presentTime = (new Date().getHours() * 60) + (new Date().getMinutes());
+        const orderDay = new Date(order.createdAt).getDay();
+        const presentDay = new Date().getDay();
 
-        if ((presentTime - orderTime) > 60) {
+        if ((orderDay !== presentDay) || ((presentTime - orderTime) > 60)) {
           return res.status(401).send({ message: 'You can not modify this order anymore' });
         }
         return order

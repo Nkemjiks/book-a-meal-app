@@ -3,8 +3,8 @@ import React, { Fragment } from 'react';
 const TodayCatererOrderComponent = ({ orderDetails }) => (
   orderDetails.map(order => (
     order.meals.map(meal => (
-      <Fragment key={order.id}>
-        <div key={order.id} className="order-info">
+      <Fragment key={meal.id}>
+        <div key={meal.id} className="order-info">
           <p>{order.user.fullName}</p>
           <p>{order.user.phoneNumber}</p>
           <p>{order.user.email}</p>
