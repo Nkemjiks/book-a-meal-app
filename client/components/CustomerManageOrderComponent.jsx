@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { ToastContainer } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 import '../scss/catererManageOrderComponent.scss';
@@ -17,7 +18,7 @@ class CustomerManageOrderComponent extends React.Component {
   }
 
   componentWillMount() {
-    const user = JSON.parse(window.localStorage.getItem('user'));
+    const user = JSON.parse(window.localStorage.getItem('@#$user'));
     this.props.getUserDetailsAction(user);
     getCustomerOrderHistoryRequest(getToken(), this.props.getCustomerOrderHistoryAction);
   }
@@ -38,6 +39,7 @@ class CustomerManageOrderComponent extends React.Component {
     return (
       <div className="dashboard">
         <div id="caterer-dashboard-flex">
+          <ToastContainer />
           <div id="incoming-orders" className="detailed-orders">
             <h1>Order History</h1>
             <div className="order-info description">
@@ -50,7 +52,9 @@ class CustomerManageOrderComponent extends React.Component {
             <div className="orders-placed">
               {
                 (this.state.customerOrderHistory.data) &&
-                <CustomerOrderHistoryListComponent orderDetails={this.state.customerOrderHistory.data.data} />
+                <CustomerOrderHistoryListComponent
+                  orderDetails={this.state.customerOrderHistory.data.data}
+                />
               }
               {
                 (!this.state.customerOrderHistory.data) &&
@@ -63,7 +67,7 @@ class CustomerManageOrderComponent extends React.Component {
     );
   }
 }
-const mapStateToProps = ({ getCustomerOrderHistory  }) => {
+const mapStateToProps = ({ getCustomerOrderHistory }) => {
   const { customerOrderHistory } = getCustomerOrderHistory;
   return {
     customerOrderHistory,

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { ToastContainer } from 'react-toastify';
 
 import '../scss/customerComponent.scss';
 
@@ -11,7 +12,6 @@ import getAllMenuRequest from '../helpers/getAllMenuRequest';
 import getToken from '../helpers/getToken';
 import AllMenuComponent from './AllMenuComponent';
 import CartComponent from './CartComponent';
-import placeOrderAction from '../action/placeOrderAction';
 import apiCall from '../helpers/axios';
 
 class CustomerDashboardComponent extends React.Component {
@@ -26,7 +26,7 @@ class CustomerDashboardComponent extends React.Component {
   }
 
   componentWillMount() {
-    const user = JSON.parse(window.localStorage.getItem('user'));
+    const user = JSON.parse(window.localStorage.getItem('@#$user'));
     this.props.getUserDetailsAction(user);
     getAllMenuRequest(getToken(), this.props.getAllMenuAction);
   }
@@ -150,13 +150,9 @@ class CustomerDashboardComponent extends React.Component {
     // Add Order API call
     apiCall('/orders', 'post', orderDetails, getToken())
       .then(() => {
-        this.props.placeOrderAction(true);
         displayToast('success', 'Order Placed Successfully');
       })
-      .catch((err) => {
-        this.props.placeOrderAction(false);
-        return displayToast('error', err.response.data.message);
-      });
+      .catch(err => displayToast('error', err.response.data.message));
 
     this.setState({
       order: [],
@@ -173,6 +169,7 @@ class CustomerDashboardComponent extends React.Component {
     const enabled = order.length > 0;
     return (
       <div>
+        <ToastContainer />
         <div id="customer-dashboard-flex">
           <div id="menu">
             <h1>&#9832; Menu for Today &#9832;</h1>
@@ -235,24 +232,20 @@ class CustomerDashboardComponent extends React.Component {
 const mapActionToProps = {
   getUserDetailsAction,
   getAllMenuAction,
-  placeOrderAction,
 };
 
-const mapStateToProps = ({ userInformation, getAllMenu, singleOrder }) => {
+const mapStateToProps = ({ userInformation, getAllMenu }) => {
   const { user, error } = userInformation;
   const { allMenu } = getAllMenu;
-  const { isOrderPlaced } = singleOrder;
   return {
     user,
     error,
     allMenu,
-    isOrderPlaced,
   };
 };
 
 CustomerDashboardComponent.propTypes = {
   getUserDetailsAction: PropTypes.func.isRequired,
-  placeOrderAction: PropTypes.func.isRequired,
   getAllMenuAction: PropTypes.func.isRequired,
   allMenu: PropTypes.array.isRequired,
 };

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 let isUser;
 
 export const UserProtectComponent = ({ component: Component, path }) => {
-  isUser = JSON.parse(window.localStorage.getItem('user'));
+  isUser = JSON.parse(window.localStorage.getItem('@#$user'));
   return (<Route
     path={path}
     render={({ location }) => (
@@ -17,7 +17,7 @@ export const UserProtectComponent = ({ component: Component, path }) => {
 };
 
 export const RoleProtectedComponent = ({ component: Component, path }) => {
-  isUser = JSON.parse(window.localStorage.getItem('user'));
+  isUser = JSON.parse(window.localStorage.getItem('@#$user'));
   return (<Route
     path={path}
     render={({ location }) => (

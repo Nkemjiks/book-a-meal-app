@@ -9,8 +9,6 @@ import '../scss/modal.scss';
 import apiCall from '../helpers/axios';
 import getToken from '../helpers/getToken';
 import displayToast from '../helpers/displayToast';
-import modifyMealAction from '../action/modifyMealAction';
-import deleteMealAction from '../action/deleteMealAction';
 import getMealsRequest from '../helpers/getMealsRequest';
 import getMealsAction from '../action/getMealsAction';
 
@@ -62,7 +60,7 @@ class MealAddedComponent extends React.Component {
         });
         return displayToast('success', 'Image Uploaded successfully');
       })
-      .catch(err => displayToast('error', 'There was error while uploading the image. Try again'));
+      .catch(() => displayToast('error', 'There was error while uploading the image. Try again'));
   }
 
   // Submit meal details, dispatch appropriate actions and update store
@@ -110,15 +108,11 @@ class MealAddedComponent extends React.Component {
 
     // Update meal API call
     apiCall(`/meals/${this.state.mealId}`, 'put', mealData, getToken())
-      .then((response) => {
-        this.props.modifyMealAction(true);
+      .then(() => {
         displayToast('success', 'Meal Modified Successfully');
         getMealsRequest(getToken(), this.props.getMealsAction);
       })
-      .catch((err) => {
-        this.props.modifyMealAction(false);
-        return displayToast('error', err.response.data.message);
-      });
+      .catch(err => displayToast('error', err.response.data.message));
 
     // Update the state after a successful modification
     this.setState({
@@ -139,15 +133,11 @@ class MealAddedComponent extends React.Component {
 
     // Delete meal API call
     apiCall(`/meals/${this.state.mealId}`, 'delete', null, getToken())
-      .then((response) => {
-        this.props.deleteMealAction(true);
+      .then(() => {
         displayToast('success', 'Meal Deleted Successfully');
         getMealsRequest(getToken(), this.props.getMealsAction);
       })
-      .catch((err) => {
-        this.props.deleteMealAction(false);
-        return displayToast('error', err.response.data.message);
-      });
+      .catch(err => displayToast('error', err.response.data.message));
 
     // Reset the state for meal name, price, image url and upload progress
     this.setState({
@@ -222,7 +212,7 @@ class MealAddedComponent extends React.Component {
         </Modal>
         <div className="meals-added">
           <div>
-            <img src={meal.imageURL} alt="Meal Image" className="meal-image" />
+            <img src={meal.imageURL} alt="Meal" className="meal-image" />
           </div>
           <p id={`${meal.id}name`}>{meal.name}</p>
           <p id={`${meal.id}price`}>&#8358; {meal.price}</p>
@@ -236,26 +226,19 @@ class MealAddedComponent extends React.Component {
   }
 }
 
-const mapStateToProps = ({ singleMeal, getMeals }) => {
-  const { isMealModified, isMealDeleted } = singleMeal;
+const mapStateToProps = ({ getMeals }) => {
   const { meals, error } = getMeals;
   return {
-    isMealModified,
-    isMealDeleted,
     meals,
     error,
   };
 };
 
 const mapActionToProps = {
-  modifyMealAction,
-  deleteMealAction,
   getMealsAction,
 };
 
 MealAddedComponent.propTypes = {
-  modifyMealAction: PropTypes.func.isRequired,
-  deleteMealAction: PropTypes.func.isRequired,
   getMealsAction: PropTypes.func.isRequired,
   meal: PropTypes.object.isRequired,
 };

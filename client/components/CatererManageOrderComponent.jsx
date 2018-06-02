@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { ToastContainer } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 import '../scss/catererManageOrderComponent.scss';
@@ -25,7 +26,7 @@ class CatererManageOrderComponent extends React.Component {
   }
 
   componentWillMount() {
-    const user = JSON.parse(window.localStorage.getItem('user'));
+    const user = JSON.parse(window.localStorage.getItem('@#$user'));
     this.props.getUserDetailsAction(user);
     getCatererOrderRequest(getToken(), this.props.getCatererOrderAction);
     getAllCatererOrderRequest(getToken(), this.props.getAllCatererOrderAction);
@@ -79,7 +80,8 @@ class CatererManageOrderComponent extends React.Component {
   render() {
     return (
       <div className="dashboard">
-        <div id="caterer-dashboard-flex">
+        <ToastContainer />
+        <div id="caterer-dashboard-flez">
           <div id="order-summary-general">
             <div className="order-summary">
               <h3>Today Order Summary</h3>
@@ -143,7 +145,7 @@ class CatererManageOrderComponent extends React.Component {
     );
   }
 }
-const mapStateToProps = ({ getCatererOrder, getAllCatererOrder  }) => {
+const mapStateToProps = ({ getCatererOrder, getAllCatererOrder }) => {
   const { orders } = getCatererOrder;
   const { allOrders } = getAllCatererOrder;
   return {

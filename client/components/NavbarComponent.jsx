@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../scss/navbarComponent.scss';
-import logoutAction from '../action/logoutAction';
 import updateUserRoleAction from '../action/updateUserRoleAction';
 import apiCall from '../helpers/axios';
 
@@ -14,24 +13,23 @@ let isUser;
 class NavbarComponent extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps) {
-      isUser = JSON.parse(window.localStorage.getItem('user'));
+      isUser = JSON.parse(window.localStorage.getItem('@#$user'));
     }
   }
 
   handleLogout = () => {
-    window.localStorage.removeItem('user');
-    window.localStorage.removeItem('token');
-    this.props.logoutAction();
+    window.localStorage.removeItem('@#$user');
+    window.localStorage.removeItem('@#$token');
     this.props.history.push('/login');
   }
 
   handleRoleUpdate = () => {
-    const token = window.localStorage.getItem('token');
+    const token = window.localStorage.getItem('@#$token');
 
     apiCall('/auth/update', 'put', null, token)
       .then((response) => {
-        window.localStorage.setItem('user', JSON.stringify(response.data.data));
-        window.localStorage.setItem('token', response.data.token);
+        window.localStorage.setItem('@#$user', JSON.stringify(response.data.data));
+        window.localStorage.setItem('@#$token', response.data.token);
         this.props.updateUserRoleAction(response.data.data, true);
         this.props.history.push('/caterer/menu');
       })
@@ -71,8 +69,8 @@ class NavbarComponent extends Component {
               <i className="fas fa-cog" id="nav-setting" />
               <div className="dropdown-content">
                 <h4 id="dropdown-name">{isUser && isUser.fullName}</h4>
-                <Link to="/customer/order">Order History</Link>
                 <Link to="/customer/dashboard">Dashboard</Link>
+                <Link to="/customer/order">Order History</Link>
                 {
                   isUser && isUser.role === 'customer' &&
                   <button className="logout" onClick={this.handleRoleUpdate}>Become a Caterer</button>
@@ -128,12 +126,10 @@ const mapStateToProps = ({ userInformation }) => {
 };
 
 const mapActionToProps = {
-  logoutAction,
   updateUserRoleAction,
 };
 
 NavbarComponent.propTypes = {
-  logoutAction: PropTypes.func.isRequired,
   updateUserRoleAction: PropTypes.func.isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,

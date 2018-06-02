@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 
 const MenuContentComponent = ({ meal }) => (
   <Fragment>
@@ -11,5 +12,9 @@ const MenuContentComponent = ({ meal }) => (
     </div>
   </Fragment>
 );
+
+MenuContentComponent.propTypes = {
+  meal: PropTypes.object.isRequired,
+};
 
 export default MenuContentComponent;

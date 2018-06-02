@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 
 class MealsInCustomerOrderComponent extends React.Component {
   handleChange = (event) => {
@@ -24,5 +25,10 @@ class MealsInCustomerOrderComponent extends React.Component {
     );
   }
 }
+
+MealsInCustomerOrderComponent.propTypes = {
+  getQuantity: PropTypes.func.isRequired,
+  mealDetails: PropTypes.array.isRequired,
+};
 
 export default MealsInCustomerOrderComponent;

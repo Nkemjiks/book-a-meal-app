@@ -9,7 +9,6 @@ import apiCall from '../helpers/axios';
 import getToken from '../helpers/getToken';
 import displayToast from '../helpers/displayToast';
 import MealsInCustomerOrderComponent from './MealsInCustomerOrderComponent';
-import modifyOrderAction from '../action/modifyOrderAction';
 import getCustomerOrderHistoryAction from '../action/getCustomerOrderHistoryAction';
 import getCustomerOrderHistoryRequest from '../helpers/getCustomerOrderHistoryRequest';
 
@@ -123,14 +122,10 @@ class CustomerOrderHistoryComponent extends React.Component {
 
     apiCall(`/orders/${orderId}`, 'put', orderDetails, getToken())
       .then(() => {
-        this.props.modifyOrderAction(true);
         getCustomerOrderHistoryRequest(getToken(), this.props.getCustomerOrderHistoryAction);
         displayToast('success', 'Order Modified Successfully');
       })
-      .catch((err) => {
-        this.props.modifyOrderAction(false);
-        return displayToast('error', err.response.data.message);
-      });
+      .catch(err => displayToast('error', err.response.data.message));
 
     this.setState({
       mealsInOrder: [],
@@ -217,21 +212,23 @@ class CustomerOrderHistoryComponent extends React.Component {
   }
 }
 
-const mapStateToProps = ({ singleOrder }) => {
-  const { isOrderModified } = singleOrder;
+const mapStateToProps = ({ getCustomerOrderHistory }) => {
+  const { customerOrderHistory } = getCustomerOrderHistory;
   return {
-    isOrderModified,
+    customerOrderHistory,
   };
 };
 
 const mapActionToProps = {
-  modifyOrderAction,
   getCustomerOrderHistoryAction,
 };
 
 CustomerOrderHistoryComponent.propTypes = {
-  modifyOrderAction: PropTypes.func.isRequired,
   getCustomerOrderHistoryAction: PropTypes.func.isRequired,
+  order: PropTypes.shape({
+    meals: PropTypes.array.isRequired,
+    deliveryAddress: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default connect(mapStateToProps, mapActionToProps)(CustomerOrderHistoryComponent);

@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 
 class AllMenuContentComponent extends React.Component {
   handleClick = (event) => {
@@ -34,7 +35,6 @@ class AllMenuContentComponent extends React.Component {
                 (Number(hours) > 5) && (Number(hours) <= 16) &&
                 <i id={meal.menuItems.mealId} className="fas fa-plus add-i" onClick={this.handleClick} />
               }
-              
             </div>
           </div>
         </Fragment>
@@ -42,5 +42,10 @@ class AllMenuContentComponent extends React.Component {
     );
   }
 }
+
+AllMenuContentComponent.propTypes = {
+  addMealToCart: PropTypes.func.isRequired,
+  meals: PropTypes.array.isRequired,
+};
 
 export default AllMenuContentComponent;

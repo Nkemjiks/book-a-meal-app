@@ -42,8 +42,8 @@ class SignupComponent extends React.Component {
 
     apiCall('/auth/signup', 'post', this.state)
       .then((response) => {
-        window.localStorage.setItem('user', JSON.stringify(response.data.data));
-        window.localStorage.setItem('token', response.data.token);
+        window.localStorage.setItem('@#$user', JSON.stringify(response.data.data));
+        window.localStorage.setItem('@#$token', response.data.token);
         this.props.signupAction(response.data.data, true);
         this.props.history.push('/customer/dashboard');
       })

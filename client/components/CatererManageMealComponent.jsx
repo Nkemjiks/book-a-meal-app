@@ -9,7 +9,6 @@ import '../scss/catererManageMealComponent.scss';
 
 import apiCall from '../helpers/axios';
 import getToken from '../helpers/getToken';
-import addMealAction from '../action/addMealAction';
 import getMealsAction from '../action/getMealsAction';
 import displayToast from '../helpers/displayToast';
 import getUserDetailsAction from '../action/getUserDetailsAction';
@@ -30,7 +29,7 @@ class CatererManageMealComponent extends React.Component {
   // Update user and meal details in Store
   // Set the state of the meals from local storage
   componentWillMount() {
-    const user = JSON.parse(window.localStorage.getItem('user'));
+    const user = JSON.parse(window.localStorage.getItem('@#$user'));
     this.props.getUserDetailsAction(user);
     getMealsRequest(getToken(), this.props.getMealsAction);
   }
@@ -79,7 +78,7 @@ class CatererManageMealComponent extends React.Component {
         });
         return displayToast('success', 'Image Uploaded successfully');
       })
-      .catch(err => displayToast('error', 'There was error while uploading the image. Try again'));
+      .catch(() => displayToast('error', 'There was error while uploading the image. Try again'));
   }
 
   // Submit meal details, dispatch appropriate actions and update store
@@ -105,15 +104,11 @@ class CatererManageMealComponent extends React.Component {
 
     // Add meal API call
     apiCall('/meals', 'post', mealData, getToken())
-      .then((response) => {
-        this.props.addMealAction(true);
+      .then(() => {
         displayToast('success', 'Meal Added Successfully');
         getMealsRequest(getToken(), this.props.getMealsAction);
       })
-      .catch((err) => {
-        this.props.addMealAction(false);
-        return displayToast('error', err.response.data.message);
-      });
+      .catch(err => displayToast('error', err.response.data.message));
 
     this.setState({
       mealName: '',
@@ -173,24 +168,20 @@ class CatererManageMealComponent extends React.Component {
   }
 }
 
-const mapStateToProps = ({ singleMeal, getMeals }) => {
-  const { isMealAdded } = singleMeal;
+const mapStateToProps = ({ getMeals }) => {
   const { meals, error } = getMeals;
   return {
-    isMealAdded,
     meals,
     error,
   };
 };
 
 const mapActionToProps = {
-  addMealAction,
   getUserDetailsAction,
   getMealsAction,
 };
 
 CatererManageMealComponent.propTypes = {
-  addMealAction: PropTypes.func.isRequired,
   getUserDetailsAction: PropTypes.func.isRequired,
   getMealsAction: PropTypes.func.isRequired,
   meals: PropTypes.array.isRequired,

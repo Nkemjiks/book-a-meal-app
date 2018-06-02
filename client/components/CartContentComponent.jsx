@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 
 class CartContentComponent extends React.Component {
   handleChange = (event) => {
@@ -26,5 +27,11 @@ class CartContentComponent extends React.Component {
     );
   }
 }
+
+CartContentComponent.propTypes = {
+  getQuantity: PropTypes.func.isRequired,
+  removeMealFromCart: PropTypes.func.isRequired,
+  meal: PropTypes.object.isRequired,
+};
 
 export default CartContentComponent;

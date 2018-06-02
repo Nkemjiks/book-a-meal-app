@@ -120,10 +120,10 @@ export const orderValidation = (req, res, next) => {
     return res.status(400).send({ message: 'You have not provided any details' });
   }
   if (Number(hours) < 9) {
-    return res.status(404).send({ message: 'You cannot place an order yet' });
+    return res.status(404).send({ message: 'You cannot place/modify an order yet' });
   }
   if (Number(hours) > 16) {
-    return res.status(404).send({ message: 'You cannot place any more order today' });
+    return res.status(404).send({ message: 'You cannot place/modify any more order today' });
   }
   if (meals.length === 0) {
     return res.status(400).send({ message: 'You have not provided any meal' });

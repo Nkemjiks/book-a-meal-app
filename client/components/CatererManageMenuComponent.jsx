@@ -13,7 +13,6 @@ import getUserDetailsAction from '../action/getUserDetailsAction';
 import getMealsRequest from '../helpers/getMealsRequest';
 import getMenuRequest from '../helpers/getMenuRequest';
 import getMenuAction from '../action/getMenuAction';
-import createMenuAction from '../action/createMenuAction';
 import displayToast from '../helpers/displayToast';
 import MenuComponent from './MenuComponent';
 import MealsAvailableListComponent from './MealsAvailableListComponent';
@@ -27,7 +26,7 @@ class CatererManageMenuComponent extends React.Component {
   }
 
   componentWillMount() {
-    const user = JSON.parse(window.localStorage.getItem('user'));
+    const user = JSON.parse(window.localStorage.getItem('@#$user'));
     this.props.getUserDetailsAction(user);
     getMealsRequest(getToken(), this.props.getMealsAction);
     getMenuRequest(getToken(), this.props.getMenuAction);
@@ -63,15 +62,11 @@ class CatererManageMenuComponent extends React.Component {
   handleSubmit = () => {
     const meals = { meals: this.state.menuIds };
     apiCall('/menu', 'post', meals, getToken())
-      .then((response) => {
-        this.props.createMenuAction(true);
+      .then(() => {
         displayToast('success', 'Menu Created Successfully');
         getMenuRequest(getToken(), this.props.getMenuAction);
       })
-      .catch((err) => {
-        this.props.createMenuAction(false);
-        return displayToast('error', err.response.data.message);
-      });
+      .catch(err => displayToast('error', err.response.data.message));
     this.setState({ menuIds: [] });
   }
 
@@ -173,14 +168,12 @@ const mapActionToProps = {
   getUserDetailsAction,
   getMealsAction,
   getMenuAction,
-  createMenuAction,
 };
 
 CatererManageMenuComponent.propTypes = {
   getUserDetailsAction: PropTypes.func.isRequired,
   getMealsAction: PropTypes.func.isRequired,
   getMenuAction: PropTypes.func.isRequired,
-  createMenuAction: PropTypes.func.isRequired,
   meals: PropTypes.array.isRequired,
   menu: PropTypes.object.isRequired,
 };
