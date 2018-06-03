@@ -202,7 +202,7 @@ class CustomerOrderHistoryComponent extends React.Component {
           {
             order.meals.map(meal => (
               <Fragment key={meal.id}>
-                <p><strong>{meal.name}</strong> - {meal.orderItems.quantity} plates</p>
+                <p><strong>{meal.name}</strong> - {meal.orderItems.quantity} plate(s)</p>
               </Fragment>
             ))
           }

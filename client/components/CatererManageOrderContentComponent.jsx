@@ -1,10 +1,17 @@
 import React, { Fragment } from 'react';
 
-const TodayCatererOrderComponent = ({ orderDetails }) => (
-  orderDetails.map(order => (
+const CatererManageOrderContentComponent = ({ orderDetails, isToday }) => (
+  orderDetails.sort((a, b) => a.createdAt < b.createdAt).map(order => (
     order.meals.map(meal => (
       <Fragment key={meal.id}>
         <div key={meal.id} className="order-info">
+          {
+            (!isToday) &&
+            <Fragment>
+              <p>{order.date}</p>
+              <p>{order.time}</p>
+            </Fragment>
+          }
           <p>{order.user.fullName}</p>
           <p>{order.user.phoneNumber}</p>
           <p>{order.user.email}</p>
@@ -25,4 +32,4 @@ const TodayCatererOrderComponent = ({ orderDetails }) => (
   ))
 );
 
-export default TodayCatererOrderComponent;
+export default CatererManageOrderContentComponent;

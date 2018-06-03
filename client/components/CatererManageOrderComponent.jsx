@@ -11,8 +11,7 @@ import getCatererOrderAction from '../action/getCatererOrderAction';
 import getCatererOrderRequest from '../helpers/getCatererOrderRequest';
 import getAllCatererOrderAction from '../action/getAllCatererOrderAction';
 import getAllCatererOrderRequest from '../helpers/getAllCatererOrderRequest';
-import TodayCatererOrderComponent from './TodayCatererOrderComponent';
-import AllCatererOrderComponent from './AllCatererOrderComponent';
+import CatererManageOrderContentComponent from './CatererManageOrderContentComponent';
 import getToken from '../helpers/getToken';
 
 class CatererManageOrderComponent extends React.Component {
@@ -108,7 +107,10 @@ class CatererManageOrderComponent extends React.Component {
             <div className="orders-placed">
               {
                 (this.state.orders.data) &&
-                <TodayCatererOrderComponent orderDetails={this.state.orders.data.data} />
+                <CatererManageOrderContentComponent
+                  orderDetails={this.state.orders.data.data}
+                  isToday
+                />
               }
               {
                 (!this.state.orders.data) &&
@@ -132,7 +134,10 @@ class CatererManageOrderComponent extends React.Component {
             <div className="orders-placed">
               {
                 (this.state.allOrders.data) &&
-                <AllCatererOrderComponent orderDetails={this.state.allOrders.data.data} />
+                <CatererManageOrderContentComponent
+                  orderDetails={this.state.allOrders.data.data}
+                  isToday={false}
+                />
               }
               {
                 (!this.state.allOrders.data) &&
