@@ -125,7 +125,6 @@ const mealOrderController = {
    */
   getCustomerOrder(req, res) {
     const userId = req.decoded.id;
-    const date = new Date().toDateString();
 
     return models.order
       .findAll({
@@ -164,6 +163,7 @@ const mealOrderController = {
     const userId = req.decoded.id;
     const { id } = req.params;
     const { meals, deliveryAddress } = req.body;
+    console.log(req.body, 'lll');
 
     return models.order
       .findOne({

@@ -1,19 +1,24 @@
 import { GET_MEALS_SUCCESS, GET_MEALS_FAILURE } from '../actionTypes';
+import apiCall from '../helpers/axios';
+import getToken from '../helpers/getToken';
 
-const getMealsAction = (mealDetails, isGotten) => {
-  return (dispatch) => {
-    if (isGotten) {
+/**
+* @returns {Promise}  - dispatches action with caterer's meals
+*/
+const getMealsAction = () => (dispatch) => {
+  apiCall('/meals', 'get', null, getToken())
+    .then((response) => {
       dispatch({
         type: GET_MEALS_SUCCESS,
-        payload: mealDetails,
+        payload: response.data.data,
       });
-    } else {
+    })
+    .catch((err) => {
       dispatch({
         type: GET_MEALS_FAILURE,
-        payload: mealDetails,
+        payload: err.response.data.message,
       });
-    }
-  };
+    });
 };
 
 export default getMealsAction;

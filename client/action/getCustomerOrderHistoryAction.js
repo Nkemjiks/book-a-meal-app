@@ -1,19 +1,24 @@
 import { GET_CUSTOMER_ORDER_HISTORY_SUCCESS, GET_CUSTOMER_ORDER_HISTORY_FAILURE } from '../actionTypes';
+import apiCall from '../helpers/axios';
+import getToken from '../helpers/getToken';
 
-const getCustomerOrderHistoryAction = (orderDetails, isGotten) => {
-  return (dispatch) => {
-    if (isGotten) {
+/**
+* @returns {Promise}  - dispatches action with all orders that have been placed by the customer
+*/
+const getCustomerOrderHistoryAction = () => (dispatch) => {
+  apiCall('/orders/customer', 'get', null, getToken())
+    .then((response) => {
       dispatch({
         type: GET_CUSTOMER_ORDER_HISTORY_SUCCESS,
-        payload: orderDetails,
+        payload: response,
       });
-    } else {
+    })
+    .catch((err) => {
       dispatch({
         type: GET_CUSTOMER_ORDER_HISTORY_FAILURE,
-        payload: orderDetails,
+        payload: err.response.data.message,
       });
-    }
-  };
+    });
 };
 
 export default getCustomerOrderHistoryAction;

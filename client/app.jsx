@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import ContainerComponent from './components/ContainerComponent';
+import Container from './components/Container';
 import './scss/app.scss';
 
-render(<ContainerComponent />, document.getElementById('app'));
+render(<Container />, document.getElementById('app'));

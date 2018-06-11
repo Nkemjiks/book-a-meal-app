@@ -1,19 +1,24 @@
 import { GET_CATERER_ORDER_SUCCESS, GET_CATERER_ORDER_FAILURE } from '../actionTypes';
+import apiCall from '../helpers/axios';
+import getToken from '../helpers/getToken';
 
-const getCatererOrderAction = (orderDetails, isGotten) => {
-  return (dispatch) => {
-    if (isGotten) {
+/**
+* @returns {Promise}  - dispatches action with the caterer's orders for that day
+*/
+const getCatererOrderAction = () => (dispatch) => {
+  apiCall('/orders/caterer', 'get', null, getToken())
+    .then((response) => {
       dispatch({
         type: GET_CATERER_ORDER_SUCCESS,
-        payload: orderDetails,
+        payload: response,
       });
-    } else {
+    })
+    .catch((err) => {
       dispatch({
         type: GET_CATERER_ORDER_FAILURE,
-        payload: orderDetails,
+        payload: err.response.data.message,
       });
-    }
-  };
+    });
 };
 
 export default getCatererOrderAction;

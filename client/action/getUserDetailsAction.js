@@ -1,12 +1,13 @@
 import { GET_USER_DETAILS_SUCCESS } from '../actionTypes';
 
-const getUserDetailsAction = (user) => {
-  return (dispatch) => {
-    dispatch({
-      type: GET_USER_DETAILS_SUCCESS,
-      payload: user,
-    });
-  };
+/**
+* @returns {Promise}  - dispatches action with user information
+*/
+const getUserDetailsAction = user => (dispatch) => {
+  dispatch({
+    type: GET_USER_DETAILS_SUCCESS,
+    payload: user,
+  });
 };
 
 export default getUserDetailsAction;

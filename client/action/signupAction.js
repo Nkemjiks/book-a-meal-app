@@ -1,19 +1,31 @@
 import { SIGNUP_USER_SUCCESS, SIGNUP_USER_FAILURE } from '../actionTypes';
+import apiCall from '../helpers/axios';
+import displayToast from '../helpers/displayToast';
 
-const signupAction = (userDetails, isAuthenticated) => {
-  return (dispatch) => {
-    if (isAuthenticated) {
+/**
+* @param {object} userDetails - user details
+* @param {array} history - browser history
+*
+* @returns {Promise}  - dispatches action with user information
+*/
+const signupAction = (userDetails, history) => (dispatch) => {
+  apiCall('/auth/signup', 'post', userDetails)
+    .then((response) => {
+      window.localStorage.setItem('@#$user', JSON.stringify(response.data.data));
+      window.localStorage.setItem('@#$token', response.data.token);
       dispatch({
         type: SIGNUP_USER_SUCCESS,
-        payload: userDetails,
+        payload: response.data.data,
       });
-    } else {
+      history.push('/customer/dashboard');
+    })
+    .catch((err) => {
       dispatch({
         type: SIGNUP_USER_FAILURE,
-        payload: userDetails,
+        payload: err.response.data.message,
       });
-    }
-  };
+      return displayToast('error', err.response.data.message);
+    });
 };
 
 export default signupAction;

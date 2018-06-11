@@ -44,6 +44,35 @@ const userController = {
   },
 
   /**
+   * @description Refresh a user token
+   * @param  {Object} req
+   * @param  {Object} res
+   * @return {Object}
+   */
+  refreshToken(req, res) {
+    const {
+      id,
+      fullName,
+      email,
+      phoneNumber,
+      role,
+      address,
+    } = req.decoded;
+
+    const userDetails = {
+      id,
+      fullName,
+      email,
+      phoneNumber,
+      role,
+      address,
+    };
+
+    const token = generateToken(userDetails);
+    return res.status(201).send({ message: 'Token refreshed successfully', token });
+  },
+
+  /**
    * @description Sign in a user
    * @param  {Object} req
    * @param  {Object} res

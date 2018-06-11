@@ -33,6 +33,7 @@ const routes = (app) => {
     checkAuthenticatedUser,
     userController.updateUserRole,
   );
+  app.post('/auth/token', verifyToken, userController.refreshToken);
 
   // Meal routes
   app.post(

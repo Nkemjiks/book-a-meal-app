@@ -1,20 +1,26 @@
 import { combineReducers } from 'redux';
-import userInformationReducer from './userInformationReducer';
-import getMealsReducer from './getMealsReducer';
-import getMenuReducer from './getMenuReducer';
-import getAllMenuReducer from './getAllMenuReducer';
-import getCatererOrderReducer from './getCatererOrderReducer';
-import getAllCatererOrderReducer from './getAllCatererOrderReducer';
-import getCustomerOrderHistoryReducer from './getCustomerOrderHistoryReducer';
+import userInformation from './userInformation';
+import getMeals from './getMeals';
+import getMenu from './getMenu';
+import getAllMenu from './getAllMenu';
+import getCatererOrder from './getCatererOrders';
+import getAllCatererOrder from './getAllCatererOrders';
+import getCustomerOrderHistory from './getCustomerOrderHistory';
+import singleRequest from './singleRequest';
+import imageUpload from './imageUpload';
+import uploadProgress from './uploadProgress';
 
 const rootReducer = combineReducers({
-  userInformation: userInformationReducer,
-  getMeals: getMealsReducer,
-  getMenu: getMenuReducer,
-  getAllMenu: getAllMenuReducer,
-  getCatererOrder: getCatererOrderReducer,
-  getAllCatererOrder: getAllCatererOrderReducer,
-  getCustomerOrderHistory: getCustomerOrderHistoryReducer,
+  userInformation,
+  getMeals,
+  getMenu,
+  getAllMenu,
+  getCatererOrder,
+  getAllCatererOrder,
+  getCustomerOrderHistory,
+  singleRequest,
+  imageUpload,
+  uploadProgress,
 });
 
 export default rootReducer;
