@@ -2,9 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { ToastContainer } from 'react-toastify';
 
-import 'react-toastify/dist/ReactToastify.css';
 import '../scss/navbarComponent.scss';
 
 import updateUserRoleAction from '../action/updateUserRoleAction';
@@ -87,7 +85,6 @@ class Navbar extends Component {
         <Link to="/">
           <img src="image/logo.png" alt="logo" />
         </Link>
-        <ToastContainer />
         {
           ((this.props.location.pathname === '/') ||
           (this.props.location.pathname === '/login') ||

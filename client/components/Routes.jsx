@@ -1,5 +1,9 @@
 import React from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
+
 import Navbar from './Navbar';
 import ManageMeal from './Caterer/ManageMeal';
 import ManageMenu from './Caterer/ManageMenu';
@@ -9,7 +13,7 @@ import ManageCustomerOrder from './Customer/ManageOrder';
 import Login from './Login';
 import Signup from './Signup';
 import LandingPage from './LandingPage';
-import { UserProtectComponent, RoleProtectedComponent } from './Protect';
+import { UserProtected, RoleProtected } from './Protect';
 
 /**
  * route for each component
@@ -25,12 +29,13 @@ const Routes = () => (
       <Route exact path="/" component={LandingPage} />
       <Route path="/signup" component={Signup} />
       <Route path="/login" component={Login} />
-      <UserProtectComponent path="/customer/dashboard" component={Dashboard} />
-      <UserProtectComponent path="/customer/order" component={ManageCustomerOrder} />
-      <RoleProtectedComponent path="/caterer/meal" component={ManageMeal} />
-      <RoleProtectedComponent path="/caterer/menu" component={ManageMenu} />
-      <RoleProtectedComponent path="/caterer/order" component={ManageCatererOrder} />
+      <UserProtected path="/customer/dashboard" component={Dashboard} />
+      <UserProtected path="/customer/order" component={ManageCustomerOrder} />
+      <RoleProtected path="/caterer/meal" component={ManageMeal} />
+      <RoleProtected path="/caterer/menu" component={ManageMenu} />
+      <RoleProtected path="/caterer/order" component={ManageCatererOrder} />
     </Switch>
+    <ToastContainer />
   </div>
 );
 

@@ -15,16 +15,14 @@ const history = createBrowserHistory();
  *
  * @returns {JSX} JSX representation of component
  */
-const Container = () => {
-  return (
-    <Provider store={store}>
-      <Router history={history}>
-        <Switch>
-          <Route path="/" component={Routes} />
-        </Switch>
-      </Router>
-    </Provider>
-  );
-};
+const Container = () => (
+  <Provider store={store}>
+    <Router history={history}>
+      <Switch>
+        <Route path="/" component={Routes} />
+      </Switch>
+    </Router>
+  </Provider>
+);
 
 export default Container;

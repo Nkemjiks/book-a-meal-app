@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import 'react-toastify/dist/ReactToastify.css';
 import '../../../scss/catererManageOrderComponent.scss';
 
 import getUserDetailsAction from '../../../action/getUserDetailsAction';

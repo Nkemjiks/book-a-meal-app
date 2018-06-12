@@ -111,7 +111,6 @@ const mealOrderController = {
           return res.status(404).send({ message: 'You don\'t have any order yet' });
         }
         const totalSales = calculateTotalSales(meal);
-
         return res.status(200).send({ message: 'You have the following orders', data: meal, totalSales });
       })
       .catch(err => res.status(500).send({ message: err.message }));
@@ -163,7 +162,6 @@ const mealOrderController = {
     const userId = req.decoded.id;
     const { id } = req.params;
     const { meals, deliveryAddress } = req.body;
-    console.log(req.body, 'lll');
 
     return models.order
       .findOne({

@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import Modal from 'react-modal';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -144,12 +143,10 @@ class MealAdded extends React.Component {
     const currentMealName = this.props.meal.name;
     const currentMealPrice = this.props.meal.price;
 
-    // Check to make sure all fields are provided
     if (!mealName || !price) {
       return displayToast('error', 'Please provide all required fields');
     }
 
-    // Check which of the field was changed and assign them to the mealData variable
     if ((mealName === currentMealName) && (price === currentMealPrice) && !imageURL) {
       return displayToast('error', 'You have not made any changes');
     }
@@ -172,7 +169,6 @@ class MealAdded extends React.Component {
       };
     }
 
-    // Update meal API call
     this.props.modifyMealAction(this.state.mealId, mealData, this.props.getMealsAction);
   }
 
@@ -187,8 +183,6 @@ class MealAdded extends React.Component {
    */
   handleDeleteMeal = (event) => {
     event.preventDefault();
-
-    // Delete meal API call
     this.props.deleteMealAction(this.state.mealId, this.props.getMealsAction);
   }
 

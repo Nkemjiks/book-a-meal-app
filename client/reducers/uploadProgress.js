@@ -17,7 +17,7 @@ export default (state = initialState, action) => {
     case UPLOAD_IMAGE_PROGRESS:
       return {
         ...state,
-        uploadProgress: action.payload,
+        imageUploadProgress: action.payload,
       };
     default:
       return state;

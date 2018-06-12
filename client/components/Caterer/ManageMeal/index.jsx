@@ -4,7 +4,6 @@ import { ToastContainer } from 'react-toastify';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import 'react-toastify/dist/ReactToastify.css';
 import '../../../scss/catererManageMealComponent.scss';
 
 import getMealsAction from '../../../action/getMealsAction';
@@ -182,7 +181,7 @@ class ManageMeal extends React.Component {
               <input type="number" name="price" placeholder="Price" className="input" value={this.state.price} onChange={this.handleChange} />
               <input type="file" name="imageURL" className="imageSelector" accept=".jpg, .jpeg, .png" onChange={this.selectFileHandler} />
               <button className="uploadButton" onClick={this.imageUploadHandler}>Upload</button>
-              <span>{this.state.imageUploadProgress} %</span>
+              <span> {this.state.imageUploadProgress} %</span>
               { enabled &&
                 <button id="enabledAddMealButton" className="button" onClick={this.handleSubmit}>Add Meal</button>
               }

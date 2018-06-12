@@ -2,10 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { ToastContainer } from 'react-toastify';
-
-import 'react-toastify/dist/ReactToastify.css';
-import '../../../scss/catererManageOrderComponent.scss';
 
 import getUserDetailsAction from '../../../action/getUserDetailsAction';
 import getCatererOrderAction from '../../../action/getCatererOrderAction';
@@ -34,6 +30,13 @@ class ManageOrder extends React.Component {
         orders,
         todayTotalOrders: orders.data.data.length,
         todayTotalSales: orders.data.totalSales,
+        allOrders,
+        totalOrders: allOrders.data.data.length,
+        totalSales: allOrders.data.totalSales,
+      };
+    }
+    if (allOrders.data) {
+      return {
         allOrders,
         totalOrders: allOrders.data.data.length,
         totalSales: allOrders.data.totalSales,
@@ -96,7 +99,6 @@ class ManageOrder extends React.Component {
   render() {
     return (
       <div className="dashboard">
-        <ToastContainer />
         <div id="caterer-dashboard-flez">
           <div id="order-summary-general">
             <div className="order-summary">
