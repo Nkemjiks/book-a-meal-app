@@ -48,11 +48,11 @@ class ManageMeal extends React.Component {
         uploadProgress: '',
       };
     }
-    if (imageUploadProgress) {
-      return { imageUploadProgress };
-    }
     if (imageURL !== '') {
       return { imageURL };
+    }
+    if (imageUploadProgress) {
+      return { imageUploadProgress };
     }
     return null;
   }

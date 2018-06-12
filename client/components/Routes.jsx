@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, withRouter } from 'react-router-dom';
+import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
@@ -27,13 +27,14 @@ const Routes = () => (
     <Navbar />
     <Switch>
       <Route exact path="/" component={LandingPage} />
-      <Route path="/signup" component={Signup} />
-      <Route path="/login" component={Login} />
-      <UserProtected path="/customer/dashboard" component={Dashboard} />
-      <UserProtected path="/customer/order" component={ManageCustomerOrder} />
-      <RoleProtected path="/caterer/meal" component={ManageMeal} />
-      <RoleProtected path="/caterer/menu" component={ManageMenu} />
-      <RoleProtected path="/caterer/order" component={ManageCatererOrder} />
+      <Route exact path="/signup" component={Signup} />
+      <Route exact path="/login" component={Login} />
+      <UserProtected exact path="/customer/dashboard" component={Dashboard} />
+      <UserProtected exact path="/customer/order" component={ManageCustomerOrder} />
+      <RoleProtected exact path="/caterer/meal" component={ManageMeal} />
+      <RoleProtected exact path="/caterer/menu" component={ManageMenu} />
+      <RoleProtected exact path="/caterer/order" component={ManageCatererOrder} />
+      <Redirect to="/customer/dashboard" />
     </Switch>
     <ToastContainer />
   </div>

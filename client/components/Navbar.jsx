@@ -88,7 +88,7 @@ class Navbar extends Component {
         {
           ((this.props.location.pathname === '/') ||
           (this.props.location.pathname === '/login') ||
-          (this.props.location.pathname === '/signup')) &&
+          (this.props.location.pathname === '/signup')) && (this.state.user === null) &&
           <Fragment>
             <Link to="/login">
               <button className="signin tablet">LOGIN</button>
@@ -100,7 +100,7 @@ class Navbar extends Component {
         }
         {
           ((this.props.location.pathname === '/customer/dashboard') ||
-          (this.props.location.pathname === '/customer/order')) &&
+          (this.props.location.pathname === '/customer/order')) && (this.state.user !== null) &&
           <Fragment>
             <div id="dropdown">
               <i className="fas fa-cog" id="nav-setting" />
@@ -125,7 +125,7 @@ class Navbar extends Component {
         {
           ((this.props.location.pathname === '/caterer/meal') ||
           (this.props.location.pathname === '/caterer/menu') ||
-          (this.props.location.pathname === '/caterer/order')) &&
+          (this.props.location.pathname === '/caterer/order')) && (this.state.user !== null) &&
           <Fragment>
             <div id="dropdown">
               <i className="fas fa-cog" id="nav-setting-caterer" />
