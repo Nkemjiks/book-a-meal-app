@@ -11,8 +11,7 @@ import modifyMealAction from '../../../action/modifyMealAction';
 import deleteMealAction from '../../../action/deleteMealAction';
 import imageUploadAction from '../../../action/imageUploadAction';
 
-Modal.setAppElement('#app');
-
+if (process.env.NODE_ENV !== 'test') Modal.setAppElement('#app');
 /**
  * view each meal
  *

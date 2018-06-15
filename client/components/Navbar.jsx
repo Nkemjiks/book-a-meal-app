@@ -88,7 +88,7 @@ class Navbar extends Component {
         {
           ((this.props.location.pathname === '/') ||
           (this.props.location.pathname === '/login') ||
-          (this.props.location.pathname === '/signup')) && (this.state.user === null) &&
+          (this.props.location.pathname === '/signup')) &&
           <Fragment>
             <Link to="/login">
               <button className="signin tablet">LOGIN</button>

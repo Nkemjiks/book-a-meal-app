@@ -10,8 +10,7 @@ import MealsInOrder from './MealsInOrder';
 import getCustomerOrderHistoryAction from '../../../action/getCustomerOrderHistoryAction';
 import modifyOrderAction from '../../../action/modifyOrderAction';
 
-Modal.setAppElement('#app');
-
+if (process.env.NODE_ENV !== 'test') Modal.setAppElement('#app');
 /**
  * display one customer order
  *
@@ -251,7 +250,7 @@ class OrderHistoryContent extends React.Component {
           </div>
         </Modal>
         <div className="orderHistory">
-          <div key={order.id} className="order-info">
+          <div className="order-info">
             <p>{order.id}</p>
             <p>{order.date}</p>
             <p>{order.time}</p>

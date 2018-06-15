@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import '../scss/signupComponent.scss';
@@ -15,7 +14,7 @@ import displayToast from '../helpers/displayToast';
  *
  * @extends {Component}
  */
-class Signup extends React.Component {
+export class Signup extends React.Component {
   state = {
     fullName: '',
     email: '',
@@ -100,14 +99,6 @@ class Signup extends React.Component {
   }
 }
 
-const mapStateToProps = ({ userInformation }) => {
-  const { user, error } = userInformation;
-  return {
-    user,
-    error,
-  };
-};
-
 const mapActionToProps = {
   signupAction,
 };
@@ -119,4 +110,4 @@ Signup.propTypes = {
   }).isRequired,
 };
 
-export default withRouter(connect(mapStateToProps, mapActionToProps)(Signup));
+export default connect(null, mapActionToProps)(Signup);

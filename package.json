@@ -11,8 +11,8 @@
     "start": "npm run build && node dist/server.js",
     "test": "cross-env NODE_ENV=test nyc mocha server/test/*.js --exit",
     "migrate-test": "cross-env NODE_ENV=test sequelize db:migrate",
-    "test-client": "jest client",
-    "test:watch": "npm test -- --watch"
+    "test-client": "jest --coverage",
+    "test:watch": "npm run test-client -- --watch"
   },
   "repository": {
     "type": "git",
@@ -43,6 +43,17 @@
     "sourceMap": false,
     "instrument": false
   },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/file.js",
+      "\\.(css|scss)$": "identity-obj-proxy"
+    },
+    "testPathIgnorePatterns": [
+      "./client/__tests__/__mocks__"
+    ],
+    "collectCoverage": true,
+    "collectCoverageFrom": ["client/**/*.{js}"]
+  },
   "dependencies": {
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
@@ -50,6 +61,7 @@
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
     "dotenv": "^5.0.1",
+    "enzyme": "^3.3.0",
     "express": "^4.16.3",
     "file-loader": "^1.1.11",
     "history": "^4.7.2",
@@ -62,8 +74,10 @@
     "react-modal": "^3.4.4",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
+    "react-test-renderer": "^16.4.0",
     "react-toastify": "^4.0.1",
     "redux": "^4.0.0",
+    "redux-mock-store": "^1.5.1",
     "redux-thunk": "^2.2.0",
     "scss-loader": "0.0.1",
     "sequelize": "^4.37.6",
@@ -88,12 +102,14 @@
     "coveralls": "^3.0.0",
     "cross-env": "^5.1.4",
     "css-loader": "^0.28.11",
+    "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
     "expect": "^22.4.3",
+    "identity-obj-proxy": "^3.0.0",
     "istanbul": "^0.4.5",
     "jest": "^23.1.0",
     "mocha": "^5.1.1",

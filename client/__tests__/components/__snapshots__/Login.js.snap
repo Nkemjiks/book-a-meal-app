@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login Component renders correctly 1`] = `
+<div
+  id="signin-component"
+>
+  <div
+    id="signin-container"
+  >
+    <h1>
+      Sign in
+    </h1>
+    <form
+      action=""
+    >
+      <input
+        name="email"
+        onChange={[Function]}
+        placeholder="Email Address"
+        type="email"
+        value=""
+      />
+      <input
+        name="password"
+        onChange={[Function]}
+        placeholder="Password"
+        type="password"
+        value=""
+      />
+      <button
+        className="button"
+        onClick={[Function]}
+      >
+        SIGN IN
+      </button>
+    </form>
+  </div>
+</div>
+`;

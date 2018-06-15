@@ -9,6 +9,8 @@ module.exports = {
         "react/forbid-prop-types": 0,
         "jsx-a11y/no-static-element-interactions": 0,
         "jsx-a11y/click-events-have-key-events": 0,
+        "react/jsx-filename-extension": 0,
+        "import/no-named-as-default": 0,
     },
     "globals": {
         "describe": true,
@@ -18,6 +20,8 @@ module.exports = {
         "window": true,
         "document": true,
         "FormData": true,
+        "expect": true,
+        "jest": true,
     },
     "parser": "babel-eslint",
 };

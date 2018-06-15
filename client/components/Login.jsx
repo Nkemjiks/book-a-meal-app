@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import '../scss/loginComponent.scss';
@@ -15,7 +14,7 @@ import displayToast from '../helpers/displayToast';
  *
  * @extends {Component}
  */
-class Login extends React.Component {
+export class Login extends React.Component {
   state = {
     email: '',
     password: '',
@@ -55,14 +54,14 @@ class Login extends React.Component {
 
     if (!email || !password) {
       displayToast('error', 'Please provide all required fields');
+    } else {
+      const userDetails = {
+        email,
+        password,
+      };
+
+      this.props.loginAction(userDetails, this.props.history);
     }
-
-    const userDetails = {
-      email,
-      password,
-    };
-
-    this.props.loginAction(userDetails, this.props.history);
   }
 
   /**
@@ -82,24 +81,11 @@ class Login extends React.Component {
             <input type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleChange} />
             <button className="button" onClick={this.handleSubmit}>SIGN IN</button>
           </form>
-          <div>
-            <p id="forget">
-              <Link to="#">Forgot Password?</Link>
-            </p>
-          </div>
         </div>
       </div>
     );
   }
 }
-
-const mapStateToProps = ({ userInformation }) => {
-  const { user, error } = userInformation;
-  return {
-    user,
-    error,
-  };
-};
 
 const mapActionToProps = {
   loginAction,
@@ -112,4 +98,4 @@ Login.propTypes = {
   }).isRequired,
 };
 
-export default connect(mapStateToProps, mapActionToProps)(Login);
+export default connect(null, mapActionToProps)(Login);

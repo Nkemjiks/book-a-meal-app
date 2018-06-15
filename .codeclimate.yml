@@ -7,5 +7,6 @@ engines:
 ratings:
   paths:
   - "server/**/*.js"
+  - "client/**/*.js"
 exclude_paths:
   - "server/test"
