@@ -37,18 +37,6 @@ class Navbar extends Component {
   }
 
   /**
-   * lifecycle methods called immediately after a component is mounted
-   *
-   * @memberof Navbar
-   *
-   * @returns {object} updates the user information in the redux store
-   */
-  componentDidMount() {
-    const user = JSON.parse(window.localStorage.getItem('@#$user'));
-    this.props.getUserDetailsAction(user);
-  }
-
-  /**
    * user logout handler
    *
    * @memberof Navbar
@@ -169,7 +157,6 @@ const mapActionToProps = {
 
 Navbar.propTypes = {
   updateUserRoleAction: PropTypes.func.isRequired,
-  getUserDetailsAction: PropTypes.func.isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
