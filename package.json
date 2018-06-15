@@ -38,7 +38,9 @@
       "server/test/*.js",
       "server/test/mock/*.js",
       "server/database/*.js",
-      "server/helpers/*.js"
+      "server/helpers/*.js",
+      "client/helpers/*.js",
+      "client/__tests__/*.js"
     ],
     "sourceMap": false,
     "instrument": false
@@ -49,10 +51,13 @@
       "\\.(css|scss)$": "identity-obj-proxy"
     },
     "testPathIgnorePatterns": [
-      "./client/__tests__/__mocks__"
+      "./client/__tests__/__mocks__",
+      "./client/helpers"
     ],
     "collectCoverage": true,
-    "collectCoverageFrom": ["client/**/*.{js}"]
+    "collectCoverageFrom": [
+      "client/**/*.{js}"
+    ]
   },
   "dependencies": {
     "axios": "^0.18.0",

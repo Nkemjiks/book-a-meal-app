@@ -1,9 +1,9 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import ConnectedSignup, { Signup } from '../../components/Signup';
+import userInformation from '../__mocks__/userInformation';
 
 const props = {
   signupAction: jest.fn(),
@@ -15,27 +15,12 @@ const props = {
 
 Enzyme.configure({ adapter: new Adapter() });
 
-const userInformation = {
-  user: {
-    id: '4094ad8a-be5e-43a4-8c58-3e0c680f5fc9',
-    fullName: 'Andela Bayo',
-    email: 'mbonunkemjika@ymail.com',
-    phoneNumber: '2334',
-    role: 'caterer',
-    address: '12B agege',
-  },
-  error: null,
-};
 const mockStore = configureMockStore();
 const store = mockStore({ userInformation });
 const wrapper = shallow(<Signup {...props} />);
 
 
 describe('Signup Component', () => {
-  it('renders correctly', () => {
-    const tree = renderer.create(wrapper).toJSON();
-    expect(tree).toMatchSnapshot();
-  });
   it('should render unconnected component properly', () => {
     expect(wrapper.find('#signup-component').length).toBe(1);
     expect(wrapper.find('#signup-container').length).toBe(1);

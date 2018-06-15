@@ -10,3 +10,4 @@ ratings:
   - "client/**/*.js"
 exclude_paths:
   - "server/test"
+  - "client/__tests__"

@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import '../scss/navbarComponent.scss';
 
 import updateUserRoleAction from '../action/updateUserRoleAction';
-import getUserDetailsAction from '../action/getUserDetailsAction';
 
 /**
  * navigate through the application
@@ -15,7 +14,7 @@ import getUserDetailsAction from '../action/getUserDetailsAction';
  *
  * @extends {Component}
  */
-class Navbar extends Component {
+export class Navbar extends Component {
   /**
    * lifecycle methods called when there is an update to the store
    *
@@ -29,7 +28,6 @@ class Navbar extends Component {
         user: props.user,
       };
     }
-    return null;
   }
 
   state = {
@@ -152,7 +150,6 @@ const mapStateToProps = ({ userInformation }) => {
 
 const mapActionToProps = {
   updateUserRoleAction,
-  getUserDetailsAction,
 };
 
 Navbar.propTypes = {
