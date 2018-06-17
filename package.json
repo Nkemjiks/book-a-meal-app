@@ -11,7 +11,7 @@
     "start": "npm run build && node dist/server.js",
     "test": "cross-env NODE_ENV=test nyc mocha server/test/*.js --exit",
     "migrate-test": "cross-env NODE_ENV=test sequelize db:migrate",
-    "test-client": "jest --coverage",
+    "test-client": "jest",
     "test:watch": "npm run test-client -- --watch"
   },
   "repository": {
@@ -38,26 +38,17 @@
       "server/test/*.js",
       "server/test/mock/*.js",
       "server/database/*.js",
-      "server/helpers/*.js",
-      "client/helpers/*.js",
-      "client/__tests__/*.js"
+      "server/helpers/*.js"
     ],
     "sourceMap": false,
     "instrument": false
   },
   "jest": {
-    "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/file.js",
-      "\\.(css|scss)$": "identity-obj-proxy"
-    },
-    "testPathIgnorePatterns": [
-      "./client/__tests__/__mocks__",
-      "./client/helpers"
-    ],
     "collectCoverage": true,
-    "collectCoverageFrom": [
-      "client/**/*.{js}"
-    ]
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/mocks/file.js",
+      "\\.(css|scss)$": "identity-obj-proxy"
+    }
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -116,7 +107,7 @@
     "expect": "^22.4.3",
     "identity-obj-proxy": "^3.0.0",
     "istanbul": "^0.4.5",
-    "jest": "^23.1.0",
+    "jest": "^23.0.1",
     "mocha": "^5.1.1",
     "morgan": "^1.9.0",
     "node-sass": "^4.9.0",

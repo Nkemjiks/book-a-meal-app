@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
  *
  * @extends {Component}
  */
-class CartContent extends React.Component {
+export class CartContent extends React.Component {
   /**
    * update meal quantity
    *

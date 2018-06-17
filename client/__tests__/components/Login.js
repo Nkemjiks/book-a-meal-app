@@ -3,7 +3,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import ConnectedLogin, { Login } from '../../components/Login';
-import userInformation from '../__mocks__/userInformation';
+import userInformation from '../../mocks/userInformation';
 
 const props = {
   loginAction: jest.fn(),

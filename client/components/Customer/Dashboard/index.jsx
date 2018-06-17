@@ -20,7 +20,7 @@ import Cart from './Cart';
  *
  * @extends {Component}
  */
-class Dashboard extends React.Component {
+export class Dashboard extends React.Component {
   /**
    * lifecycle methods called when there is an update to the store
    *

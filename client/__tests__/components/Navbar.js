@@ -3,9 +3,11 @@ import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import ConnectedNavbar, { Navbar } from '../../components/Navbar';
-import localStorageMock from '../__mocks__/localStoragemock';
-import userInformation from '../__mocks__/userInformation';
-import { defaultProps, customerUserProps, catererUserProps, catererProps } from '../__mocks__/navbarProps';
+import localStorageMock from '../../mocks/localStoragemock';
+import userInformation from '../../mocks/userInformation';
+import { defaultProps, customerUserProps, catererUserProps, catererProps } from '../../mocks/navbarProps';
+
+window.localStorage = localStorageMock;
 
 const props = {
   updateUserRoleAction: jest.fn(),
@@ -23,7 +25,7 @@ Enzyme.configure({ adapter: new Adapter() });
 
 const mockStore = configureMockStore();
 const store = mockStore({ userInformation });
-Object.defineProperty(window, 'localStorage', { value: localStorageMock });
+
 
 describe('Navbar Component', () => {
   it('should render unconnected component properly', () => {
