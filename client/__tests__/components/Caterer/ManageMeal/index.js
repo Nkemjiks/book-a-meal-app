@@ -15,7 +15,7 @@ const props = {
   addMealAction: jest.fn(),
   imageUploadAction: jest.fn(),
   history: {},
-  meals: [],
+  meals,
 };
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -116,15 +116,12 @@ describe('ManageMeal Component', () => {
     expect(handleSubmitSpy).toHaveBeenCalled();
     expect(addMealActionSpy).toHaveBeenCalled();
   });
-  it('should call update state when as image is uploaded', () => {
+  it('should update state when a new meal is added successfully', () => {
     wrapper.setProps({ mealAdded: true });
-    wrapper.setProps({ imageUploadProgress: 80 });
-    // expect(wrapper.state().imageUploadProgress).toBe(80);
-    // console.log(wrapper.state(), 'ttt')
-  });
-  it('should call update state when as image is uploaded', () => {
-    // expect(wrapper.state().imageUploadProgress).toBe(80);
-    // console.log(wrapper.state())
+    expect(wrapper.state().mealName).toBe('');
+    expect(wrapper.state().price).toBe('');
+    expect(wrapper.state().imageURL).toBe('');
+    expect(wrapper.state().imageUploadProgress).toBe('');
   });
   it('should render connected component properly', () => {
     const connectedWrapper = shallow(<ConnectedManageMeal {...props} store={store} />);

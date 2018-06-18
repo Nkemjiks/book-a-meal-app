@@ -54,7 +54,7 @@ describe('Navbar Component', () => {
     expect(wrapper.find('button').length).toBe(1);
     expect(wrapper.find('button').last().text()).toBe('Logout');
   });
-  it('should render a navabar component with a dropdown and a link to caterer panel', () => {
+  it('should render a navabar component with a dropdown and a link to customer dashboard', () => {
     const wrapper = shallow(<Navbar {...catererProps} />);
     expect(wrapper.find('i').length).toBe(1);
     expect(wrapper.find('h4').length).toBe(1);

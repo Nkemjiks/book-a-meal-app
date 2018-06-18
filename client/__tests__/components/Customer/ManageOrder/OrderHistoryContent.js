@@ -33,7 +33,7 @@ const store = mockStore({
 });
 
 
-describe('ManageOrder Component', () => {
+describe('OrderHistoryContent Component', () => {
   createModalDomNode();
   const mountWrapper = mount(<OrderHistoryContent {...props} store={store} />);
   it('should render unconnected component properly', () => {

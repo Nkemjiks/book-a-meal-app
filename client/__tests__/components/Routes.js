@@ -7,8 +7,8 @@ Enzyme.configure({ adapter: new Adapter() });
 
 const wrapper = shallow(<Routes />);
 
-describe('Container Component', () => {
-  it('renders page Route', () => {
+describe('Route Component', () => {
+  it('renders Route component correctly', () => {
     expect((wrapper).find('Provider').length).toBe(1);
     expect((wrapper).find('Router').length).toBe(1);
     expect((wrapper).find('Switch').length).toBe(1);

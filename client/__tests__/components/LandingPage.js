@@ -6,7 +6,7 @@ import LandingPage from '../../components/LandingPage';
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('LandingPage Component', () => {
-  it('renders page Landing Page', () => {
+  it('renders Landing Page correctly', () => {
     const wrapper = shallow(<LandingPage />);
     expect((wrapper).find('#app-summary').length).toBe(1);
     expect((wrapper).find('#steps').length).toBe(1);

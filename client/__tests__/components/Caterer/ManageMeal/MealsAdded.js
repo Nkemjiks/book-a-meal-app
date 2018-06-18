@@ -55,14 +55,19 @@ describe('ManageMenu Component', () => {
     expect(mountWrapper.find('i').length).toBe(2);
     expect(mountWrapper.find('div').length).toBe(3);
   });
-  it('should update state when menu is passed as a prop', () => {
+  it('should update state when imageUploadProgress is passed as a prop', () => {
     mountWrapper.setProps({ imageUploadProgress: 80 });
+    expect(mountWrapper.state().mealName).toBe('80');
   });
-  it('should update state when menu is passed as a prop', () => {
+  it('should update state when mealDeleted is passed as a prop', () => {
     mountWrapper.setProps({ mealDeleted: true });
+    expect(mountWrapper.state().mealName).toBe('');
+    expect(mountWrapper.state().imageURL).toBe('');
   });
-  it('should update state when menu is passed as a prop', () => {
+  it('should update state when mealModified is passed as a prop', () => {
     mountWrapper.setProps({ mealModified: true });
+    expect(mountWrapper.state().imageUploadProgress).toBe('');
+    expect(mountWrapper.state().price).toBe('');
   });
   it('should call the handle change method to update state', () => {
     const handleChangeSpy = jest.spyOn(mountWrapper.instance(), 'handleChange');
@@ -141,7 +146,7 @@ describe('ManageMenu Component', () => {
     expect(handleDeleteMealSpy).toHaveBeenCalled();
     expect(deleteMealActionSpy).toHaveBeenCalled();
   });
-  it('should call the handleModifyMeal to an empty meal', () => {
+  it('should not dispatch modifyMealAction with a meal is provided with incomplete details', () => {
     const handleModifyMealSpy = jest.spyOn(mountWrapper.instance(), 'handleModifyMeal');
     const modifyMealActionSpy = jest.spyOn(mountWrapper.instance().props, 'modifyMealAction');
     mountWrapper.setState({
@@ -154,7 +159,7 @@ describe('ManageMenu Component', () => {
     expect(handleModifyMealSpy).toHaveBeenCalled();
     expect(modifyMealActionSpy).not.toHaveBeenCalled();
   });
-  it('should call the handleModifyMeal to modify a meal with the same meal detail', () => {
+  it('should not dispatch modifyMealAction with the same meal detail', () => {
     const handleModifyMealSpy = jest.spyOn(mountWrapper.instance(), 'handleModifyMeal');
     const modifyMealActionSpy = jest.spyOn(mountWrapper.instance().props, 'modifyMealAction');
     mountWrapper.setState({

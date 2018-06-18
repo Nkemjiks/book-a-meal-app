@@ -5,8 +5,8 @@ import NotFound from '../../components/NotFound';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe('LandingPage Component', () => {
-  it('renders page Landing Page', () => {
+describe('NotFound Component', () => {
+  it('renders NotFound Page correctly', () => {
     const wrapper = shallow(<NotFound />);
     expect((wrapper).find('div').length).toBe(1);
     expect((wrapper).find('h1').first().text()).toBe('404');
