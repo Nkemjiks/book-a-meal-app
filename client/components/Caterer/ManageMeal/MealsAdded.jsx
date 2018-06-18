@@ -18,7 +18,7 @@ import imageUploadAction from '../../../action/imageUploadAction';
  *
  * @extends {Component}
  */
-class MealAdded extends React.Component {
+export class MealsAdded extends React.Component {
   /**
    * lifecycle methods called when there is an update to the store
    *
@@ -36,7 +36,7 @@ class MealAdded extends React.Component {
         mealName: '',
         price: '',
         imageURL: '',
-        uploadProgress: '',
+        imageUploadProgress: '',
         mealId: '',
         modifyModalIsOpen: false,
       };
@@ -46,7 +46,7 @@ class MealAdded extends React.Component {
         mealName: '',
         price: '',
         imageURL: '',
-        uploadProgress: '',
+        imageUploadProgress: '',
         deleteModalIsOpen: false,
       };
     }
@@ -56,9 +56,6 @@ class MealAdded extends React.Component {
     if (imageURL !== '') {
       return { imageURL };
     }
-    return {
-      customerOrderHistory: {},
-    };
   }
 
   state = {
@@ -325,7 +322,7 @@ const mapActionToProps = {
   imageUploadAction,
 };
 
-MealAdded.propTypes = {
+MealsAdded.propTypes = {
   getMealsAction: PropTypes.func.isRequired,
   modifyMealAction: PropTypes.func.isRequired,
   deleteMealAction: PropTypes.func.isRequired,
@@ -333,4 +330,4 @@ MealAdded.propTypes = {
   meal: PropTypes.object.isRequired,
 };
 
-export default connect(mapStateToProps, mapActionToProps)(MealAdded);
+export default connect(mapStateToProps, mapActionToProps)(MealsAdded);

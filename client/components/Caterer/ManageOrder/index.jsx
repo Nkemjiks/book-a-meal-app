@@ -16,7 +16,7 @@ import ManageOrderContent from './ManageOrderContent';
  *
  * @extends {Component}
  */
-class ManageOrder extends React.Component {
+export class ManageOrder extends React.Component {
   /**
    * lifecycle methods called when there is an update to the store
    *
@@ -138,7 +138,7 @@ class ManageOrder extends React.Component {
             </div>
           </div>
           <div id="incoming-orders" className="detailed-orders">
-            <h1>Details of All Order</h1>
+            <h1>Details of All Orders</h1>
             <div className="order-info description">
               <h4>Date</h4>
               <h4>Time</h4>

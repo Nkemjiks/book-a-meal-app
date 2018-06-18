@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
  *
  * @extends {Component}
  */
-class MealAvailable extends React.Component {
+export class MealsAvailable extends React.Component {
   /**
    * add meal to menu
    *
@@ -55,10 +55,10 @@ class MealAvailable extends React.Component {
   }
 }
 
-MealAvailable.propTypes = {
+MealsAvailable.propTypes = {
   addMealIdToArray: PropTypes.func.isRequired,
   mealsInMenuId: PropTypes.array.isRequired,
   meal: PropTypes.object.isRequired,
 };
 
-export default MealAvailable;
+export default MealsAvailable;

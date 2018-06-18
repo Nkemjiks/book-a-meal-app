@@ -20,7 +20,7 @@ import MealsAvailableList from './MealsAvailableList';
  *
  * @extends {Component}
  */
-class ManageMenu extends React.Component {
+export class ManageMenu extends React.Component {
   /**
    * lifecycle methods called when there is an update to the store
    *

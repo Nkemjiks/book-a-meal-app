@@ -101,6 +101,7 @@ describe('Dashboard Component', () => {
     expect(mountWrapper.state().total).toBe(2000);
   });
   it('should call the remove meal from cart method and update state', () => {
+    jest.useFakeTimers();
     const removeMealFromCartSpy = jest.spyOn(mountWrapper.instance(), 'removeMealFromCart');
     const getTotalSpy = jest.spyOn(mountWrapper.instance(), 'getTotal');
     mountWrapper.instance().removeMealFromCart('7eeebb0e-74a2-4d3e-8f9e-afd51806ddce');
@@ -110,6 +111,7 @@ describe('Dashboard Component', () => {
     expect(mountWrapper.state().order[0]).toBe(undefined);
     expect(mountWrapper.state().mealDetails[0]).toBe(undefined);
     expect(mountWrapper.state().total).toBe(0);
+    jest.runAllTimers();
   });
   it('should call the handle change method to update state', () => {
     const handleChangeSpy = jest.spyOn(mountWrapper.instance(), 'handleChange');

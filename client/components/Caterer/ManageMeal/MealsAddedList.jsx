@@ -8,7 +8,7 @@ import MealsAdded from './MealsAdded';
  *
  * @returns {JSX} JSX representation of component
  */
-const MealAddedList = ({ meals }) => (
+export const MealsAddedList = ({ meals }) => (
   meals.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase()).map(meal => (
     <Fragment key={meal.id}>
       <MealsAdded meal={meal} />
@@ -16,4 +16,4 @@ const MealAddedList = ({ meals }) => (
   ))
 );
 
-export default MealAddedList;
+export default MealsAddedList;

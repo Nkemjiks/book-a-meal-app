@@ -21,7 +21,7 @@ import MealsAddedList from './MealsAddedList';
  *
  * @extends {Component}
  */
-class ManageMeal extends React.Component {
+export class ManageMeal extends React.Component {
   /**
    * lifecycle methods called when there is an update to the store
    *
@@ -45,7 +45,7 @@ class ManageMeal extends React.Component {
         mealName: '',
         price: '',
         imageURL: '',
-        uploadProgress: '',
+        imageUploadProgress: '',
       };
     }
     if (imageURL !== '') {
@@ -54,7 +54,6 @@ class ManageMeal extends React.Component {
     if (imageUploadProgress) {
       return { imageUploadProgress };
     }
-    return null;
   }
 
   state = {
@@ -150,12 +149,10 @@ class ManageMeal extends React.Component {
       price,
       imageURL,
     };
-
     // Check to make sure all fields are provided
     if (!mealName || !price || !imageURL) {
       return displayToast('error', 'Please provide all required fields');
     }
-
     this.props.addMealAction(mealData, this.props.getMealsAction);
   }
 
