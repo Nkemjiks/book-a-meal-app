@@ -20,7 +20,7 @@ const props = {
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe('Dashboard Component', () => {
+describe('Meal Component', () => {
   const wrapper = shallow(<Meal {...props} />);
   it('should render unconnected component properly', () => {
     expect(wrapper.find('#meal-info').length).toBe(1);

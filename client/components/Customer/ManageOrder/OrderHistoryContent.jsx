@@ -10,7 +10,6 @@ import MealsInOrder from './MealsInOrder';
 import getCustomerOrderHistoryAction from '../../../action/getCustomerOrderHistoryAction';
 import modifyOrderAction from '../../../action/modifyOrderAction';
 
-if (process.env.NODE_ENV !== 'test') Modal.setAppElement('#app');
 /**
  * display one customer order
  *
@@ -18,7 +17,7 @@ if (process.env.NODE_ENV !== 'test') Modal.setAppElement('#app');
  *
  * @extends {Component}
  */
-class OrderHistoryContent extends React.Component {
+export class OrderHistoryContent extends React.Component {
   /**
    * lifecycle methods called when there is an update to the store
    *
@@ -48,6 +47,10 @@ class OrderHistoryContent extends React.Component {
     orders: [],
     originalOrder: [],
   };
+
+  componentDidMount() {
+    Modal.setAppElement('#app');
+  }
 
   /**
    * method called in other methods to update state
@@ -238,7 +241,7 @@ class OrderHistoryContent extends React.Component {
             <input
               type="text"
               className="input"
-              name="address"
+              name="deliveryAddress"
               defaultValue={this.state.deliveryAddress}
               placeholder="Delivery Address"
               onChange={this.handleChange}
@@ -249,7 +252,7 @@ class OrderHistoryContent extends React.Component {
             <button id="enabledAddMealButton" className="button" onClick={this.handleSubmit} >Modify Order</button>
           </div>
         </Modal>
-        <div className="orderHistory">
+        <div className="orderHistory" id="orderHistory">
           <div className="order-info">
             <p>{order.id}</p>
             <p>{order.date}</p>

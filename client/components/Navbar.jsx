@@ -28,6 +28,7 @@ export class Navbar extends Component {
         user: props.user,
       };
     }
+    return null;
   }
 
   state = {

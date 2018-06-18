@@ -8,7 +8,7 @@ import OrderHistoryContent from './OrderHistoryContent';
  *
  * @returns {JSX} JSX representation of component
  */
-const OrderHistoryList = ({ orderDetails }) => (
+export const OrderHistoryList = ({ orderDetails }) => (
   orderDetails.sort((a, b) => a.createdAt < b.createdAt).map(order => (
     <Fragment key={order.id}>
       <OrderHistoryContent order={order} />

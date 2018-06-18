@@ -11,7 +11,6 @@ import modifyMealAction from '../../../action/modifyMealAction';
 import deleteMealAction from '../../../action/deleteMealAction';
 import imageUploadAction from '../../../action/imageUploadAction';
 
-if (process.env.NODE_ENV !== 'test') Modal.setAppElement('#app');
 /**
  * view each meal
  *
@@ -72,6 +71,10 @@ class MealAdded extends React.Component {
     imageURL: '',
     selectedFile: '',
   };
+
+  componentDidMount() {
+    Modal.setAppElement('#app');
+  }
 
   /**
    * updates component state when form values change

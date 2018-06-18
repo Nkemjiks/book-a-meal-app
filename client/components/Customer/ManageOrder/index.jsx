@@ -17,7 +17,7 @@ import OrderHistoryList from './OrderHistoryList';
  *
  * @extends {Component}
  */
-class ManageOrder extends React.Component {
+export class ManageOrder extends React.Component {
   /**
    * lifecycle methods called when there is an update to the store
    *
