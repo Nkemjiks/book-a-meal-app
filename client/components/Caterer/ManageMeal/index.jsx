@@ -35,11 +35,6 @@ export class ManageMeal extends React.Component {
     imageURL,
     imageUploadProgress,
   }, state) {
-    if (meals !== state.meals) {
-      return {
-        meals,
-      };
-    }
     if (mealAdded) {
       return {
         mealName: '',
@@ -48,12 +43,18 @@ export class ManageMeal extends React.Component {
         imageUploadProgress: '',
       };
     }
+    if (meals !== state.meals) {
+      return {
+        meals,
+      };
+    }
     if (imageURL !== '') {
       return { imageURL };
     }
     if (imageUploadProgress) {
       return { imageUploadProgress };
     }
+    return null;
   }
 
   state = {
@@ -79,6 +80,18 @@ export class ManageMeal extends React.Component {
     this.props.getMealsAction();
   }
 
+  /**
+   * lifecycle methods called immediately after a component is updated
+   *
+   * @memberof ManageMeal
+   *
+   * @returns {object} updates the caterer's meal information in the redux store
+   */
+  componentDidUpdate(prevProps) {
+    if (prevProps.mealAdded !== this.props.mealAdded) {
+      this.props.getMealsAction();
+    }
+  }
   /**
    * updates component state when form values change
    *
@@ -153,7 +166,7 @@ export class ManageMeal extends React.Component {
     if (!mealName || !price || !imageURL) {
       return displayToast('error', 'Please provide all required fields');
     }
-    this.props.addMealAction(mealData, this.props.getMealsAction);
+    this.props.addMealAction(mealData);
   }
 
   /**
@@ -214,12 +227,10 @@ export class ManageMeal extends React.Component {
 }
 
 const mapStateToProps = ({
-  getMeals,
-  singleRequest,
+  catererMeals,
   imageUpload, uploadProgress,
 }) => {
-  const { meals, error } = getMeals;
-  const { mealAdded } = singleRequest;
+  const { meals, error, mealAdded } = catererMeals;
   const { imageURL } = imageUpload;
   const { imageUploadProgress } = uploadProgress;
   return {
@@ -244,6 +255,7 @@ ManageMeal.propTypes = {
   addMealAction: PropTypes.func.isRequired,
   imageUploadAction: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
+  mealAdded: PropTypes.bool.isRequired,
 };
 
 export default withRouter(connect(mapStateToProps, mapActionToProps)(ManageMeal));

@@ -10,23 +10,20 @@ import displayToast from '../helpers/displayToast';
 *
 * @returns {Promise}  - dispatches action with true or false
 */
-const modifyOrderAction = (orderId, orderDetails, action) => (dispatch) => {
-  apiCall(`/orders/${orderId}`, 'put', orderDetails, getToken())
-    .then(() => {
-      dispatch({
-        type: MODIFY_ORDER_SUCCESS,
-        payload: true,
-      });
-      action();
-      displayToast('success', 'Order Modified Successfully');
-    })
-    .catch((err) => {
-      dispatch({
-        type: MODIFY_ORDER_FAILURE,
-        payload: false,
-      });
-      displayToast('error', err.response.data.message);
+const modifyOrderAction = (orderId, orderDetails) => dispatch => apiCall(`/orders/${orderId}`, 'put', orderDetails, getToken())
+  .then(() => {
+    dispatch({
+      type: MODIFY_ORDER_SUCCESS,
+      payload: true,
     });
-};
+    displayToast('success', 'Order Modified Successfully');
+  })
+  .catch((err) => {
+    dispatch({
+      type: MODIFY_ORDER_FAILURE,
+      payload: false,
+    });
+    displayToast('error', err.response.data.message);
+  });
 
 export default modifyOrderAction;

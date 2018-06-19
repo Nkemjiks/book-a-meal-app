@@ -23,7 +23,7 @@ Enzyme.configure({ adapter: new Adapter() });
 const mockStore = configureMockStore();
 const store = mockStore({
   userInformation,
-  getCustomerOrderHistory: {
+  customerOrder: {
     customerOrderHistory: {},
     error: null,
   },

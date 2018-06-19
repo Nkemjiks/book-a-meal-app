@@ -69,7 +69,9 @@ describe('ManageMenu Component', () => {
   });
   it('should update state when menucreated is passed as a prop', () => {
     mountWrapper.setProps({ menuCreated: true });
+    const getMenuActionSpy = jest.spyOn(mountWrapper.instance().props, 'getMenuAction');
     expect(mountWrapper.state().menuIds.length).toBe(0);
+    expect(getMenuActionSpy).toHaveBeenCalled();
   });
   it('should render connected component properly', () => {
     const connectedWrapper = shallow(<ConnectedManageMenu {...props} store={store} />);

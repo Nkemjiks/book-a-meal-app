@@ -8,24 +8,22 @@ import displayToast from '../helpers/displayToast';
 *
 * @returns {Promise}  - dispatches action with user information
 */
-const signupAction = (userDetails, history) => (dispatch) => {
-  apiCall('/auth/signup', 'post', userDetails)
-    .then((response) => {
-      window.localStorage.setItem('@#$user', JSON.stringify(response.data.data));
-      window.localStorage.setItem('@#$token', response.data.token);
-      dispatch({
-        type: SIGNUP_USER_SUCCESS,
-        payload: response.data.data,
-      });
-      history.push('/customer/dashboard');
-    })
-    .catch((err) => {
-      dispatch({
-        type: SIGNUP_USER_FAILURE,
-        payload: err.response.data.message,
-      });
-      return displayToast('error', err.response.data.message);
+const signupAction = (userDetails, history) => dispatch => apiCall('/auth/signup', 'post', userDetails)
+  .then((response) => {
+    window.localStorage.setItem('@#$user', JSON.stringify(response.data.data));
+    window.localStorage.setItem('@#$token', response.data.token);
+    dispatch({
+      type: SIGNUP_USER_SUCCESS,
+      payload: response.data.data,
     });
-};
+    history.push('/customer/dashboard');
+  })
+  .catch((err) => {
+    dispatch({
+      type: SIGNUP_USER_FAILURE,
+      payload: err.response.data.message,
+    });
+    return displayToast('error', err.response.data.message);
+  });
 
 export default signupAction;

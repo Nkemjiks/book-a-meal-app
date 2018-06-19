@@ -9,23 +9,20 @@ import displayToast from '../helpers/displayToast';
 *
 * @returns {Promise}  - dispatches action with true or false
 */
-const deleteMealAction = (mealId, action) => (dispatch) => {
-  apiCall(`/meals/${mealId}`, 'delete', null, getToken())
-    .then(() => {
-      dispatch({
-        type: DELETE_MEAL_SUCCESS,
-        payload: true,
-      });
-      action();
-      displayToast('success', 'Meal Deleted Successfully');
-    })
-    .catch((err) => {
-      dispatch({
-        type: DELETE_MEAL_FAILURE,
-        payload: false,
-      });
-      displayToast('error', err.response.data.message);
+const deleteMealAction = mealId => dispatch => apiCall(`/meals/${mealId}`, 'delete', null, getToken())
+  .then(() => {
+    dispatch({
+      type: DELETE_MEAL_SUCCESS,
+      payload: true,
     });
-};
+    displayToast('success', 'Meal Deleted Successfully');
+  })
+  .catch((err) => {
+    dispatch({
+      type: DELETE_MEAL_FAILURE,
+      payload: false,
+    });
+    displayToast('error', err.response.data.message);
+  });
 
 export default deleteMealAction;

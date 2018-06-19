@@ -1,8 +1,14 @@
-import { GET_MENU_SUCCESS, GET_MENU_FAILURE } from '../actionTypes';
+import {
+  GET_MENU_SUCCESS,
+  GET_MENU_FAILURE,
+  CREATE_MENU_SUCCESS,
+  CREATE_MENU_FAILURE,
+} from '../actionTypes';
 
 const initialState = {
   menu: {},
   error: null,
+  menuCreated: false,
 };
 
 /**
@@ -20,12 +26,28 @@ export default (state = initialState, action) => {
         ...state,
         menu: action.payload,
         error: null,
+        menuCreated: false,
       };
     case GET_MENU_FAILURE:
       return {
         ...state,
         menu: {},
         error: action.payload,
+        menuCreated: false,
+      };
+    case CREATE_MENU_SUCCESS:
+      return {
+        ...state,
+        menu: {},
+        error: null,
+        menuCreated: action.payload,
+      };
+    case CREATE_MENU_FAILURE:
+      return {
+        ...state,
+        menu: {},
+        error: null,
+        menuCreated: action.payload,
       };
     default:
       return state;

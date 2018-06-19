@@ -56,6 +56,7 @@ export class MealsAdded extends React.Component {
     if (imageURL !== '') {
       return { imageURL };
     }
+    return null;
   }
 
   state = {
@@ -69,10 +70,30 @@ export class MealsAdded extends React.Component {
     selectedFile: '',
   };
 
+  /**
+   * lifecycle methods called immediately after a component is mounted
+   *
+   * @memberof MealsAdded
+   *
+   * @returns {object} mounts modal on root element
+   */
   componentDidMount() {
     Modal.setAppElement('#app');
   }
 
+  /**
+   * lifecycle methods called immediately after a component is updated
+   *
+   * @memberof MealsAdded
+   *
+   * @returns {object} updates the caterer's meal information in the redux store
+   */
+  componentDidUpdate(prevProps) {
+    if ((prevProps.mealModified !== this.props.mealModified) ||
+    (prevProps.mealDeleted !== this.props.mealDeleted)) {
+      this.props.getMealsAction();
+    }
+  }
   /**
    * updates component state when form values change
    *
@@ -168,7 +189,7 @@ export class MealsAdded extends React.Component {
       };
     }
 
-    this.props.modifyMealAction(this.state.mealId, mealData, this.props.getMealsAction);
+    this.props.modifyMealAction(this.state.mealId, mealData);
   }
 
   /**
@@ -182,7 +203,7 @@ export class MealsAdded extends React.Component {
    */
   handleDeleteMeal = (event) => {
     event.preventDefault();
-    this.props.deleteMealAction(this.state.mealId, this.props.getMealsAction);
+    this.props.deleteMealAction(this.state.mealId);
   }
 
   /**
@@ -298,16 +319,18 @@ export class MealsAdded extends React.Component {
 }
 
 const mapStateToProps = ({
-  getMeals, singleRequest,
+  catererMeals,
   imageUpload, uploadProgress,
 }) => {
-  const { meals, error } = getMeals;
-  const { mealModified, mealDeleted } = singleRequest;
+  console.log(catererMeals, '+++++++++++++++++++++')
+  const {
+    mealModified,
+    mealDeleted,
+  } = catererMeals;
+
   const { imageURL } = imageUpload;
   const { imageUploadProgress } = uploadProgress;
   return {
-    meals,
-    error,
     mealModified,
     mealDeleted,
     imageURL,
@@ -328,6 +351,8 @@ MealsAdded.propTypes = {
   deleteMealAction: PropTypes.func.isRequired,
   imageUploadAction: PropTypes.func.isRequired,
   meal: PropTypes.object.isRequired,
+  mealModified: PropTypes.bool.isRequired,
+  mealDeleted: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps, mapActionToProps)(MealsAdded);

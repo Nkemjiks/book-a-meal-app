@@ -9,23 +9,20 @@ import getToken from '../helpers/getToken';
 *
 * @returns {Promise}  - dispatches action with true or false
 */
-const addMealAction = (mealData, action) => (dispatch) => {
-  apiCall('/meals', 'post', mealData, getToken())
-    .then(() => {
-      dispatch({
-        type: ADD_MEAL_SUCCESS,
-        payload: true,
-      });
-      displayToast('success', 'Meal Added Successfully');
-      action();
-    })
-    .catch((err) => {
-      dispatch({
-        type: ADD_MEAL_FAILURE,
-        payload: false,
-      });
-      displayToast('error', err.response.data.message);
+const addMealAction = mealData => dispatch => apiCall('/meals', 'post', mealData, getToken())
+  .then(() => {
+    dispatch({
+      type: ADD_MEAL_SUCCESS,
+      payload: true,
     });
-};
+    displayToast('success', 'Meal Added Successfully');
+  })
+  .catch((err) => {
+    dispatch({
+      type: ADD_MEAL_FAILURE,
+      payload: false,
+    });
+    displayToast('error', err.response.data.message);
+  });
 
 export default addMealAction;

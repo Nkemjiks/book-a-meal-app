@@ -10,23 +10,20 @@ import displayToast from '../helpers/displayToast';
 *
 * @returns {Promise}  - dispatches action with true or false
 */
-const modifyMealAction = (mealId, mealDetails, action) => (dispatch) => {
-  apiCall(`/meals/${mealId}`, 'put', mealDetails, getToken())
-    .then(() => {
-      dispatch({
-        type: MODIFY_MEAL_SUCCESS,
-        payload: true,
-      });
-      action();
-      displayToast('success', 'Meal Modified Successfully');
-    })
-    .catch((err) => {
-      dispatch({
-        type: MODIFY_MEAL_FAILURE,
-        payload: false,
-      });
-      displayToast('error', err.response.data.message);
+const modifyMealAction = (mealId, mealDetails) => dispatch => apiCall(`/meals/${mealId}`, 'put', mealDetails, getToken())
+  .then(() => {
+    dispatch({
+      type: MODIFY_MEAL_SUCCESS,
+      payload: true,
     });
-};
+    displayToast('success', 'Meal Modified Successfully');
+  })
+  .catch((err) => {
+    dispatch({
+      type: MODIFY_MEAL_FAILURE,
+      payload: false,
+    });
+    displayToast('error', err.response.data.message);
+  });
 
 export default modifyMealAction;

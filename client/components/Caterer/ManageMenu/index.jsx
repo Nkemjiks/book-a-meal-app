@@ -73,6 +73,18 @@ export class ManageMenu extends React.Component {
   }
 
   /**
+   * lifecycle methods called immediately after a component is updated
+   *
+   * @memberof MealsAdded
+   *
+   * @returns {object} updates the caterer's meal information in the redux store
+   */
+  componentDidUpdate(prevProps) {
+    if (prevProps.menuCreated !== this.props.menuCreated) {
+      this.props.getMenuAction();
+    }
+  }
+  /**
    * method called to update state
    *
    * @param  {string} mealId meal id
@@ -104,7 +116,7 @@ export class ManageMenu extends React.Component {
    */
   handleSubmit = () => {
     const meals = { meals: this.state.menuIds };
-    this.props.createMenuAction(meals, this.props.getMenuAction);
+    this.props.createMenuAction(meals);
   }
 
   /**
@@ -197,10 +209,9 @@ export class ManageMenu extends React.Component {
   }
 }
 
-const mapStateToProps = ({ getMeals, getMenu, singleRequest }) => {
-  const { meals, error } = getMeals;
-  const { menu } = getMenu;
-  const { menuCreated } = singleRequest;
+const mapStateToProps = ({ catererMeals, catererMenu }) => {
+  const { meals, error } = catererMeals;
+  const { menu, menuCreated } = catererMenu;
   return {
     meals,
     error,
@@ -222,6 +233,7 @@ ManageMenu.propTypes = {
   getMenuAction: PropTypes.func.isRequired,
   createMenuAction: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
+  menuCreated: PropTypes.bool.isRequired,
 };
 
 export default withRouter(connect(mapStateToProps, mapActionToProps)(ManageMenu));

@@ -117,11 +117,13 @@ describe('ManageMeal Component', () => {
     expect(addMealActionSpy).toHaveBeenCalled();
   });
   it('should update state when a new meal is added successfully', () => {
+    const getMealsActionSpy = jest.spyOn(wrapper.instance().props, 'getMealsAction');
     wrapper.setProps({ mealAdded: true });
     expect(wrapper.state().mealName).toBe('');
     expect(wrapper.state().price).toBe('');
     expect(wrapper.state().imageURL).toBe('');
     expect(wrapper.state().imageUploadProgress).toBe('');
+    expect(getMealsActionSpy).toHaveBeenCalled();
   });
   it('should render connected component properly', () => {
     const connectedWrapper = shallow(<ConnectedManageMeal {...props} store={store} />);

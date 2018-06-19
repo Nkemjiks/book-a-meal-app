@@ -32,7 +32,7 @@ const store = mockStore({
   getAllMenu: {
     allMenu: [],
   },
-  getMeals: {
+  catererMeals: {
     meals: {},
   },
   singleRequest: {
@@ -57,7 +57,7 @@ describe('ManageMenu Component', () => {
   });
   it('should update state when imageUploadProgress is passed as a prop', () => {
     mountWrapper.setProps({ imageUploadProgress: 80 });
-    expect(mountWrapper.state().mealName).toBe('80');
+    expect(mountWrapper.state().imageUploadProgress).toBe(80);
   });
   it('should update state when mealDeleted is passed as a prop', () => {
     mountWrapper.setProps({ mealDeleted: true });

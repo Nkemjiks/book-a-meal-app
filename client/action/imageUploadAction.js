@@ -8,24 +8,22 @@ import displayToast from '../helpers/displayToast';
 *
 * @returns {Promise}  - dispatches action with image URL
 */
-const imageUploadAction = formData => (dispatch) => {
-  axios.post('https://api.cloudinary.com/v1_1/dqsmurjpg/image/upload', formData, {
-    onUploadProgress: (progressEvent) => {
-      const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-      dispatch({
-        type: UPLOAD_IMAGE_PROGRESS,
-        payload: percentCompleted,
-      });
-    },
+const imageUploadAction = formData => dispatch => axios.post('https://api.cloudinary.com/v1_1/dqsmurjpg/image/upload', formData, {
+  onUploadProgress: (progressEvent) => {
+    const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+    dispatch({
+      type: UPLOAD_IMAGE_PROGRESS,
+      payload: percentCompleted,
+    });
+  },
+})
+  .then((response) => {
+    dispatch({
+      type: IMAGE_UPLOAD_URL,
+      payload: response.data.url,
+    });
+    displayToast('success', 'Image Uploaded successfully');
   })
-    .then((response) => {
-      dispatch({
-        type: IMAGE_UPLOAD_URL,
-        payload: response.data.url,
-      });
-      displayToast('success', 'Image Uploaded successfully');
-    })
-    .catch(() => displayToast('error', 'There was error while uploading the image. Try again'));
-};
+  .catch(() => displayToast('error', 'There was error while uploading the image. Try again'));
 
 export default imageUploadAction;

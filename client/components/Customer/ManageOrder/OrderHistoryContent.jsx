@@ -25,8 +25,8 @@ export class OrderHistoryContent extends React.Component {
    *
    * @returns {object} updates component state
    */
-  static getDerivedStateFromProps(props) {
-    if (props.orderModified) {
+  static getDerivedStateFromProps({ orderModified }) {
+    if (orderModified) {
       return {
         modifyModalIsOpen: false,
         mealsInOrder: [],
@@ -48,10 +48,29 @@ export class OrderHistoryContent extends React.Component {
     originalOrder: [],
   };
 
+  /**
+   * lifecycle methods called immediately after a component is mounted
+   *
+   * @memberof OrderHistoryContent
+   *
+   * @returns {object} mounts modal on root element
+   */
   componentDidMount() {
     Modal.setAppElement('#app');
   }
 
+  /**
+   * lifecycle methods called immediately after a component is updated
+   *
+   * @memberof OrderHistoryContent
+   *
+   * @returns {object} updates the caterer's meal information in the redux store
+   */
+  componentDidUpdate(prevProps) {
+    if (prevProps.orderModified !== this.props.orderModified) {
+      this.props.getCustomerOrderHistoryAction();
+    }
+  }
   /**
    * method called in other methods to update state
    *
@@ -197,7 +216,7 @@ export class OrderHistoryContent extends React.Component {
       meals: orders,
       deliveryAddress,
     };
-    this.props.modifyOrderAction(orderId, orderDetails, this.props.getCustomerOrderHistoryAction);
+    this.props.modifyOrderAction(orderId, orderDetails);
   }
 
   /**
@@ -282,11 +301,9 @@ export class OrderHistoryContent extends React.Component {
   }
 }
 
-const mapStateToProps = ({ getCustomerOrderHistory, singleRequest }) => {
-  const { customerOrderHistory } = getCustomerOrderHistory;
-  const { orderModified } = singleRequest;
+const mapStateToProps = ({ customerOrder }) => {
+  const { orderModified } = customerOrder;
   return {
-    customerOrderHistory,
     orderModified,
   };
 };
@@ -299,6 +316,7 @@ const mapActionToProps = {
 OrderHistoryContent.propTypes = {
   getCustomerOrderHistoryAction: PropTypes.func.isRequired,
   modifyOrderAction: PropTypes.func.isRequired,
+  orderModified: PropTypes.bool.isRequired,
   order: PropTypes.shape({
     meals: PropTypes.array.isRequired,
     deliveryAddress: PropTypes.string.isRequired,

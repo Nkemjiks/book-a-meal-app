@@ -317,10 +317,10 @@ const mapActionToProps = {
   placeOrderAction,
 };
 
-const mapStateToProps = ({ userInformation, getAllMenu, singleRequest }) => {
+const mapStateToProps = ({ userInformation, getAllMenu, customerOrder }) => {
   const { user, error } = userInformation;
   const { allMenu } = getAllMenu;
-  const { orderPlaced } = singleRequest;
+  const { orderPlaced } = customerOrder;
   return {
     user,
     error,
