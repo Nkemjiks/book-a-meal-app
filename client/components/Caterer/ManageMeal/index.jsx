@@ -88,7 +88,10 @@ export class ManageMeal extends React.Component {
    * @returns {object} updates the caterer's meal information in the redux store
    */
   componentDidUpdate(prevProps) {
-    if (prevProps.mealAdded !== this.props.mealAdded) {
+    if ((prevProps.mealAdded !== this.props.mealAdded) ||
+    (prevProps.mealModified !== this.props.mealModified) ||
+    (prevProps.mealDeleted !== this.props.mealDeleted)
+    ) {
       this.props.getMealsAction();
     }
   }
@@ -226,17 +229,21 @@ export class ManageMeal extends React.Component {
   }
 }
 
-const mapStateToProps = ({
-  catererMeals,
-  imageUpload, uploadProgress,
-}) => {
-  const { meals, error, mealAdded } = catererMeals;
-  const { imageURL } = imageUpload;
-  const { imageUploadProgress } = uploadProgress;
+const mapStateToProps = ({ catererMeals, imageUpload }) => {
+  const {
+    meals,
+    error,
+    mealAdded,
+    mealModified,
+    mealDeleted,
+  } = catererMeals;
+  const { imageURL, imageUploadProgress } = imageUpload;
   return {
     meals,
     error,
     mealAdded,
+    mealModified,
+    mealDeleted,
     imageURL,
     imageUploadProgress,
   };
@@ -256,6 +263,8 @@ ManageMeal.propTypes = {
   imageUploadAction: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
   mealAdded: PropTypes.bool.isRequired,
+  mealModified: PropTypes.bool.isRequired,
+  mealDeleted: PropTypes.bool.isRequired,
 };
 
 export default withRouter(connect(mapStateToProps, mapActionToProps)(ManageMeal));

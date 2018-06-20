@@ -7,7 +7,6 @@ import getCatererOrder from './getCatererOrders';
 import getAllCatererOrder from './getAllCatererOrders';
 import customerOrder from './customerOrder';
 import imageUpload from './imageUpload';
-import uploadProgress from './uploadProgress';
 
 const rootReducer = combineReducers({
   userInformation,
@@ -18,7 +17,6 @@ const rootReducer = combineReducers({
   getAllCatererOrder,
   customerOrder,
   imageUpload,
-  uploadProgress,
 });
 
 export default rootReducer;

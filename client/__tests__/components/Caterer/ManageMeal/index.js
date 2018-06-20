@@ -16,6 +16,9 @@ const props = {
   imageUploadAction: jest.fn(),
   history: {},
   meals,
+  mealAdded: false,
+  mealModified: false,
+  mealDeleted: false,
 };
 
 Enzyme.configure({ adapter: new Adapter() });

@@ -7,7 +7,6 @@ import '../../../scss/modal.scss';
 
 import displayToast from '../../../helpers/displayToast';
 import MealsInOrder from './MealsInOrder';
-import getCustomerOrderHistoryAction from '../../../action/getCustomerOrderHistoryAction';
 import modifyOrderAction from '../../../action/modifyOrderAction';
 
 /**
@@ -59,18 +58,6 @@ export class OrderHistoryContent extends React.Component {
     Modal.setAppElement('#app');
   }
 
-  /**
-   * lifecycle methods called immediately after a component is updated
-   *
-   * @memberof OrderHistoryContent
-   *
-   * @returns {object} updates the caterer's meal information in the redux store
-   */
-  componentDidUpdate(prevProps) {
-    if (prevProps.orderModified !== this.props.orderModified) {
-      this.props.getCustomerOrderHistoryAction();
-    }
-  }
   /**
    * method called in other methods to update state
    *
@@ -309,14 +296,11 @@ const mapStateToProps = ({ customerOrder }) => {
 };
 
 const mapActionToProps = {
-  getCustomerOrderHistoryAction,
   modifyOrderAction,
 };
 
 OrderHistoryContent.propTypes = {
-  getCustomerOrderHistoryAction: PropTypes.func.isRequired,
   modifyOrderAction: PropTypes.func.isRequired,
-  orderModified: PropTypes.bool.isRequired,
   order: PropTypes.shape({
     meals: PropTypes.array.isRequired,
     deliveryAddress: PropTypes.string.isRequired,

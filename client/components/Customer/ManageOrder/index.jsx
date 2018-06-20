@@ -26,15 +26,12 @@ export class ManageOrder extends React.Component {
    * @returns {object} updates component state
    */
   static getDerivedStateFromProps({ customerOrderHistory }, state) {
-    console.log(customerOrderHistory, '-----------');
     if (customerOrderHistory !== state.customerOrderHistory) {
       return {
         customerOrderHistory,
       };
     }
-    return {
-      customerOrderHistory: {},
-    };
+    return null;
   }
 
   state = {
@@ -56,6 +53,17 @@ export class ManageOrder extends React.Component {
   }
 
   /**
+   * lifecycle methods called immediately after a component is updated
+   *
+   * @memberof OrderHistoryContent
+   *
+   * @returns {object} updates the caterer's meal information in the redux store
+   */
+  componentDidUpdate() {
+    this.props.getCustomerOrderHistoryAction();
+  }
+
+  /**
    * renders component to DOM
    *
    * @memberof ManageOrder
@@ -63,7 +71,6 @@ export class ManageOrder extends React.Component {
    * @returns {JSX} JSX representation of component
    */
   render() {
-    console.log(this.state, '')
     return (
       <div className="dashboard">
         <div id="caterer-dashboard-flex">
@@ -95,9 +102,10 @@ export class ManageOrder extends React.Component {
   }
 }
 const mapStateToProps = ({ customerOrder }) => {
-  const { customerOrderHistory } = customerOrder;
+  const { customerOrderHistory, orderModified } = customerOrder;
   return {
     customerOrderHistory,
+    orderModified,
   };
 };
 
@@ -110,6 +118,7 @@ ManageOrder.propTypes = {
   getUserDetailsAction: PropTypes.func.isRequired,
   getCustomerOrderHistoryAction: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
+  orderModified: PropTypes.bool.isRequired,
 };
 
 export default withRouter(connect(mapStateToProps, mapActionToProps)(ManageOrder));

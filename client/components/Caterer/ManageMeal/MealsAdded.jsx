@@ -82,19 +82,6 @@ export class MealsAdded extends React.Component {
   }
 
   /**
-   * lifecycle methods called immediately after a component is updated
-   *
-   * @memberof MealsAdded
-   *
-   * @returns {object} updates the caterer's meal information in the redux store
-   */
-  componentDidUpdate(prevProps) {
-    if ((prevProps.mealModified !== this.props.mealModified) ||
-    (prevProps.mealDeleted !== this.props.mealDeleted)) {
-      this.props.getMealsAction();
-    }
-  }
-  /**
    * updates component state when form values change
    *
    * @param {Object} event
@@ -318,18 +305,13 @@ export class MealsAdded extends React.Component {
   }
 }
 
-const mapStateToProps = ({
-  catererMeals,
-  imageUpload, uploadProgress,
-}) => {
-  console.log(catererMeals, '+++++++++++++++++++++')
+const mapStateToProps = ({ catererMeals, imageUpload }) => {
   const {
     mealModified,
     mealDeleted,
   } = catererMeals;
 
-  const { imageURL } = imageUpload;
-  const { imageUploadProgress } = uploadProgress;
+  const { imageURL, imageUploadProgress } = imageUpload;
   return {
     mealModified,
     mealDeleted,
@@ -346,13 +328,10 @@ const mapActionToProps = {
 };
 
 MealsAdded.propTypes = {
-  getMealsAction: PropTypes.func.isRequired,
   modifyMealAction: PropTypes.func.isRequired,
   deleteMealAction: PropTypes.func.isRequired,
   imageUploadAction: PropTypes.func.isRequired,
   meal: PropTypes.object.isRequired,
-  mealModified: PropTypes.bool.isRequired,
-  mealDeleted: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps, mapActionToProps)(MealsAdded);

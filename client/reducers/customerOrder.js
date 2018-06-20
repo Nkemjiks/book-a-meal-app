@@ -43,7 +43,6 @@ export default (state = initialState, action) => {
     case PLACE_ORDER_SUCCESS:
       return {
         ...state,
-        customerOrderHistory: {},
         error: null,
         orderPlaced: action.payload,
         orderModified: false,
@@ -51,7 +50,6 @@ export default (state = initialState, action) => {
     case PLACE_ORDER_FAILURE:
       return {
         ...state,
-        customerOrderHistory: {},
         error: null,
         orderPlaced: action.payload,
         orderModified: false,
@@ -59,7 +57,6 @@ export default (state = initialState, action) => {
     case MODIFY_ORDER_SUCCESS:
       return {
         ...state,
-        customerOrderHistory: {},
         error: null,
         orderPlaced: false,
         orderModified: action.payload,
@@ -67,7 +64,6 @@ export default (state = initialState, action) => {
     case MODIFY_ORDER_FAILURE:
       return {
         ...state,
-        customerOrderHistory: {},
         error: null,
         orderPlaced: false,
         orderModified: action.payload,

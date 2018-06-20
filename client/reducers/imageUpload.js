@@ -1,7 +1,8 @@
-import { IMAGE_UPLOAD_URL } from '../actionTypes';
+import { IMAGE_UPLOAD_URL, UPLOAD_IMAGE_PROGRESS } from '../actionTypes';
 
 const initialState = {
   imageURL: '',
+  imageUploadProgress: 0,
 };
 
 /**
@@ -18,6 +19,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         imageURL: action.payload,
+        imageUploadProgress: 0,
+      };
+    case UPLOAD_IMAGE_PROGRESS:
+      return {
+        ...state,
+        imageURL: '',
+        imageUploadProgress: action.payload,
       };
     default:
       return state;

@@ -48,7 +48,6 @@ export default (state = initialState, action) => {
     case ADD_MEAL_SUCCESS:
       return {
         ...state,
-        meals: [],
         error: null,
         mealAdded: action.payload,
         mealModified: false,
@@ -57,7 +56,6 @@ export default (state = initialState, action) => {
     case ADD_MEAL_FAILURE:
       return {
         ...state,
-        meals: [],
         error: null,
         mealAdded: action.payload,
         mealModified: false,
@@ -66,7 +64,6 @@ export default (state = initialState, action) => {
     case MODIFY_MEAL_SUCCESS:
       return {
         ...state,
-        meals: [],
         error: null,
         mealAdded: false,
         mealModified: action.payload,
@@ -75,7 +72,6 @@ export default (state = initialState, action) => {
     case MODIFY_MEAL_FAILURE:
       return {
         ...state,
-        meals: [],
         error: null,
         mealAdded: false,
         mealModified: action.payload,
@@ -84,7 +80,6 @@ export default (state = initialState, action) => {
     case DELETE_MEAL_SUCCESS:
       return {
         ...state,
-        meals: [],
         error: null,
         mealAdded: false,
         mealModified: false,
@@ -93,7 +88,6 @@ export default (state = initialState, action) => {
     case DELETE_MEAL_FAILURE:
       return {
         ...state,
-        meals: [],
         error: null,
         mealAdded: false,
         mealModified: false,

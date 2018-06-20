@@ -14,6 +14,7 @@ const props = {
   getCustomerOrderHistoryAction: jest.fn(),
   history: {},
   customerOrderHistory: orders,
+  orderModified: false,
 };
 
 Enzyme.configure({ adapter: new Adapter() });

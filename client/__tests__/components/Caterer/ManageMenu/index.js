@@ -17,6 +17,7 @@ const props = {
   history: {},
   meals,
   orderPlaced: true,
+  menuCreated: false,
 };
 
 Enzyme.configure({ adapter: new Adapter() });

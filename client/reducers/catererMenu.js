@@ -38,14 +38,12 @@ export default (state = initialState, action) => {
     case CREATE_MENU_SUCCESS:
       return {
         ...state,
-        menu: {},
         error: null,
         menuCreated: action.payload,
       };
     case CREATE_MENU_FAILURE:
       return {
         ...state,
-        menu: {},
         error: null,
         menuCreated: action.payload,
       };

@@ -16,6 +16,7 @@ const props = {
   allOrders: orders,
   orders: {},
   history: {},
+  orderModified: false,
 };
 
 Enzyme.configure({ adapter: new Adapter() });
