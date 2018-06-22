@@ -1,11 +1,10 @@
 import { GET_MENU_SUCCESS, GET_MENU_FAILURE } from '../actionTypes';
-import apiCall from '../helpers/axios';
-import getToken from '../helpers/getToken';
+import axiosInstance, { config } from '../helpers/axios';
 
 /**
 * @returns {Promise}  - dispatches action with menu set by the caterer
 */
-const getMenuAction = () => dispatch => apiCall('/menu/caterer', 'get', null, getToken())
+const getMenuAction = () => dispatch => axiosInstance.get('/menu/caterer', config)
   .then((response) => {
     dispatch({
       type: GET_MENU_SUCCESS,

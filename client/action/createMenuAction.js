@@ -1,7 +1,6 @@
 import { CREATE_MENU_SUCCESS, CREATE_MENU_FAILURE } from '../actionTypes';
-import apiCall from '../helpers/axios';
+import axios, { config } from '../helpers/axios';
 import displayToast from '../helpers/displayToast';
-import getToken from '../helpers/getToken';
 
 /**
 * @param {Object} meals - ids of meal
@@ -9,7 +8,7 @@ import getToken from '../helpers/getToken';
 *
 * @returns {Promise}  - dispatches action with true or false
 */
-const createMenuAction = meals => dispatch => apiCall('/menu', 'post', meals, getToken())
+const createMenuAction = meals => dispatch => axios.post('/menu', meals, config)
   .then((response) => {
     dispatch({
       type: CREATE_MENU_SUCCESS,

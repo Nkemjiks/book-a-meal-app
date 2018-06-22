@@ -1,6 +1,5 @@
 import { MODIFY_MEAL_SUCCESS, MODIFY_MEAL_FAILURE } from '../actionTypes';
-import apiCall from '../helpers/axios';
-import getToken from '../helpers/getToken';
+import axiosInstance, { config } from '../helpers/axios';
 import displayToast from '../helpers/displayToast';
 
 /**
@@ -10,7 +9,7 @@ import displayToast from '../helpers/displayToast';
 *
 * @returns {Promise}  - dispatches action with true or false
 */
-const modifyMealAction = (mealId, mealDetails) => dispatch => apiCall(`/meals/${mealId}`, 'put', mealDetails, getToken())
+const modifyMealAction = (mealId, mealDetails) => dispatch => axiosInstance.put(`/meals/${mealId}`, mealDetails, config)
   .then(() => {
     dispatch({
       type: MODIFY_MEAL_SUCCESS,

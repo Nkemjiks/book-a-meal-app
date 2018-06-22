@@ -67,10 +67,10 @@ export class Dashboard extends React.Component {
    * @returns {object} updates the user and menu information in the redux store
    */
   componentDidMount() {
-    refreshTokenRequest(this.props.history);
     const user = JSON.parse(window.localStorage.getItem('@#$user'));
     this.props.getUserDetailsAction(user);
     this.props.getAllMenuAction();
+    refreshTokenRequest(this.props.history);
   }
 
   /**

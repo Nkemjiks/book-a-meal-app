@@ -1,4 +1,6 @@
 import axios from 'axios';
+import getToken from './getToken';
+
 /**
  * @description make api calls with axios
  *
@@ -9,23 +11,21 @@ import axios from 'axios';
  *
  * @returns {Function} - a function that makes the api call
  */
-const apiCall = (url, method, requestBody, token) => {
-  let axiosInstance;
-  if (token) {
-    axiosInstance = axios.create({
-      baseURL: 'http://localhost:8080/',
-      headers: { Authorization: token },
-    });
-  } else {
-    axiosInstance = axios.create({
-      baseURL: 'http://localhost:8080/',
-    });
-  }
-  if (method === 'post' || method === 'put') {
-    return axiosInstance[method](url, requestBody);
-  }
 
-  return axiosInstance[method](url);
-};
+if (process.env.NODE_ENV === 'development') {
+  axios.defaults.baseURL = 'http://localhost:8080';
+  axios.interceptors.request.use(
+    (config) => {
+      if (config.baseURL && (config.url !== 'https://api.cloudinary.com/v1_1/dqsmurjpg/image/upload')) {
+        const token = getToken();
+        if (token) {
+          config.headers.Authorization = token;
+        }
+      }
+      return config;
+    },
+    error => Promise.reject(error),
+  );
+}
 
-export default apiCall;
+export default axios;

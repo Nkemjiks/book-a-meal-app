@@ -2,18 +2,18 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import moxios from 'moxios';
 import expect from 'expect';
-import addMealAction from '../../action/addMealAction';
-import { ADD_MEAL_SUCCESS, ADD_MEAL_FAILURE } from '../../actionTypes';
+import deleteMealAction from '../../action/deleteMealAction';
+import { DELETE_MEAL_SUCCESS, DELETE_MEAL_FAILURE } from '../../actionTypes';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-describe('addMeal action', () => {
+describe('deleteMealAction action', () => {
   beforeEach(() => moxios.install());
   afterEach(() => moxios.uninstall());
 
-  it('creates ADD_MEAL_SUCCESS when the meal is added', (done) => {
-    moxios.stubRequest('/meals', {
+  it('creates DELETE_MEAL_SUCCESS when a meal is deleted', (done) => {
+    moxios.stubRequest('/meals/28983839', {
       status: 201,
       response: {
         data: { message: 'Meal added successfully' },
@@ -21,20 +21,20 @@ describe('addMeal action', () => {
     });
 
     const expectedActions = [
-      { type: ADD_MEAL_SUCCESS, payload: true },
+      { type: DELETE_MEAL_SUCCESS, payload: true },
     ];
 
     const store = mockStore({});
 
-    store.dispatch(addMealAction())
+    store.dispatch(deleteMealAction('28983839'))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
         done();
       });
   });
 
-  it('creates ADD_MEAL_FAILURE when the meal is not added', (done) => {
-    moxios.stubRequest('/meals', {
+  it('creates DELETE_MEAL_FAILURE when the menu is not created', (done) => {
+    moxios.stubRequest('/meals/28983839', {
       status: 400,
       response: {
         data: { message: 'Invalid token' },
@@ -42,12 +42,12 @@ describe('addMeal action', () => {
     });
 
     const expectedActions = [
-      { type: ADD_MEAL_FAILURE, payload: false },
+      { type: DELETE_MEAL_FAILURE, payload: false },
     ];
 
-    const store = mockStore({ });
+    const store = mockStore({});
 
-    store.dispatch(addMealAction())
+    store.dispatch(deleteMealAction('28983839'))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
         done();

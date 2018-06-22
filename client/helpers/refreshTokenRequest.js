@@ -1,5 +1,4 @@
-import apiCall from '../helpers/axios';
-import getToken from '../helpers/getToken';
+import axios from './axios';
 
 /**
  * @description make an api call to refresh
@@ -7,7 +6,8 @@ import getToken from '../helpers/getToken';
  *
  * @param {Array} history - browser history
  */
-const refreshTokenRequest = history => apiCall('/auth/token', 'post', null, getToken())
+
+const refreshTokenRequest = history => axios.post('/auth/token')
   .then((response) => {
     window.localStorage.setItem('@#$token', response.data.token);
   })

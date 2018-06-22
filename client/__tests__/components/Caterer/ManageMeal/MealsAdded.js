@@ -4,11 +4,8 @@ import Enzyme, { shallow, mount } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import ConnectedMealsAdded, { MealsAdded } from '../../../../components/Caterer/ManageMeal/MealsAdded';
 import userInformation from '../../../../mocks/userInformation';
-import localStorageMock from '../../../../mocks/localStoragemock';
 import createModalDomNode from '../../../../mocks/createModalDomNode';
 import { meals } from '../../../../mocks/catererMealDetails';
-
-window.localStorage = localStorageMock;
 
 const props = {
   modifyMealAction: jest.fn(),

@@ -4,10 +4,7 @@ import Enzyme, { shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import ConnectedManageOrder, { ManageOrder } from '../../../../components/Customer/ManageOrder';
 import userInformation from '../../../../mocks/userInformation';
-import localStorageMock from '../../../../mocks/localStoragemock';
 import orders from '../../../../mocks/customerOrder';
-
-window.localStorage = localStorageMock;
 
 const props = {
   getUserDetailsAction: jest.fn(),

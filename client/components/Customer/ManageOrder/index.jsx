@@ -53,17 +53,6 @@ export class ManageOrder extends React.Component {
   }
 
   /**
-   * lifecycle methods called immediately after a component is updated
-   *
-   * @memberof OrderHistoryContent
-   *
-   * @returns {object} updates the caterer's meal information in the redux store
-   */
-  componentDidUpdate() {
-    this.props.getCustomerOrderHistoryAction();
-  }
-
-  /**
    * renders component to DOM
    *
    * @memberof ManageOrder

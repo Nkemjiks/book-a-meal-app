@@ -4,10 +4,7 @@ import Enzyme, { shallow, mount } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import ConnectedDashboard, { Dashboard } from '../../../../components/Customer/Dashboard';
 import userInformation from '../../../../mocks/userInformation';
-import localStorageMock from '../../../../mocks/localStoragemock';
 import menu from '../../../../mocks/menu';
-
-window.localStorage = localStorageMock;
 
 const props = {
   getUserDetailsAction: jest.fn(),

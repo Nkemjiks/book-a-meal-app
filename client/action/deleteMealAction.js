@@ -1,6 +1,5 @@
 import { DELETE_MEAL_SUCCESS, DELETE_MEAL_FAILURE } from '../actionTypes';
-import apiCall from '../helpers/axios';
-import getToken from '../helpers/getToken';
+import axios, { config } from '../helpers/axios';
 import displayToast from '../helpers/displayToast';
 
 /**
@@ -9,7 +8,7 @@ import displayToast from '../helpers/displayToast';
 *
 * @returns {Promise}  - dispatches action with true or false
 */
-const deleteMealAction = mealId => dispatch => apiCall(`/meals/${mealId}`, 'delete', null, getToken())
+const deleteMealAction = mealId => dispatch => axios.delete(`/meals/${mealId}`, config)
   .then(() => {
     dispatch({
       type: DELETE_MEAL_SUCCESS,

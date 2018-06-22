@@ -1,11 +1,10 @@
 import { GET_ALL_MENU_SUCCESS, GET_ALL_MENU_FAILURE } from '../actionTypes';
-import apiCall from '../helpers/axios';
-import getToken from '../helpers/getToken';
+import axiosInstance, { config } from '../helpers/axios';
 
 /**
 * @returns {Promise}  - dispatches action with all menu set for the day
 */
-const getMenuAction = () => dispatch => apiCall('/menu/customer', 'get', null, getToken())
+const getMenuAction = () => dispatch => axiosInstance.get('/menu/customer', config)
   .then((response) => {
     dispatch({
       type: GET_ALL_MENU_SUCCESS,

@@ -4,11 +4,8 @@ import Enzyme, { mount, shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import ConnectedOrderHistoryContent, { OrderHistoryContent } from '../../../../components/Customer/ManageOrder/OrderHistoryContent';
 import userInformation from '../../../../mocks/userInformation';
-import localStorageMock from '../../../../mocks/localStoragemock';
 import orders from '../../../../mocks/customerOrder';
 import createModalDomNode from '../../../../mocks/createModalDomNode';
-
-window.localStorage = localStorageMock;
 
 const props = {
   modifyOrderAction: jest.fn(),

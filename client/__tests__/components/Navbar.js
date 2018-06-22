@@ -3,11 +3,8 @@ import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import ConnectedNavbar, { Navbar } from '../../components/Navbar';
-import localStorageMock from '../../mocks/localStoragemock';
 import userInformation from '../../mocks/userInformation';
 import { defaultProps, customerUserProps, catererUserProps, catererProps } from '../../mocks/navbarProps';
-
-window.localStorage = localStorageMock;
 
 const props = {
   updateUserRoleAction: jest.fn(),

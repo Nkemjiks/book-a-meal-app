@@ -1,5 +1,5 @@
 import { LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS } from '../actionTypes';
-import apiCall from '../helpers/axios';
+import axiosInstance from '../helpers/axios';
 import displayToast from '../helpers/displayToast';
 
 /**
@@ -8,7 +8,7 @@ import displayToast from '../helpers/displayToast';
 *
 * @returns {Promise}  - dispatches action with user information
 */
-const loginAction = (userDetails, history) => dispatch => apiCall('/auth/login', 'post', userDetails)
+const loginAction = (userDetails, history) => dispatch => axiosInstance.post('/auth/login', userDetails)
   .then((response) => {
     window.localStorage.setItem('@#$user', JSON.stringify(response.data.data));
     window.localStorage.setItem('@#$token', response.data.token);

@@ -1,11 +1,10 @@
 import { GET_MEALS_SUCCESS, GET_MEALS_FAILURE } from '../actionTypes';
-import apiCall from '../helpers/axios';
-import getToken from '../helpers/getToken';
+import axiosInstance, { config } from '../helpers/axios';
 
 /**
 * @returns {Promise}  - dispatches action with caterer's meals
 */
-const getMealsAction = () => dispatch => apiCall('/meals', 'get', null, getToken())
+const getMealsAction = () => dispatch => axiosInstance.get('/meals', config)
   .then((response) => {
     dispatch({
       type: GET_MEALS_SUCCESS,

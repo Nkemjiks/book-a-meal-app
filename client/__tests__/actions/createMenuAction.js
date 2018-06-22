@@ -2,39 +2,39 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import moxios from 'moxios';
 import expect from 'expect';
-import addMealAction from '../../action/addMealAction';
-import { ADD_MEAL_SUCCESS, ADD_MEAL_FAILURE } from '../../actionTypes';
+import createMenuAction from '../../action/createMenuAction';
+import { CREATE_MENU_SUCCESS, CREATE_MENU_FAILURE } from '../../actionTypes';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-describe('addMeal action', () => {
+describe('createMenuAction action', () => {
   beforeEach(() => moxios.install());
   afterEach(() => moxios.uninstall());
 
-  it('creates ADD_MEAL_SUCCESS when the meal is added', (done) => {
-    moxios.stubRequest('/meals', {
+  it('creates CREATE_MENU_SUCCESS when the menu is created', (done) => {
+    moxios.stubRequest('/menu', {
       status: 201,
       response: {
-        data: { message: 'Meal added successfully' },
+        data: { message: 'Menu created successfully' },
       },
     });
 
     const expectedActions = [
-      { type: ADD_MEAL_SUCCESS, payload: true },
+      { type: CREATE_MENU_SUCCESS, payload: true },
     ];
 
     const store = mockStore({});
 
-    store.dispatch(addMealAction())
+    store.dispatch(createMenuAction())
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
         done();
       });
   });
 
-  it('creates ADD_MEAL_FAILURE when the meal is not added', (done) => {
-    moxios.stubRequest('/meals', {
+  it('creates CREATE_MENU_FAILURE when the menu is not created', (done) => {
+    moxios.stubRequest('/menu', {
       status: 400,
       response: {
         data: { message: 'Invalid token' },
@@ -42,12 +42,12 @@ describe('addMeal action', () => {
     });
 
     const expectedActions = [
-      { type: ADD_MEAL_FAILURE, payload: false },
+      { type: CREATE_MENU_FAILURE, payload: false },
     ];
 
-    const store = mockStore({ });
+    const store = mockStore({});
 
-    store.dispatch(addMealAction())
+    store.dispatch(createMenuAction())
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
         done();

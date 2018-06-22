@@ -1,11 +1,10 @@
 import { GET_CATERER_ORDER_SUCCESS, GET_CATERER_ORDER_FAILURE } from '../actionTypes';
-import apiCall from '../helpers/axios';
-import getToken from '../helpers/getToken';
+import axiosInstance, { config } from '../helpers/axios';
 
 /**
 * @returns {Promise}  - dispatches action with the caterer's orders for that day
 */
-const getCatererOrderAction = () => dispatch => apiCall('/orders/caterer', 'get', null, getToken())
+const getCatererOrderAction = () => dispatch => axiosInstance.get('/orders/caterer', config)
   .then((response) => {
     dispatch({
       type: GET_CATERER_ORDER_SUCCESS,

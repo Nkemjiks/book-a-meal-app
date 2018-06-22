@@ -4,10 +4,7 @@ import Enzyme, { shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import ConnectedManageMeal, { ManageMeal } from '../../../../components/Caterer/ManageMeal';
 import userInformation from '../../../../mocks/userInformation';
-import localStorageMock from '../../../../mocks/localStoragemock';
 import { meals } from '../../../../mocks/catererMealDetails';
-
-window.localStorage = localStorageMock;
 
 const props = {
   getUserDetailsAction: jest.fn(),

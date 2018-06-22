@@ -1,5 +1,5 @@
 import { SIGNUP_USER_SUCCESS, SIGNUP_USER_FAILURE } from '../actionTypes';
-import apiCall from '../helpers/axios';
+import axiosInstance from '../helpers/axios';
 import displayToast from '../helpers/displayToast';
 
 /**
@@ -8,7 +8,7 @@ import displayToast from '../helpers/displayToast';
 *
 * @returns {Promise}  - dispatches action with user information
 */
-const signupAction = (userDetails, history) => dispatch => apiCall('/auth/signup', 'post', userDetails)
+const signupAction = (userDetails, history) => dispatch => axiosInstance.post('/auth/signup', userDetails)
   .then((response) => {
     window.localStorage.setItem('@#$user', JSON.stringify(response.data.data));
     window.localStorage.setItem('@#$token', response.data.token);

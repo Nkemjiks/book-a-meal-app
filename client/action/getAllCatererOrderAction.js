@@ -1,11 +1,10 @@
 import { GET_ALL_CATERER_ORDER_SUCCESS, GET_ALL_CATERER_ORDER_FAILURE } from '../actionTypes';
-import apiCall from '../helpers/axios';
-import getToken from '../helpers/getToken';
+import axios, { config } from '../helpers/axios';
 
 /**
 * @returns {Promise}  - dispatches action with all order that have been placed to the caterer
 */
-const getAllCatererOrderAction = () => dispatch => apiCall('/orders/caterer/all', 'get', null, getToken())
+const getAllCatererOrderAction = () => dispatch => axios.get('/orders/caterer/all', config)
   .then((response) => {
     dispatch({
       type: GET_ALL_CATERER_ORDER_SUCCESS,

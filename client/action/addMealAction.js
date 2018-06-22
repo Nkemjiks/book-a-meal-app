@@ -1,7 +1,6 @@
 import { ADD_MEAL_SUCCESS, ADD_MEAL_FAILURE } from '../actionTypes';
-import apiCall from '../helpers/axios';
+import axios, { config } from '../helpers/axios';
 import displayToast from '../helpers/displayToast';
-import getToken from '../helpers/getToken';
 
 /**
 * @param {Object} mealData - meal information
@@ -9,7 +8,7 @@ import getToken from '../helpers/getToken';
 *
 * @returns {Promise}  - dispatches action with true or false
 */
-const addMealAction = mealData => dispatch => apiCall('/meals', 'post', mealData, getToken())
+const addMealAction = mealData => dispatch => axios.post('/meals', mealData, config)
   .then(() => {
     dispatch({
       type: ADD_MEAL_SUCCESS,
