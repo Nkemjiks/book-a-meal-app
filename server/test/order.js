@@ -18,9 +18,7 @@ const {
 } = userMockData;
 
 const {
-  placeOrderDev,
   placeOrderProd,
-  modifyOrderDev,
   modifyOrderProd,
 } = otherMockData;
 
@@ -63,9 +61,8 @@ describe('Order Controller', () => {
   before((done) => {
     models.order
       .destroy({
-        where: {
-          date,
-        },
+        where: {},
+        truncate: true,
       })
       .then(() => {
         done();

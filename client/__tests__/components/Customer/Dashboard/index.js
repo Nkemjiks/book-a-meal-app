@@ -13,7 +13,7 @@ const props = {
   refreshTokenRequest: jest.fn(),
   history: {},
   allMenu: menu,
-  orderPlaced: true,
+  orderPlaced: false,
 };
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -32,6 +32,7 @@ const store = mockStore({
 
 describe('Dashboard Component', () => {
   const mountWrapper = mount(<Dashboard {...props} />);
+  jest.useFakeTimers();
   it('should render unconnected component properly', () => {
     expect(mountWrapper.find('#customer-dashboard-flex').length).toBe(1);
     expect(mountWrapper.find('#menu').length).toBe(1);
@@ -98,7 +99,6 @@ describe('Dashboard Component', () => {
     expect(mountWrapper.state().total).toBe(2000);
   });
   it('should call the remove meal from cart method and update state', () => {
-    jest.useFakeTimers();
     const removeMealFromCartSpy = jest.spyOn(mountWrapper.instance(), 'removeMealFromCart');
     const getTotalSpy = jest.spyOn(mountWrapper.instance(), 'getTotal');
     mountWrapper.instance().removeMealFromCart('7eeebb0e-74a2-4d3e-8f9e-afd51806ddce');
@@ -108,7 +108,6 @@ describe('Dashboard Component', () => {
     expect(mountWrapper.state().order[0]).toBe(undefined);
     expect(mountWrapper.state().mealDetails[0]).toBe(undefined);
     expect(mountWrapper.state().total).toBe(0);
-    jest.runAllTimers();
   });
   it('should call the handle change method to update state', () => {
     const handleChangeSpy = jest.spyOn(mountWrapper.instance(), 'handleChange');
@@ -133,6 +132,16 @@ describe('Dashboard Component', () => {
     mountWrapper.instance().handleSubmit(event);
     expect(handleSubmitSpy).toHaveBeenCalled();
     expect(placeOrderActionSpy).toHaveBeenCalled();
+    jest.runAllTimers();
+  });
+  it('should update state after order is placed', () => {
+    mountWrapper.setProps({ orderPlaced: true });
+    expect(mountWrapper.state().order[0]).toBe(undefined);
+    expect(mountWrapper.state().mealDetails[0]).toBe(undefined);
+    expect(mountWrapper.state().total).toBe(0);
+    expect(mountWrapper.state().isAlreadyAdded).toBe(false);
+    expect(mountWrapper.state().deliveryAddress).toBe('');
+    expect(mountWrapper.state().selectedMeal[0]).toBe(undefined);
   });
   it('should render connected component properly', () => {
     const connectedWrapper = shallow(<ConnectedDashboard {...props} store={store} />);

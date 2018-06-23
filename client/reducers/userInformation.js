@@ -6,7 +6,6 @@ import {
   GET_USER_DETAILS_SUCCESS,
   USER_ROLE_UPDATE_SUCCESS,
   USER_ROLE_UPDATE_FAILURE,
-  LOGOUT_USER_SUCCESS,
 } from '../actionTypes';
 
 const initialState = {
@@ -66,12 +65,6 @@ export default (state = initialState, action) => {
         ...state,
         user: {},
         error: action.payload,
-      };
-    case LOGOUT_USER_SUCCESS:
-      return {
-        ...state,
-        user: {},
-        error: null,
       };
     default:
       return state;

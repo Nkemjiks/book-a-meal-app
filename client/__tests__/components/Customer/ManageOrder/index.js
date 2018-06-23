@@ -43,6 +43,12 @@ describe('ManageOrder Component', () => {
     expect(getUserDetailsActionSpy).toHaveBeenCalled();
     expect(getCustomerOrderHistoryActionSpy).toHaveBeenCalled();
   });
+  it('should call component did update to dispatch action', () => {
+    mountWrapper.setProps({ orderModified: true });
+    const getCustomerOrderHistoryActionSpy = jest.spyOn(mountWrapper.instance().props, 'getCustomerOrderHistoryAction');
+    expect(mountWrapper).toBeDefined();
+    expect(getCustomerOrderHistoryActionSpy).toHaveBeenCalled();
+  });
   it('should render connected component properly', () => {
     const connectedWrapper = shallow(<ConnectedManageOrder {...props} store={store} />);
     expect(connectedWrapper.length).toBe(1);

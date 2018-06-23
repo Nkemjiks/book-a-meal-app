@@ -17,6 +17,15 @@ const props = {
   history: {},
   orderModified: false,
 };
+const shallowProps = {
+  getUserDetailsAction: jest.fn(),
+  getCatererOrderAction: jest.fn(),
+  getAllCatererOrderAction: jest.fn(),
+  allOrders: orders,
+  orders: {},
+  history: {},
+  orderModified: false,
+};
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -43,9 +52,9 @@ describe('ManageOrder Component', () => {
     expect(getAllCatererOrderActionSpy).toHaveBeenCalled();
   });
   it('should update state for only allOrders', () => {
-    mountWrapper.setProps({ allOrders: orders });
+    const wrapper = shallow(<ManageOrder {...shallowProps} />);
     expect(mountWrapper.state().allOrders.message).toBe('You have placed the following orders');
-    expect(mountWrapper).toBeDefined();
+    expect(wrapper).toBeDefined();
     mountWrapper.unmount();
   });
   it('should render connected component properly', () => {

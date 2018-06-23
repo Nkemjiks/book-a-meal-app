@@ -270,5 +270,17 @@ describe('User Controller', () => {
           done();
         });
     });
+    it(`It should return a message saying '
+    Token refreshed successfully`, (done) => {
+      chai.request(server)
+        .put('/auth/token')
+        .set({ authorization: catererToken })
+        .end((err, res) => {
+          expect(res.status).toEqual(201);
+          expect(res.body.message).toEqual('Token refreshed successfully');
+          expect(res.body).toHaveProperty('token');
+          done();
+        });
+    });
   });
 });
