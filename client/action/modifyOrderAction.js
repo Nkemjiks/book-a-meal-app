@@ -1,5 +1,5 @@
 import { MODIFY_ORDER_SUCCESS, MODIFY_ORDER_FAILURE } from '../actionTypes';
-import axiosInstance, { config } from '../helpers/axios';
+import axios from '../helpers/axios';
 import displayToast from '../helpers/displayToast';
 
 /**
@@ -9,7 +9,7 @@ import displayToast from '../helpers/displayToast';
 *
 * @returns {Promise}  - dispatches action with true or false
 */
-const modifyOrderAction = (orderId, orderDetails) => dispatch => axiosInstance.put(`/orders/${orderId}`, orderDetails, config)
+const modifyOrderAction = (orderId, orderDetails) => dispatch => axios.put(`/orders/${orderId}`, orderDetails)
   .then(() => {
     dispatch({
       type: MODIFY_ORDER_SUCCESS,

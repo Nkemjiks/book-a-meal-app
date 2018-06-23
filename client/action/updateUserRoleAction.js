@@ -1,5 +1,5 @@
 import { USER_ROLE_UPDATE_SUCCESS, USER_ROLE_UPDATE_FAILURE } from '../actionTypes';
-import axiosInstance, { config } from '../helpers/axios';
+import axios from '../helpers/axios';
 import displayToast from '../helpers/displayToast';
 
 /**
@@ -7,7 +7,7 @@ import displayToast from '../helpers/displayToast';
 *
 * @returns {Promise}  - dispatches action with user information
 */
-const updateUserRoleAction = history => dispatch => axiosInstance.put('/auth/update', config)
+const updateUserRoleAction = history => dispatch => axios.put('/auth/update')
   .then((response) => {
     window.localStorage.setItem('@#$user', JSON.stringify(response.data.data));
     window.localStorage.setItem('@#$token', response.data.token);

@@ -1,14 +1,14 @@
 import { GET_CUSTOMER_ORDER_HISTORY_SUCCESS, GET_CUSTOMER_ORDER_HISTORY_FAILURE } from '../actionTypes';
-import axiosInstance, { config } from '../helpers/axios';
+import axios from '../helpers/axios';
 
 /**
 * @returns {Promise}  - dispatches action with all orders that have been placed by the customer
 */
-const getCustomerOrderHistoryAction = () => dispatch => axiosInstance.get('/orders/customer', config)
+const getCustomerOrderHistoryAction = () => dispatch => axios.get('/orders/customer')
   .then((response) => {
     dispatch({
       type: GET_CUSTOMER_ORDER_HISTORY_SUCCESS,
-      payload: response,
+      payload: response.data,
     });
   })
   .catch((err) => {

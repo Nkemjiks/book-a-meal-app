@@ -5,7 +5,7 @@ import { OrderHistoryList } from '../../../../components/Customer/ManageOrder/Or
 import orders from '../../../../mocks/customerOrder';
 
 const props = {
-  orderDetails: orders.data.data,
+  orderDetails: orders.data,
 };
 
 Enzyme.configure({ adapter: new Adapter() });

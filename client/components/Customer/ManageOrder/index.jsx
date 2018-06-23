@@ -52,6 +52,11 @@ export class ManageOrder extends React.Component {
     this.props.getCustomerOrderHistoryAction();
   }
 
+  componentDidUpdate(prevProps) {
+    if ((prevProps.orderModified !== this.props.orderModified)) {
+      this.props.getCustomerOrderHistoryAction();
+    }
+  }
   /**
    * renders component to DOM
    *
@@ -76,7 +81,7 @@ export class ManageOrder extends React.Component {
               {
                 (this.state.customerOrderHistory.data) &&
                 <OrderHistoryList
-                  orderDetails={this.state.customerOrderHistory.data.data}
+                  orderDetails={this.state.customerOrderHistory.data}
                 />
               }
               {

@@ -11,7 +11,7 @@ const props = {
   modifyOrderAction: jest.fn(),
   getCustomerOrderHistoryAction: jest.fn(),
   history: {},
-  order: orders.data.data[0],
+  order: orders.data[0],
   orderModified: true,
 };
 

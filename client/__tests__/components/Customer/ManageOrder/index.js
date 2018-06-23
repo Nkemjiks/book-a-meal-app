@@ -39,7 +39,7 @@ describe('ManageOrder Component', () => {
     const getUserDetailsActionSpy = jest.spyOn(mountWrapper.instance().props, 'getUserDetailsAction');
     const getCustomerOrderHistoryActionSpy = jest.spyOn(mountWrapper.instance().props, 'getCustomerOrderHistoryAction');
     expect(mountWrapper).toBeDefined();
-    expect(mountWrapper.state().customerOrderHistory.data.message).toBe('You have placed the following orders');
+    expect(mountWrapper.state().customerOrderHistory.message).toBe('You have placed the following orders');
     expect(getUserDetailsActionSpy).toHaveBeenCalled();
     expect(getCustomerOrderHistoryActionSpy).toHaveBeenCalled();
   });

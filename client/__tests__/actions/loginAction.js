@@ -12,33 +12,43 @@ describe('loginAction action', () => {
   beforeEach(() => moxios.install());
   afterEach(() => moxios.uninstall());
 
-  it('creates LOGIN_USER_SUCCESS when caterer\' orders is gotten', (done) => {
+  it('should dispatch LOGIN_USER_SUCCESS action', (done) => {
     moxios.stubRequest('/auth/login', {
-      status: 201,
-      response: { message: 'User created successfully' },
+      status: 200,
+      response: {
+        data: {
+          message: 'User created successfully',
+        },
+      },
     });
 
     const expectedActions = [
-      { type: LOGIN_USER_SUCCESS, payload: {} },
+      { type: LOGIN_USER_SUCCESS, payload: { message: 'User created successfully' } },
     ];
 
     const store = mockStore({});
-
-    store.dispatch(loginAction())
+    const history = {
+      push: jest.fn(),
+    };
+    const user = {
+      email: 'dab@yahoo.com',
+      password: 'test',
+    };
+    store.dispatch(loginAction(user, history))
       .then(() => {
-        expect(store.getActions()).toMatch(expectedActions);
+        expect(store.getActions()).toEqual(expectedActions);
         done();
       });
   });
 
-  it('creates LOGIN_USER_FAILURE when the menu is not created', (done) => {
+  it('should dispatch LOGIN_USER_FAILURE action', (done) => {
     moxios.stubRequest('/auth/login', {
       status: 400,
-      response: { message: 'Invalid token' },
+      response: { message: 'Invalid user details' },
     });
 
     const expectedActions = [
-      { type: LOGIN_USER_FAILURE, payload: 'Invalid token' },
+      { type: LOGIN_USER_FAILURE, payload: 'Invalid user details' },
     ];
 
     const store = mockStore({});

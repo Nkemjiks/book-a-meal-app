@@ -11,7 +11,9 @@ const props = {
   getCatererOrderAction: jest.fn(),
   getAllCatererOrderAction: jest.fn(),
   allOrders: orders,
-  orders: {},
+  orders: {
+    data: [],
+  },
   history: {},
   orderModified: false,
 };
@@ -41,8 +43,8 @@ describe('ManageOrder Component', () => {
     expect(getAllCatererOrderActionSpy).toHaveBeenCalled();
   });
   it('should update state for only allOrders', () => {
-    mountWrapper.setProps({ orders });
-    expect(mountWrapper.state().orders.data.message).toBe('You have placed the following orders');
+    mountWrapper.setProps({ allOrders: orders });
+    expect(mountWrapper.state().allOrders.message).toBe('You have placed the following orders');
     expect(mountWrapper).toBeDefined();
     mountWrapper.unmount();
   });

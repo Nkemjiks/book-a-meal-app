@@ -12,11 +12,11 @@ describe('deleteMealAction action', () => {
   beforeEach(() => moxios.install());
   afterEach(() => moxios.uninstall());
 
-  it('creates DELETE_MEAL_SUCCESS when a meal is deleted', (done) => {
+  it('should dispatch DELETE_MEAL_SUCCESS action', (done) => {
     moxios.stubRequest('/meals/28983839', {
       status: 201,
       response: {
-        data: { message: 'Meal added successfully' },
+        data: { message: 'Meal deleted successfully' },
       },
     });
 
@@ -33,7 +33,7 @@ describe('deleteMealAction action', () => {
       });
   });
 
-  it('creates DELETE_MEAL_FAILURE when the menu is not created', (done) => {
+  it('should dispatch DELETE_MEAL_FAILURE action', (done) => {
     moxios.stubRequest('/meals/28983839', {
       status: 400,
       response: {

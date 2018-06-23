@@ -28,18 +28,18 @@ export class ManageOrder extends React.Component {
     if (orders.data && allOrders.data) {
       return {
         orders,
-        todayTotalOrders: orders.data.data.length,
-        todayTotalSales: orders.data.totalSales,
+        todayTotalOrders: orders.data.length,
+        todayTotalSales: orders.totalSales,
         allOrders,
-        totalOrders: allOrders.data.data.length,
-        totalSales: allOrders.data.totalSales,
+        totalOrders: allOrders.data.length,
+        totalSales: allOrders.totalSales,
       };
     }
     if (allOrders.data) {
       return {
         allOrders,
-        totalOrders: allOrders.data.data.length,
-        totalSales: allOrders.data.totalSales,
+        totalOrders: allOrders.data.length,
+        totalSales: allOrders.totalSales,
       };
     }
     return null;
@@ -127,7 +127,7 @@ export class ManageOrder extends React.Component {
               {
                 (this.state.orders.data) &&
                 <ManageOrderContent
-                  orderDetails={this.state.orders.data.data}
+                  orderDetails={this.state.orders.data}
                   isToday
                 />
               }
@@ -154,7 +154,7 @@ export class ManageOrder extends React.Component {
               {
                 (this.state.allOrders.data) &&
                 <ManageOrderContent
-                  orderDetails={this.state.allOrders.data.data}
+                  orderDetails={this.state.allOrders.data}
                   isToday={false}
                 />
               }

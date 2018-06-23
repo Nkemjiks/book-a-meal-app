@@ -1,5 +1,5 @@
 import { PLACE_ORDER_SUCCESS, PLACE_ORDER_FAILURE } from '../actionTypes';
-import axiosInstance, { config } from '../helpers/axios';
+import axios from '../helpers/axios';
 import displayToast from '../helpers/displayToast';
 
 /**
@@ -7,7 +7,7 @@ import displayToast from '../helpers/displayToast';
 *
 * @returns {Promise}  - dispatches action with true or false
 */
-const placeOrderAction = orderDetails => dispatch => axiosInstance.post('/orders', orderDetails, config)
+const placeOrderAction = orderDetails => dispatch => axios.post('/orders', orderDetails)
   .then(() => {
     dispatch({
       type: PLACE_ORDER_SUCCESS,

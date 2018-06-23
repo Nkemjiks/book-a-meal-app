@@ -12,26 +12,26 @@ describe('getAllCatererOrderAction action', () => {
   beforeEach(() => moxios.install());
   afterEach(() => moxios.uninstall());
 
-  it('creates GET_ALL_CATERER_ORDER_SUCCESS when caterer\' orders is gotten', (done) => {
+  it('should dispatch GET_ALL_CATERER_ORDER_SUCCESS action', (done) => {
     moxios.stubRequest('/orders/caterer/all', {
-      status: 201,
-      response: { message: 'Meal added successfully' },
+      status: 200,
+      response: { message: 'You have the following orders' },
     });
 
     const expectedActions = [
-      { type: GET_ALL_CATERER_ORDER_SUCCESS, payload: {} },
+      { type: GET_ALL_CATERER_ORDER_SUCCESS, payload: { message: 'You have the following orders' } },
     ];
 
     const store = mockStore({});
 
     store.dispatch(getAllCatererOrderAction())
       .then(() => {
-        expect(store.getActions()).toMatch(expectedActions);
+        expect(store.getActions()).toEqual(expectedActions);
         done();
       });
   });
 
-  it('creates GET_ALL_CATERER_ORDER_FAILURE when the menu is not created', (done) => {
+  it('should dispatch GET_ALL_CATERER_ORDER_FAILURE action', (done) => {
     moxios.stubRequest('/orders/caterer/all', {
       status: 400,
       response: { message: 'Invalid token' },

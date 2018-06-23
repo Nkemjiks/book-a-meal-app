@@ -1,5 +1,5 @@
 import { MODIFY_MEAL_SUCCESS, MODIFY_MEAL_FAILURE } from '../actionTypes';
-import axiosInstance, { config } from '../helpers/axios';
+import axios from '../helpers/axios';
 import displayToast from '../helpers/displayToast';
 
 /**
@@ -9,7 +9,7 @@ import displayToast from '../helpers/displayToast';
 *
 * @returns {Promise}  - dispatches action with true or false
 */
-const modifyMealAction = (mealId, mealDetails) => dispatch => axiosInstance.put(`/meals/${mealId}`, mealDetails, config)
+const modifyMealAction = (mealId, mealDetails) => dispatch => axios.put(`/meals/${mealId}`, mealDetails)
   .then(() => {
     dispatch({
       type: MODIFY_MEAL_SUCCESS,

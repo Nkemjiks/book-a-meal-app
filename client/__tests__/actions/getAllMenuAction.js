@@ -2,52 +2,52 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import moxios from 'moxios';
 import expect from 'expect';
-import createMenuAction from '../../action/createMenuAction';
-import { CREATE_MENU_SUCCESS, CREATE_MENU_FAILURE } from '../../actionTypes';
+import getAllMenuAction from '../../action/getAllMenuAction';
+import { GET_ALL_MENU_SUCCESS, GET_ALL_MENU_FAILURE } from '../../actionTypes';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-describe('createMenuAction action', () => {
+describe('getMenuAction action', () => {
   beforeEach(() => moxios.install());
   afterEach(() => moxios.uninstall());
 
-  it('should dispatch CREATE_MENU_SUCCESS action', (done) => {
-    moxios.stubRequest('/menu', {
-      status: 201,
+  it('should dispatch GET_ALL_MENU_SUCCESS action', (done) => {
+    moxios.stubRequest('/menu/customer', {
+      status: 200,
       response: {
-        data: { message: 'Menu created successfully' },
+        data: {
+          orders: [],
+        },
       },
     });
 
     const expectedActions = [
-      { type: CREATE_MENU_SUCCESS, payload: true },
+      { type: GET_ALL_MENU_SUCCESS, payload: { orders: [] } },
     ];
 
     const store = mockStore({});
 
-    store.dispatch(createMenuAction())
+    store.dispatch(getAllMenuAction())
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
         done();
       });
   });
 
-  it('should dispatch CREATE_MENU_FAILURE action', (done) => {
-    moxios.stubRequest('/menu', {
+  it('should dispatch GET_ALL_MENU_FAILURE action', (done) => {
+    moxios.stubRequest('/menu/customer', {
       status: 400,
-      response: {
-        data: { message: 'Invalid token' },
-      },
+      response: { message: 'Invalid token' },
     });
 
     const expectedActions = [
-      { type: CREATE_MENU_FAILURE, payload: false },
+      { type: GET_ALL_MENU_FAILURE, payload: 'Invalid token' },
     ];
 
     const store = mockStore({});
 
-    store.dispatch(createMenuAction())
+    store.dispatch(getAllMenuAction())
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
         done();

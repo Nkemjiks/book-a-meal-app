@@ -1,14 +1,14 @@
 import { GET_CATERER_ORDER_SUCCESS, GET_CATERER_ORDER_FAILURE } from '../actionTypes';
-import axiosInstance, { config } from '../helpers/axios';
+import axios from '../helpers/axios';
 
 /**
 * @returns {Promise}  - dispatches action with the caterer's orders for that day
 */
-const getCatererOrderAction = () => dispatch => axiosInstance.get('/orders/caterer', config)
+const getCatererOrderAction = () => dispatch => axios.get('/orders/caterer')
   .then((response) => {
     dispatch({
       type: GET_CATERER_ORDER_SUCCESS,
-      payload: response,
+      payload: response.data,
     });
   })
   .catch((err) => {
