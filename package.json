@@ -9,7 +9,7 @@
     "dev-server": "concurrently 'npm run client-dev' 'npm run dev'",
     "build": "babel server -d dist",
     "start": "npm run build && node dist/server.js",
-    "test-server": "cross-env NODE_ENV=test nyc mocha server/test/*.js --exit",
+    "test-server": "cross-env NODE_ENV=test nyc mocha server/test/*.js --exit --timeout 300000",
     "migrate-test": "sequelize db:migrate",
     "test-client": " NODE_ENV=test jest",
     "test": "concurrently 'npm run test-server' 'npm run test-client'",

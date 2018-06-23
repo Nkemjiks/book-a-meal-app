@@ -54,8 +54,8 @@ describe('User Controller', () => {
         .end((err, res) => {
           expect(res.status).toEqual(201);
           expect(res.body.message).toEqual('User successfully created');
+          done();
         });
-      done();
     });
     it(`It should return a message "A User already exist with this email address" 
     when you signup with an existing email address`, (done) => {
@@ -65,8 +65,8 @@ describe('User Controller', () => {
         .end((err, res) => {
           expect(res.status).toEqual(409);
           expect(res.body.message).toEqual('A User already exist with this email address');
+          done();
         });
-      done();
     });
     it(`It should return a message "Please provide a valid name" 
     when you signup with empty input fields`, (done) => {
@@ -211,8 +211,8 @@ describe('User Controller', () => {
         .end((err, res) => {
           expect(res.status).toEqual(401);
           expect(res.body.message).toEqual('Account does not exist. Please signup to continue');
+          done();
         });
-      done();
     });
     it(`It should return a message "Please provide a valid email address"
      if the email does not contain @ or .com`, (done) => {
@@ -222,8 +222,8 @@ describe('User Controller', () => {
         .end((err, res) => {
           expect(res.status).toEqual(400);
           expect(res.body.message).toEqual('Please provide a valid email address');
+          done();
         });
-      done();
     });
     it(`It should return a message "Please provide a valid password"
      if the password contains <>`, (done) => {
@@ -233,8 +233,8 @@ describe('User Controller', () => {
         .end((err, res) => {
           expect(res.status).toEqual(400);
           expect(res.body.message).toEqual('Please provide a valid password');
+          done();
         });
-      done();
     });
   });
   describe('User Role Update', () => {
@@ -273,7 +273,7 @@ describe('User Controller', () => {
     it(`It should return a message saying '
     Token refreshed successfully`, (done) => {
       chai.request(server)
-        .put('/auth/token')
+        .post('/auth/token')
         .set({ authorization: catererToken })
         .end((err, res) => {
           expect(res.status).toEqual(201);
