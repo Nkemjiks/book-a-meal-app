@@ -6,13 +6,13 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon server/server.js --exec babel-node",
     "client-dev": "webpack-dev-server --mode development",
-    "dev-server": "concurrently \"npm run client-dev\" \"npm run dev\"",
+    "dev-server": "concurrently 'npm run client-dev' 'npm run dev'",
     "build": "babel server -d dist",
     "start": "npm run build && node dist/server.js",
-    "test-server": "nyc mocha server/test/*.js --exit",
+    "test-server": "cross-env NODE_ENV=test nyc mocha server/test/*.js --exit",
     "migrate-test": "sequelize db:migrate",
-    "test-client": "jest",
-    "test": "cross-env NODE_ENV=test concurrently npm run test-server npm run test-client",
+    "test-client": " NODE_ENV=test jest",
+    "test": "concurrently 'npm run test-server' 'npm run test-client'",
     "test:watch": "npm run test-client -- --watch"
   },
   "repository": {

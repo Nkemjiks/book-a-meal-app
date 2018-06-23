@@ -44,8 +44,8 @@ describe('User Controller', () => {
           },
         })
         .then(() => {
-          done();
         });
+      done();
     });
     it('It should signup a user and return the message "User successfully created"', (done) => {
       chai.request(server)
