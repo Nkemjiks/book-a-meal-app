@@ -14,7 +14,7 @@ const mealController = {
     const stripMultipleSpaces = name.replace(/  +/g, ' ');
     return models.meal
       .findOrCreate({
-        where: { name, userId },
+        where: { name, userId, isDeleted: false },
         defaults: {
           name: stripMultipleSpaces,
           price,
@@ -72,6 +72,8 @@ const mealController = {
       .findOne({
         where: {
           name: stripMultipleSpaces,
+          isDeleted: false,
+          userId,
         },
       })
       .then((mealExist) => {
@@ -109,7 +111,7 @@ const mealController = {
 
     return models.meal
       .findById(id)
-      .then(async (meal) => {
+      .then((meal) => {
         if (!meal) {
           return res.status(404).send({ message: 'This meal does not exist in the database' });
         }

@@ -76,18 +76,6 @@ describe('Menu Controller', () => {
           done();
         });
     });
-    it(`It should return the message "Menu doesn't exist" 
-  when a caterer tries to get the menu without creating one`, (done) => {
-      chai.request(server)
-        .delete('/menu/')
-        .set({ authorization: secondCatererToken })
-        .send(removeMealProd)
-        .end((err, res) => {
-          expect(res.status).toEqual(404);
-          expect(res.body.message).toEqual('Menu doesn\'t exist');
-          done();
-        });
-    });
     it(`It should return the message "The menu for today has not been set yet" 
   when a customer tries to get the menu when it has not been set`, (done) => {
       chai.request(server)
@@ -149,20 +137,6 @@ describe('Menu Controller', () => {
         .end((err, res) => {
           expect(res.status).toEqual(200);
           expect(res.body).toHaveProperty('data');
-          done();
-        });
-    });
-  });
-  describe('Remove a meal from the menu', () => {
-    it(`It should return the message "Menu has been updated" 
-  when a caterer removes a meal from the menu`, (done) => {
-      chai.request(server)
-        .delete('/menu/')
-        .set({ authorization: secondCatererToken })
-        .send(removeMealProd)
-        .end((err, res) => {
-          expect(res.status).toEqual(201);
-          expect(res.body.message).toEqual('Menu has been updated');
           done();
         });
     });

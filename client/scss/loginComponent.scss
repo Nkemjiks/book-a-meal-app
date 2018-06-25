@@ -1,0 +1,61 @@
+@media only screen and (max-width: 425px) {
+  #signin-container {
+    width: 80%;
+    h1 {
+      font-size: 25px;
+    }
+  }
+}
+@media only screen and (min-width: 426px) {
+  #signin-container {
+    width: 350px;
+  }
+}
+#signin-container {
+  border: 1px solid #d8d5d5;
+  padding: 20px;
+  height: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  background-color: #fff;
+}
+
+#signin-container {
+  input {
+    display: inline-block;
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid #f1f1f1;
+  }
+  .button {
+    color: white;
+    background-color: black;
+    padding: 14px 20px;
+    margin: 15px 0;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    width: 100%;
+    border-radius: 3px;
+  }
+  h1 {
+    text-align: center;
+    margin-top: 70px;
+  }
+}
+#signin-component {
+  background: linear-gradient(
+    rgba(49, 44, 44, 0.6), 
+    rgba(36, 33, 33, 0.6)), url('https://res.cloudinary.com/dqsmurjpg/image/upload/v1526911672/oasdom.com-top-30-nigerian-food.jpg');
+  height: 80vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-top: 2px;
+}
+#forget {
+  float: right;
+}

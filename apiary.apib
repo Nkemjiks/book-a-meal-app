@@ -277,7 +277,8 @@ You can upgrade your role from customer to caterer. You need to provide the toke
                     "phoneNumber": "07037827892",
                     "role": "caterer",
                     "address": "124, Express road, Lagos State"
-                }
+                },
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
             }
 
 + Request (application/json)
@@ -320,6 +321,52 @@ You can upgrade your role from customer to caterer. You need to provide the toke
 
             {
                 "message": "You are already a caterer"}
+            }
+
+### Refresh Token [POST /auth/token]
+You can refresh you token if you visit the application consistently
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 201 (application/json)
+
+    + Body
+
+            {
+                "message": "Token refreshed successfully",
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOYW1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+            }
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMzYjdjOGVjLTFiNWItNDA5ZC05NGQ0LWZlMGM1MTJjMjI3YSIsImZ1bGxOQQ1lIjoiQWxleCBKYW1lcyIsImVtYWlsIjoiYWxleGphbWVzQGdtYWlsLmNvbSIsInBob25lTnVtYmVyIjoiMDcwMzc4Mjc4OTIiLCJyb2xlIjoiY3VzdG9tZXIiLCJhZGRyZXNzIjoiMTI0LCBFeHByZXNzIHJvYWQsIExhZ29zIFN0YXRlIiwiaWF0IjoxNTI2NTM4NjYzLCJleHAiOjE1MjY2MjUwNjN9.yCehS5feOdohmU0V_vTLdba0sjmaSDXu1VsVzhqjlfk"
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "Invalid Token"
+            }
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: ""
+
++ Response 403 (application/json)
+
+    + Body
+
+            {
+                "message": "Please provide a valid token"
             }
 
 ## Meal [/meals/]

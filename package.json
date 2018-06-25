@@ -5,10 +5,15 @@
   "main": "index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon server/server.js --exec babel-node",
+    "client-dev": "webpack-dev-server --mode development",
+    "dev-server": "concurrently 'npm run client-dev' 'npm run dev'",
     "build": "babel server -d dist",
     "start": "npm run build && node dist/server.js",
-    "test": "cross-env NODE_ENV=test nyc mocha server/test/*.js --exit",
-    "migrate-test": "cross-env NODE_ENV=test sequelize db:migrate"
+    "test-server": "cross-env NODE_ENV=test nyc mocha server/test/*.js --exit --timeout 300000",
+    "migrate-test": "sequelize db:migrate",
+    "test-client": " NODE_ENV=test jest",
+    "test": "concurrently 'npm run test-server' 'npm run test-client'",
+    "test:watch": "npm run test-client -- --watch"
   },
   "repository": {
     "type": "git",
@@ -39,39 +44,90 @@
     "sourceMap": false,
     "instrument": false
   },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/mocks/file.js",
+      "\\.(css|scss)$": "identity-obj-proxy"
+    },
+    "setupFiles": [
+      "jest-localstorage-mock"
+    ],
+    "collectCoverageFrom": [
+      "!<rootDir>/client/helpers/",
+      "!<rootDir>/client/__tests__/",
+      "!<rootDir>/client/mocks/"
+    ],
+    "collectCoverage": true
+  },
   "dependencies": {
+    "axios": "^0.18.0",
+    "babel-polyfill": "^6.26.0",
     "bcrypt": "^2.0.1",
     "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
     "dotenv": "^5.0.1",
+    "enzyme": "^3.3.0",
     "express": "^4.16.3",
+    "file-loader": "^1.1.11",
+    "history": "^4.7.2",
     "jsonwebtoken": "^8.2.1",
     "pg": "^7.4.1",
     "pg-hstore": "^2.3.2",
-    "sequelize": "^4.37.6"
+    "prop-types": "^15.6.1",
+    "react": "^16.4.0",
+    "react-dom": "^16.3.2",
+    "react-modal": "^3.4.4",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.2.2",
+    "react-test-renderer": "^16.4.0",
+    "react-toastify": "^4.0.1",
+    "redux": "^4.0.0",
+    "redux-mock-store": "^1.5.1",
+    "redux-thunk": "^2.2.0",
+    "scss-loader": "0.0.1",
+    "sequelize": "^4.37.6",
+    "sequelize-cli": "^4.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.3",
+    "babel-jest": "^23.0.1",
     "babel-loader": "^7.1.4",
     "babel-plugin-istanbul": "^4.1.6",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.26.0",
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
     "codeclimate-test-reporter": "^0.5.0",
+    "concurrently": "^3.5.1",
     "coveralls": "^3.0.0",
     "cross-env": "^5.1.4",
+    "css-loader": "^0.28.11",
+    "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
     "expect": "^22.4.3",
+    "identity-obj-proxy": "^3.0.0",
     "istanbul": "^0.4.5",
+    "jest": "^23.1.0",
+    "jest-localstorage-mock": "^2.2.0",
     "mocha": "^5.1.1",
+    "morgan": "^1.9.0",
+    "moxios": "^0.4.0",
+    "node-sass": "^4.9.0",
     "nodemon": "^1.17.3",
-    "nyc": "^11.7.1"
+    "nyc": "^11.7.1",
+    "sass-loader": "^7.0.1",
+    "style-loader": "^0.21.0",
+    "webpack": "^4.8.3",
+    "webpack-cli": "^2.1.3",
+    "webpack-dev-server": "^3.1.4"
   }
 }

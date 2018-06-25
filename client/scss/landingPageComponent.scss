@@ -1,0 +1,79 @@
+@media only screen and (min-width: 680px) {
+  #steps div {
+    width: 150px;
+    height: 150px;
+    margin: 15px;
+    padding: 40px 20px;
+  }
+  #app-summary {
+    > p {
+      font-size: 20px;
+    }
+    > h1 {
+      font-size: 40px;
+    }
+  }
+}
+
+@media only screen and (max-width: 680px) {
+  #steps div {
+    width: 100px;
+    height: 100px;
+    padding: 23px 10px;
+    font-size: 12px;
+  }
+  #app-summary {
+    > p {
+      font-size: 15px;
+    }
+    > h1 {
+      font-size: 30px;
+    }
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  #steps div {
+    width: 80px;
+    height: 80px;
+    padding: 20px 10px;
+    font-size: 10px;
+  }
+}
+@media only screen and (max-width: 370px) {
+  #steps div {
+    width: 60px;
+    height: 60px;
+    padding: 9px 5px;
+    font-size: 8px;
+  }
+}
+#steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 50px 0;
+  div {
+    color: #fff;
+    border-radius: 50%;
+    background-color:#000;
+    text-align: center;
+    box-sizing: border-box;
+  }
+  span {
+    font-size: 50px;
+    color: #000;
+  }
+}
+#app-summary {
+  background: linear-gradient(
+      rgba(49, 44, 44, 0.6), 
+      rgba(36, 33, 33, 0.6)), url('http://res.cloudinary.com/dqsmurjpg/image/upload/v1525982000/nigeria_food.jpg');
+  height: 70vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 20px;
+  text-align: center;
+  color: #fff;
+}
