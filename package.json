@@ -7,7 +7,7 @@
     "dev": "cross-env NODE_ENV=development nodemon server/server.js --exec babel-node",
     "client-dev": "webpack-dev-server --mode development",
     "dev-server": "concurrently 'npm run client-dev' 'npm run dev'",
-    "build": "babel server -d dist",
+    "heroku-postbuild": "npm install && cd client && npm install --only-dev && npm install && npm run build",
     "start": "npm run build && node dist/server.js",
     "test-server": "cross-env NODE_ENV=test nyc mocha server/test/*.js --exit --timeout 300000",
     "migrate-test": "sequelize db:migrate",
