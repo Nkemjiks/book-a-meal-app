@@ -13,10 +13,12 @@ import getToken from './getToken';
  */
 
 if (process.env.NODE_ENV !== 'test') {
-  axios.defaults.baseURL = (process.env.NODE_ENV === 'production') ? process.env.PROD_BASE_URL : process.env.DEV_BASE_URL;
+  if (process.env.NODE_ENV === 'development') {
+    axios.defaults.baseURL = process.env.DEV_BASE_URL;
+  }
   axios.interceptors.request.use(
     (config) => {
-      if (config.baseURL && (config.url !== 'https://api.cloudinary.com/v1_1/dqsmurjpg/image/upload')) {
+      if ((config.url !== 'https://api.cloudinary.com/v1_1/dqsmurjpg/image/upload')) {
         const token = getToken();
         if (token) {
           config.headers.Authorization = token;

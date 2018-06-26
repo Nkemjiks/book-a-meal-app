@@ -8,9 +8,8 @@ module.exports = {
   },
 
   output: {
-    path: path.resolve(__dirname, 'client', 'public', 'js'),
+    path: path.resolve(__dirname, 'client', 'public'),
     filename: '[name].bundle.js',
-    publicPath: '/',
   },
 
   module: {
