@@ -12,8 +12,8 @@ import getToken from './getToken';
  * @returns {Function} - a function that makes the api call
  */
 
-if (process.env.NODE_ENV === 'development') {
-  axios.defaults.baseURL = 'http://localhost:8080';
+if (process.env.NODE_ENV !== 'test') {
+  axios.defaults.baseURL = process.env.BASE_URL;
   axios.interceptors.request.use(
     (config) => {
       if (config.baseURL && (config.url !== 'https://api.cloudinary.com/v1_1/dqsmurjpg/image/upload')) {

@@ -95,6 +95,7 @@ export class Navbar extends Component {
                 <h4 id="dropdown-name">{this.state.user.fullName}</h4>
                 <Link to="/customer/dashboard">Dashboard</Link>
                 <Link to="/customer/order">Order History</Link>
+                <a href="https://bookameal24.docs.apiary.io/#" target="_blank" rel="noopener noreferrer" className="default">Documentation</a>
                 {
                   this.state.user.role === 'customer' &&
                   <button className="logout" onClick={this.handleRoleUpdate}>Become a Caterer</button>
@@ -122,6 +123,7 @@ export class Navbar extends Component {
                 <Link to="/caterer/meal" className="dropdown-option">Manage Meals</Link>
                 <Link to="/caterer/order" className="dropdown-option">Manage Orders</Link>
                 <Link to="/customer/dashboard" className="default">Customer Dashboard</Link>
+                <a target="_blank" rel="noopener noreferrer" href="https://bookameal24.docs.apiary.io/#" className="default">Documentation</a>
                 <button className="default logout" onClick={this.handleLogout}>Logout</button>
               </div>
             </div>

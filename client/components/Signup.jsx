@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import '../scss/signupComponent.scss';
@@ -81,6 +82,10 @@ export class Signup extends React.Component {
    * @returns {JSX} JSX representation of component
    */
   render() {
+    const user = JSON.parse(window.localStorage.getItem('@#$user'));
+    if (user) {
+      return <Redirect to="/customer/dashboard" />;
+    }
     return (
       <div id="signup-component">
         <div id="signup-container">

@@ -23,7 +23,7 @@ export const RoleProtected = ({ component: Component, path }) => {
     render={({ location }) => (
       isUser && (isUser.role === 'caterer')
       ? <Component />
-      : <Redirect to={{ pathname: '/customer', state: { from: location } }} />
+      : <Redirect to={{ pathname: '/customer/dashboard', state: { from: location } }} />
     )}
   />);
 };

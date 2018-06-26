@@ -113,6 +113,11 @@ const routes = (app) => {
     orderValidation,
     orderController.modifyOrder,
   );
+
+  // API docs
+  app.get('/docs', (res) => {
+    return res.redirect('https://bookameal24.docs.apiary.io/#');
+  });
 };
 
 export default routes;
