@@ -13,7 +13,7 @@ import getToken from './getToken';
  */
 
 if (process.env.NODE_ENV !== 'test') {
-  axios.defaults.baseURL = process.env.BASE_URL;
+  axios.defaults.baseURL = (process.env.NODE_ENV === 'production') ? process.env.PROD_BASE_URL : process.env.DEV_BASE_URL;
   axios.interceptors.request.use(
     (config) => {
       if (config.baseURL && (config.url !== 'https://api.cloudinary.com/v1_1/dqsmurjpg/image/upload')) {
