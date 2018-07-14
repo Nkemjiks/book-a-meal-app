@@ -84,6 +84,7 @@ export class Signup extends React.Component {
   render() {
     const user = JSON.parse(window.localStorage.getItem('@#$user'));
     if (user) {
+      /* istanbul ignore next */
       return <Redirect to="/customer/dashboard" />;
     }
     return (

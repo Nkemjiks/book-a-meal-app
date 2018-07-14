@@ -1,19 +1,19 @@
-import { GET_ALL_MENU_SUCCESS, GET_ALL_MENU_FAILURE } from '../actionTypes';
+import { GET_MEALS_IN_MENU_SUCCESS, GET_MEALS_IN_MENU_FAILURE } from '../actionTypes';
 import axios from '../helpers/axios';
 
 /**
 * @returns {Promise}  - dispatches action with all menu set for the day
 */
-const getAllMenuAction = offset => dispatch => axios.get(`/menu/${offset}`)
+const getAllMenuAction = catererId => dispatch => axios.get(`/menu/meal/${catererId}`)
   .then((response) => {
     dispatch({
-      type: GET_ALL_MENU_SUCCESS,
+      type: GET_MEALS_IN_MENU_SUCCESS,
       payload: response.data,
     });
   })
   .catch((err) => {
     dispatch({
-      type: GET_ALL_MENU_FAILURE,
+      type: GET_MEALS_IN_MENU_FAILURE,
       payload: err.response.data.message,
     });
   });

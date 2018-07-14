@@ -1,0 +1,76 @@
+module.exports = {
+  up: (queryInterface, Sequelize) => queryInterface.bulkInsert('menu', [
+    {
+      id: 'a4573ddf-819a-4f5c-846d-f3f2ac4a3ab0',
+      date: 'Fri Jul 13 2018',
+      userId: '1099a012-f2be-42e8-aa58-6575a8e12093',
+      createdAt: '2018-07-13 04:56:32.04+01',
+      updatedAt: '2018-07-13 04:56:32.04+01',
+    },
+    {
+      id: '58d32a46-a598-4208-ac39-653ce3ea108f',
+      date: 'Fri Jul 13 2018',
+      userId: '94439045-e43b-4fdb-8fce-772374370703',
+      createdAt: '2018-07-13 04:56:32.04+01',
+      updatedAt: '2018-07-13 04:56:32.04+01',
+    },
+    {
+      id: '405d24ae-a2bf-4ca2-8c24-0ccf3d331a59',
+      date: 'Fri Jul 13 2018',
+      userId: 'adabd747-588c-441d-8d97-102c49f41527',
+      createdAt: '2018-07-13 04:56:32.04+01',
+      updatedAt: '2018-07-13 04:56:32.04+01',
+    },
+    {
+      id: 'adc825e8-b895-49dd-92d1-c8f66fdbe455',
+      date: 'Fri Jul 13 2018',
+      userId: 'c88b974e-6833-4dd1-a10b-3290f17b0d7c',
+      createdAt: '2018-07-13 04:56:32.04+01',
+      updatedAt: '2018-07-13 04:56:32.04+01',
+    },
+    {
+      id: 'd1c132a4-bab0-4fe4-9298-a56c6608a39b',
+      date: 'Fri Jul 13 2018',
+      userId: '98244a6f-5677-4bb6-8999-de1dae5af8e7',
+      createdAt: '2018-07-13 04:56:32.04+01',
+      updatedAt: '2018-07-13 04:56:32.04+01',
+    },
+    {
+      id: '5246ada9-99b1-4114-8547-4933454b8dbe',
+      date: 'Fri Jul 13 2018',
+      userId: '8b36dff4-cc5d-4590-a9bf-4291ea89caf5',
+      createdAt: '2018-07-13 04:56:32.04+01',
+      updatedAt: '2018-07-13 04:56:32.04+01',
+    },
+    {
+      id: '0e307de5-732b-4413-bdef-d8704e6b7c7f',
+      date: 'Fri Jul 13 2018',
+      userId: 'b7afa7fb-556d-4b95-9c3e-6cafc0a06e3a',
+      createdAt: '2018-07-13 04:56:32.04+01',
+      updatedAt: '2018-07-13 04:56:32.04+01',
+    },
+    {
+      id: 'f045da0b-0c31-4ba7-97da-c32770a86a2b',
+      date: 'Fri Jul 13 2018',
+      userId: '5e00e7b1-2cb7-4c9a-b9ff-fa715c579f97',
+      createdAt: '2018-07-13 04:56:32.04+01',
+      updatedAt: '2018-07-13 04:56:32.04+01',
+    },
+    {
+      id: '756aa02d-43f1-4e80-bbc4-2d5bb63015f6',
+      date: 'Fri Jul 13 2018',
+      userId: 'cd1f6d60-c5de-4267-887a-b80bcde3fba4',
+      createdAt: '2018-07-13 04:56:32.04+01',
+      updatedAt: '2018-07-13 04:56:32.04+01',
+    },
+    {
+      id: '1880f226-aba2-45b6-940f-8e520484ae6d',
+      date: 'Fri Jul 13 2018',
+      userId: '8f8aa393-d3dc-45ff-9a11-8e9d250ffc0f',
+      createdAt: '2018-07-13 04:56:32.04+01',
+      updatedAt: '2018-07-13 04:56:32.04+01',
+    },
+  ], {}),
+
+  down: (queryInterface, Sequelize) => queryInterface.bulkDelete('menu', null, {}),
+};

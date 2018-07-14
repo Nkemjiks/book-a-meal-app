@@ -76,13 +76,46 @@ const menuController = {
    * @param  {Object} res
    * @return {Object}
    */
-  getAllMenu(req, res) {
+  getAvailableMenu(req, res) {
     const date = new Date().toDateString();
+    const { offset } = req.params;
+
+    return models.menu
+      .findAndCountAll({
+        where: {
+          date,
+        },
+        include: [
+          {
+            model: models.user,
+            attributes: ['fullName', 'email', 'businessName', 'businessAddress', 'logoURL'],
+          },
+        ],
+        offset,
+        limit: 10,
+      })
+      .then((todayMenu) => {
+        if (todayMenu.rows.length === 0) {
+          return res.status(404).send({ message: 'The menu for today has not been set yet' });
+        }
+        const filteredMenu = [];
+        todayMenu.rows.forEach((caterer) => {
+          const filter = filterMenuDetails(caterer);
+          filteredMenu.push(filter);
+        });
+        return res.status(200).send({ data: filteredMenu, count: todayMenu.count });
+      })
+      .catch(err => res.status(500).send({ message: err.message }));
+  },
+  getMealsInMenu(req, res) {
+    const date = new Date().toDateString();
+    const { id } = req.params;
 
     return models.menu
       .findAll({
         where: {
           date,
+          userId: id,
         },
         include: [
           {
@@ -94,20 +127,15 @@ const menuController = {
           },
           {
             model: models.user,
-            attributes: ['fullName', 'email'],
+            attributes: ['businessName', 'businessAddress', 'logoURL'],
           },
         ],
       })
       .then((meals) => {
         if (meals.length === 0) {
-          return res.status(404).send({ message: 'The menu for today has not been set yet' });
+          return res.status(404).send({ message: 'There are no meals in the menu' });
         }
-        const filteredMenu = [];
-        meals.forEach((meal) => {
-          const filter = filterMenuDetails(meal);
-          filteredMenu.push(filter);
-        });
-        return res.status(200).send({ data: filteredMenu });
+        return res.status(200).send({ data: meals[0].meals, caterer: meals[0].user });
       })
       .catch(err => res.status(500).send({ message: err.message }));
   },

@@ -209,6 +209,7 @@ export class ManageMenu extends React.Component {
   }
 }
 
+/* istanbul ignore next */
 const mapStateToProps = ({ catererMeals, catererMenu }) => {
   const { meals, error } = catererMeals;
   const { menu, menuCreated } = catererMenu;

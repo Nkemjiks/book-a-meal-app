@@ -14,6 +14,7 @@ import {
 import {
   signupValidation,
   signInValidation,
+  roleUpdateValidation,
   addMealValidation,
   modifyMealValidation,
   menuMealsValidation,
@@ -31,6 +32,7 @@ const routes = (app) => {
     '/auth/update',
     verifyToken,
     checkAuthenticatedUser,
+    roleUpdateValidation,
     userController.updateUserRole,
   );
   app.post('/auth/token', verifyToken, userController.refreshToken);
@@ -78,7 +80,8 @@ const routes = (app) => {
     checkUserRole,
     menuController.getCatererMenu,
   );
-  app.get('/menu/customer', menuController.getAllMenu);
+  app.get('/menu/:offset', menuController.getAvailableMenu);
+  app.get('/menu/meal/:id', menuController.getMealsInMenu);
 
   // Meal Order routes
   app.post(

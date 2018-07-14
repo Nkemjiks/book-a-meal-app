@@ -2,8 +2,8 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import moxios from 'moxios';
 import expect from 'expect';
-import getAllMenuAction from '../../action/getAllMenuAction';
-import { GET_ALL_MENU_SUCCESS, GET_ALL_MENU_FAILURE } from '../../actionTypes';
+import getMealsInMenuAction from '../../action/getMealsInMenuAction';
+import { GET_MEALS_IN_MENU_FAILURE, GET_MEALS_IN_MENU_SUCCESS } from '../../actionTypes';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -12,42 +12,42 @@ describe('getMenuAction action', () => {
   beforeEach(() => moxios.install());
   afterEach(() => moxios.uninstall());
 
-  it('should dispatch GET_ALL_MENU_SUCCESS action', (done) => {
-    moxios.stubRequest('/menu/0', {
+  it('should dispatch GET_MEALS_IN_MENU_SUCCESS action', (done) => {
+    moxios.stubRequest('/menu/meal/398484', {
       status: 200,
       response: {
         data: {
-          menu: [],
+          meals: [],
         },
       },
     });
 
     const expectedActions = [
-      { type: GET_ALL_MENU_SUCCESS, payload: { data: { menu: [] } } },
+      { type: GET_MEALS_IN_MENU_SUCCESS, payload: { data: { meals: [] } } },
     ];
 
     const store = mockStore({});
 
-    store.dispatch(getAllMenuAction('0'))
+    store.dispatch(getMealsInMenuAction('398484'))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
         done();
       });
   });
 
-  it('should dispatch GET_ALL_MENU_FAILURE action', (done) => {
-    moxios.stubRequest('/menu/0', {
+  it('should dispatch GET_MEALS_IN_MENU_FAILURE action', (done) => {
+    moxios.stubRequest('/menu/meal/398484', {
       status: 400,
       response: { message: 'Invalid token' },
     });
 
     const expectedActions = [
-      { type: GET_ALL_MENU_FAILURE, payload: 'Invalid token' },
+      { type: GET_MEALS_IN_MENU_FAILURE, payload: 'Invalid token' },
     ];
 
     const store = mockStore({});
 
-    store.dispatch(getAllMenuAction('0'))
+    store.dispatch(getMealsInMenuAction('398484'))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
         done();

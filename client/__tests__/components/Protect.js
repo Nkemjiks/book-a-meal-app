@@ -9,7 +9,7 @@ Enzyme.configure({ adapter: new Adapter() });
 
 describe('Protect Component', () => {
   it('renders UserProtected component', () => {
-    const wrapper = shallow(<UserProtected path="/customer/dashboard" component={Dashboard} />);
+    const wrapper = shallow(<UserProtected path="/customer/dashboard/0" component={Dashboard} />);
     expect(wrapper).toBeDefined();
   });
   it('renders RoleProtected component', () => {

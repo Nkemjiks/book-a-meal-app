@@ -28,9 +28,11 @@ const {
   invalidUserLoginDetailPasswordFirst,
   invalidUserLoginDetailsThird,
   nonExistingUserFirst,
+  updateRoleFirst,
 } = userMockData;
 
 let firstCustomerToken;
+let catererToken;
 chai.use(chaiHttp);
 
 describe('User Controller', () => {
@@ -238,7 +240,6 @@ describe('User Controller', () => {
     });
   });
   describe('User Role Update', () => {
-    let catererToken;
     afterEach((done) => {
       chai.request(server)
         .post('/auth/login')
@@ -249,10 +250,11 @@ describe('User Controller', () => {
         });
     });
     it(`It should update the role of a user to caterer and return a message
-     "Please provide a valid password"`, (done) => {
+     "Update successful"`, (done) => {
       chai.request(server)
         .put('/auth/update')
         .set({ authorization: firstCustomerToken })
+        .send(updateRoleFirst)
         .end((err, res) => {
           expect(res.status).toEqual(200);
           expect(res.body.message).toEqual('Update successful');
@@ -264,12 +266,15 @@ describe('User Controller', () => {
       chai.request(server)
         .put('/auth/update')
         .set({ authorization: catererToken })
+        .send(updateRoleFirst)
         .end((err, res) => {
           expect(res.status).toEqual(409);
           expect(res.body.message).toEqual('You are already a caterer');
           done();
         });
     });
+  });
+  describe('Refresh Token', () => {
     it(`It should return a message saying '
     Token refreshed successfully`, (done) => {
       chai.request(server)

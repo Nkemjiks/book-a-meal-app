@@ -1,5 +1,6 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+import timekeeper from 'timekeeper';
 import expect from 'expect';
 import server from '../app';
 import models from '../models';
@@ -29,8 +30,12 @@ let orderId;
 
 chai.use(chaiHttp);
 
-const date = new Date().toDateString();
 describe('Order Controller', () => {
+  before((done) => {
+    const time = new Date(Date.now()).setHours(12);
+    timekeeper.freeze(time);
+    done();
+  });
   before((done) => {
     chai.request(server)
       .post('/auth/login')
@@ -68,6 +73,11 @@ describe('Order Controller', () => {
         done();
       });
   });
+  after((done) => {
+    timekeeper.reset();
+    done();
+  });
+
   describe('Get all Orders - Caterer', () => {
     it(`It should return the message "You don't have any order yet" 
   when a caterer tries to get the order for that day when there is none`, (done) => {

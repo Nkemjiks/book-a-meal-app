@@ -106,13 +106,19 @@ const userController = {
    */
   updateUserRole(req, res) {
     const { id } = req.decoded;
+    const { businessName, logoURL, businessAddress } = req.body;
 
     return models.user
       .findOne({ where: { id } })
       .then((user) => {
         if (user) {
           if (user.role === 'customer') {
-            user.update({ role: 'caterer' });
+            user.update({
+              role: 'caterer',
+              businessName,
+              logoURL,
+              businessAddress,
+            });
             const filteredUserDetail = filterUserDetail(user);
             const token = generateToken(filteredUserDetail);
             return res.status(200).send({ message: 'Update successful', data: filteredUserDetail, token });

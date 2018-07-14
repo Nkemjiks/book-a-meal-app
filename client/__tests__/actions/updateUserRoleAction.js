@@ -7,6 +7,11 @@ import { USER_ROLE_UPDATE_SUCCESS, USER_ROLE_UPDATE_FAILURE } from '../../action
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
+const userData = {
+  businessName: 'Danish Food',
+  businessAddress: '12B Agege',
+  logoURL: 'www.ikage.com',
+};
 
 describe('updateUserRoleAction action', () => {
   beforeEach(() => moxios.install());
@@ -34,7 +39,7 @@ describe('updateUserRoleAction action', () => {
       push: jest.fn(),
     };
 
-    store.dispatch(updateUserRoleAction(history))
+    store.dispatch(updateUserRoleAction(userData, history))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
         done();

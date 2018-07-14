@@ -10,7 +10,7 @@ import '../scss/landingPageComponent.scss';
 const LandingPage = () => {
   const user = JSON.parse(window.localStorage.getItem('@#$user'));
   if (user) {
-    return <Redirect to="/customer/dashboard" />;
+    return <Redirect to="/customer/dashboard/0" />;
   }
   return (
     <div id="app-summary">

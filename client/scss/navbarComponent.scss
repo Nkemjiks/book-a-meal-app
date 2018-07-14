@@ -3,7 +3,7 @@
     display: none;
   }
   #nav {
-    height: 70px;
+    height: 50px;
     img[alt='logo'] {
       width: 70px;
     }
@@ -36,7 +36,7 @@
 }
 @media (min-width: 450px) {
   #nav {
-    height: 16vh;
+    height: 10vh;
     > h3 {
       display: inline-block;
     }

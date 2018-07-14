@@ -12,6 +12,7 @@ import getToken from './getToken';
  * @returns {Function} - a function that makes the api call
  */
 
+/* istanbul ignore next */
 if (process.env.NODE_ENV !== 'test') {
   if (process.env.NODE_ENV === 'development') {
     axios.defaults.baseURL = process.env.DEV_BASE_URL;

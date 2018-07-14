@@ -7,7 +7,7 @@ import displayToast from '../helpers/displayToast';
 *
 * @returns {Promise}  - dispatches action with user information
 */
-const updateUserRoleAction = history => dispatch => axios.put('/auth/update')
+const updateUserRoleAction = (userData, history) => dispatch => axios.put('/auth/update', userData)
   .then((response) => {
     window.localStorage.setItem('@#$user', JSON.stringify(response.data.data));
     window.localStorage.setItem('@#$token', response.data.token);

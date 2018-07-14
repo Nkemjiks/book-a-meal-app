@@ -95,6 +95,8 @@ export class ManageOrder extends React.Component {
     );
   }
 }
+
+/* istanbul ignore next */
 const mapStateToProps = ({ customerOrder }) => {
   const { customerOrderHistory, orderModified } = customerOrder;
   return {

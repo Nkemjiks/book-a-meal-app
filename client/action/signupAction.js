@@ -16,7 +16,7 @@ const signupAction = (userDetails, history) => dispatch => axios.post('/auth/sig
       type: SIGNUP_USER_SUCCESS,
       payload: response.data.data,
     });
-    history.push('/customer/dashboard');
+    history.push('/customer/dashboard/0');
   })
   .catch((err) => {
     dispatch({

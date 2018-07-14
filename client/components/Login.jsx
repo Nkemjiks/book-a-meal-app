@@ -75,7 +75,8 @@ export class Login extends React.Component {
   render() {
     const user = JSON.parse(window.localStorage.getItem('@#$user'));
     if (user) {
-      return <Redirect to="/customer/dashboard" />;
+      /* istanbul ignore next */
+      return <Redirect to="/customer/dashboard/0" />;
     }
     return (
       <div id="signin-component">

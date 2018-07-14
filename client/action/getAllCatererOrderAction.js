@@ -1,5 +1,5 @@
 import { GET_ALL_CATERER_ORDER_SUCCESS, GET_ALL_CATERER_ORDER_FAILURE } from '../actionTypes';
-import axios, { config } from '../helpers/axios';
+import axios from '../helpers/axios';
 
 /**
 * @returns {Promise}  - dispatches action with all order that have been placed to the caterer

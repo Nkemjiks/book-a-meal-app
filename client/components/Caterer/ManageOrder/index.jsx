@@ -69,6 +69,7 @@ export class ManageOrder extends React.Component {
     this.props.getAllCatererOrderAction();
     const time = new Date().getHours();
     if ((Number(time) >= 9) && (Number(time) < 16)) {
+      /* istanbul ignore next */
       this.refreshInterval = setInterval(() => {
         this.props.getCatererOrderAction();
         this.props.getAllCatererOrderAction();
@@ -169,6 +170,8 @@ export class ManageOrder extends React.Component {
     );
   }
 }
+
+/* istanbul ignore next */
 const mapStateToProps = ({ getCatererOrder, getAllCatererOrder }) => {
   const { orders } = getCatererOrder;
   const { allOrders } = getAllCatererOrder;

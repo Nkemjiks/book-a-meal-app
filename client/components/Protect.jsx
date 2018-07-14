@@ -9,6 +9,7 @@ export const UserProtected = ({ component: Component, path }) => {
   return (<Route
     path={path}
     render={({ location }) => (
+      /* istanbul ignore next */
       isUser && (isUser.role === 'customer' || isUser.role === 'caterer')
       ? <Component />
       : <Redirect to={{ pathname: '/login', state: { from: location } }} />
@@ -21,6 +22,7 @@ export const RoleProtected = ({ component: Component, path }) => {
   return (<Route
     path={path}
     render={({ location }) => (
+      /* istanbul ignore next */
       isUser && (isUser.role === 'caterer')
       ? <Component />
       : <Redirect to={{ pathname: '/customer/dashboard', state: { from: location } }} />

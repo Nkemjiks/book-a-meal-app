@@ -305,6 +305,7 @@ export class MealsAdded extends React.Component {
   }
 }
 
+/* istanbul ignore next */
 const mapStateToProps = ({ catererMeals, imageUpload }) => {
   const {
     mealModified,

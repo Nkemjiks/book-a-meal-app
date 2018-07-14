@@ -95,6 +95,7 @@ export class ManageMeal extends React.Component {
       this.props.getMealsAction();
     }
   }
+
   /**
    * updates component state when form values change
    *
@@ -229,6 +230,7 @@ export class ManageMeal extends React.Component {
   }
 }
 
+/* istanbul ignore next */
 const mapStateToProps = ({ catererMeals, imageUpload }) => {
   const {
     meals,

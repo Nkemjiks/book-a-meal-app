@@ -16,6 +16,7 @@ module.exports = {
         "describe": true,
         "it": true,
         "before": true,
+        "after": true,
         "afterEach": true,
         "beforeEach": true,
         "window": true,
