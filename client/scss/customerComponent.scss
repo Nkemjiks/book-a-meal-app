@@ -49,20 +49,29 @@
 #navigate {
   text-align: center;
 }
- #navigate {
-   .enabled-button, .disabled-button {
-    width: 80px;
+
+#navigate {
+  .enabled-button, .current-button {
+    width: 20px;
     height: 30px;
     border-radius: 3px;
     margin: 8px 7px;
-  }
-
-  .enabled-button {
     cursor: pointer;
   }
 
-  .disabled-button {
-    cursor: not-allowed;
+  .enabled-button {
+    background-color: #fff;
+    color: #000;
+  }
+
+  .current-button {
+    background-color: #000;
+    color: #fff;
+  }
+
+  .current-button:hover {
+    background-color: #fff;
+    color: #000;
   }
 
   .enabled-button:hover {
@@ -234,7 +243,7 @@
   cursor: not-allowed;
   color: rgb(209, 206, 206);
 }
-.fa-times {
+.remove-meal-cart {
   padding-top: 30px;
   font-size: 20px;
   cursor: pointer;

@@ -31,7 +31,8 @@
   "nyc": {
     "reporter": [
       "text",
-      "html"
+      "html",
+      "lcov"
     ],
     "exclude": [
       "server/test/*.js",

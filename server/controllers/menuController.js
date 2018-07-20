@@ -13,11 +13,11 @@ const menuController = {
     const date = new Date().toDateString();
 
     const { meals } = req.body;
+
     return models.menu
       .findOrCreate({
         where: {
           userId,
-          date,
         },
         defaults: {
           userId,
@@ -43,13 +43,11 @@ const menuController = {
    */
   getCatererMenu(req, res) {
     const userId = req.decoded.id;
-    const date = new Date().toDateString();
 
     return models.menu
       .findOne({
         where: {
           userId,
-          date,
         },
         include: [
           {
@@ -63,11 +61,39 @@ const menuController = {
       })
       .then((meals) => {
         if (meals === null) {
-          return res.status(404).send({ message: 'The menu for today has not been set yet' });
+          return res.status(404).send({ message: 'You have not created a menu yet' });
         }
         return res.status(200).send({ data: meals });
       })
       .catch(err => res.status(500).send({ message: err.message }));
+  },
+
+  /**
+   * @description Remove certain meal from the menu by the caterer
+   * @param  {Object} req
+   * @param  {Object} res
+   * @return {Object}
+   */
+  removeMealFromMenu(req, res) {
+    const userId = req.decoded.id;
+
+    const { id } = req.params;
+
+    return models.menu
+      .findOne({
+        where: {
+          userId,
+        },
+      })
+      .then((menu) => {
+        if (!menu) {
+          return res.status(404).send({ message: 'Menu does not exist' });
+        }
+        menu.removeMeals(id);
+        menu.save();
+        return res.status(200).send({ message: 'Menu has been updated', data: menu });
+      })
+      .catch(err => res.status(500).send({ message: err }));
   },
 
   /**
@@ -77,14 +103,10 @@ const menuController = {
    * @return {Object}
    */
   getAvailableMenu(req, res) {
-    const date = new Date().toDateString();
     const { offset } = req.params;
 
     return models.menu
       .findAndCountAll({
-        where: {
-          date,
-        },
         include: [
           {
             model: models.user,
@@ -96,7 +118,7 @@ const menuController = {
       })
       .then((todayMenu) => {
         if (todayMenu.rows.length === 0) {
-          return res.status(404).send({ message: 'The menu for today has not been set yet' });
+          return res.status(404).send({ message: 'No menu available' });
         }
         const filteredMenu = [];
         todayMenu.rows.forEach((caterer) => {
@@ -107,14 +129,19 @@ const menuController = {
       })
       .catch(err => res.status(500).send({ message: err.message }));
   },
+
+  /**
+   * @description Get all meals in a menu
+   * @param  {Object} req
+   * @param  {Object} res
+   * @return {Object}
+   */
   getMealsInMenu(req, res) {
-    const date = new Date().toDateString();
     const { id } = req.params;
 
     return models.menu
       .findAll({
         where: {
-          date,
           userId: id,
         },
         include: [

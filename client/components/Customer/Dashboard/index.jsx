@@ -38,7 +38,6 @@ export class AvaliableMenu extends React.Component {
 
   state = {
     allMenu: [],
-    currentCount: 0,
   }
 
   /**
@@ -50,9 +49,10 @@ export class AvaliableMenu extends React.Component {
    */
   componentDidMount() {
     const { params } = this.props.match;
+    const offset = Number(params.id) * 10;
     const user = JSON.parse(window.localStorage.getItem('@#$user'));
     this.props.getUserDetailsAction(user);
-    this.props.getAllMenuAction(params.id);
+    this.props.getAllMenuAction(offset);
     refreshTokenRequest(this.props.history);
   }
 
@@ -61,31 +61,31 @@ export class AvaliableMenu extends React.Component {
    *
    * @memberof AvaliableMenu
    *
-   * @returns {undefined} moves to the previous page
+   * @returns {undefined} generate all pages with links to the next page
    */
-  handlePrevious = () => {
-    const { id } = this.props.match.params;
-    const newId = Number(id) - 10;
-    this.props.history.push(`/customer/dashboard/${newId}`);
-    this.setState({
-      currentCount: newId,
-    });
-  }
-
-  /**
-   * handle pagination
-   *
-   * @memberof AvaliableMenu
-   *
-   * @returns {undefined} moves to the next page
-   */
-  handleNext = () => {
-    const { id } = this.props.match.params;
-    const newId = Number(id) + 10;
-    this.props.history.push(`/customer/dashboard/${newId}`);
-    this.setState({
-      currentCount: newId,
-    });
+  createPages = () => {
+    const { params } = this.props.match;
+    const holder = [];
+    let numberOfPage = 0;
+    if ((Number(this.state.allMenu.count) / 10) === 0) {
+      numberOfPage = Number(this.state.allMenu.count) / 10;
+    } else {
+      numberOfPage = Math.ceil(Number(this.state.allMenu.count) / 10);
+    }
+    for (let i = 0; i < numberOfPage; i += 1) {
+      if (Number(params.id) === i) {
+        holder.push(
+          <a href={`${window.location.origin}/customer/dashboard/${i}`} id={i} key={`page${i}`}>
+            <button className="current-button">{i}</button>
+          </a>);
+      } else {
+        holder.push(
+          <a href={`${window.location.origin}/customer/dashboard/${i}`} id={i} key={`page${i}`}>
+            <button className="enabled-button">{i}</button>
+          </a>);
+      }
+    }
+    return holder;
   }
 
   /**
@@ -116,25 +116,7 @@ export class AvaliableMenu extends React.Component {
               }
             </div>
           </div>
-          <div id="navigate">
-            {
-              (this.state.currentCount >= 10) &&
-              <button className="enabled-button" onClick={this.handlePrevious} >Previous</button>
-            }
-            {
-              (this.state.currentCount <= 10) &&
-              <button className="disabled-button" disabled >Previous</button>
-            }
-            {
-              ((this.state.allMenu.count - this.state.currentCount) >= 10) &&
-              <button className="enabled-button" onClick={this.handleNext} >Next</button>
-            }
-            {
-              (((this.state.allMenu.count - this.state.currentCount) <= 10) ||
-              (this.state.allMenu.count === undefined)) &&
-              <button className="disabled-button" disabled >Next</button>
-            }
-          </div>
+          <div id="navigate">{this.createPages()}</div>
         </div>
       </div>
     );

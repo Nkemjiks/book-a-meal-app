@@ -80,6 +80,12 @@ const routes = (app) => {
     checkUserRole,
     menuController.getCatererMenu,
   );
+  app.put(
+    '/menu/:id',
+    verifyToken,
+    checkUserRole,
+    menuController.removeMealFromMenu,
+  );
   app.get('/menu/:offset', menuController.getAvailableMenu);
   app.get('/menu/meal/:id', menuController.getMealsInMenu);
 
@@ -118,9 +124,7 @@ const routes = (app) => {
   );
 
   // API docs
-  app.get('/docs', (res) => {
-    return res.redirect('https://bookameal24.docs.apiary.io/#');
-  });
+  app.get('/docs', res => res.redirect('https://bookameal24.docs.apiary.io/#'));
 };
 
 export default routes;

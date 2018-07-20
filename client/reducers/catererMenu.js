@@ -3,12 +3,15 @@ import {
   GET_MENU_FAILURE,
   CREATE_MENU_SUCCESS,
   CREATE_MENU_FAILURE,
+  REMOVE_MEAL_SUCCESS,
+  REMOVE_MEAL_FAILURE,
 } from '../actionTypes';
 
 const initialState = {
   menu: {},
   error: null,
   menuCreated: false,
+  mealRemoved: false,
 };
 
 /**
@@ -27,6 +30,7 @@ export default (state = initialState, action) => {
         menu: action.payload,
         error: null,
         menuCreated: false,
+        mealRemoved: false,
       };
     case GET_MENU_FAILURE:
       return {
@@ -34,18 +38,35 @@ export default (state = initialState, action) => {
         menu: {},
         error: action.payload,
         menuCreated: false,
+        mealRemoved: false,
       };
     case CREATE_MENU_SUCCESS:
       return {
         ...state,
         error: null,
         menuCreated: action.payload,
+        mealRemoved: false,
       };
     case CREATE_MENU_FAILURE:
       return {
         ...state,
         error: null,
         menuCreated: action.payload,
+        mealRemoved: false,
+      };
+    case REMOVE_MEAL_SUCCESS:
+      return {
+        ...state,
+        error: null,
+        menuCreated: false,
+        mealRemoved: action.payload,
+      };
+    case REMOVE_MEAL_FAILURE:
+      return {
+        ...state,
+        error: null,
+        menuCreated: false,
+        mealRemoved: action.payload,
       };
     default:
       return state;

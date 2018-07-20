@@ -3,12 +3,15 @@ import {
   GET_MENU_FAILURE,
   CREATE_MENU_SUCCESS,
   CREATE_MENU_FAILURE,
+  REMOVE_MEAL_SUCCESS,
+  REMOVE_MEAL_FAILURE,
 } from '../actionTypes';
 
 export const initialState = {
   menu: {},
   error: null,
   menuCreated: false,
+  mealRemoved: false,
 };
 
 export const getMenuSuccessAction = {
@@ -23,6 +26,7 @@ export const getMenuSuccessState = {
   },
   error: null,
   menuCreated: false,
+  mealRemoved: false,
 };
 export const getMenuFailureAction = {
   type: GET_MENU_FAILURE,
@@ -32,6 +36,7 @@ export const getMenuFailureState = {
   menu: {},
   error: 'You have not set the menu for today',
   menuCreated: false,
+  mealRemoved: false,
 };
 
 export const createMenuSucessAction = {
@@ -41,7 +46,9 @@ export const createMenuSucessAction = {
 export const createMenuSucessState = {
   error: null,
   menuCreated: true,
+  mealRemoved: false,
 };
+
 export const createMenuFailureAction = {
   type: CREATE_MENU_FAILURE,
   payload: false,
@@ -49,4 +56,25 @@ export const createMenuFailureAction = {
 export const createMenuFailureState = {
   error: null,
   menuCreated: false,
+  mealRemoved: false,
+};
+
+export const removeMealSucessAction = {
+  type: REMOVE_MEAL_SUCCESS,
+  payload: true,
+};
+export const removeMealSucessState = {
+  error: null,
+  menuCreated: false,
+  mealRemoved: true,
+};
+
+export const removeMealFailureAction = {
+  type: REMOVE_MEAL_FAILURE,
+  payload: false,
+};
+export const removeMealFailureState = {
+  error: null,
+  menuCreated: false,
+  mealRemoved: false,
 };

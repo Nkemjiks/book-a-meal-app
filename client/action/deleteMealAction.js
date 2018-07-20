@@ -1,5 +1,5 @@
 import { DELETE_MEAL_SUCCESS, DELETE_MEAL_FAILURE } from '../actionTypes';
-import axios, { config } from '../helpers/axios';
+import axios from '../helpers/axios';
 import displayToast from '../helpers/displayToast';
 
 /**
@@ -8,7 +8,7 @@ import displayToast from '../helpers/displayToast';
 *
 * @returns {Promise}  - dispatches action with true or false
 */
-const deleteMealAction = mealId => dispatch => axios.delete(`/meals/${mealId}`, config)
+const deleteMealAction = mealId => dispatch => axios.delete(`/meals/${mealId}`)
   .then(() => {
     dispatch({
       type: DELETE_MEAL_SUCCESS,

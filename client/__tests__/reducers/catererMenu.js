@@ -18,4 +18,10 @@ describe('catererMenu reducer', () => {
   it('should handle CREATE_MENU_FAILURE', () => {
     expect(reducer({}, mocks.createMenuFailureAction)).toEqual(mocks.createMenuFailureState);
   });
+  it('should handle REMOVE_MEAL_SUCCESS', () => {
+    expect(reducer({}, mocks.removeMealSucessAction)).toEqual(mocks.removeMealSucessState);
+  });
+  it('should handle REMOVE_MEAL_FAILURE', () => {
+    expect(reducer({}, mocks.removeMealFailureAction)).toEqual(mocks.removeMealFailureState);
+  });
 });

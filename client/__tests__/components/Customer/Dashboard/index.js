@@ -38,7 +38,7 @@ describe('Meals Component', () => {
     expect(mountWrapper.find('#customer-dashboard').length).toBe(1);
     expect(mountWrapper.find('h1').length).toBe(1);
     expect(mountWrapper.find('div').length).toBe(11);
-    expect(mountWrapper.find('button').length).toBe(2);
+    expect(mountWrapper.find('button').length).toBe(1);
   });
   it('should call component did mount to dispatch action', () => {
     const getUserDetailsActionSpy = jest.spyOn(mountWrapper.instance().props, 'getUserDetailsAction');
@@ -48,17 +48,10 @@ describe('Meals Component', () => {
     expect(getUserDetailsActionSpy).toHaveBeenCalled();
     expect(getAllMenuActionSpy).toHaveBeenCalled();
   });
-  it('should call the handle previous method and update state', () => {
-    const handlePreviousSpy = jest.spyOn(mountWrapper.instance(), 'handlePrevious');
-    mountWrapper.instance().handlePrevious();
-    expect(handlePreviousSpy).toHaveBeenCalled();
-    expect(mountWrapper.state().currentCount).toBe(20);
-  });
-  it('should call the handle next method and update state', () => {
-    const handleNextSpy = jest.spyOn(mountWrapper.instance(), 'handleNext');
-    mountWrapper.instance().handleNext();
-    expect(handleNextSpy).toHaveBeenCalled();
-    expect(mountWrapper.state().currentCount).toBe(40);
+  it('should call the createPages method and update state', () => {
+    const createPagesSpy = jest.spyOn(mountWrapper.instance(), 'createPages');
+    mountWrapper.instance().createPages();
+    expect(createPagesSpy).toHaveBeenCalled();
   });
   it('should render connected component properly', () => {
     const connectedWrapper = shallow(<ConnectedAvaliableMenu {...props} store={store} />);

@@ -1,5 +1,5 @@
 module.exports = {
-  up: (queryInterface, Sequelize) => queryInterface.bulkInsert('user', [
+  up: (queryInterface, Sequelize) => queryInterface.bulkInsert('users', [
     {
       id: '1099a012-f2be-42e8-aa58-6575a8e12093',
       fullName: 'Miguela Welfare',

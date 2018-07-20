@@ -21,6 +21,7 @@ const {
   addMealProd,
   updateMealProd,
   placeOrderDev,
+  removeMealProd,
 } = otherMockData;
 
 let secondCatererToken;
@@ -59,9 +60,7 @@ describe('Menu Controller', () => {
   before((done) => {
     models.menu
       .destroy({
-        where: {
-          date,
-        },
+        truncate: { cascade: true },
       })
       .then(() => {
         done();
@@ -72,7 +71,7 @@ describe('Menu Controller', () => {
     done();
   });
 
-  describe('Get menu and delete meal from the menu when it has not been set', () => {
+  describe('Get menu when when none has been created yet', () => {
     it(`It should return the message "The menu for today has not been set yet" 
   when a caterer tries to get the menu without creating one`, (done) => {
       chai.request(server)
@@ -81,7 +80,7 @@ describe('Menu Controller', () => {
         .send(addMealProd)
         .end((err, res) => {
           expect(res.status).toEqual(404);
-          expect(res.body.message).toEqual('The menu for today has not been set yet');
+          expect(res.body.message).toEqual('You have not created a menu yet');
           done();
         });
     });
@@ -92,7 +91,18 @@ describe('Menu Controller', () => {
         .set({ authorization: firstCustomerToken })
         .end((err, res) => {
           expect(res.status).toEqual(404);
-          expect(res.body.message).toEqual('The menu for today has not been set yet');
+          expect(res.body.message).toEqual('No menu available');
+          done();
+        });
+    });
+    it(`It should return the message "Menu does not exist" 
+  when a caterer tries to remove a meal from the menu when it has not been set`, (done) => {
+      chai.request(server)
+        .put(`/menu/${removeMealProd.meals[0]}`)
+        .set({ authorization: secondCatererToken })
+        .end((err, res) => {
+          expect(res.status).toEqual(404);
+          expect(res.body.message).toEqual('Menu does not exist');
           done();
         });
     });
@@ -110,12 +120,12 @@ describe('Menu Controller', () => {
     it(`It should return the message "The menu for today has not been set yet" 
   when a customer tries to place an order when the menu has not been set`, (done) => {
       chai.request(server)
-        .post('/orders/')
+        .post('/orders')
         .set({ authorization: firstCustomerToken })
         .send(placeOrderDev)
         .end((err, res) => {
           expect(res.status).toEqual(404);
-          expect(res.body.message).toEqual('The menu for today has not been set yet');
+          expect(res.body.message).toEqual('No menu has been created yet');
           done();
         });
     });
@@ -140,6 +150,20 @@ describe('Menu Controller', () => {
         .post('/menu/')
         .set({ authorization: secondCatererToken })
         .send(updateMealProd)
+        .end((err, res) => {
+          expect(res.status).toEqual(200);
+          expect(res.body).toHaveProperty('data');
+          expect(res.body.message).toEqual('Menu has been updated');
+          done();
+        });
+    });
+  });
+  describe('Remove meal from menu', () => {
+    it(`It should return the message "Menu has been updated" 
+  when a caterer tries to remove a meal from the menu`, (done) => {
+      chai.request(server)
+        .put(`/menu/${removeMealProd.meals[0]}`)
+        .set({ authorization: secondCatererToken })
         .end((err, res) => {
           expect(res.status).toEqual(200);
           expect(res.body).toHaveProperty('data');
