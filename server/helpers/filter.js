@@ -6,6 +6,9 @@ const filterUserDetail = user => ({
   phoneNumber: user.phoneNumber,
   role: user.role,
   address: user.address,
+  businessName: user.businessName,
+  logoURL: user.logoURL,
+  businessAddress: user.businessAddress,
 });
 
 // Filter the menu details that is displayed to users

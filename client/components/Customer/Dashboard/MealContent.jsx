@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import MenuContent from './MenuContent';
+import Meal from './Meal';
 
 /**
  * display the menu for the day
@@ -11,10 +11,9 @@ import MenuContent from './MenuContent';
  */
 const Menu = ({ allMenu, addMealToCart }) => (
   allMenu.sort((a, b) =>
-    a.caterer.fullName.toLowerCase() > b.caterer.fullName.toLowerCase()).map(menu => (
-      <Fragment key={menu.id}>
-        <h3>Caterer: { menu.caterer.fullName }</h3>
-        <MenuContent meals={menu.meals} addMealToCart={addMealToCart} />
+    a.name.toLowerCase() > b.name.toLowerCase()).map(meal => (
+      <Fragment key={meal.menuItems.mealId}>
+        <Meal meal={meal} addMealToCart={addMealToCart} />
       </Fragment>
   ))
 );

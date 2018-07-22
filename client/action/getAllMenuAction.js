@@ -1,14 +1,14 @@
 import { GET_ALL_MENU_SUCCESS, GET_ALL_MENU_FAILURE } from '../actionTypes';
-import axios, { config } from '../helpers/axios';
+import axios from '../helpers/axios';
 
 /**
 * @returns {Promise}  - dispatches action with all menu set for the day
 */
-const getAllMenuAction = () => dispatch => axios.get('/menu/customer')
+const getAllMenuAction = offset => dispatch => axios.get(`/menu/${offset}`)
   .then((response) => {
     dispatch({
       type: GET_ALL_MENU_SUCCESS,
-      payload: response.data.data,
+      payload: response.data,
     });
   })
   .catch((err) => {

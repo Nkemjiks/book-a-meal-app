@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import '../scss/loginComponent.scss';
@@ -72,6 +73,11 @@ export class Login extends React.Component {
    * @returns {JSX} JSX representation of component
    */
   render() {
+    const user = JSON.parse(window.localStorage.getItem('@#$user'));
+    if (user) {
+      /* istanbul ignore next */
+      return <Redirect to="/customer/dashboard/0" />;
+    }
     return (
       <div id="signin-component">
         <div id="signin-container">

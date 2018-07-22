@@ -7,12 +7,13 @@
     "dev": "cross-env NODE_ENV=development nodemon server/server.js --exec babel-node",
     "client-dev": "webpack-dev-server --mode development",
     "dev-server": "concurrently 'npm run client-dev' 'npm run dev'",
-    "build": "babel server -d dist",
-    "heroku-postbuild": "cd client && npm install && npm run build",
-    "start": "npm run build && node dist/server.js",
-    "test-server": "cross-env NODE_ENV=test nyc mocha server/test/*.js --exit --timeout 300000",
+    "build-server": "babel server -d dist",
+    "build-client": "webpack --mode production",
+    "build": "npm run build-client && npm run build-server",
+    "start": "NODE_ENV=production npm run build && node dist/server.js",
+    "test-server": "cross-env NODE_ENV=test nyc mocha --compilers js:babel-register server/test/*.js --exit --timeout 300000",
     "migrate-test": "sequelize db:migrate",
-    "test-client": " NODE_ENV=test jest",
+    "test-client": " NODE_ENV=test jest --config=jest.config.js",
     "test": "concurrently 'npm run test-server' 'npm run test-client'",
     "test:watch": "npm run test-client -- --watch"
   },
@@ -28,13 +29,10 @@
   },
   "homepage": "https://github.com/Nkemjiks/book-a-meal-app#readme",
   "nyc": {
-    "require": [
-      "babel-register"
-    ],
     "reporter": [
-      "lcov",
       "text",
-      "html"
+      "html",
+      "lcov"
     ],
     "exclude": [
       "server/test/*.js",
@@ -45,28 +43,15 @@
     "sourceMap": false,
     "instrument": false
   },
-  "jest": {
-    "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/mocks/file.js",
-      "\\.(css|scss)$": "identity-obj-proxy"
-    },
-    "setupFiles": [
-      "jest-localstorage-mock"
-    ],
-    "collectCoverageFrom": [
-      "!<rootDir>/client/helpers/",
-      "!<rootDir>/client/__tests__/",
-      "!<rootDir>/client/mocks/"
-    ],
-    "collectCoverage": true
-  },
   "dependencies": {
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
     "bcrypt": "^2.0.1",
     "body-parser": "^1.18.2",
+    "connect-history-api-fallback": "^1.5.0",
     "cors": "^2.8.4",
     "dotenv": "^5.0.1",
+    "dotenv-webpack": "^1.5.7",
     "enzyme": "^3.3.0",
     "express": "^4.16.3",
     "file-loader": "^1.1.11",
@@ -98,6 +83,7 @@
     "babel-plugin-istanbul": "^4.1.6",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.26.0",
@@ -115,6 +101,7 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
     "expect": "^22.4.3",
+    "heroku-cli": "^7.0.9",
     "identity-obj-proxy": "^3.0.0",
     "istanbul": "^0.4.5",
     "jest": "^23.1.0",
@@ -127,6 +114,7 @@
     "nyc": "^11.7.1",
     "sass-loader": "^7.0.1",
     "style-loader": "^0.21.0",
+    "timekeeper": "^2.1.2",
     "webpack": "^4.8.3",
     "webpack-cli": "^2.1.3",
     "webpack-dev-server": "^3.1.4"

@@ -149,4 +149,9 @@ export default {
     email: 'samjohn@gmail.com',
     password: 'testing',
   },
+  updateRoleFirst: {
+    businessName: 'Best Food',
+    logoURL: 'www.image.com/jdjd',
+    businessAddress: '12B, Agege Rod',
+  },
 };

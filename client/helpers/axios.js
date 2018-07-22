@@ -12,11 +12,14 @@ import getToken from './getToken';
  * @returns {Function} - a function that makes the api call
  */
 
-if (process.env.NODE_ENV === 'development') {
-  axios.defaults.baseURL = 'http://localhost:8080';
+/* istanbul ignore next */
+if (process.env.NODE_ENV !== 'test') {
+  if (process.env.NODE_ENV === 'development') {
+    axios.defaults.baseURL = process.env.DEV_BASE_URL;
+  }
   axios.interceptors.request.use(
     (config) => {
-      if (config.baseURL && (config.url !== 'https://api.cloudinary.com/v1_1/dqsmurjpg/image/upload')) {
+      if ((config.url !== 'https://api.cloudinary.com/v1_1/dqsmurjpg/image/upload')) {
         const token = getToken();
         if (token) {
           config.headers.Authorization = token;

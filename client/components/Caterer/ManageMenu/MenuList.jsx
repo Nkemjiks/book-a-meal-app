@@ -8,10 +8,10 @@ import MenuContent from './MenuContent';
  *
  * @returns {JSX} JSX representation of component
  */
-const MenuList = ({ menu }) => (
+const MenuList = ({ menu, removeMealFromMenu }) => (
   menu.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase()).map(meal => (
     <Fragment key={meal.menuItems.mealId}>
-      <MenuContent meal={meal} />
+      <MenuContent meal={meal} removeMealFromMenu={removeMealFromMenu} />
     </Fragment>
   ))
 );

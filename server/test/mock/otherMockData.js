@@ -14,7 +14,7 @@ export default {
     meals: ['593c9d41-4c24-4ea1-949e-c1f30b3af0a4'],
   },
   addMealProd: {
-    meals: ['82a712ab-fd6e-4b68-bc63-c34f5f1ba7f1'],
+    meals: ['82a712ab-fd6e-4b68-bc63-c34f5f1ba7f1', '91f77b21-56ed-4260-a935-7dfed583bc4b'],
   },
   updateMealProd: {
     meals: ['91f77b21-56ed-4260-a935-7dfed583bc4b'],

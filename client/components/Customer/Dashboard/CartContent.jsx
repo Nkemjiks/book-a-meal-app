@@ -48,7 +48,7 @@ export class CartContent extends React.Component {
     return (
       <Fragment>
         <div className="cart-order">
-          <i id={meal.mealId} onClick={this.handleRemove} className="fas fa-times" />
+          <i id={meal.mealId} onClick={this.handleRemove} className="fas fa-times remove-meal-cart" />
           <p className="cartdetails">{meal.mealName}</p>
           <p className="cartdetails" id={`${meal.mealId}price`}>&#8358;{meal.mealPrice}</p>
           <div>

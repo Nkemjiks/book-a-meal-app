@@ -1,5 +1,5 @@
 import { CREATE_MENU_SUCCESS, CREATE_MENU_FAILURE } from '../actionTypes';
-import axios, { config } from '../helpers/axios';
+import axios from '../helpers/axios';
 import displayToast from '../helpers/displayToast';
 
 /**
@@ -8,7 +8,7 @@ import displayToast from '../helpers/displayToast';
 *
 * @returns {Promise}  - dispatches action with true or false
 */
-const createMenuAction = meals => dispatch => axios.post('/menu', meals, config)
+const createMenuAction = meals => dispatch => axios.post('/menu', meals)
   .then((response) => {
     dispatch({
       type: CREATE_MENU_SUCCESS,

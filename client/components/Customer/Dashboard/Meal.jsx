@@ -48,11 +48,11 @@ export class Meal extends React.Component {
               <i id={meal.menuItems.mealId} className="fas fa-plus add-i disabled" />
             }
             {
-              (Number(hours) < 5) &&
+              (Number(hours) < 9) &&
               <i id={meal.menuItems.mealId} className="fas fa-plus add-i disabled" />
             }
             {
-              (Number(hours) >= 5) && (Number(hours) <= 16) &&
+              (Number(hours) >= 9) && (Number(hours) <= 16) &&
               <i id={meal.menuItems.mealId} className="fas fa-plus add-i" onClick={this.handleClick} />
             }
           </div>

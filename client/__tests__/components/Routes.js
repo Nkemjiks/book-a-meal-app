@@ -13,7 +13,7 @@ describe('Route Component', () => {
     expect((wrapper).find('Router').length).toBe(1);
     expect((wrapper).find('Switch').length).toBe(1);
     expect((wrapper).find('Route').length).toBe(4);
-    expect((wrapper).find('UserProtected').length).toBe(2);
+    expect((wrapper).find('UserProtected').length).toBe(3);
     expect((wrapper).find('RoleProtected').length).toBe(3);
   });
 });

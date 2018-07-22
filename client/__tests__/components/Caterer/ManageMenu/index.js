@@ -36,7 +36,7 @@ describe('ManageMenu Component', () => {
   it('should render unconnected component properly', () => {
     expect(mountWrapper.find('.dashboard').length).toBe(1);
     expect(mountWrapper.find('h1').length).toBe(2);
-    expect(mountWrapper.find('h4').length).toBe(7);
+    expect(mountWrapper.find('h4').length).toBe(8);
     expect(mountWrapper.find('div').length).toBe(24);
     expect(mountWrapper.find('p').first().text()).toBe('You have not set the menu');
     expect(mountWrapper.find('button').length).toBe(1);

@@ -41,6 +41,45 @@
   display: flex;
   border-top: 2px solid #d8d5d5;
 }
+
+#customer-dashboard {
+  border-top: 2px solid #d8d5d5;
+}
+
+#navigate {
+  text-align: center;
+}
+
+#navigate {
+  .enabled-button, .current-button {
+    width: 20px;
+    height: 30px;
+    border-radius: 3px;
+    margin: 8px 7px;
+    cursor: pointer;
+  }
+
+  .enabled-button {
+    background-color: #fff;
+    color: #000;
+  }
+
+  .current-button {
+    background-color: #000;
+    color: #fff;
+  }
+
+  .current-button:hover {
+    background-color: #fff;
+    color: #000;
+  }
+
+  .enabled-button:hover {
+    background-color: #000;
+    color: #fff;
+  }
+}
+
 #menu h1 {
   text-align: center;
   margin: 50px 0 10px;
@@ -52,6 +91,7 @@
   flex-direction: column;
   margin-left: auto;
   margin-right: auto;
+  
   #add-meal {
     width: 25px;
     height: 25px;
@@ -74,7 +114,34 @@
   display: flex;
   flex-direction: row;
   color: #000000;
+  border-bottom: 2px solid #aaa;
+  background-color: #ededed;
 }
+
+#menu-info {
+  min-width: 30%;
+  height: 80px;
+  text-align: center;
+  margin: 5px 10px;
+  flex-grow: 1;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: row;
+  color: #000000;
+  border-bottom: 2px solid #aaa;
+  background-color: #ededed;
+  cursor: pointer;
+}
+
+.meal-image {
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  padding-top: 5px;
+  margin-left: 20px;
+  margin-right: 40px;
+}
+
 #add-meal-div {
   height: 40px;
   margin-top: 9px;
@@ -84,6 +151,7 @@
   display: block;
   margin: 6px auto;
 }
+
 .cart-order, .order-info, .meals-added, #meal-info {
   display: flex;
   flex-direction: row;
@@ -100,21 +168,34 @@
 .meal-name {
   flex: 2;
 }
+
 #cart {
   margin-top: 20px;
   padding: 20px;
   box-sizing: border-box;
   border: 2px solid #d8d5d5;
   border-radius: 3px;
-  height: 510px;
+  height: 420px;
   box-shadow: 0 2px 5px -1px rgba(0, 0, 0, 0.3);
 }
 
-#menu {
-  p {
-    text-align: center;
-  }
+#business-address {
+  margin-top: 8px;
 }
+
+.business-name {
+  margin-bottom: 10px;
+}
+
+.menu-content-info {
+  flex: 2;
+  text-align: left;
+}
+
+.order-period {
+  text-align: center;
+}
+
 .meals-added input {
   width: 70px;
   margin: 18px 0;
@@ -136,6 +217,7 @@
     text-align: left;
   }
 }
+
 #order {
   color: white;
   background-color: black;
@@ -147,6 +229,7 @@
   width: 100%;
   border-radius: 3px;
 }
+
 #items {
   height: 150px;
 }
@@ -160,7 +243,7 @@
   cursor: not-allowed;
   color: rgb(209, 206, 206);
 }
-.fa-times {
+.remove-meal-cart {
   padding-top: 30px;
   font-size: 20px;
   cursor: pointer;
@@ -184,4 +267,21 @@ hr {
 }
 .orders-placed {
   height: 280px;
+}
+.caterer-info {
+  text-align: center;
+  padding-top: 10px;
+  height: 150px;
+}
+.caterer-info h2 {
+  margin-bottom: 5px;
+  margin-top: 0;
+}
+.caterer-info p {
+  margin-top: 2px;
+}
+.caterer-info img {
+  width: 8%;
+  border: 2px solid white;
+  border-radius: 3px;
 }

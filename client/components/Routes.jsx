@@ -10,7 +10,8 @@ import Navbar from './Navbar';
 import ManageMeal from './Caterer/ManageMeal';
 import ManageMenu from './Caterer/ManageMenu';
 import ManageCatererOrder from './Caterer/ManageOrder';
-import Dashboard from './Customer/Dashboard';
+import AvaliableMenu from './Customer/Dashboard';
+import Meals from './Customer/Dashboard/Meals';
 import ManageCustomerOrder from './Customer/ManageOrder';
 import Login from './Login';
 import Signup from './Signup';
@@ -38,7 +39,8 @@ const Routes = () => (
           <Route exact path="/" component={LandingPage} />
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/login" component={Login} />
-          <UserProtected exact path="/customer/dashboard" component={Dashboard} />
+          <UserProtected exact path="/customer/dashboard/:id" component={AvaliableMenu} />
+          <UserProtected exact path="/customer/dashboard/:id/:businessName" component={Meals} />
           <UserProtected exact path="/customer/order" component={ManageCustomerOrder} />
           <RoleProtected exact path="/caterer/meal" component={ManageMeal} />
           <RoleProtected exact path="/caterer/menu" component={ManageMenu} />

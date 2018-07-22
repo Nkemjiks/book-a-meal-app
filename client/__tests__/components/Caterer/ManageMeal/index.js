@@ -85,6 +85,9 @@ describe('ManageMeal Component', () => {
     const event = {
       preventDefault: jest.fn(),
     };
+    wrapper.setProps({
+      imageUploadProgress: 45,
+    });
     wrapper.instance().imageUploadHandler(event);
     expect(imageUploadHandlerSpy).toHaveBeenCalled();
     expect(imageUploadActionSpy).toHaveBeenCalled();

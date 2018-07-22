@@ -13,13 +13,13 @@ const mealOrderController = {
     const hours = new Date().getHours();
     const minutes = new Date().getMinutes();
     const time = `${hours}:${minutes}`;
-    const date = new Date().toDateString();
 
     const { meals, deliveryAddress } = req.body;
 
-    const menu = await models.menu.findOne({ where: { date } });
-    if (!menu) {
-      return res.status(404).send({ message: 'The menu for today has not been set yet' });
+    const menu = await models.menu.findAll({ limit: 2 });
+
+    if (menu.length === 0) {
+      return res.status(404).send({ message: 'No menu has been created yet' });
     }
 
     return models.order

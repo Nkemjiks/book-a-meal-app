@@ -8,6 +8,7 @@ import '../../../scss/catererManageMenuComponent.scss';
 import getMealsAction from '../../../action/getMealsAction';
 import getUserDetailsAction from '../../../action/getUserDetailsAction';
 import getMenuAction from '../../../action/getMenuAction';
+import removeMealAction from '../../../action/removeMealAction';
 import createMenuAction from '../../../action/createMenuAction';
 import refreshTokenRequest from '../../../helpers/refreshTokenRequest';
 import MenuList from './MenuList';
@@ -83,6 +84,9 @@ export class ManageMenu extends React.Component {
     if (prevProps.menuCreated !== this.props.menuCreated) {
       this.props.getMenuAction();
     }
+    if (prevProps.mealRemoved !== this.props.mealRemoved) {
+      this.props.getMenuAction();
+    }
   }
   /**
    * method called to update state
@@ -103,6 +107,20 @@ export class ManageMenu extends React.Component {
       newState.splice(index, 1);
       this.setState({ menuIds: newState });
     }
+  }
+
+  /**
+   * method called to update state
+   *
+   * @param  {string} mealId meal id
+   * @param  {boolean} isChecked check if meal is already in menu
+   *
+   * @memberof ManageMenu
+   *
+   * @return {undefined} sets state
+   */
+  removeMealFromMenu = (mealId) => {
+    this.props.removeMealAction(mealId);
   }
 
   /**
@@ -136,11 +154,12 @@ export class ManageMenu extends React.Component {
             <h1>Menu</h1>
             <div className="meals-added description">
               <h4>Image</h4>
-              <h4>Price </h4>
+              <h4>Name </h4>
               <h4>Price</h4>
+              <h4>Remove</h4>
             </div>
             <div className="meals">
-              { (this.state.menu.meals) && <MenuList menu={this.state.menu.meals} /> }
+              { (this.state.menu.meals) && <MenuList menu={this.state.menu.meals} removeMealFromMenu={this.removeMealFromMenu} /> }
               { (!this.state.menu.meals) && <p className="no-meal">You have not set the menu</p> }
             </div>
           </div>
@@ -209,14 +228,16 @@ export class ManageMenu extends React.Component {
   }
 }
 
+/* istanbul ignore next */
 const mapStateToProps = ({ catererMeals, catererMenu }) => {
   const { meals, error } = catererMeals;
-  const { menu, menuCreated } = catererMenu;
+  const { menu, menuCreated, mealRemoved } = catererMenu;
   return {
     meals,
     error,
     menu,
     menuCreated,
+    mealRemoved,
   };
 };
 
@@ -225,6 +246,7 @@ const mapActionToProps = {
   getMealsAction,
   getMenuAction,
   createMenuAction,
+  removeMealAction,
 };
 
 ManageMenu.propTypes = {
@@ -232,8 +254,10 @@ ManageMenu.propTypes = {
   getMealsAction: PropTypes.func.isRequired,
   getMenuAction: PropTypes.func.isRequired,
   createMenuAction: PropTypes.func.isRequired,
+  removeMealAction: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
   menuCreated: PropTypes.bool.isRequired,
+  mealRemoved: PropTypes.bool.isRequired,
 };
 
 export default withRouter(connect(mapStateToProps, mapActionToProps)(ManageMenu));

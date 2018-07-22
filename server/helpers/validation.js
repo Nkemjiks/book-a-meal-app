@@ -46,7 +46,31 @@ export const signInValidation = (req, res, next) => {
 };
 
 /**
- * @description Validate add meal inputs and caterer id
+ * @description Validate user role update
+ * @param  {Object} req - The object that returns a response
+ * @param  {Object} res - The object that sends the request
+ * @param  {Object} next - The object that tells the next action to take place
+ * @returns {Object}
+ */
+export const roleUpdateValidation = (req, res, next) => {
+  const {
+    businessName,
+    logoURL,
+    businessAddress,
+  } = req.body;
+
+  if (!(businessName) || (/^ *$/.test(businessName) === true) || (/^[a-zA-Z ]+$/.test(businessName) === false) || typeof businessName !== 'string') {
+    return res.status(400).send({ message: 'Please provide a valid business name' });
+  } else if (typeof logoURL !== 'string' || (/[<>]/.test(logoURL) === true) || (/^ *$/.test(logoURL) === true)) {
+    return res.status(400).send({ message: 'Please provide a valid logo URL' });
+  } else if (!businessAddress || (/^ *$/.test(businessAddress) === true) || (/[<>]/.test(businessAddress) === true) || (/[=]/.test(businessAddress) === true) || typeof businessAddress !== 'string') {
+    return res.status(400).send({ message: 'Please provide a valid address' });
+  }
+  return next();
+};
+
+/**
+ * @description Validate add meal inputs
  * @param  {Object} req - The object that returns a response
  * @param  {Object} res - The object that sends the request
  * @param  {Object} next - The object that tells the next action to take place

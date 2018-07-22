@@ -288,6 +288,7 @@ export class OrderHistoryContent extends React.Component {
   }
 }
 
+/* istanbul ignore next */
 const mapStateToProps = ({ customerOrder }) => {
   const { orderModified } = customerOrder;
   return {

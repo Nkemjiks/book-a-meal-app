@@ -14,6 +14,7 @@ import {
 import {
   signupValidation,
   signInValidation,
+  roleUpdateValidation,
   addMealValidation,
   modifyMealValidation,
   menuMealsValidation,
@@ -31,6 +32,7 @@ const routes = (app) => {
     '/auth/update',
     verifyToken,
     checkAuthenticatedUser,
+    roleUpdateValidation,
     userController.updateUserRole,
   );
   app.post('/auth/token', verifyToken, userController.refreshToken);
@@ -78,7 +80,14 @@ const routes = (app) => {
     checkUserRole,
     menuController.getCatererMenu,
   );
-  app.get('/menu/customer', menuController.getAllMenu);
+  app.put(
+    '/menu/:id',
+    verifyToken,
+    checkUserRole,
+    menuController.removeMealFromMenu,
+  );
+  app.get('/menu/:offset', menuController.getAvailableMenu);
+  app.get('/menu/meal/:id', menuController.getMealsInMenu);
 
   // Meal Order routes
   app.post(
@@ -113,6 +122,9 @@ const routes = (app) => {
     orderValidation,
     orderController.modifyOrder,
   );
+
+  // API docs
+  app.get('/docs', res => res.redirect('https://bookameal24.docs.apiary.io/#'));
 };
 
 export default routes;

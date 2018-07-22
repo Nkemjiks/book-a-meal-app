@@ -53,6 +53,18 @@ module.exports = (sequelize, DataTypes) => {
         isIn: { args: [['customer', 'caterer']], msg: 'You can only be either a caterer or customer' },
       },
     },
+    businessName: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    logoURL: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    businessAddress: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   });
   user.associate = (models) => {
     user.hasMany(models.meal, {

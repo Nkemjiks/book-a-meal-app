@@ -1,5 +1,5 @@
 import { ADD_MEAL_SUCCESS, ADD_MEAL_FAILURE } from '../actionTypes';
-import axios, { config } from '../helpers/axios';
+import axios from '../helpers/axios';
 import displayToast from '../helpers/displayToast';
 
 /**
@@ -8,7 +8,7 @@ import displayToast from '../helpers/displayToast';
 *
 * @returns {Promise}  - dispatches action with true or false
 */
-const addMealAction = mealData => dispatch => axios.post('/meals', mealData, config)
+const addMealAction = mealData => dispatch => axios.post('/meals', mealData)
   .then(() => {
     dispatch({
       type: ADD_MEAL_SUCCESS,
