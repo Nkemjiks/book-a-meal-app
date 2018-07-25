@@ -1,0 +1,62 @@
+14:19:48.588 INFO - Selenium build info: version: '3.9.1', revision: '63f7b50'
+14:19:48.589 INFO - Launching a standalone Selenium Server on port 4444
+2018-07-24 14:19:48.757:INFO::main: Logging initialized @494ms to org.seleniumhq.jetty9.util.log.StdErrLog
+2018-07-24 14:19:48.901:INFO:osjs.Server:main: jetty-9.4.7.v20170914, build timestamp: 2017-11-21T22:27:37+01:00, git hash: 82b8fb23f757335bb3329d540ce37a2a2615f0a8
+2018-07-24 14:19:48.924:WARN:osjs.SecurityHandler:main: ServletContext@o.s.j.s.ServletContextHandler@5ba3f27a{/,null,STARTING} has uncovered http methods for path: /
+2018-07-24 14:19:48.929:INFO:osjsh.ContextHandler:main: Started o.s.j.s.ServletContextHandler@5ba3f27a{/,null,AVAILABLE}
+2018-07-24 14:19:48.957:INFO:osjs.AbstractConnector:main: Started ServerConnector@6892b3b6{HTTP/1.1,[http/1.1]}{0.0.0.0:4444}
+2018-07-24 14:19:48.958:INFO:osjs.Server:main: Started @695ms
+14:19:48.958 INFO - Selenium Server is up and running on port 4444
+2018-07-24 14:19:49.191:INFO:osjshC.ROOT:qtp1388278453-13: org.openqa.selenium.remote.server.WebDriverServlet-482bce4f: Initialising WebDriverServlet
+14:19:49.257 INFO - Found handler: org.openqa.selenium.remote.server.commandhandler.BeginSession@52a828f1
+14:19:49.260 INFO - /session: Executing POST on /session (handler: BeginSession)
+14:19:49.326 INFO - Capabilities are: Capabilities {acceptSslCerts: true, browserName: chrome, chromeOptions: {args: [--no-sandbox]}, javascriptEnabled: true, name: Test}
+14:19:49.328 INFO - Capabilities {acceptSslCerts: true, browserName: chrome, chromeOptions: {args: [--no-sandbox]}, javascriptEnabled: true, name: Test} matched class org.openqa.selenium.remote.server.ServicedSession$Factory (provider: org.openqa.selenium.chrome.ChromeDriverService)
+Starting ChromeDriver 2.40.565386 (45a059dc425e08165f9a10324bd1380cc13ca363) on port 10569
+Only local connections are allowed.
+14:19:50.103 INFO - Detected dialect: OSS
+14:19:50.524 INFO - Found handler: org.openqa.selenium.remote.server.ServicedSession@31b69ccf
+14:19:50.525 INFO - Handler thread for session 8455da0dfa0f21d857a3bbe7d60a062a (chrome): Executing POST on /session/8455da0dfa0f21d857a3bbe7d60a062a/url (handler: ServicedSession)
+14:19:50.527 INFO - To upstream: {"url":"https://www.google.com"}
+14:19:53.618 INFO - To downstream: {"sessionId":"8455da0dfa0f21d857a3bbe7d60a062a","status":0,"value":null}
+14:19:53.623 INFO - Found handler: org.openqa.selenium.remote.server.ServicedSession@31b69ccf
+14:19:53.623 INFO - Handler thread for session 8455da0dfa0f21d857a3bbe7d60a062a (chrome): Executing POST on /session/8455da0dfa0f21d857a3bbe7d60a062a/elements (handler: ServicedSession)
+14:19:53.624 INFO - To upstream: {"using":"css selector","value":"body"}
+14:19:53.636 INFO - To downstream: {"sessionId":"8455da0dfa0f21d857a3bbe7d60a062a","status":0,"value":[{"ELEMENT":"0.10602243975541259-1"}]}
+14:19:53.641 INFO - Found handler: org.openqa.selenium.remote.server.ServicedSession@31b69ccf
+14:19:53.642 INFO - Handler thread for session 8455da0dfa0f21d857a3bbe7d60a062a (chrome): Executing GET on /session/8455da0dfa0f21d857a3bbe7d60a062a/element/0.10602243975541259-1/displayed (handler: ServicedSession)
+14:19:53.651 INFO - To downstream: {"sessionId":"8455da0dfa0f21d857a3bbe7d60a062a","status":0,"value":true}
+14:19:53.656 INFO - Found handler: org.openqa.selenium.remote.server.ServicedSession@31b69ccf
+14:19:53.656 INFO - Handler thread for session 8455da0dfa0f21d857a3bbe7d60a062a (chrome): Executing POST on /session/8455da0dfa0f21d857a3bbe7d60a062a/element (handler: ServicedSession)
+14:19:53.659 INFO - To upstream: {"using":"css selector","value":"input[type=text]"}
+14:19:53.670 INFO - To downstream: {"sessionId":"8455da0dfa0f21d857a3bbe7d60a062a","status":0,"value":{"ELEMENT":"0.10602243975541259-2"}}
+14:19:53.673 INFO - Found handler: org.openqa.selenium.remote.server.ServicedSession@31b69ccf
+14:19:53.673 INFO - Handler thread for session 8455da0dfa0f21d857a3bbe7d60a062a (chrome): Executing POST on /session/8455da0dfa0f21d857a3bbe7d60a062a/element/0.10602243975541259-2/value (handler: ServicedSession)
+14:19:53.674 INFO - To upstream: {"value":["n","i","g","h","t","w","a","t","c","h"]}
+14:19:53.764 INFO - To downstream: {"sessionId":"8455da0dfa0f21d857a3bbe7d60a062a","status":0,"value":null}
+14:19:53.767 INFO - Found handler: org.openqa.selenium.remote.server.ServicedSession@31b69ccf
+14:19:53.767 INFO - Handler thread for session 8455da0dfa0f21d857a3bbe7d60a062a (chrome): Executing POST on /session/8455da0dfa0f21d857a3bbe7d60a062a/elements (handler: ServicedSession)
+14:19:53.768 INFO - To upstream: {"using":"css selector","value":"input[type=submit]"}
+14:19:53.778 INFO - To downstream: {"sessionId":"8455da0dfa0f21d857a3bbe7d60a062a","status":0,"value":[{"ELEMENT":"0.10602243975541259-3"},{"ELEMENT":"0.10602243975541259-4"}]}
+14:19:53.782 INFO - Found handler: org.openqa.selenium.remote.server.ServicedSession@31b69ccf
+14:19:53.782 INFO - Handler thread for session 8455da0dfa0f21d857a3bbe7d60a062a (chrome): Executing GET on /session/8455da0dfa0f21d857a3bbe7d60a062a/element/0.10602243975541259-3/displayed (handler: ServicedSession)
+14:19:53.795 INFO - To downstream: {"sessionId":"8455da0dfa0f21d857a3bbe7d60a062a","status":0,"value":true}
+14:19:53.799 INFO - Found handler: org.openqa.selenium.remote.server.ServicedSession@31b69ccf
+14:19:53.799 INFO - Handler thread for session 8455da0dfa0f21d857a3bbe7d60a062a (chrome): Executing POST on /session/8455da0dfa0f21d857a3bbe7d60a062a/element (handler: ServicedSession)
+14:19:53.800 INFO - To upstream: {"using":"css selector","value":"input[name=btnK]"}
+14:19:53.815 INFO - To downstream: {"sessionId":"8455da0dfa0f21d857a3bbe7d60a062a","status":0,"value":{"ELEMENT":"0.10602243975541259-3"}}
+14:19:53.818 INFO - Found handler: org.openqa.selenium.remote.server.ServicedSession@31b69ccf
+14:19:53.819 INFO - Handler thread for session 8455da0dfa0f21d857a3bbe7d60a062a (chrome): Executing POST on /session/8455da0dfa0f21d857a3bbe7d60a062a/element/0.10602243975541259-3/click (handler: ServicedSession)
+14:19:53.821 INFO - To upstream: 
+14:19:56.351 INFO - To downstream: {"sessionId":"8455da0dfa0f21d857a3bbe7d60a062a","status":0,"value":null}
+14:19:57.358 INFO - Found handler: org.openqa.selenium.remote.server.ServicedSession@31b69ccf
+14:19:57.359 INFO - Handler thread for session 8455da0dfa0f21d857a3bbe7d60a062a (chrome): Executing POST on /session/8455da0dfa0f21d857a3bbe7d60a062a/element (handler: ServicedSession)
+14:19:57.360 INFO - To upstream: {"using":"css selector","value":"#main"}
+14:19:57.371 INFO - To downstream: {"sessionId":"8455da0dfa0f21d857a3bbe7d60a062a","status":0,"value":{"ELEMENT":"0.026444155019117233-1"}}
+14:19:57.373 INFO - Found handler: org.openqa.selenium.remote.server.ServicedSession@31b69ccf
+14:19:57.374 INFO - Handler thread for session 8455da0dfa0f21d857a3bbe7d60a062a (chrome): Executing GET on /session/8455da0dfa0f21d857a3bbe7d60a062a/element/0.026444155019117233-1/text (handler: ServicedSession)
+14:19:57.595 INFO - To downstream: {"sessionId":"8455da0dfa0f21d857a3bbe7d60a062a","status":0,"value":"AllImagesNewsVideosBooksMore\nSettings\nTools\nAbout 7,510,000 results (0.55 seconds) \n\n\nNightwatch.js | Node.js powered End-to-End testing framework\nnightwatchjs.org/\nWrite efficient and straightforward end-to-end tests in Node.js which run against a Selenium/WebDriver server.\nWhat is Nightwatch? · Configuration · Using Nightwatch · Running Tests\nNightcloud.io | Nightwatch.js cloud testing platform\nnightcloud.io/\nNightCloud.io. Run and manage your Nightwatch tests with absolutely no hassle, no config, no nonsense. NightCloud.io. About ...\nGitHub - nightwatchjs/nightwatch: Automated testing and continuous ...\nhttps://github.com/nightwatchjs/nightwatch\nNightwatch. Automated testing framework powered by Node.js and using W3C Webdriver (formerly Selenium). Nightwatch is a complete and integrated solution ...\nVideos\n1:55\nNightwatch: What Are the Differences Between a Nurse and a ...\nA&E\nYouTube - Mar 3, 2017\n3:18\nNightwatch: An EMT is Assaulted (Season 2, Episode 6)| A&E\nA&E\nYouTube - Dec 21, 2015\n2:52\nNightwatch: A Fleeing Driver Pulls a Gun (Season 2, Episode 2) | A&E\nA&E\nYouTube - Nov 16, 2015\n2:54\nNight Watch Trailer 2004\nCalvin Edward\nYouTube - Sep 5, 2013\n12:58\nHow to tell if your website is ranking Google - Nightwatch and Ahrefs ...\nTriston Goodwin\nYouTube - Apr 1, 2017\n2:49\nNightwatch: The Child Whisperer (Season 3, Episode 10) | A&E\nA&E\nYouTube - Sep 26, 2017\n2:37\nNightwatch: A Diva Gets Stabbed in the Back (Season 3, Episode 2 ...\nA&E\nYouTube - Sep 26, 2017\n1:48\nNightwatching (Trailer)\nICA\nYouTube - Feb 26, 2010\n6:23\nThe Unveiling of \"The Night Watch\" - P. Greenaway, Nightwatching ...\nTheLyulai\nYouTube - Apr 3, 2011\n6:38\nRembrandt, The Night Watch (video)\nSmarthistory. art...\nKhan Academy - Mar 5, 2015\nnightwatch - npm\nhttps://www.npmjs.com/package/nightwatch\nNightwatch works with the Selenium standalone server so the first thing you need to do is download the selenium server jar file selenium-server-standalone-2.\nAutomate your UI testing with Nightwatch - Juri Strumpflohner\nhttps://juristr.com/blog/2014/02/nightwatch-test-automation/\nAutomate your UI testing with Nightwatch. Automated UI testing awesomeness based on Node and Selenium. Wanna keep up to date with the latest webdev ...\nE2E Testing with Nightwatch: Part One – Frontend Weekly – Medium\nhttps://medium.com/front-end.../e2e-testing-with-nightwatch-part-one-309c221b7a98\nOct 11, 2017 - So what is Nightwatch? Nightwatch is an automated testing framework for web applications and websites, written in Node.js and using the W3C ...\nJavaScript Functional Testing with Nightwatch.js — SitePoint\nhttps://www.sitepoint.com › ... › Node.js IDEs, Frameworks, Tools & Other Resources\nAug 10, 2016 - Nightwatch.js describes itself an a Node.js powered end-to-end testing framework. It relies on Selenium, a project aimed at facilitating web ...\nNight Watch (2004 film) - Wikipedia\nhttps://en.wikipedia.org/wiki/Night_Watch_(2004_film)\nNight Watch is a 2004 Russian urban fantasy supernatural thriller film written by Timur Bekmambetov and Laeta Kalogridis and directed by Timur Bekmambetov.\nBased on: The Night Watch; by Sergei Lukyan... Release date: 8 July 2004 (Russia)\nLanguage: Russian Music by: Yuri Poteyenko\nSelenium testing with Nightwatch | BrowserStack\nhttps://www.browserstack.com/automate/nightwatch\nYour guide to running Selenium Webdriver tests with Nightwatch on BrowserStack.\nSearches related to nightwatch\nnightwatch testing\nnightwatch tutorial for beginners\nnightwatch js tutorial\nnightwatch github\nnightwatch.js examples\nnightwatch execute\nnpm nightwatch\nnightwatch js wiki\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\nNext\nSee results about\nNight Watch (2004 film)\nInitial release: 8 July 2004 (Kazakhstan)\nDirector: Timur Bekmambetov\nNigeria Ilupeju Industrial Estate, Lagos - From your Internet address - Use precise location - Learn more\nHelpSend feedbackPrivacyTerms"}
+14:19:57.602 INFO - Found handler: org.openqa.selenium.remote.server.ServicedSession@31b69ccf
+14:19:57.602 INFO - Handler thread for session 8455da0dfa0f21d857a3bbe7d60a062a (chrome): Executing DELETE on /session/8455da0dfa0f21d857a3bbe7d60a062a (handler: ServicedSession)
+14:19:57.656 INFO - To downstream: {"sessionId":"8455da0dfa0f21d857a3bbe7d60a062a","status":0,"value":null}
+14:19:57.660 INFO - Removing session org.openqa.selenium.remote.server.ServicedSession@31b69ccf
