@@ -1,5 +1,8 @@
 module.exports = {
     "extends": "airbnb",
+    "ecmaFeatures": {
+      modules: true
+    },
     "rules": {
         "consistent-return": 0,
         "import/no-extraneous-dependencies": 0,
@@ -11,6 +14,7 @@ module.exports = {
         "jsx-a11y/click-events-have-key-events": 0,
         "react/jsx-filename-extension": 0,
         "import/no-named-as-default": 0,
+        "no-undef" : 2
     },
     "globals": {
         "describe": true,
@@ -27,4 +31,7 @@ module.exports = {
         "jest": true,
     },
     "parser": "babel-eslint",
+    "parserOptions": {
+        "sourceType": "module"
+    }
 };

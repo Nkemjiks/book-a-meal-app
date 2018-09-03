@@ -36,9 +36,8 @@ describe('Meals Component', () => {
   const mountWrapper = mount(<AvaliableMenuContent {...props} />);
   it('should render unconnected component properly', () => {
     expect(mountWrapper.find('#menu-info').length).toBe(1);
-    expect(mountWrapper.find('h3').length).toBe(1);
     expect(mountWrapper.find('div').length).toBe(3);
-    expect(mountWrapper.find('p').length).toBe(1);
+    expect(mountWrapper.find('p').length).toBe(2);
   });
   it('should call the handle click method and load the meals page', () => {
     const handleClickSpy = jest.spyOn(mountWrapper.instance(), 'handleClick');

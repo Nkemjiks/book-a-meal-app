@@ -32,6 +32,8 @@ describe('updateUserRoleAction action', () => {
         type: USER_ROLE_UPDATE_SUCCESS,
         payload: { message: 'User role updated successfully' },
       },
+      { payload: 0, type: 'UPLOAD_IMAGE_PROGRESS' },
+      { payload: '', type: 'IMAGE_UPLOAD_URL' },
     ];
 
     const store = mockStore({});

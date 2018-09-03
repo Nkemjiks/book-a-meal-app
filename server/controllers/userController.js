@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import models from '../models';
-import { filterUserDetail } from '../helpers/filter';
+import { filterUserDetail, filterUserDetailForToken } from '../helpers/filter';
 import { generateToken } from '../helpers/token';
 
 const userController = {
@@ -37,7 +37,8 @@ const userController = {
           return res.status(409).send({ message: 'A User already exist with this email address' });
         }
         const filteredUserDetail = filterUserDetail(user);
-        const token = generateToken(filteredUserDetail);
+        const filterToken = filterUserDetailForToken(user);
+        const token = generateToken(filterToken);
         return res.status(201).send({ message: 'User successfully created', data: filteredUserDetail, token });
       })
       .catch(err => res.status(500).send({ message: err.message }));
@@ -52,20 +53,14 @@ const userController = {
   refreshToken(req, res) {
     const {
       id,
-      fullName,
       email,
-      phoneNumber,
       role,
-      address,
     } = req.decoded;
 
     const userDetails = {
       id,
-      fullName,
       email,
-      phoneNumber,
       role,
-      address,
     };
 
     const token = generateToken(userDetails);
@@ -88,7 +83,8 @@ const userController = {
           const hashPassword = user.password;
           if (bcrypt.compareSync(password, hashPassword)) {
             const filteredUserDetail = filterUserDetail(user);
-            const token = generateToken(filteredUserDetail);
+            const filterToken = filterUserDetailForToken(user);
+            const token = generateToken(filterToken);
             return res.status(200).send({ message: 'Signin successful', data: filteredUserDetail, token });
           }
           return res.status(401).send({ message: 'Email or password is incorrect' });
@@ -120,7 +116,8 @@ const userController = {
               businessAddress,
             });
             const filteredUserDetail = filterUserDetail(user);
-            const token = generateToken(filteredUserDetail);
+            const filterToken = filterUserDetailForToken(user);
+            const token = generateToken(filterToken);
             return res.status(200).send({ message: 'Update successful', data: filteredUserDetail, token });
           }
           return res.status(409).send({ message: 'You are already a caterer' });

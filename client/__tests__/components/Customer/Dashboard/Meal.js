@@ -25,7 +25,6 @@ describe('Meal Component', () => {
   it('should render unconnected component properly', () => {
     expect(wrapper.find('#meal-info').length).toBe(1);
     expect(wrapper.find('img').length).toBe(1);
-    expect(wrapper.find('h4').length).toBe(1);
     expect(wrapper.find('i').length).toBe(1);
     expect(wrapper.find('div').length).toBe(3);
     expect(wrapper.find('strong').length).toBe(1);

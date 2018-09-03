@@ -10,7 +10,7 @@ const wrapper = shallow(<Routes />);
 describe('Route Component', () => {
   it('renders Route component correctly', () => {
     expect((wrapper).find('Provider').length).toBe(1);
-    expect((wrapper).find('Router').length).toBe(1);
+    expect((wrapper).find('HashRouter').length).toBe(1);
     expect((wrapper).find('Switch').length).toBe(1);
     expect((wrapper).find('Route').length).toBe(4);
     expect((wrapper).find('UserProtected').length).toBe(3);

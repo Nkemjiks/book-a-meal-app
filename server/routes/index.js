@@ -7,6 +7,7 @@ import userController from '../controllers/userController';
 import {
   checkUserRole,
   checkAuthenticatedUser,
+  checkValidMealIds,
   checkValidMealId,
 } from '../helpers/middlewares';
 
@@ -19,6 +20,9 @@ import {
   modifyMealValidation,
   menuMealsValidation,
   orderValidation,
+  idValidation,
+  limitOffsetValidation,
+  catererIdValidation,
 } from '../helpers/validation';
 
 // Import Token Verification
@@ -26,8 +30,16 @@ import { verifyToken } from '../helpers/token';
 
 const routes = (app) => {
   // User route
-  app.post('/auth/signup', signupValidation, userController.addUser);
-  app.post('/auth/login', signInValidation, userController.logInUser);
+  app.post(
+    '/auth/signup',
+    signupValidation,
+    userController.addUser,
+  );
+  app.post(
+    '/auth/login',
+    signInValidation,
+    userController.logInUser,
+  );
   app.put(
     '/auth/update',
     verifyToken,
@@ -35,7 +47,11 @@ const routes = (app) => {
     roleUpdateValidation,
     userController.updateUserRole,
   );
-  app.post('/auth/token', verifyToken, userController.refreshToken);
+  app.post(
+    '/auth/token',
+    verifyToken,
+    userController.refreshToken,
+  );
 
   // Meal routes
   app.post(
@@ -55,6 +71,7 @@ const routes = (app) => {
     '/meals/:id',
     verifyToken,
     checkUserRole,
+    idValidation,
     modifyMealValidation,
     mealController.modifyMeal,
   );
@@ -62,6 +79,7 @@ const routes = (app) => {
     '/meals/:id',
     verifyToken,
     checkUserRole,
+    idValidation,
     mealController.deleteMeal,
   );
 
@@ -71,7 +89,7 @@ const routes = (app) => {
     verifyToken,
     checkUserRole,
     menuMealsValidation,
-    checkValidMealId,
+    checkValidMealIds,
     menuController.createMenu,
   );
   app.get(
@@ -84,10 +102,20 @@ const routes = (app) => {
     '/menu/:id',
     verifyToken,
     checkUserRole,
+    idValidation,
+    checkValidMealId,
     menuController.removeMealFromMenu,
   );
-  app.get('/menu/:offset', menuController.getAvailableMenu);
-  app.get('/menu/meal/:id', menuController.getMealsInMenu);
+  app.get(
+    '/menu/',
+    limitOffsetValidation,
+    menuController.getAvailableMenu,
+  );
+  app.get(
+    '/menu/meal/:id',
+    idValidation,
+    menuController.getMealsInMenu,
+  );
 
   // Meal Order routes
   app.post(
@@ -95,6 +123,7 @@ const routes = (app) => {
     verifyToken,
     checkAuthenticatedUser,
     orderValidation,
+    catererIdValidation,
     orderController.placeOrder,
   );
   app.get(
@@ -107,6 +136,7 @@ const routes = (app) => {
     '/orders/caterer/all',
     verifyToken,
     checkUserRole,
+    limitOffsetValidation,
     orderController.getAllCatererOrder,
   );
   app.get(
@@ -119,12 +149,17 @@ const routes = (app) => {
     '/orders/:id',
     verifyToken,
     checkAuthenticatedUser,
+    idValidation,
     orderValidation,
     orderController.modifyOrder,
   );
 
   // API docs
   app.get('/docs', res => res.redirect('https://bookameal24.docs.apiary.io/#'));
+
+  app.use((req, res) => {
+    res.status(404).send({ message: 'The resource you are looking for does not exist' });
+  });
 };
 
 export default routes;

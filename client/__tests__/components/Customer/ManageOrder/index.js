@@ -31,8 +31,8 @@ describe('ManageOrder Component', () => {
   it('should render unconnected component properly', () => {
     expect(mountWrapper.find('.dashboard').length).toBe(1);
     expect(mountWrapper.find('h1').length).toBe(1);
-    expect(mountWrapper.find('h4').length).toBe(5);
-    expect(mountWrapper.find('div').length).toBe(5);
+    expect(mountWrapper.find('table').length).toBe(1);
+    expect(mountWrapper.find('div').length).toBe(4);
     expect(mountWrapper.find('h1').first().text()).toBe('Order History');
   });
   it('should call component did mount to dispatch action', () => {

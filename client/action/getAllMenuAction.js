@@ -4,7 +4,7 @@ import axios from '../helpers/axios';
 /**
 * @returns {Promise}  - dispatches action with all menu set for the day
 */
-const getAllMenuAction = offset => dispatch => axios.get(`/menu/${offset}`)
+const getAllMenuAction = (offset, limit) => dispatch => axios.get(`/menu?limit=${limit}&offset=${offset}`)
   .then((response) => {
     dispatch({
       type: GET_ALL_MENU_SUCCESS,

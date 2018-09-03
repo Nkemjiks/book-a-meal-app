@@ -6,10 +6,11 @@ import ConnectedManageMeal, { ManageMeal } from '../../../../components/Caterer/
 import userInformation from '../../../../mocks/userInformation';
 import { meals } from '../../../../mocks/catererMealDetails';
 
+const promise = Promise.resolve();
 const props = {
   getUserDetailsAction: jest.fn(),
   getMealsAction: jest.fn(),
-  addMealAction: jest.fn(),
+  addMealAction: jest.fn(() => promise),
   imageUploadAction: jest.fn(),
   history: {},
   meals,

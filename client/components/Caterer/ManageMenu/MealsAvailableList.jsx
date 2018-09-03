@@ -15,6 +15,7 @@ const MealsAvailableList = ({ meals, addMealIdToArray, mealsInMenuId }) => (
     <Fragment key={meal.id}>
       <MealsAvailable
         meal={meal}
+        key={meal.id}
         addMealIdToArray={addMealIdToArray}
         mealsInMenuId={mealsInMenuId}
       />

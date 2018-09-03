@@ -129,7 +129,7 @@ export class OrderHistoryContent extends React.Component {
     this.props.order.meals.forEach((meal) => {
       const mealId = meal.id;
       const mealPrice = meal.price;
-      const { quantity } = meal.orderItems;
+      const { quantity } = meal;
       orders.push({ mealId, quantity });
       mealsInOrder.push({ mealPrice, quantity });
     });
@@ -216,6 +216,7 @@ export class OrderHistoryContent extends React.Component {
   render() {
     const { order } = this.props;
     let subTotal = 0;
+
     return (
       <Fragment>
         <Modal
@@ -259,26 +260,35 @@ export class OrderHistoryContent extends React.Component {
           </div>
         </Modal>
         <div className="orderHistory" id="orderHistory">
-          <div className="order-info">
-            <p>{order.id}</p>
-            <p>{order.date}</p>
-            <p>{order.time}</p>
-            {
-              this.props.order.meals.map((meal) => {
-                subTotal += (meal.orderItems.quantity * meal.price);
-                return null;
-              })
-            }
-            <p>&#8358; {subTotal}</p>
-            <div id="modify-div">
-              <i id={order.id} onClick={this.openEditModal} className="far fa-edit" />
-            </div>
-          </div>
+          <table>
+            <tbody>
+              <tr>
+                <td>{order.id}</td>
+                <td>{order.date}</td>
+                <td>{order.time}</td>
+                {
+                  this.props.order.meals.map((meal) => {
+                    subTotal += (meal.quantity * meal.price);
+                    return null;
+                  })
+                }
+                <td>&#8358; {subTotal}</td>
+                <td>
+                  {
+                    ((((Date.now() - new Date(order.createdAt).getTime()) / 1000) / 60) < 60) &&
+                    <div id="modify-div">
+                      <i id={order.id} onClick={this.openEditModal} className="far fa-edit" />
+                    </div>
+                  }
+                </td>
+              </tr>
+            </tbody>
+          </table>
           <hr />
           {
             order.meals.map(meal => (
               <Fragment key={meal.id}>
-                <p><strong>{meal.name}</strong> - {meal.orderItems.quantity} plate(s)</p>
+                <p><strong>{meal.name}</strong> - {meal.quantity} plate(s)</p>
               </Fragment>
             ))
           }

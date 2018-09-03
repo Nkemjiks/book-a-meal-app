@@ -1,6 +1,5 @@
 import React from 'react';
-import { createBrowserHistory } from 'history';
-import { Router, Route, Switch } from 'react-router-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 
@@ -21,8 +20,6 @@ import { UserProtected, RoleProtected } from './Protect';
 
 import store from '../store';
 
-const history = createBrowserHistory();
-
 /**
  * landing page of the application
  *
@@ -32,15 +29,15 @@ const history = createBrowserHistory();
  */
 const Routes = () => (
   <Provider store={store}>
-    <Router history={history}>
+    <HashRouter>
       <div>
         <Navbar />
         <Switch>
           <Route exact path="/" component={LandingPage} />
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/login" component={Login} />
-          <UserProtected exact path="/customer/dashboard/:id" component={AvaliableMenu} />
-          <UserProtected exact path="/customer/dashboard/:id/:businessName" component={Meals} />
+          <UserProtected exact path="/customer/dashboard" component={AvaliableMenu} />
+          <UserProtected exact path="/customer/dashboard/:businessName" component={Meals} />
           <UserProtected exact path="/customer/order" component={ManageCustomerOrder} />
           <RoleProtected exact path="/caterer/meal" component={ManageMeal} />
           <RoleProtected exact path="/caterer/menu" component={ManageMenu} />
@@ -49,7 +46,7 @@ const Routes = () => (
         </Switch>
         <ToastContainer />
       </div>
-    </Router>
+    </HashRouter>
   </Provider>
 );
 

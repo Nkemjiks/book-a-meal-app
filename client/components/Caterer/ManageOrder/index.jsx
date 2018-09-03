@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import Pagination from 'react-js-pagination';
 
 import getUserDetailsAction from '../../../action/getUserDetailsAction';
 import getCatererOrderAction from '../../../action/getCatererOrderAction';
@@ -52,6 +53,7 @@ export class ManageOrder extends React.Component {
     totalOrders: 0,
     todayTotalSales: 0,
     totalSales: 0,
+    activePage: 1,
   }
 
   /**
@@ -63,16 +65,17 @@ export class ManageOrder extends React.Component {
    */
   componentDidMount() {
     refreshTokenRequest(this.props.history);
+    const offset = (Number(this.state.activePage) - 1) * 10;
     const user = JSON.parse(window.localStorage.getItem('@#$user'));
     this.props.getUserDetailsAction(user);
     this.props.getCatererOrderAction();
-    this.props.getAllCatererOrderAction();
+    this.props.getAllCatererOrderAction(offset, 10);
     const time = new Date().getHours();
     if ((Number(time) >= 9) && (Number(time) < 16)) {
       /* istanbul ignore next */
       this.refreshInterval = setInterval(() => {
         this.props.getCatererOrderAction();
-        this.props.getAllCatererOrderAction();
+        this.props.getAllCatererOrderAction(offset, 10);
       }, 300000);
     } else {
       clearInterval(this.refreshInterval);
@@ -88,6 +91,19 @@ export class ManageOrder extends React.Component {
    */
   componentWillUnmount() {
     clearInterval(this.refreshInterval);
+  }
+
+  /**
+   * handle pagination
+   *
+   * @memberof ManageOrder
+   *
+   * @returns {undefined} generate all pages with links to the next page
+   */
+  handlePageChange = (pageNumber) => {
+    this.setState({ activePage: pageNumber });
+    const offset = (Number(pageNumber) - 1) * 10;
+    this.props.getAllCatererOrderAction(offset, 10);
   }
 
   /**
@@ -119,8 +135,6 @@ export class ManageOrder extends React.Component {
               <h4>Customer</h4>
               <h4>Phone Number</h4>
               <h4>Email Address</h4>
-              <h4>Meal name</h4>
-              <h4>Quantity</h4>
               <h4>Order Id</h4>
               <h4>Address</h4>
             </div>
@@ -146,8 +160,6 @@ export class ManageOrder extends React.Component {
               <h4>Customer</h4>
               <h4>Phone Number</h4>
               <h4>Email Address</h4>
-              <h4>Meal name</h4>
-              <h4>Quantity</h4>
               <h4>Order Id</h4>
               <h4>Address</h4>
             </div>
@@ -164,6 +176,20 @@ export class ManageOrder extends React.Component {
                 <p className="message">You do not have any order yet</p>
               }
             </div>
+            {
+              (this.state.allOrders.count !== 0) &&
+                <div id="paginate">
+                  <Pagination
+                    hideDisabled
+                    activePage={this.state.activePage}
+                    itemsCountPerPage={10}
+                    totalItemsCount={this.state.allOrders.count}
+                    pageRangeDisplayed={5}
+                    onChange={this.handlePageChange}
+                    getPageUrl={() => `${window.location.origin}/#/caterer/order`}
+                  />
+                </div>
+              }
           </div>
         </div>
       </div>

@@ -22,6 +22,8 @@ describe('addMeal action', () => {
 
     const expectedActions = [
       { type: ADD_MEAL_SUCCESS, payload: true },
+      { payload: 0, type: 'UPLOAD_IMAGE_PROGRESS' },
+      { payload: '', type: 'IMAGE_UPLOAD_URL' },
     ];
 
     const store = mockStore({});

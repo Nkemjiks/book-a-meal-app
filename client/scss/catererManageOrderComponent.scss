@@ -72,7 +72,7 @@
 #incoming-orders {
   margin-right: 10px;
   margin-left: 10px;
-  height: 400px;
+  height: 700px;
 }
 #incoming-orders {
   margin-bottom: 15px;
@@ -83,4 +83,20 @@
 }
 #order-summary-general {
   display: flex;
+}
+.orders-placed {
+  height: 440px;
+}
+#paginate {
+  text-align: center;
+}
+
+#order-container {
+  border: 2px solid #e0dede;
+  margin-top: 10px;
+  border-radius: 3px;
+}
+
+#order-container > p {
+  padding-left: 13px;
 }

@@ -13,7 +13,7 @@ describe('getAllCatererOrderAction action', () => {
   afterEach(() => moxios.uninstall());
 
   it('should dispatch GET_ALL_CATERER_ORDER_SUCCESS action', (done) => {
-    moxios.stubRequest('/orders/caterer/all', {
+    moxios.stubRequest('/orders/caterer/all?limit=10&offset=0', {
       status: 200,
       response: { message: 'You have the following orders' },
     });
@@ -24,7 +24,7 @@ describe('getAllCatererOrderAction action', () => {
 
     const store = mockStore({});
 
-    store.dispatch(getAllCatererOrderAction())
+    store.dispatch(getAllCatererOrderAction(0, 10))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
         done();
@@ -32,7 +32,7 @@ describe('getAllCatererOrderAction action', () => {
   });
 
   it('should dispatch GET_ALL_CATERER_ORDER_FAILURE action', (done) => {
-    moxios.stubRequest('/orders/caterer/all', {
+    moxios.stubRequest('/orders/caterer/all?limit=10&offset=0', {
       status: 400,
       response: { message: 'Invalid token' },
     });
@@ -43,7 +43,7 @@ describe('getAllCatererOrderAction action', () => {
 
     const store = mockStore({});
 
-    store.dispatch(getAllCatererOrderAction())
+    store.dispatch(getAllCatererOrderAction(0, 10))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
         done();

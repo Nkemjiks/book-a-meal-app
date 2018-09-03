@@ -1,4 +1,4 @@
-import { USER_ROLE_UPDATE_SUCCESS, USER_ROLE_UPDATE_FAILURE } from '../actionTypes';
+import { USER_ROLE_UPDATE_SUCCESS, USER_ROLE_UPDATE_FAILURE, UPLOAD_IMAGE_PROGRESS, IMAGE_UPLOAD_URL } from '../actionTypes';
 import axios from '../helpers/axios';
 import displayToast from '../helpers/displayToast';
 
@@ -14,6 +14,14 @@ const updateUserRoleAction = (userData, history) => dispatch => axios.put('/auth
     dispatch({
       type: USER_ROLE_UPDATE_SUCCESS,
       payload: response.data.data,
+    });
+    dispatch({
+      type: UPLOAD_IMAGE_PROGRESS,
+      payload: 0,
+    });
+    dispatch({
+      type: IMAGE_UPLOAD_URL,
+      payload: '',
     });
     history.push('/caterer/menu');
   })

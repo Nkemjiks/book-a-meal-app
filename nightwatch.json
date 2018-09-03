@@ -1,0 +1,47 @@
+{
+  "src_folders": ["e2e-tests"],
+  "output_folder" : "reports",
+  "globals_path" : "",
+
+  "selenium" : {
+    "start_process" : true,
+    "server_path" : "bin/selenium-server-standalone-3.9.1.jar",
+    "log_path" : "./reports",
+    "port" : 4444,
+    "cli_args" : {
+      "webdriver.chrome.driver" : "bin/chromedriver",
+      "webdriver.gecko.driver" : "bin/geckodriver"
+    }
+  },
+
+  "test_settings" : {
+    "default" : {
+      "selenium_port"  : 4444,
+      "selenium_host"  : "localhost",
+      "screenshots" : {
+        "enabled" : true,
+        "path" : "./reports"
+      },
+      "desiredCapabilities": {
+        "browserName": "chrome",
+        "javascriptEnabled": true,
+        "chromeOptions" : {
+          "args" : ["--no-sandbox"]
+        },
+        "acceptSslCerts": true
+      }
+    },
+
+    "chrome" : {
+      "desiredCapabilities": {
+        "browserName": "chrome"
+      }
+    },
+
+    "edge" : {
+      "desiredCapabilities": {
+        "browserName": "MicrosoftEdge"
+      }
+    }
+  }
+}

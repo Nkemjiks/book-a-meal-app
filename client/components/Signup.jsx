@@ -91,13 +91,57 @@ export class Signup extends React.Component {
       <div id="signup-component">
         <div id="signup-container">
           <h1>Sign Up Now</h1>
-          <form>
-            <input type="text" name="fullName" value={this.state.fullName} placeholder="Full Name" onChange={this.handleChange} />
-            <input type="email" name="email" value={this.state.email} placeholder="Email Address" onChange={this.handleChange} />
-            <input type="tel" name="phoneNumber" value={this.state.phoneNumber} placeholder="Phone Number" onChange={this.handleChange} />
-            <input type="password" name="password" value={this.state.password} placeholder="Password" onChange={this.handleChange} />
-            <input type="text" name="address" value={this.state.address} placeholder="Address" onChange={this.handleChange} />
-            <button className="button" onClick={this.handleSubmit}>SIGN UP</button>
+          <form onSubmit={this.handleSubmit}>
+            <input
+              type="text"
+              name="fullName"
+              value={this.state.fullName}
+              placeholder="Full Name e.g. Jane Doe"
+              pattern="^(?=.*[a-z])(?=.*[A-Z]).+$"
+              title="The name must contain at least one uppercase letter, lowercase letter and a space"
+              onChange={this.handleChange}
+              required
+            />
+            <input
+              type="email"
+              name="email"
+              value={this.state.email}
+              placeholder="Email Address e.g. email@email.com"
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+              title="Enter a valid email address"
+              onChange={this.handleChange}
+              required
+            />
+            <input
+              type="tel"
+              name="phoneNumber"
+              value={this.state.phoneNumber}
+              placeholder="Phone Number e.g. 08058938393"
+              pattern="^(0)(7|8|9)(0|1)[0-9]{8}$"
+              title="Enter a valid email phone number e.g. 09058973983"
+              onChange={this.handleChange}
+              required
+            />
+            <input
+              type="password"
+              name="password"
+              value={this.state.password}
+              placeholder="Password"
+              pattern=".{4,}"
+              title="Four or more characters"
+              onChange={this.handleChange}
+              required
+            />
+            <input
+              type="text"
+              name="address"
+              value={this.state.address}
+              pattern="[a-zA-Z0-9,. ]*$"
+              placeholder="Address e.g. 12, Agege Road, Lagos"
+              onChange={this.handleChange}
+              required
+            />
+            <button className="button">SIGN UP</button>
           </form>
         </div>
       </div>

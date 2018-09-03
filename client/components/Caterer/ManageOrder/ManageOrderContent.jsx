@@ -10,9 +10,9 @@ import React, { Fragment } from 'react';
  */
 const ManageOrderContent = ({ orderDetails, isToday }) => (
   orderDetails.sort((a, b) => a.createdAt < b.createdAt).map(order => (
-    order.meals.map(meal => (
-      <Fragment key={meal.id}>
-        <div key={meal.id} className="order-info">
+    <Fragment key={order.id}>
+      <div id="order-container">
+        <div key={order.id} className="order-info">
           {
             (!isToday) &&
             <Fragment>
@@ -23,8 +23,6 @@ const ManageOrderContent = ({ orderDetails, isToday }) => (
           <p>{order.user.fullName}</p>
           <p>{order.user.phoneNumber}</p>
           <p>{order.user.email}</p>
-          <p>{meal.name}</p>
-          <p>{meal.orderItems.quantity}</p>
           <p>{order.id}</p>
           {
             (order.deliveryAddress) &&
@@ -35,8 +33,16 @@ const ManageOrderContent = ({ orderDetails, isToday }) => (
             <p>{order.user.address}</p>
           }
         </div>
-      </Fragment>
-    ))
+        <hr />
+        {
+            order.meals.map(meal => (
+              <Fragment key={meal.id}>
+                <p><strong>{meal.name}</strong> - {meal.quantity} plate(s)</p>
+              </Fragment>
+            ))
+          }
+      </div>
+    </Fragment>
   ))
 );
 

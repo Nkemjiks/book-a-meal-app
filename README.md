@@ -8,22 +8,59 @@
 ## Description
 Book-A-Meal is an application that allows customers to make food orders and helps the food vendor know what the customers want to eat. 
 
-### How to clone this repository
-+   Navigate to a directory using your favourite CLI(command line interface)
+## Getting Started
++   Create a directory and navigate to it using your favourite CLI(command line interface)
 +   Clone this repository on that directory using 
 ```
 git clone https://github.com/Nkemjiks/book-a-meal-app.git
 ```
++   Install all packages in the project by running 
+```
+npm install
+```
++   To startup the project, simply run 
+```
+npm run dev-server
+```
 
-#### For navigating through the github pages, simply click on the signup or signin button on either of the form to go to the user dashbaord
-+ The external signup or signin button are to toggle between the signup and signin pages
-+ To navigate to the admin dashboard, simply proceed to the user dashboard and hover over the settings icon. You should see a dropdown containing admin and signout elements. Click on the admin page to navigate to the admin dashboard and the signout page to sign out of the application.
+## Running the tests
+To run both client side and serverside test concurrently, run
+```
+npm run test
+```
+To run the client-side test, run
+```
+npm run test-client
+```
+To run the server-side test, run
+```
+npm run test-server
+```
 
-### Link to the API documentation
+### Break down into end to end tests
 
-[Book A Meal -Apiary Documentation](bookameal24.docs.apiary.io)
+To run the end to end test, run
 
+```
+npm run test-e2e
+```
+Please note that you need to download selenium-server-standalone-3.9.1.jar, chromedriver and gecko driver for this to run smoothly. Create a folder called bin and copy them into it. Also note that java needs to be installed on your local machine as well. Visit [Nightwatch](http://nightwatchjs.org/gettingstarted) to find out more about getting started.
 
-##### A .env file is need for keep the database URL and the secret key for your JWT. A sample .env file called '.sampleenv'has been included to show what should be included in the file.
- 
-##### P.S: I moved the Sign Up page to the top-level directory and renamed it as index.html to be able to use github pages
+### Link
+* API documentation - [Book-A-Meal - Apiary Documentation](bookameal24.docs.apiary.io)
+* Heroku hosted app - [Heroku Book-A-Meal App](https://book-a-meal-app-andela.herokuapp.com/)
+* Github pages(Initial Templates) - [Github Pages](https://nkemjiks.github.io/book-a-meal-app/)
+
+## Built With
+
+* [React](https://reactjs.org/) - The web framework
+* [Redux](https://redux.js.org/) - A predictable state container for JavaScript apps
+* [Nodejs](https://nodejs.org/) - A JavaScript runtime
+
+## Authors
+
+* **Mbonu Blessing** - [Link to Repo](https://github.com/Nkemjiks)
+
+## License
+
+This project is licensed under the MIT License.

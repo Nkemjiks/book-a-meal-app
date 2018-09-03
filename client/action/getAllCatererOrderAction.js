@@ -4,7 +4,7 @@ import axios from '../helpers/axios';
 /**
 * @returns {Promise}  - dispatches action with all order that have been placed to the caterer
 */
-const getAllCatererOrderAction = () => dispatch => axios.get('/orders/caterer/all')
+const getAllCatererOrderAction = (offset, limit) => dispatch => axios.get(`/orders/caterer/all?limit=${limit}&offset=${offset}`)
   .then((response) => {
     dispatch({
       type: GET_ALL_CATERER_ORDER_SUCCESS,
