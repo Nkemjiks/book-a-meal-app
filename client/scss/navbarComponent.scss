@@ -4,9 +4,6 @@
   }
   #nav {
     height: 50px;
-    img[alt='logo'] {
-      width: 70px;
-    }
   }
   #nav {
     button {
@@ -27,11 +24,21 @@
     margin: 10px 0;
   }
   #nav-setting {
-    margin-top: 20px;
+    margin-top: 14px;
     width: 30px;
   }
   .dropdown-content, .dropdown-content-caterer {
-    margin-top: 50px;
+    margin-top: 45px;
+  }
+  #nav-setting-caterer {
+    margin-top: 14px;
+  }
+  #nav {
+    background-color: white;
+    position: sticky;
+    top: 0;
+    height: 60px;
+    padding: 8px 12px;
   }
 }
 @media (min-width: 450px) {
@@ -39,9 +46,6 @@
     height: 10vh;
     > h3 {
       display: inline-block;
-    }
-    img[alt='logo'] {
-      width: 100px;
     }
     button {
       &.signin, &.signup {
@@ -51,23 +55,31 @@
     }
   }
   #nav-setting {
-    margin-top: 35px;
+    margin-top: 22px;
   }
   #nav-setting-caterer {
-    margin-top: 25px;
+    margin-top: 14px;
     margin-left: 10px;
   }
   #dropdown-name {
     display: none;
+    margin-left: 10px;
   }
   #dropdown-option {
     display: none;
   }
   .dropdown-content {
-    margin-top: 65px;
+    margin-top: 52px;
   }
   .dropdown-content-caterer {
-    margin-top: 57px;
+    margin-top: 45px;
+  }
+  #nav {
+    background-color: white;
+    position: sticky;
+    top: 0;
+    height: 60px;
+    padding: 15px 40px;
   }
 }
 @media (max-width: 580px) {
@@ -111,20 +123,21 @@
 #nav button {
   float: right;
 }
-#nav {
-  background-color: white;
-  position: sticky;
-  top: 0;
+
+#nav img[alt='logo'] {
+  width: 70px;
 }
+
+
 #nav .manage-button {
-  background-color: black;
-  color: white;
+  background-color: white;
+  color: black;
   border-radius: 3px;
   cursor: pointer;
   width: auto;
   min-width: 104px;
   border: none;
-  margin-top: 14px;
+  margin: 7px;
   padding: 15px;
   font-size: 12px;
 }
@@ -135,11 +148,11 @@
   float: right;
 }
 #nav-avatar {
-  margin-top: 30px;
+  padding: 23px 0;
 }
 #nav h3 {
   float: right;
-  margin: 34px 30px 25px 10px;
+  padding: 10px 15px;
 }
 #nav > div {
   position: relative;
@@ -149,8 +162,9 @@
 #nav-setting, #nav-setting-caterer {
   width: 30px;
   cursor: pointer;
+  color: #ca490a;
 }
-.signup, .signin, #nav .manage-button, .mobile-caterer .manage-button {
+.signup, .signin, .mobile-caterer .manage-button {
   background-color: black;
   color: white;
   border-radius: 3px;

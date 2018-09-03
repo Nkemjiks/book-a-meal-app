@@ -16,6 +16,7 @@ module.exports = {
   collectCoverageFrom: [
     'client/**/*.{js,jsx}',
     '!client/app.jsx',
+    '!client/mocks/**.js',
   ],
   coveragePathIgnorePatterns: [
     '/node_modules/',

@@ -1,43 +1,52 @@
 @media only screen and (max-width: 425px) {
   .add-meal {
-    width: 80%;
+    width: 100%;
   }
 }
+
 @media only screen and (min-width: 426px) {
   .add-meal {
     width: 350px;
   }
 }
+
 @media only screen and (min-width: 1024px) {
   .add-meal {
     flex: 30%;
   }
   .added-meals {
     flex: 70%;
-    margin-right: 10px;
+    margin: 10px;
   }
 }
+
 @media only screen and (max-width: 1024px) {
   .added-meals {
-    flex: 60%;
-    margin-right: 10px;
+    margin: 10px;
   }
   .add-meal {
     flex: 40%;
   }
 }
+
 @media only screen and (max-width: 980px) {
   .add-meal {
     margin-left: auto;
     margin-right: auto;
+    box-sizing: border-box;
   }
   .add-meal {
-    width: 85%;
+    width: 91%;
   }
   input[type=file] {
     width: 40%;
   }
+  #caterer-dashboard-flex {
+    flex-direction: column;
+    width: 100%;
+  }
 }
+
 @media only screen and (min-width: 980px) {
   .add-meal {
     margin-left: 10px;
@@ -46,12 +55,18 @@
     width: 50%;
   }
 }
+
+.orders-placed {
+  height: 700px;
+}
+
 .add-meal {
   border: 1px solid #d8d5d5;
   padding: 20px;
   height: 400px;
   box-shadow: 2px 5px 4px #d8d5d5;
 }
+
 .add-meal .input {
   display: inline-block;
   width: 100%;
@@ -60,28 +75,29 @@
   box-sizing: border-box;
   border: 2px solid #f1f1f1;
 }
+
 .add-meal {
   margin-top: 20px;
 }
+
 .add-meal {
   height: 356px;
 }
+
 .added-meals {
   margin-top: 20px;
   padding: 20px;
   box-sizing: border-box;
   border: 2px solid #d8d5d5;
   border-radius: 3px;
-  height: 450px;
   box-shadow: 0 2px 5px -1px rgba(0, 0, 0, 0.3);
-  margin-right: 10px;
-  margin-left: 10px;
-  height: 400px;
-  margin-bottom: 80px;
+  height: 770px;
 }
+
 .added-meals h1, h1 {
   text-align: center;
 }
+
 .add-meal .button {
   color: white;
   background-color: black;
@@ -92,31 +108,42 @@
   width: 100%;
   border-radius: 3px;
 }
+
 #disabledAddMealButton {
-  opacity: 0.6;
+  background: #dddddd;
   cursor: not-allowed;
 }
+
 #enabledAddMealButton {
   opacity: 1;
   cursor: pointer;
 }
+
 .edit {
   width: 26px;
 }
+
 .modify {
   margin: 2px;
 }
+
 #caterer-dashboard-flex {
   display: flex;
+  margin-left: auto;
+  margin-right: auto;
 }
+
 .dashboard {
   border-top: 2px solid #d8d5d5;
 }
-input[type=file] {
+
+#businessLogo, #select-image {
   display: inline;
   border: none;
-  padding: 15px 20px;
+  margin: 10px 0;
+  padding: 0;
 }
+
 .uploadButton {
   color: white;
   background-color: black;
@@ -126,26 +153,36 @@ input[type=file] {
   font-size: 12px;
   border-radius: 3px;
 }
+
 .meal-image {
   width: 65px;
   height: 65px;
   border-radius: 50%;
 }
+
 #modify-div {
   padding-top: 15px;
 }
+
 .no-meal {
   text-align: center;
 }
+
 .fa-edit, .fa-trash-alt {
   font-size: 25px;
   cursor: pointer;
 }
+
 .fa-edit {
   margin-right: 14px;
   color: midnightblue;
 }
+
 .fa-trash-alt {
   padding-right: 8px;
   color: red;
+}
+
+#imageupload {
+  font-size: 12px;
 }

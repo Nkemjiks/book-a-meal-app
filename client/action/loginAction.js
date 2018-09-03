@@ -16,7 +16,7 @@ const loginAction = (userDetails, history) => dispatch => axios.post('/auth/logi
       type: LOGIN_USER_SUCCESS,
       payload: response.data.data,
     });
-    history.push('/customer/dashboard/0');
+    history.push('/customer/dashboard');
   })
   .catch((err) => {
     dispatch({

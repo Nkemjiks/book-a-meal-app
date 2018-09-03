@@ -170,7 +170,11 @@ export class ManageMeal extends React.Component {
     if (!mealName || !price || !imageURL) {
       return displayToast('error', 'Please provide all required fields');
     }
-    this.props.addMealAction(mealData);
+    this.props.addMealAction(mealData).then((response) => {
+      if (response.response.status === 201) {
+        document.getElementById('select-image').value = '';
+      }
+    });
   }
 
   /**
@@ -190,17 +194,20 @@ export class ManageMeal extends React.Component {
         <div id="caterer-dashboard-flex">
           <div className="add-meal" >
             <h1>Add Meal</h1>
-            <form action="">
+            <form onSubmit={this.handleSubmit}>
               <input type="text" name="mealName" placeholder="Meal Name" className="input" value={this.state.mealName} onChange={this.handleChange} />
               <input type="number" name="price" placeholder="Price" className="input" value={this.state.price} onChange={this.handleChange} />
-              <input type="file" name="imageURL" className="imageSelector" accept=".jpg, .jpeg, .png" onChange={this.selectFileHandler} />
+              <label id="imageupload" htmlFor="select-image">Add Meal Image
+                <br />
+                <input type="file" name="imageURL" id="select-image" className="imageSelector" accept=".jpg, .jpeg, .png" onChange={this.selectFileHandler} />
+              </label>
               <button className="uploadButton" onClick={this.imageUploadHandler}>Upload</button>
               <span> {this.state.imageUploadProgress} %</span>
               { enabled &&
-                <button id="enabledAddMealButton" className="button" onClick={this.handleSubmit}>Add Meal</button>
+                <button id="enabledAddMealButton" className="button">Add Meal</button>
               }
               { !enabled &&
-                <button id="disabledAddMealButton" className="button" onClick={this.handleSubmit} disabled>Add Meal</button>
+                <button id="disabledAddMealButton" className="button" disabled>Add Meal</button>
               }
             </form>
           </div>

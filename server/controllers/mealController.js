@@ -122,7 +122,7 @@ const mealController = {
           .update({
             isDeleted: true,
           })
-          .then(deletedMeal => res.status(200).send({ message: 'Meal has been deleted successfully' }))
+          .then(() => res.status(200).send({ message: 'Meal has been deleted successfully' }))
           .catch(err => res.status(500).send({ message: err.message }));
       })
       .catch(err => res.status(500).send({ message: err.message }));

@@ -82,10 +82,28 @@ export class Login extends React.Component {
       <div id="signin-component">
         <div id="signin-container">
           <h1>Sign in</h1>
-          <form action="">
-            <input type="email" name="email" placeholder="Email Address" value={this.state.email} onChange={this.handleChange} />
-            <input type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleChange} />
-            <button className="button" onClick={this.handleSubmit}>SIGN IN</button>
+          <form onSubmit={this.handleSubmit}>
+            <input
+              type="email"
+              name="email"
+              placeholder="Email Address"
+              value={this.state.email}
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+              title="Enter a valid email address"
+              onChange={this.handleChange}
+              required
+            />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={this.state.password}
+              onChange={this.handleChange}
+              pattern=".{4,}"
+              title="Four or more characters"
+              required
+            />
+            <button className="button">SIGN IN</button>
           </form>
         </div>
       </div>

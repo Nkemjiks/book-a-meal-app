@@ -33,13 +33,13 @@ export class MenuContent extends React.Component {
     const { meal } = this.props;
     return (
       <Fragment>
-        <div className="meals-added">
+        <div key={meal.mealId} className="meals-added menu-created">
           <div>
             <img src={meal.imageURL} alt="Meal" className="meal-image" />
           </div>
-          <p id={`${meal.menuItems.mealId}name`}>{meal.name}</p>
-          <p id={`${meal.menuItems.mealId}price`}>&#8358; {meal.price}</p>
-          <i id={meal.menuItems.mealId} onClick={this.handleRemove} className="fa fa-times remove-meal" aria-hidden="true" />
+          <p id={`${meal.mealId}name`}>{meal.name}</p>
+          <p id={`${meal.mealId}price`}>&#8358; {meal.price}</p>
+          <i id={meal.mealId} onClick={this.handleRemove} className="fa fa-times remove-meal" aria-hidden="true" />
         </div>
       </Fragment>
     );

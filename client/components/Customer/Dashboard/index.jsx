@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import Pagination from 'react-js-pagination';
 import PropTypes from 'prop-types';
 
 import '../../../scss/customerComponent.scss';
@@ -38,6 +39,7 @@ export class AvaliableMenu extends React.Component {
 
   state = {
     allMenu: [],
+    activePage: 1,
   }
 
   /**
@@ -48,11 +50,10 @@ export class AvaliableMenu extends React.Component {
    * @returns {object} updates the user and menu information in the redux store
    */
   componentDidMount() {
-    const { params } = this.props.match;
-    const offset = Number(params.id) * 10;
+    const offset = (Number(this.state.activePage) - 1) * 10;
     const user = JSON.parse(window.localStorage.getItem('@#$user'));
     this.props.getUserDetailsAction(user);
-    this.props.getAllMenuAction(offset);
+    this.props.getAllMenuAction(offset, 10);
     refreshTokenRequest(this.props.history);
   }
 
@@ -63,29 +64,10 @@ export class AvaliableMenu extends React.Component {
    *
    * @returns {undefined} generate all pages with links to the next page
    */
-  createPages = () => {
-    const { params } = this.props.match;
-    const holder = [];
-    let numberOfPage = 0;
-    if ((Number(this.state.allMenu.count) / 10) === 0) {
-      numberOfPage = Number(this.state.allMenu.count) / 10;
-    } else {
-      numberOfPage = Math.ceil(Number(this.state.allMenu.count) / 10);
-    }
-    for (let i = 0; i < numberOfPage; i += 1) {
-      if (Number(params.id) === i) {
-        holder.push(
-          <a href={`${window.location.origin}/customer/dashboard/${i}`} id={i} key={`page${i}`}>
-            <button className="current-button">{i}</button>
-          </a>);
-      } else {
-        holder.push(
-          <a href={`${window.location.origin}/customer/dashboard/${i}`} id={i} key={`page${i}`}>
-            <button className="enabled-button">{i}</button>
-          </a>);
-      }
-    }
-    return holder;
+  handlePageChange = (pageNumber) => {
+    this.setState({ activePage: pageNumber });
+    const offset = (Number(pageNumber) - 1) * 10;
+    this.props.getAllMenuAction(offset, 10);
   }
 
   /**
@@ -100,9 +82,11 @@ export class AvaliableMenu extends React.Component {
       <div>
         <div id="customer-dashboard">
           <div id="available-menu">
-            <h1>&#9832; Menu for Today &#9832;</h1>
-            <p className="order-period">Opening Hours: 9:00AM - 4:00PM</p>
-            <div className="meal">
+            <div id="first">
+              <h1>Available Menu</h1>
+              <p className="order-period">Opening Hours: 9:00AM - 4:00PM</p>
+            </div>
+            <div className="menu-main">
               {
               (this.state.allMenu.length !== 0) &&
               <AvaliableMenuSort
@@ -116,7 +100,20 @@ export class AvaliableMenu extends React.Component {
               }
             </div>
           </div>
-          <div id="navigate">{this.createPages()}</div>
+          {
+            (this.state.allMenu.length !== 0) &&
+            <div>
+              <Pagination
+                hideDisabled
+                activePage={this.state.activePage}
+                itemsCountPerPage={10}
+                totalItemsCount={this.state.allMenu.count}
+                pageRangeDisplayed={5}
+                onChange={this.handlePageChange}
+                getPageUrl={() => `${window.location.origin}/#/customer/dashboard`}
+              />
+            </div>
+          }
         </div>
       </div>
     );

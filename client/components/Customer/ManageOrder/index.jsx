@@ -67,17 +67,21 @@ export class ManageOrder extends React.Component {
   render() {
     return (
       <div className="dashboard">
-        <div id="caterer-dashboard-flex">
-          <div id="incoming-orders" className="detailed-orders">
+        <div id="customer-order-dashboard">
+          <div id="customer-orders" className="detailed-orders">
             <h1>Order History</h1>
-            <div className="order-info description">
-              <h4>Order Id</h4>
-              <h4>Date</h4>
-              <h4>Time</h4>
-              <h4>Total</h4>
-              <h4>Modify</h4>
-            </div>
-            <div className="orders-placed">
+            <table>
+              <thead>
+                <tr className="description">
+                  <th>Order Id</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Total</th>
+                  <th>Modify</th>
+                </tr>
+              </thead>
+            </table>
+            <div>
               {
                 (this.state.customerOrderHistory.data) &&
                 <OrderHistoryList

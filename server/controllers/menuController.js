@@ -1,5 +1,5 @@
 import models from '../models';
-import { filterMenuDetails } from '../helpers/filter';
+import { filterMenuDetails, filterCaterermenu, filterMealinMenu, filterCreateCaterermenu } from '../helpers/filter';
 
 const menuController = {
   /**
@@ -27,10 +27,15 @@ const menuController = {
       .spread((menu, created) => {
         menu.addMeals(meals);
         menu.save();
-        if (created === false) {
-          return res.status(200).send({ message: 'Menu has been updated', data: menu });
-        }
-        return res.status(201).send({ message: 'Menu created', data: menu });
+        setTimeout(() => {
+          menu.getMeals().then((mealsAdded) => {
+            const filteredMenu = filterCreateCaterermenu(mealsAdded);
+            if (created === false) {
+              return res.status(200).send({ message: 'Menu has been updated', data: menu, meals: filteredMenu.meals });
+            }
+            return res.status(201).send({ message: 'Menu created', data: menu, meals: filteredMenu.meals });
+          });
+        }, 100);
       })
       .catch(err => res.status(500).send({ message: err }));
   },
@@ -59,11 +64,13 @@ const menuController = {
           },
         ],
       })
-      .then((meals) => {
-        if (meals === null) {
+      .then((menu) => {
+        if (menu === null) {
           return res.status(404).send({ message: 'You have not created a menu yet' });
         }
-        return res.status(200).send({ data: meals });
+
+        const filteredMenu = filterCaterermenu(menu.dataValues);
+        return res.status(200).send({ data: filteredMenu });
       })
       .catch(err => res.status(500).send({ message: err.message }));
   },
@@ -91,7 +98,12 @@ const menuController = {
         }
         menu.removeMeals(id);
         menu.save();
-        return res.status(200).send({ message: 'Menu has been updated', data: menu });
+        setTimeout(() => {
+          menu.getMeals().then((meals) => {
+            const filteredMenu = filterCreateCaterermenu(meals);
+            return res.status(200).send({ message: 'Menu has been updated', data: menu, meals: filteredMenu.meals });
+          });
+        }, 100);
       })
       .catch(err => res.status(500).send({ message: err }));
   },
@@ -103,8 +115,7 @@ const menuController = {
    * @return {Object}
    */
   getAvailableMenu(req, res) {
-    const { offset } = req.params;
-
+    const { offset, limit } = req.query;
     return models.menu
       .findAndCountAll({
         include: [
@@ -113,8 +124,8 @@ const menuController = {
             attributes: ['fullName', 'email', 'businessName', 'businessAddress', 'logoURL'],
           },
         ],
-        offset,
-        limit: 10,
+        offset: offset || 0,
+        limit: limit || 10,
       })
       .then((todayMenu) => {
         if (todayMenu.rows.length === 0) {
@@ -162,7 +173,8 @@ const menuController = {
         if (meals.length === 0) {
           return res.status(404).send({ message: 'There are no meals in the menu' });
         }
-        return res.status(200).send({ data: meals[0].meals, caterer: meals[0].user });
+        const filterMeals = filterMealinMenu(meals[0].meals);
+        return res.status(200).send({ data: filterMeals, caterer: meals[0].user });
       })
       .catch(err => res.status(500).send({ message: err.message }));
   },
