@@ -8,12 +8,13 @@ import displayToast from '../helpers/displayToast';
 * @returns {Promise}  - dispatches action with true or false
 */
 const placeOrderAction = orderDetails => dispatch => axios.post('/orders', orderDetails)
-  .then(() => {
+  .then((response) => {
     dispatch({
       type: PLACE_ORDER_SUCCESS,
       payload: true,
     });
     displayToast('success', 'Order Placed Successfully');
+    return ({ response });
   })
   .catch((err) => {
     dispatch({
@@ -21,6 +22,7 @@ const placeOrderAction = orderDetails => dispatch => axios.post('/orders', order
       payload: false,
     });
     displayToast('error', err.response.data.message);
+    return ({ err });
   });
 
 export default placeOrderAction;

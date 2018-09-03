@@ -10,8 +10,8 @@ import MenuContent from './MenuContent';
  */
 const MenuList = ({ menu, removeMealFromMenu }) => (
   menu.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase()).map(meal => (
-    <Fragment key={meal.menuItems.mealId}>
-      <MenuContent meal={meal} removeMealFromMenu={removeMealFromMenu} />
+    <Fragment key={meal.mealId}>
+      <MenuContent meal={meal} key={meal.mealId} removeMealFromMenu={removeMealFromMenu} />
     </Fragment>
   ))
 );

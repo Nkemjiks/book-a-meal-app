@@ -33,27 +33,27 @@ export class Meal extends React.Component {
     const { meal } = this.props;
     const hours = new Date().getHours();
     return (
-      <Fragment key={meal.menuItems.mealId}>
+      <Fragment key={meal.mealId}>
         <div id="meal-info">
           <div>
             <img src={meal.imageURL} alt="Meal" className="meal-image" />
           </div>
-          <h4 id={`${meal.menuItems.mealId}name`} className="meal-name">
+          <p id={`${meal.mealId}name`} className="meal-name">
             <strong>{meal.name}</strong>
-          </h4>
-          <p id={`${meal.menuItems.mealId}price`} className="meal-price">&#8358; {meal.price}</p>
+          </p>
           <div id="add-meal-div">
+            <p id={`${meal.mealId}price`} className="meal-price">&#8358; {meal.price}</p>
             {
               (Number(hours) > 16) &&
-              <i id={meal.menuItems.mealId} className="fas fa-plus add-i disabled" />
+              <i id={meal.mealId} className="fas fa-plus disabled" />
             }
             {
               (Number(hours) < 9) &&
-              <i id={meal.menuItems.mealId} className="fas fa-plus add-i disabled" />
+              <i id={meal.mealId} className="fas fa-plus disabled" />
             }
             {
               (Number(hours) >= 9) && (Number(hours) <= 16) &&
-              <i id={meal.menuItems.mealId} className="fas fa-plus add-i" onClick={this.handleClick} />
+              <i id={meal.mealId} className="fas fa-plus add-i" onClick={this.handleClick} />
             }
           </div>
         </div>

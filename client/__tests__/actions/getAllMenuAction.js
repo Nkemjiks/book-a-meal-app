@@ -13,7 +13,7 @@ describe('getMenuAction action', () => {
   afterEach(() => moxios.uninstall());
 
   it('should dispatch GET_ALL_MENU_SUCCESS action', (done) => {
-    moxios.stubRequest('/menu/0', {
+    moxios.stubRequest('/menu?limit=10&offset=0', {
       status: 200,
       response: {
         data: {
@@ -28,7 +28,7 @@ describe('getMenuAction action', () => {
 
     const store = mockStore({});
 
-    store.dispatch(getAllMenuAction('0'))
+    store.dispatch(getAllMenuAction(0, 10))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
         done();
@@ -36,7 +36,7 @@ describe('getMenuAction action', () => {
   });
 
   it('should dispatch GET_ALL_MENU_FAILURE action', (done) => {
-    moxios.stubRequest('/menu/0', {
+    moxios.stubRequest('/menu?limit=10&offset=0', {
       status: 400,
       response: { message: 'Invalid token' },
     });
@@ -47,7 +47,7 @@ describe('getMenuAction action', () => {
 
     const store = mockStore({});
 
-    store.dispatch(getAllMenuAction('0'))
+    store.dispatch(getAllMenuAction(0, 10))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
         done();

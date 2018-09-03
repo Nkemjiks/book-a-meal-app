@@ -50,13 +50,14 @@ export const checkAuthenticatedUser = (req, res, next) => {
 };
 
 /**
- * @description Validate the id of the meal are present in the meal database before proceeding
+ * @description Validate the id of the meal are present
+ * in the meal database before adding meals to menu
  * @param  {Object} req - The object that returns a response
  * @param  {Object} res - The object that sends the request
  * @param  {Object} next - The object that tells the next action to take place
  * @returns {Object}
  */
-export const checkValidMealId = (req, res, next) => {
+export const checkValidMealIds = (req, res, next) => {
   const userId = req.decoded.id;
 
   // Search through the meal table to make sure that the meal exists
@@ -69,8 +70,39 @@ export const checkValidMealId = (req, res, next) => {
       },
     })
     .then((result) => {
-      if (meals.length > result.length) {
+      if (meals.length !== result.length) {
         return res.status(403).send({ message: 'Some selected meals does not exist' });
+      }
+      next();
+      return null;
+    })
+    .catch(err => res.status(500).send({ message: err }));
+};
+
+/**
+ * @description Validate the id of the meal are present in
+ * the meal database before removing from menu
+ * @param  {Object} req - The object that returns a response
+ * @param  {Object} res - The object that sends the request
+ * @param  {Object} next - The object that tells the next action to take place
+ * @returns {Object}
+ */
+export const checkValidMealId = (req, res, next) => {
+  const userId = req.decoded.id;
+
+  // Search through the meal table to make sure that the meal exists
+  const { id } = req.params;
+
+  return models.meal
+    .findAll({
+      where: {
+        id,
+        userId,
+      },
+    })
+    .then((result) => {
+      if (result.length === 0) {
+        return res.status(403).send({ message: 'This meal does not exist' });
       }
       next();
       return null;

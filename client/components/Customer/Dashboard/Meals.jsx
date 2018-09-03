@@ -28,25 +28,13 @@ export class Meals extends React.Component {
    *
    * @returns {object} updates component state
    */
-  static getDerivedStateFromProps({ mealsInMenu, orderPlaced }, state) {
+  static getDerivedStateFromProps({ mealsInMenu }, state) {
     if (mealsInMenu !== state.mealsInMenu) {
       return {
         mealsInMenu,
       };
     }
-    if (orderPlaced) {
-      return {
-        order: [],
-        mealDetails: [],
-        total: 0,
-        isAlreadyAdded: false,
-        deliveryAddress: '',
-        selectedMeal: [],
-      };
-    }
-    return {
-      mealsInMenu: [],
-    };
+    return null;
   }
 
   state = {
@@ -227,6 +215,7 @@ export class Meals extends React.Component {
    */
   handleSubmit = (event) => {
     event.preventDefault();
+    const catererId = window.localStorage.getItem('@#$getmeal%^');
 
     const {
       order,
@@ -234,13 +223,36 @@ export class Meals extends React.Component {
     } = this.state;
 
     const orderDetails = {
+      catererId,
       meals: order,
       deliveryAddress,
     };
 
-    this.props.placeOrderAction(orderDetails);
+    this.props.placeOrderAction(orderDetails).then((response) => {
+      if (response.response.status === 201) {
+        this.setState({
+          order: [],
+          mealDetails: [],
+          total: 0,
+          isAlreadyAdded: false,
+          deliveryAddress: '',
+          selectedMeal: [],
+        });
+      }
+    });
   }
 
+  toggleDisplay = () => {
+    const width = window.innerWidth;
+    if (width <= 980) {
+      const cartItems = document.getElementById('items-container');
+      if ((cartItems.style.display === '') || (cartItems.style.display === 'none')) {
+        cartItems.style.display = 'block';
+      } else {
+        cartItems.style.display = 'none';
+      }
+    }
+  }
   /**
    * renders component to DOM
    *
@@ -259,16 +271,24 @@ export class Meals extends React.Component {
               {
                 (this.state.mealsInMenu.length !== 0) &&
                 <div className="caterer-info">
-                  <img src={this.state.mealsInMenu.caterer.logoURL} alt="business logo" />
-                  <h2>{this.state.mealsInMenu.caterer.businessName}</h2>
-                  <p>{this.state.mealsInMenu.caterer.businessAddress}</p>
+                  <div>
+                    <img src={this.state.mealsInMenu.caterer.logoURL} alt="business logo" />
+                  </div>
+                  <div>
+                    <h2>{this.state.mealsInMenu.caterer.businessName}</h2>
+                    <p>{this.state.mealsInMenu.caterer.businessAddress}</p>
+                  </div>
+                  <h3>Avaliable Meals</h3>
                 </div>
               }
             </div>
             <div className="meal">
               {
               (this.state.mealsInMenu.length !== 0) &&
-                <MealContent allMenu={this.state.mealsInMenu.data} addMealToCart={this.addMealToCart} />
+                <MealContent
+                  allMenu={this.state.mealsInMenu.data}
+                  addMealToCart={this.addMealToCart}
+                />
               }
               {
               (this.state.mealsInMenu.length === 0) && <p className="no-meal">No Menu Available yet</p>
@@ -277,37 +297,39 @@ export class Meals extends React.Component {
             </div>
           </div>
           <div id="cart">
-            <h1>Cart</h1>
-            <div id="items">
-              {
-              (this.state.selectedMeal.length !== 0) &&
-              <Cart
-                selectedMeal={this.state.selectedMeal}
-                getQuantity={this.getQuantity}
-                removeMealFromCart={this.removeMealFromCart}
+            <h1 onClick={this.toggleDisplay}>Cart</h1>
+            <div id="items-container">
+              <div id="items">
+                {
+                (this.state.selectedMeal.length !== 0) &&
+                <Cart
+                  selectedMeal={this.state.selectedMeal}
+                  getQuantity={this.getQuantity}
+                  removeMealFromCart={this.removeMealFromCart}
+                />
+                }
+                {
+                (this.state.selectedMeal.length === 0) && <p className="no-meal">Add meals to your cart</p>
+                }
+              </div>
+              <p>Total:
+                <span>&#8358; {this.state.total}</span>
+              </p>
+              <input
+                type="text"
+                className="input"
+                name="address"
+                value={this.state.deliveryAddress}
+                placeholder="Delivery Address"
+                onChange={this.handleChange}
               />
+              {
+                enabled && <button id="enabledAddMealButton" className="button" onClick={this.handleSubmit} >Place Order</button>
               }
               {
-              (this.state.selectedMeal.length === 0) && <p className="no-meal">Add meals to your cart</p>
+                !enabled && <button id="disabledAddMealButton" className="button" disabled>Place Order</button>
               }
             </div>
-            <p>Total:
-              <span>&#8358; {this.state.total}</span>
-            </p>
-            <input
-              type="text"
-              className="input"
-              name="address"
-              value={this.state.deliveryAddress}
-              placeholder="Delivery Address"
-              onChange={this.handleChange}
-            />
-            {
-              enabled && <button id="enabledAddMealButton" className="button" onClick={this.handleSubmit} >Place Order</button>
-            }
-            {
-              !enabled && <button id="disabledAddMealButton" className="button" disabled>Place Order</button>
-            }
           </div>
         </div>
       </div>

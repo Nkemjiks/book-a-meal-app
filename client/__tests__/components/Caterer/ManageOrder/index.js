@@ -40,8 +40,8 @@ describe('ManageOrder Component', () => {
   it('should render unconnected component properly', () => {
     expect(mountWrapper.find('h1').length).toBe(2);
     expect(mountWrapper.find('h3').length).toBe(2);
-    expect(mountWrapper.find('h4').length).toBe(16);
-    expect(mountWrapper.find('div').length).toBe(13);
+    expect(mountWrapper.find('h4').length).toBe(12);
+    expect(mountWrapper.find('div').length).toBe(16);
     expect(mountWrapper.find('h3').first().text()).toBe('Today Order Summary');
     expect(mountWrapper.find('h1').first().text()).toBe('Incoming Orders');
     expect(mountWrapper.find('h3').last().text()).toBe('All Order Summary');

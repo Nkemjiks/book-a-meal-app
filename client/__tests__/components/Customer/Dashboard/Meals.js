@@ -6,9 +6,17 @@ import ConnectedMeals, { Meals } from '../../../../components/Customer/Dashboard
 import userInformation from '../../../../mocks/userInformation';
 import { mainMenu } from '../../../../mocks/menu';
 
+const response = {
+  response: {
+    status: 201,
+  },
+};
+
+const promise = Promise.resolve(response);
+
 const props = {
   getUserDetailsAction: jest.fn(),
-  placeOrderAction: jest.fn(),
+  placeOrderAction: jest.fn(() => promise),
   getMealsInMenuAction: jest.fn(),
   refreshTokenRequest: jest.fn(),
   history: {},
@@ -37,8 +45,7 @@ describe('Meals Component', () => {
     expect(mountWrapper.find('#customer-dashboard-flex').length).toBe(1);
     expect(mountWrapper.find('#menu').length).toBe(1);
     expect(mountWrapper.find('h1').length).toBe(1);
-    expect(mountWrapper.find('h4').length).toBe(2);
-    expect(mountWrapper.find('div').length).toBe(14);
+    expect(mountWrapper.find('div').length).toBe(17);
     expect(mountWrapper.find('#cart').length).toBe(1);
     expect(mountWrapper.find('#items').length).toBe(1);
     expect(mountWrapper.find('input').length).toBe(1);
@@ -69,7 +76,7 @@ describe('Meals Component', () => {
     expect(mountWrapper.state().selectedMeal[0].mealName).toBe('Akara and Cornflakes');
     expect(mountWrapper.state().mealDetails[0].quantity).toBe(1);
   });
-  it('should call the add meal to cart method with the same meal update state for isAlreadyAdded', () => {
+  it('should call the add meal to cart method with the same meal and update state for isAlreadyAdded', () => {
     const addMealToCartSpy = jest.spyOn(mountWrapper.instance(), 'addMealToCart');
     const getTotalSpy = jest.spyOn(mountWrapper.instance(), 'getTotal');
     mountWrapper.instance().addMealToCart('7eeebb0e-74a2-4d3e-8f9e-afd51806ddce', 'Akara and Cornflakes', 500);

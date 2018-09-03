@@ -11,6 +11,8 @@ const props = {
   getMealsAction: jest.fn(),
   getMenuAction: jest.fn(),
   createMenuAction: jest.fn(),
+  removeMealAction: jest.fn(),
+  mealRemoved: false,
   history: {},
   meals,
   orderPlaced: true,

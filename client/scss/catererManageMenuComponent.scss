@@ -3,22 +3,11 @@
     flex-direction: row;
   }
 }
+
 @media only screen and (max-width: 980px) {
   #caterer-dashboard-flex {
     flex-direction: column;
   }
-}
-@media only screen and (min-width: 1024px) {
-  .menu, .create-menu {
-    flex: 50%;
-  }
-}
-@media only screen and (max-width: 1024px) {
-  .menu, .create-menu {
-    flex: 50%;
-  }
-}
-@media only screen and (max-width: 980px) {
   .menu {
     margin-left: auto;
     margin-right: auto;
@@ -32,16 +21,42 @@
   .create-menu {
     order: 1;
   }
+  .menu, .create-menu {
+    max-height: 700px;
+  }
+  .meals, .meals-avaliable {
+    max-height: 470px;
+  }
 }
+
+@media only screen and (min-width: 1024px) {
+  .menu, .create-menu {
+    flex: 50%;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .menu, .create-menu {
+    flex: 50%;
+  }
+}
+
 @media only screen and (min-width: 980px) {
   .add-meal, .menu {
     margin-left: 10px;
+  }
+  .menu, .create-menu {
+    height: 760px;
+  }
+  .meals, .meals-avaliable {
+    height: 540px;
   }
 }
 
 #caterer-dashboard-flex {
   display: flex;
 }
+
 .create-menu button {
   color: white;
   background-color: black;
@@ -53,50 +68,49 @@
   width: 100%;
   border-radius: 3px;
 }
+
 .create-menu, #incoming-orders {
   margin-top: 20px;
+  margin-right: 10px;
+  margin-left: 10px;
   padding: 20px;
   box-sizing: border-box;
   border: 2px solid #d8d5d5;
   border-radius: 3px;
-  height: 450px;
   box-shadow: 0 2px 5px -1px rgba(0, 0, 0, 0.3);
 }
+
 .create-menu h1, #incoming-orders h1 {
   text-align: center;
 }
-.create-menu, #incoming-orders {
-  margin-right: 10px;
-  margin-left: 10px;
-  height: 400px;
-}
+
 .menu {
   border: 1px solid #d8d5d5;
   padding: 20px;
   box-shadow: 2px 5px 4px #d8d5d5;
   box-sizing: border-box;
 }
-.menu {
-  height: 400px;
-}
+
 #incoming-orders {
   margin-bottom: 80px;
   overflow-x: auto;
+  max-height: 700px;
 }
+
 .dashboard {
   border-top: 2px solid #d8d5d5;
 }
+
 .menu, .order-summary {
   margin-top: 20px;
 }
+
 #items, .meals, .orders-placed, .meals-avaliable {
   overflow: auto;
 }
-.meals, .orders-placed {
-  height: 200px;
-}
-.meals-avaliable {
-  height: 170px;
+
+.orders-placed {
+  height: 600px;
 }
 
 .fa-plus {

@@ -49,7 +49,7 @@
   background: linear-gradient(
     rgba(49, 44, 44, 0.6), 
     rgba(36, 33, 33, 0.6)), url('https://res.cloudinary.com/dqsmurjpg/image/upload/v1526911663/DSC00839-1024x682.jpg');
-  height: 80vh;
+  height: calc(100vh - 90px);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

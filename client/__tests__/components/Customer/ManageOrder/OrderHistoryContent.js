@@ -36,8 +36,8 @@ describe('OrderHistoryContent Component', () => {
   it('should render unconnected component properly', () => {
     expect(mountWrapper.find('Modal').length).toBe(1);
     expect(mountWrapper.find('.orderHistory').length).toBe(1);
-    expect(mountWrapper.find('p').length).toBe(5);
-    expect(mountWrapper.find('div').length).toBe(3);
+    expect(mountWrapper.find('p').length).toBe(1);
+    expect(mountWrapper.find('div').length).toBe(1);
   });
   it('should call the openEditModal method and update state', () => {
     const openEditModalSpy = jest.spyOn(mountWrapper.instance(), 'openEditModal');

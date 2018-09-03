@@ -33,7 +33,7 @@ export class MealsAvailable extends React.Component {
     const { meal, mealsInMenuId } = this.props;
     return (
       <Fragment>
-        <div className="meals-added">
+        <div key={meal.id} className="meals-added meal-avaliable">
           <div>
             <img src={meal.imageURL} alt="Meal" className="meal-image" />
           </div>

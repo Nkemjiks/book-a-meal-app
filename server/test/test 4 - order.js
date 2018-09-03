@@ -1,27 +1,26 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import timekeeper from 'timekeeper';
-import expect from 'expect';
 import server from '../app';
 import models from '../models';
-import userMockData from './mock/userMockData';
-import otherMockData from './mock/otherMockData';
+import mockData from './mock/mockData';
 
 /** Test cases for creating the Order for the day
 We are testing all input case time to make sure that our validations are working
 and that we are getting the desired output
 */
+const { expect } = chai;
 
 const {
   customerLoginDetailsFirst,
   customerLoginDetailsSecond,
   catererLoginDetailsSecond,
-} = userMockData;
-
-const {
   placeOrderProd,
   modifyOrderProd,
-} = otherMockData;
+  placeOrderProdSec,
+  placeOrderProdThird,
+  placeOrderProdFourth,
+} = mockData;
 
 let secondCatererToken;
 let firstCustomerToken;
@@ -85,8 +84,10 @@ describe('Order Controller', () => {
         .get('/orders/caterer')
         .set({ authorization: secondCatererToken })
         .end((err, res) => {
-          expect(res.status).toEqual(404);
-          expect(res.body.message).toEqual('You don\'t have any order yet');
+          expect(res.status).to.equal(404);
+          expect(res.body.message).to.equal('You don\'t have any order yet');
+          expect(res.body).to.not.have.property('data');
+          expect(res.body).to.not.have.property('totalSales');
           done();
         });
     });
@@ -98,8 +99,10 @@ describe('Order Controller', () => {
         .get('/orders/customer')
         .set({ authorization: secondCustomerToken })
         .end((err, res) => {
-          expect(res.status).toEqual(404);
-          expect(res.body.message).toEqual('You have not placed any order yet');
+          expect(res.status).to.equal(404);
+          expect(res.body.message).to.equal('You have not placed any order yet');
+          expect(res.body).to.not.have.property('data');
+          expect(res.body).to.not.have.property('totalExpenses');
           done();
         });
     });
@@ -112,8 +115,9 @@ describe('Order Controller', () => {
         .set({ authorization: secondCustomerToken })
         .send(modifyOrderProd)
         .end((err, res) => {
-          expect(res.status).toEqual(404);
-          expect(res.body.message).toEqual('Order not found');
+          expect(res.status).to.equal(404);
+          expect(res.body.message).to.equal('Order not found');
+          expect(res.body).to.not.have.property('data');
           done();
         });
     });
@@ -127,9 +131,52 @@ describe('Order Controller', () => {
         .send(placeOrderProd)
         .end((err, res) => {
           orderId = res.body.data.id;
-          expect(res.status).toEqual(201);
-          expect(res.body).toHaveProperty('data');
-          expect(res.body.message).toEqual('Order Placed successfully');
+          expect(res.status).to.equal(201);
+          expect(res.body).to.have.property('data');
+          expect(res.body.message).to.equal('Order Placed successfully');
+          expect(res.body.data.id).to.be.a('string');
+          expect(res.body.data.userId).to.equal('1acb0e56-8839-4d05-b9a4-216643a98f35');
+          expect(res.body.data.mealIds[0].mealId).to.equal('82a712ab-fd6e-4b68-bc63-c34f5f1ba7f1');
+          expect(res.body.data.mealIds[0].quantity).to.equal(5);
+          done();
+        });
+    });
+    it(`It should return the message "You have not provided any details" 
+  when a customer places an order without sending meals`, (done) => {
+      chai.request(server)
+        .post('/orders')
+        .set({ authorization: secondCustomerToken })
+        .send(placeOrderProdSec)
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body).to.not.have.property('data');
+          expect(res.body.message).to.equal('You have not provided any details');
+          done();
+        });
+    });
+    it(`It should return the message "Provide a valid quantity value" 
+  when a customer places an order with a quantity that is a string`, (done) => {
+      chai.request(server)
+        .post('/orders')
+        .set({ authorization: secondCustomerToken })
+        .send(placeOrderProdThird)
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body).to.not.have.property('data');
+          expect(res.body.message).to.equal('Provide a valid quantity value');
+          done();
+        });
+    });
+    it(`It should return the message "Please select a quantity that is less than or equal to 20" 
+  when a customer places an order with a quantity that is above 20`, (done) => {
+      chai.request(server)
+        .post('/orders')
+        .set({ authorization: secondCustomerToken })
+        .send(placeOrderProdFourth)
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body).to.not.have.property('data');
+          expect(res.body.message).to.equal('Please select a quantity that is less than or equal to 20');
           done();
         });
     });
@@ -141,10 +188,10 @@ describe('Order Controller', () => {
         .get('/orders/caterer')
         .set({ authorization: secondCatererToken })
         .end((err, res) => {
-          expect(res.status).toEqual(200);
-          expect(res.body).toHaveProperty('data');
-          expect(res.body).toHaveProperty('totalSales');
-          expect(res.body.message).toEqual('You have the following orders');
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.property('data');
+          expect(res.body).to.have.property('totalSales');
+          expect(res.body.message).to.equal('You have the following orders');
           done();
         });
     });
@@ -156,10 +203,12 @@ describe('Order Controller', () => {
         .get('/orders/caterer/all')
         .set({ authorization: secondCatererToken })
         .end((err, res) => {
-          expect(res.status).toEqual(200);
-          expect(res.body).toHaveProperty('data');
-          expect(res.body).toHaveProperty('totalSales');
-          expect(res.body.message).toEqual('You have the following orders');
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.property('data');
+          expect(res.body).to.have.property('totalSales');
+          expect(res.body.message).to.equal('You have the following orders');
+          expect(res.body.data[0].id).to.be.a('string');
+          expect(res.body.data[0].userId).to.equal('1acb0e56-8839-4d05-b9a4-216643a98f35');
           done();
         });
     });
@@ -171,10 +220,14 @@ describe('Order Controller', () => {
         .get('/orders/customer')
         .set({ authorization: secondCustomerToken })
         .end((err, res) => {
-          expect(res.status).toEqual(200);
-          expect(res.body).toHaveProperty('data');
-          expect(res.body).toHaveProperty('totalExpenses');
-          expect(res.body.message).toEqual('You have placed the following orders');
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.property('data');
+          expect(res.body).to.have.property('totalExpenses');
+          expect(res.body.message).to.equal('You have placed the following orders');
+          expect(res.body.data[0].id).to.be.a('string');
+          expect(res.body.data[0].userId).to.equal('1acb0e56-8839-4d05-b9a4-216643a98f35');
+          expect(res.body.data[0].meals).to.be.a('array');
+          expect(res.body.data[0].deliveryAddress).to.equal(null);
           done();
         });
     });
@@ -187,9 +240,13 @@ describe('Order Controller', () => {
         .set({ authorization: secondCustomerToken })
         .send(modifyOrderProd)
         .end((err, res) => {
-          expect(res.status).toEqual(200);
-          expect(res.body).toHaveProperty('data');
-          expect(res.body.message).toEqual('Order Modified successfully');
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.property('data');
+          expect(res.body.message).to.equal('Order Modified successfully');
+          expect(res.body.data.id).to.be.a('string');
+          expect(res.body.data.userId).to.equal('1acb0e56-8839-4d05-b9a4-216643a98f35');
+          expect(res.body.data.mealIds[0].mealId).to.equal('82a712ab-fd6e-4b68-bc63-c34f5f1ba7f1');
+          expect(res.body.data.mealIds[0].quantity).to.equal(8);
           done();
         });
     });
@@ -202,8 +259,9 @@ describe('Order Controller', () => {
         .set({ authorization: firstCustomerToken })
         .send(modifyOrderProd)
         .end((err, res) => {
-          expect(res.status).toEqual(401);
-          expect(res.body.message).toEqual('You can not modify this order');
+          expect(res.status).to.equal(401);
+          expect(res.body.message).to.equal('You can not modify this order');
+          expect(res.body).to.not.have.property('data');
           done();
         });
     });

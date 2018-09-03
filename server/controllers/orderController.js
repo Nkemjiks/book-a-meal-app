@@ -1,5 +1,6 @@
 import models from '../models';
 import calculateTotalSales from '../helpers/calculation';
+import { filterCatererOrders, filterPlaceOrder } from '../helpers/filter';
 
 const mealOrderController = {
   /**
@@ -13,28 +14,37 @@ const mealOrderController = {
     const hours = new Date().getHours();
     const minutes = new Date().getMinutes();
     const time = `${hours}:${minutes}`;
+    const mealIds = [];
 
-    const { meals, deliveryAddress } = req.body;
+    const { catererId, meals, deliveryAddress } = req.body;
 
-    const menu = await models.menu.findAll({ limit: 2 });
+    for (let i = 0; i < meals.length; i += 1) {
+      mealIds.push(meals[i].mealId);
+    }
 
-    if (menu.length === 0) {
+    const menu = await models.menu.findOne({ where: { userId: catererId } });
+    if (menu === null) {
       return res.status(404).send({ message: 'No menu has been created yet' });
     }
 
-    return models.order
-      .create({
-        userId,
-        time,
-        deliveryAddress,
-      })
-      .then((order) => {
+    const mealsInMenu = await menu.getMeals({ where: { id: mealIds } });
+    if (mealsInMenu.length !== mealIds.length) {
+      return res.status(403).send({ message: 'Some selected meals does not exist' });
+    }
+
+    try {
+      const createOrder = await models.order.create({ userId, time, deliveryAddress });
+      if (createOrder.id) {
         for (const meal of meals) {
-          order.setMeals(meal.mealId, { through: { quantity: meal.quantity } });
+          await createOrder.addMeals(meal.mealId, { through: { quantity: meal.quantity } });
         }
-        return res.status(201).send({ message: 'Order Placed successfully', data: order });
-      })
-      .catch(err => res.status(500).send({ message: err }));
+      }
+      const getOrder = await createOrder.getMeals();
+      const filterOrder = filterPlaceOrder(createOrder, getOrder);
+      return res.status(201).send({ message: 'Order Placed successfully', data: filterOrder });
+    } catch (err) {
+      return res.status(500).send({ message: err });
+    }
   },
 
   /**
@@ -72,8 +82,8 @@ const mealOrderController = {
           return res.status(404).send({ message: 'You don\'t have any order yet' });
         }
         const totalSales = calculateTotalSales(meal);
-
-        return res.status(200).send({ message: 'You have the following orders', data: meal, totalSales });
+        const filterOrder = filterCatererOrders(meal);
+        return res.status(200).send({ message: 'You have the following orders', data: filterOrder, totalSales });
       })
       .catch(err => res.status(500).send({ message: err.message }));
   },
@@ -86,9 +96,10 @@ const mealOrderController = {
    */
   getAllCatererOrder(req, res) {
     const userId = req.decoded.id;
-
+    const { offset, limit } = req.query;
     return models.order
-      .findAll({
+      .findAndCountAll({
+        distinct: true,
         where: {
           isDeleted: false,
         },
@@ -105,13 +116,19 @@ const mealOrderController = {
             attributes: ['id', 'fullName', 'email', 'phoneNumber', 'address'],
           },
         ],
+        order: [['updatedAt', 'DESC']],
+        offset: offset || 0,
+        limit: limit || 10,
       })
       .then((meal) => {
-        if (meal.length === 0) {
-          return res.status(404).send({ message: 'You don\'t have any order yet' });
-        }
-        const totalSales = calculateTotalSales(meal);
-        return res.status(200).send({ message: 'You have the following orders', data: meal, totalSales });
+        const filterOrder = filterCatererOrders(meal.rows);
+        const totalSales = calculateTotalSales(meal.rows);
+        return res.status(200).send({
+          message: 'You have the following orders',
+          data: filterOrder,
+          count: meal.count,
+          totalSales,
+        });
       })
       .catch(err => res.status(500).send({ message: err.message }));
   },
@@ -147,7 +164,8 @@ const mealOrderController = {
           return res.status(404).send({ message: 'You have not placed any order yet' });
         }
         const totalExpenses = calculateTotalSales(meal);
-        return res.status(200).send({ message: 'You have placed the following orders', data: meal, totalExpenses });
+        const filterOrder = filterCatererOrders(meal);
+        return res.status(200).send({ message: 'You have placed the following orders', data: filterOrder, totalExpenses });
       })
       .catch(err => res.status(500).send({ message: err.message }));
   },
@@ -177,14 +195,8 @@ const mealOrderController = {
         if (order.userId !== userId) {
           return res.status(401).send({ message: 'You can not modify this order' });
         }
-        const orderHour = new Date(order.createdAt).getHours() * 60;
-        const orderMinutes = new Date(order.createdAt).getMinutes();
-        const orderTime = orderHour + orderMinutes;
-        const presentTime = (new Date().getHours() * 60) + (new Date().getMinutes());
-        const orderDay = new Date(order.createdAt).getDay();
-        const presentDay = new Date().getDay();
 
-        if ((orderDay !== presentDay) || ((presentTime - orderTime) > 60)) {
+        if ((((Date.now() - new Date(order.createdAt).getTime()) / 1000) / 60) > 60) {
           return res.status(401).send({ message: 'You can not modify this order anymore' });
         }
         return order
@@ -193,7 +205,15 @@ const mealOrderController = {
             for (const meal of meals) {
               updatedOrder.setMeals(meal.mealId, { through: { quantity: meal.quantity } });
             }
-            return res.status(200).send({ message: 'Order Modified successfully', data: order });
+            return updatedOrder;
+          })
+          .then((updatedOrder) => {
+            setTimeout(() => {
+              updatedOrder.getMeals().then((adds) => {
+                const filterOrder = filterPlaceOrder(updatedOrder, adds);
+                return res.status(200).send({ message: 'Order Modified successfully', data: filterOrder });
+              });
+            }, 100);
           })
           .catch(err => res.status(500).send({ message: err.message }));
       })

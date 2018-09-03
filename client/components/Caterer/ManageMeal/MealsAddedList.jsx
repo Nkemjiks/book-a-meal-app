@@ -11,7 +11,7 @@ import MealsAdded from './MealsAdded';
 export const MealsAddedList = ({ meals }) => (
   meals.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase()).map(meal => (
     <Fragment key={meal.id}>
-      <MealsAdded meal={meal} />
+      <MealsAdded key={meal.id} meal={meal} />
     </Fragment>
   ))
 );

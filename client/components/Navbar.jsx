@@ -56,6 +56,7 @@ export class Navbar extends Component {
     logoURL: '',
     businessName: '',
     businessAddress: '',
+    selectedFile: '',
   }
 
   /**
@@ -202,10 +203,13 @@ export class Navbar extends Component {
           <form action="">
             <input type="text" name="businessName" placeholder="Business Name" className="input" value={this.state.businessName} onChange={this.handleChange} />
             <input type="text" name="businessAddress" placeholder="Business Address" className="input" value={this.state.businessAddress} onChange={this.handleChange} />
-            <input type="file" name="logoURL" className="imageSelector" accept=".jpg, .jpeg, .png" onChange={this.selectFileHandler} />
+            <label id="imageupload" htmlFor="businessLogo">Add Business Logo
+              <br />
+              <input type="file" name="logoURL" className="imageSelector" id="businessLogo" accept=".jpg, .jpeg, .png" onChange={this.selectFileHandler} />
+            </label>
             <button className="uploadButton" onClick={this.imageUploadHandler}>Upload</button>
             <span>{this.state.imageUploadProgress} %</span>
-            <button className="button" onClick={this.handleRoleUpdate} >Update Role</button>
+            <button className="button update" onClick={this.handleRoleUpdate} >Update Role</button>
           </form>
         </Modal>
         <div id="nav">
@@ -213,9 +217,7 @@ export class Navbar extends Component {
             <img src="image/logo.png" alt="logo" />
           </Link>
           {
-          ((this.props.location.pathname === '/') ||
-          (this.props.location.pathname === '/login') ||
-          (this.props.location.pathname === '/signup')) &&
+          (this.props.location.pathname === '/') &&
           <Fragment>
             <Link to="/login">
               <button className="signin tablet">LOGIN</button>
@@ -224,31 +226,46 @@ export class Navbar extends Component {
               <button className="signup tablet">SIGN UP</button>
             </Link>
           </Fragment>
-        }
+          }
+          {
+          (this.props.location.pathname === '/login') &&
+          <Fragment>
+            <Link to="/signup">
+              <button className="signup tablet">SIGN UP</button>
+            </Link>
+          </Fragment>
+          }
+          {
+          (this.props.location.pathname === '/signup') &&
+          <Fragment>
+            <Link to="/login">
+              <button className="signin tablet">LOGIN</button>
+            </Link>
+          </Fragment>
+          }
           {
           (/customer/.test(this.props.location.pathname)) &&
           !(/caterer/.test(this.props.location.pathname)) &&
           (this.state.user !== null) &&
           <Fragment>
             <div id="dropdown">
-              <i className="fas fa-cog" id="nav-setting" />
+              <i className="fas fa-bars" id="nav-setting" />
               <div className="dropdown-content">
                 <h4 id="dropdown-name">{this.state.user.fullName}</h4>
-                <Link to="/customer/dashboard/0">Dashboard</Link>
-                <Link to="/customer/order">Order History</Link>
+                <Link to="/customer/dashboard">Dashboard</Link>
+                <Link to="/customer/order" className="customer-order">Order History</Link>
                 <a href="https://bookameal24.docs.apiary.io/#" target="_blank" rel="noopener noreferrer" className="default">Documentation</a>
                 {
                   this.state.user.role === 'customer' &&
-                  <button className="logout" onClick={this.openModal}>Become a Caterer</button>
+                  <button className="logout update-role" onClick={this.openModal}>Become a Caterer</button>
                 }
                 {
-                  this.state.user.role === 'caterer' && <Link to="/caterer/menu">Caterer Panel</Link>
+                  this.state.user.role === 'caterer' && <Link className="caterer-panel" to="/caterer/menu">Caterer Panel</Link>
                 }
-                <button className="logout" onClick={this.handleLogout}>Logout</button>
+                <button className="logout logout-button" onClick={this.handleLogout}>Logout</button>
               </div>
             </div>
             <h3>{this.state.user.fullName}</h3>
-            <i className="fas fa-user" id="nav-avatar" />
           </Fragment>
         }
           {
@@ -257,25 +274,25 @@ export class Navbar extends Component {
           (this.state.user !== null) &&
           <Fragment>
             <div id="dropdown">
-              <i className="fas fa-cog" id="nav-setting-caterer" />
+              <i className="fas fa-bars" id="nav-setting-caterer" />
               <div className="dropdown-content-caterer">
                 <h4 id="dropdown-name-caterer">{this.state.user.businessName}</h4>
                 <Link to="/caterer/menu" className="dropdown-option">Set Menu</Link>
                 <Link to="/caterer/meal" className="dropdown-option">Manage Meals</Link>
                 <Link to="/caterer/order" className="dropdown-option">Manage Orders</Link>
-                <Link to="/customer/dashboard/0" className="default">Customer Dashboard</Link>
+                <Link to="/customer/dashboard" className="default">Customer Dashboard</Link>
                 <a target="_blank" rel="noopener noreferrer" href="https://bookameal24.docs.apiary.io/#" className="default">Documentation</a>
-                <button className="default logout" onClick={this.handleLogout}>Logout</button>
+                <button className="default logout logout-button" onClick={this.handleLogout}>Logout</button>
               </div>
             </div>
             <Link to="/caterer/order">
-              <button className="manage-button">Manage Orders</button>
+              <button className="manage-button view-order">Manage Orders</button>
             </Link>
             <Link to="/caterer/menu">
-              <button className="manage-button">Set Menu</button>
+              <button className="manage-button set-menu">Set Menu</button>
             </Link>
             <Link to="/caterer/meal">
-              <button className="manage-button">Manage Meals</button>
+              <button className="manage-button meal">Manage Meals</button>
             </Link>
           </Fragment>
         }

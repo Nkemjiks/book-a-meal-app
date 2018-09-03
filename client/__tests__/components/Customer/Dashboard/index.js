@@ -37,8 +37,7 @@ describe('Meals Component', () => {
   it('should render unconnected component properly', () => {
     expect(mountWrapper.find('#customer-dashboard').length).toBe(1);
     expect(mountWrapper.find('h1').length).toBe(1);
-    expect(mountWrapper.find('div').length).toBe(11);
-    expect(mountWrapper.find('button').length).toBe(1);
+    expect(mountWrapper.find('div').length).toBe(12);
   });
   it('should call component did mount to dispatch action', () => {
     const getUserDetailsActionSpy = jest.spyOn(mountWrapper.instance().props, 'getUserDetailsAction');
@@ -47,11 +46,6 @@ describe('Meals Component', () => {
     expect(mountWrapper.state().allMenu).not.toBe([]);
     expect(getUserDetailsActionSpy).toHaveBeenCalled();
     expect(getAllMenuActionSpy).toHaveBeenCalled();
-  });
-  it('should call the createPages method and update state', () => {
-    const createPagesSpy = jest.spyOn(mountWrapper.instance(), 'createPages');
-    mountWrapper.instance().createPages();
-    expect(createPagesSpy).toHaveBeenCalled();
   });
   it('should render connected component properly', () => {
     const connectedWrapper = shallow(<ConnectedAvaliableMenu {...props} store={store} />);

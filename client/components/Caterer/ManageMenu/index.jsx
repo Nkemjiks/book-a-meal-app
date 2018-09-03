@@ -35,9 +35,16 @@ export class ManageMenu extends React.Component {
         meals,
       };
     }
+    if (menu.meals === undefined) {
+      return {
+        menu: {},
+        mealsInMenuId: [],
+        menuIds: [],
+      };
+    }
     if (menu.meals !== state.menu.meals) {
       const ids = [];
-      menu.meals.forEach(meal => ids.push(meal.menuItems.mealId));
+      menu.meals.forEach(meal => ids.push(meal.mealId));
       return {
         menu,
         mealsInMenuId: ids,
@@ -147,6 +154,7 @@ export class ManageMenu extends React.Component {
   render() {
     const { menuIds } = this.state;
     const enabled = menuIds.length > 0;
+    
     return (
       <div className="dashboard">
         <div id="caterer-dashboard-flex">

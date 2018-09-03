@@ -14,7 +14,8 @@ module.exports = {
         "jsx-a11y/click-events-have-key-events": 0,
         "react/jsx-filename-extension": 0,
         "import/no-named-as-default": 0,
-        "no-undef" : 2
+        "no-undef" : 2,
+        "no-await-in-loop": 0
     },
     "globals": {
         "describe": true,

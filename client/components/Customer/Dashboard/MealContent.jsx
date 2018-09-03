@@ -12,7 +12,7 @@ import Meal from './Meal';
 const Menu = ({ allMenu, addMealToCart }) => (
   allMenu.sort((a, b) =>
     a.name.toLowerCase() > b.name.toLowerCase()).map(meal => (
-      <Fragment key={meal.menuItems.mealId}>
+      <Fragment key={meal.mealId}>
         <Meal meal={meal} addMealToCart={addMealToCart} />
       </Fragment>
   ))

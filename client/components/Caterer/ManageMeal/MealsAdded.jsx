@@ -269,11 +269,11 @@ export class MealsAdded extends React.Component {
           <h1>Modify Meal</h1>
           <form action="">
             <input type="text" name="mealName" placeholder="Meal Name" className="input" value={this.state.mealName} onChange={this.handleChange} />
-            <input type="number" name="price" placeholder="Price" className="input" value={this.state.price} onChange={this.handleChange} />
+            <input type="number" name="price" placeholder="Price" className="input update-price" value={this.state.price} onChange={this.handleChange} />
             <input type="file" name="imageURL" className="imageSelector" accept=".jpg, .jpeg, .png" onChange={this.selectFileHandler} />
             <button className="uploadButton" onClick={this.imageUploadHandler}>Upload</button>
             <span>{this.state.imageUploadProgress} %</span>
-            <button className="button" onClick={this.handleModifyMeal}>Modify Meal</button>
+            <button className="button modify-btn" onClick={this.handleModifyMeal}>Modify Meal</button>
           </form>
         </Modal>
         <Modal

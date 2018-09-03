@@ -38,7 +38,7 @@ export class Meal extends React.Component {
           <p className="cartdetails">{meal.name}</p>
           <p className="cartdetails" id={`${meal.id}price`}>&#8358; {meal.price}</p>
           <div>
-            <input type="number" defaultValue={meal.orderItems.quantity} minLength="1" maxLength="20" id={meal.id} name="quatity" onChange={this.handleChange} />
+            <input type="number" defaultValue={meal.quantity} minLength="1" maxLength="20" id={meal.id} name="quatity" onChange={this.handleChange} />
           </div>
         </div>
       </Fragment>
